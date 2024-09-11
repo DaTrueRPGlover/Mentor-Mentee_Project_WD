@@ -1,1 +1,1 @@
-# CSE-120-Mentee-and-Mentor-Project
+# CSE-120-WDC-Mentee-and-Mentor-Project
