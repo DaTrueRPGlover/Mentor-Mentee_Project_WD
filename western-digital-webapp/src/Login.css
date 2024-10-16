@@ -1,0 +1,49 @@
+/* Center the form container */
+.logo {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+  
+  /* Center the form container */
+  .login-container {
+    /* Remove position: relative if present */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Other styles... */
+  }
+  
+  /* Style for the avatar icon */
+  .login-avatar {
+    margin-top: 20px; /* Adjust as needed */
+    margin: 8px;
+    background-color: #1976d2;
+  }
+  /* Style for the heading */
+  .login-heading {
+    margin-bottom: 8px;
+  }
+  
+  /* Style for the form */
+  .login-form {
+    width: 100%; /* Fixes IE11 issue */
+    margin-top: 8px;
+  }
+  
+  /* Style for the submit button */
+  .login-button {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    border-radius: 50px;
+  }
+  /* Login.css */
+  .error-message {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  
