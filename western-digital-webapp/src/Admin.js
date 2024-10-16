@@ -1,7 +1,9 @@
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './Admin.css'; // Import the CSS file
 import logo from './assets/WDC.png';// Adjust the path as needed
+
 function AdminHome() {
   const navigate = useNavigate();
 
@@ -15,6 +17,7 @@ function AdminHome() {
   };
 
   return (
+    
     <div className="admin-home">
       <header className="header">
         <img src={logo} alt="Logo" className="logo" />
@@ -26,8 +29,9 @@ function AdminHome() {
         <h1 className="welcome-message">Welcome Admin {adminName}</h1>
         <div className="button-container">
           <button className="circle-button" onClick={() => navigate('/see-interactions')}>
-            See Interactions
+              See Interactions
           </button>
+
           <button className="circle-button" onClick={() => navigate('/assign-mentor')}>
             Assign Mentor to Mentee
           </button>
@@ -39,6 +43,7 @@ function AdminHome() {
           </button>
         </div>
       </main>
+      
     </div>
   );
 }

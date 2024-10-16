@@ -4,6 +4,7 @@ import Login from './Login';
 import MentorHome from './MentorHome';
 import MenteeHome from './MenteeHome';
 import AdminHome from './Admin';
+import AdminSeeInteractions from './AdminSeeInteractions'; // Import your component
 
 function App() {
   return (
@@ -13,9 +14,11 @@ function App() {
         <Route path="/mentor-home" element={<MentorHome />} />
         <Route path="/mentee-home" element={<MenteeHome />} />
         <Route path="/admin-home" element={<AdminHome />} />
-        <Route path="/home" element={<div>Home Page</div>} />
+        <Route path="/see-interactions" element={<AdminSeeInteractions />} />
+
       </Routes>
     </Router>
+    
   );
 }
 
