@@ -1,0 +1,54 @@
+.assign-mentor {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+  }
+  
+  input {
+    margin-left: 10px;
+    padding: 5px;
+  }
+  
+  button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  .add-assignment {
+    margin-top: 20px;
+  }
+  
+  .add-assignment input {
+    padding: 8px;
+    width: 40%;
+    margin-right: 10px;
+  }
+  
+  .add-assignment button {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-assignment button:hover {
+    background-color: #0056b3;
+  }
+  

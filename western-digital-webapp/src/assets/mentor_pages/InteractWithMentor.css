@@ -1,0 +1,56 @@
+.interact-with-mentor {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .message-list {
+    max-height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+  
+  .mentor {
+    text-align: left;
+    color: blue;
+  }
+  
+  .mentee {
+    text-align: right;
+    color: green;
+  }
+  
+  .timestamp {
+    font-size: 0.8em;
+    color: gray;
+  }
+  
+  textarea {
+    width: 80%;
+    height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1em;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

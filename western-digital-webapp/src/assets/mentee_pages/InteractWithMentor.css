@@ -1,0 +1,23 @@
+.interact-with-mentor {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .chat-box {
+    margin-top: 20px;
+  }
+  
+  .chat-box textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .chat-box button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

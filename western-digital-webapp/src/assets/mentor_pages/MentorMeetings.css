@@ -1,0 +1,42 @@
+.mentor-meetings {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
+  .schedule-form {
+    margin-top: 20px;
+  }
+  
+  input {
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

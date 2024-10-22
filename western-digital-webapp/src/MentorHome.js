@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MentorHome.css'; // Import the CSS file
-import logo from './assets/WDC.png';// Adjust the path as needed
+import logo from './assets/WDC.png'; // Adjust the path as needed
 
 function MentorHome() {
   const navigate = useNavigate();
 
   // Retrieve mentor's name from local storage or context
   const mentorName = localStorage.getItem('mentorName') || 'Mentor';
-  console.log(mentorName)
+
   const handleLogout = () => {
     // Clear user data
     localStorage.clear();
@@ -26,11 +26,11 @@ function MentorHome() {
       <main className="main-content">
         <h1 className="welcome-message">Welcome Mentor {mentorName}</h1>
         <div className="button-container">
-          <button className="circle-button" onClick={() => navigate('/interact-mentee')}>
+          <button className="circle-button" onClick={() => navigate('/interact-with-mentee')}>
             Interact with Mentee
           </button>
-          <button className="circle-button" onClick={() => navigate('/write-progression')}>
-            Write Progression
+          <button className="circle-button" onClick={() => navigate('/write-mentee-progression')}>
+            Write Mentee Progression
           </button>
           <button className="circle-button" onClick={() => navigate('/assign-homework')}>
             Assign Homework
@@ -45,3 +45,4 @@ function MentorHome() {
 }
 
 export default MentorHome;
+

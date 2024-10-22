@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MenteeHome.css'; // Import the CSS file
-import logo from './assets/WDC.png';// Adjust the path as needed
+import logo from './assets/WDC.png'; // Adjust the path as needed
+
 function MenteeHome() {
   const navigate = useNavigate();
 
@@ -31,8 +32,8 @@ function MenteeHome() {
           <button className="circle-button" onClick={() => navigate('/todo-progression')}>
             To-Do/Progression
           </button>
-          <button className="circle-button" onClick={() => navigate('/scheduled-meetings')}>
-            Scheduled Meetings
+          <button className="circle-button" onClick={() => navigate('/mentee-meetings')}>
+            Mentee Meetings
           </button>
         </div>
       </main>
@@ -41,3 +42,4 @@ function MenteeHome() {
 }
 
 export default MenteeHome;
+

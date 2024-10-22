@@ -1,0 +1,25 @@
+.see-interactions {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1em;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
