@@ -31,7 +31,6 @@ function AdminHome() {
           <button className="circle-button" onClick={() => navigate('/see-interactions')}>
               See Interactions
           </button>
-
           <button className="circle-button" onClick={() => navigate('/assign-mentor')}>
             Assign Mentor to Mentee
           </button>
