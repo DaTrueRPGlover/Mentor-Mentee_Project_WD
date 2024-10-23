@@ -3,8 +3,8 @@ import './InteractWithMentor.css';
 
 function InteractWithMentor() {
   const [messages, setMessages] = useState([
-    { sender: 'Mentee', content: 'Hello, I have completed the assignment.', timestamp: '2024-10-15' },
     { sender: 'Mentor', content: 'Great! Let’s review it during our next meeting.', timestamp: '2024-10-16' },
+    { sender: 'Mentee', content: 'Hello, I have completed the assignment.', timestamp: '2024-10-15' },
   ]);
 
   const [newMessage, setNewMessage] = useState('');

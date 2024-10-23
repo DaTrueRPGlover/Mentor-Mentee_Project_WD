@@ -1,16 +1,15 @@
-Reset default margins and paddings
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 /* Container for the whole page */
 .admin-home {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  background-color: #ADD8E6;
+  /* background-color: #ADD8E6; */
   font-family: Arial, sans-serif;
   text-align: center;
   justify-content: space-between;
@@ -31,14 +30,14 @@ Reset default margins and paddings
 .logo {
   width: 150px;
   height: auto;
-  background-color: #ADD8E6;
+  /* background-color: #ADD8E6; */
 }
 
 .logout-button {
   padding: 10px 20px;
   border-radius: 50px;
   border: none;
-  background-color: #ADD8E6;
+  /* background-color: #ADD8E6; */
   /* background-color: #1976d2; */
   /* color: #fff; */
   cursor: pointer;
