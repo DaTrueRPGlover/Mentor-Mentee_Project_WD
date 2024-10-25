@@ -1,8 +1,19 @@
-/* * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-} */
+}
+.title {
+  margin-top: 15px; /* Move it up by 20 pixels */
+  font-size: large;
+  background-color: #91BECD;
+  /* Add other styles as needed */
+}
+.logo {
+  width: 150px;
+  height: auto;
+  /* background-color: #ADD8E6; */
+}
 /* Container for the whole page */
 .admin-home {
   display: flex;
@@ -14,7 +25,11 @@
   text-align: center;
   justify-content: space-between;
 }
-
+.welcome-message {
+  margin-bottom: 40px;
+  font-size: 32px;
+  text-align: center;
+}
 /* Header styles */
 .header {
   display: flex;
@@ -27,26 +42,6 @@
 /* background-color: #f5f5f5; */
 }
 
-.logo {
-  width: 150px;
-  height: auto;
-  /* background-color: #ADD8E6; */
-}
-
-.logout-button {
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: none;
-  /* background-color: #ADD8E6; */
-  /* background-color: #1976d2; */
-  /* color: #fff; */
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  background-color: #115293;
-}
-
 /* Main content styles */
 .main-content {
   flex: 1 0 auto;
@@ -57,11 +52,7 @@
   justify-content: center;
 }
 
-.welcome-message {
-  margin-bottom: 40px;
-  font-size: 32px;
-  text-align: center;
-}
+
 
 /* Button container */
 .button-container {
@@ -71,27 +62,89 @@
   gap: 20px;
   width: 100%;
 }
+body {
+  margin: 0; /* Remove default body margin */
+  padding: 0;
+  overflow: hidden; /* Prevent overflow if needed */
+}
+/* moves log button left and top and center so it dosent extend page */
+.logout-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #65558F;
+}
+
+.logout-button:hover {
+  background-color: #2d1960;
+}
+.circle {
+  width: 355px;
+  height: 355px;
+  border-radius: 50%;
+  background-color: #91BECD;
+
+  display: flex;               /* Use Flexbox for alignment */
+  flex-direction: column;      /* Stack items vertically */
+  align-items: center;         /* Center items horizontally */
+  justify-content: center;     /* Center items vertically */
+  text-align: center;
+  position: relative;          /* Allow precise control over child elements */
+}
+
+.Talk {
+  width: 200px;            /* Adjust size as needed */
+  height: auto;           /* Maintain aspect ratio */
+  margin-bottom: 5px;     /* Space below the image */
+  background-color: #91BECD;
+}
+.Twopeople {
+  width: 200px;            /* Adjust size as needed */
+  height: auto;           /* Maintain aspect ratio */
+  margin-bottom: 5px;     /* Space below the image */
+  background-color: #91BECD;
+}
+.One {
+  width: 190px;            /* Adjust size as needed */
+  height: auto;           /* Maintain aspect ratio */
+  margin-bottom: 5px;     /* Space below the image */
+  background-color: #91BECD;
+}
+.Notes {
+  width: 190px;            /* Adjust size as needed */
+  height: auto;           /* Maintain aspect ratio */
+  margin-bottom: 5px;     /* Space below the image */
+  background-color: #91BECD;
+}
 
 .circle-button {
-  width: 150px; /* Fixed width */
-  height: 150px; /* Fixed height */
-  border-radius: 50%; /* Ensures circular shape */
+  width: 100px;
+  height: 40px;
+  border-radius: 50px;
   border: none;
   font-size: 16px;
-  text-align: center;
-  padding: 20px;
   cursor: pointer;
+  background-color: #65558F;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px; /* Space between h2 and button */
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
-  color: white; /* Button text color */
-  transition: background-color 0.3s; /* Smooth color change */
+  padding: 0;
+  margin-top: 20px;
+  margin: 0;
+  transition: background-color 0.3s;
 }
 
+
+
+
 .circle-button:hover {
-  background-color: rgba(0, 86, 179, 0.7); /* Semi-transparent hover color */
+  background-color: #2d1960; /* Semi-transparent hover color */
 }
 
 
