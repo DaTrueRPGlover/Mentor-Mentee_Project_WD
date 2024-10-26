@@ -3,13 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-.title {
+.admin-home title {
   margin-top: 15px; /* Move it up by 20 pixels */
   font-size: large;
   background-color: #91BECD;
   /* Add other styles as needed */
 }
-.logo {
+.admin-home .logo {
   width: 150px;
   height: auto;
   /* background-color: #ADD8E6; */
@@ -25,13 +25,13 @@
   text-align: center;
   justify-content: space-between;
 }
-.welcome-message {
+.admin-home .welcome-message {
   margin-bottom: 40px;
   font-size: 32px;
   text-align: center;
 }
 /* Header styles */
-.header {
+.admin-home .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +43,7 @@
 }
 
 /* Main content styles */
-.main-content {
+.admin-home .main-content {
   flex: 1 0 auto;
   width: 100%;
   display: flex;
@@ -55,20 +55,20 @@
 
 
 /* Button container */
-.button-container {
+.admin-home .button-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
   width: 100%;
 }
-body {
+.admin-home .body {
   margin: 0; /* Remove default body margin */
   padding: 0;
   overflow: hidden; /* Prevent overflow if needed */
 }
 /* moves log button left and top and center so it dosent extend page */
-.logout-button {
+.admin-home .logout-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -80,10 +80,10 @@ body {
   background-color: #65558F;
 }
 
-.logout-button:hover {
+.admin-home .logout-button:hover {
   background-color: #2d1960;
 }
-.circle {
+.admin-home .circle {
   width: 355px;
   height: 355px;
   border-radius: 50%;
@@ -97,32 +97,32 @@ body {
   position: relative;          /* Allow precise control over child elements */
 }
 
-.Talk {
+.admin-home .Talk {
   width: 200px;            /* Adjust size as needed */
   height: auto;           /* Maintain aspect ratio */
   margin-bottom: 5px;     /* Space below the image */
   background-color: #91BECD;
 }
-.Twopeople {
+.admin-home .Twopeople {
   width: 200px;            /* Adjust size as needed */
   height: auto;           /* Maintain aspect ratio */
   margin-bottom: 5px;     /* Space below the image */
   background-color: #91BECD;
 }
-.One {
+.admin-home .One {
   width: 190px;            /* Adjust size as needed */
   height: auto;           /* Maintain aspect ratio */
   margin-bottom: 5px;     /* Space below the image */
   background-color: #91BECD;
 }
-.Notes {
+.admin-home .Notes {
   width: 190px;            /* Adjust size as needed */
   height: auto;           /* Maintain aspect ratio */
   margin-bottom: 5px;     /* Space below the image */
   background-color: #91BECD;
 }
 
-.circle-button {
+.admin-home .circle-button {
   width: 100px;
   height: 40px;
   border-radius: 50px;
@@ -143,12 +143,12 @@ body {
 
 
 
-.circle-button:hover {
+.admin-home .circle-button:hover {
   background-color: #2d1960; /* Semi-transparent hover color */
 }
 
 
-.header-container {
+.admin-home .header-container {
   display: flex;
   justify-content: space-around;
   align-items: center;

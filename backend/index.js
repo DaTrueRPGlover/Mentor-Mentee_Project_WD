@@ -9,7 +9,7 @@ app.use(cors());
 
 // Mock user data (replace this with database calls later)
 const users = [
-  {  email: 'testmentor@wdc.com', name: 'Frenando', role: 'Mentor', department: 'GST', password: 'passmentor' },
+  {  email: 'testmentor@wdc.com', name: 'Fernando', role: 'Mentor', department: 'GST', password: 'passmentor' },
   {  email: 'testmentee@wdc.com', name: 'Kyle', role: 'Mentee', department: 'GST', password: 'passmentee' },
   {  email: 'testadmin@wdc.com', name: 'Hikaru',role: 'Admin', department: 'GST', password: 'passadmin' },
   {email: 'test@wdc.com', name:'Shri', role: 'Tester', department: 'GST', password: 'passtester'}
