@@ -1,5 +1,4 @@
-/* Center the form container */
-.login logo {
+  .login-logo {
     width: 150px; /* Adjust size as needed */
     height: auto;
     position: absolute;
@@ -7,43 +6,55 @@
     left: 20px;
     z-index: 1000;
   }
-  
+
   /* Center the form container */
-  .login login-container {
-    /* Remove position: relative if present */
+  .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     /* Other styles... */
   }
-  
+
   /* Style for the avatar icon */
-  .login login-avatar {
+  .login-avatar {
     margin-top: 20px; /* Adjust as needed */
     margin: 8px;
     background-color: #1976d2;
   }
+
   /* Style for the heading */
-  .login login-heading {
+  .login-heading {
     margin-bottom: 8px;
   }
-  
+
   /* Style for the form */
-  .login login-form {
+  .login-form {
     width: 100%; /* Fixes IE11 issue */
     margin-top: 8px;
   }
-  
+
   /* Style for the submit button */
-  .login login-button {
+  .login-button {
     margin-top: 24px;
     margin-bottom: 16px;
     border-radius: 50px;
   }
-  /* Login.css */
-  .login error-message {
+
+  /* Error message style */
+  .login-error-message {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+
+  input[type="text"], input[type="password"] {
+    color: #000 !important; /* Text color */
+    background-color: #fff !important; /* Background color */
+    border: 1px solid #ccc; /* Border styling */
+    padding: 10px;
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
   }
   
   
