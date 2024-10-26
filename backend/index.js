@@ -1,10 +1,18 @@
+const mysql = require('mysql2/promise')
 require('dotenv').config();
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10, // Adjust the limit based on your needs
+  queueLimit: 0
+});
 const express = require('express');
 // const bcrypt = require('bcrypt');
-const pool = require('./db');
 const cors = require('cors');
-
-
+module.exports = pool;
 const app = express();
 
 app.use(express.json());
