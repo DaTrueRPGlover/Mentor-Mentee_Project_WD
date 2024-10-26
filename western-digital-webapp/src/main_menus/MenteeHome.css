@@ -16,7 +16,7 @@
   }
   
   /* Header styles */
-  .header {
+  .mentee-home header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,12 +25,12 @@
     background-color: #f5f5f5;
   }
   
-  .logo {
+  .mentee-home logo {
     width: 150px;
     height: auto;
   }
   
-  .logout-button {
+  .mentee-home logout-button {
     padding: 10px 20px;
     border-radius: 50px;
     border: none;
@@ -39,12 +39,12 @@
     cursor: pointer;
   }
   
-  .logout-button:hover {
+  .mentee-home logout-button:hover {
     background-color: #115293;
   }
   
   /* Main content styles */
-  .main-content {
+  .mentee-home main-content {
     flex: 1 0 auto;
     width: 100%;
     display: flex;
@@ -53,14 +53,14 @@
     justify-content: center;
   }
   
-  .welcome-message {
+  .mentee-home welcome-message {
     margin-bottom: 40px;
     font-size: 32px;
     text-align: center;
   }
   
   /* Button container */
-  .button-container {
+  .mentee-home button-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -69,7 +69,7 @@
   }
   
   /* Circular buttons */
-  .circle-button {
+  .mentee-home circle-button {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -85,7 +85,7 @@
     justify-content: center;
   }
   
-  .circle-button:hover {
+  .mentee-home circle-button:hover {
     background-color: #115293;
   }
   
