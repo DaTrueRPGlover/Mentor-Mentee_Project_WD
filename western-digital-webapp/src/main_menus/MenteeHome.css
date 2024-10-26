@@ -16,7 +16,7 @@
   }
   
   /* Header styles */
-  .mentee-home header {
+  .mentee-home .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
