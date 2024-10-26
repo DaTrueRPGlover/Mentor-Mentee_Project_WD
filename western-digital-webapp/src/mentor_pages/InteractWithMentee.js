@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './InteractWithMentor.css';
+import './InteractWithMentee.css';
 
 function InteractWithMentor() {
   const [messages, setMessages] = useState([

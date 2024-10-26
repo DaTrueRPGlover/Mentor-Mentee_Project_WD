@@ -2,14 +2,11 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import './AdminHome.css'; // Import the CSS file
-import logo from '../WDC.png';// Adjust the path as needed
-
-import './Admin.css'; // Import the CSS file
-import logo from './assets/WDC.png';// Adjust the path as needed
-import talk from './assets/talk.png';// Adjust the path as needed
-import twopeople from './assets/twopeople.png';// Adjust the path as needed
-import one from './assets/one.png';// Adjust the path as needed
-import notes from './assets/notes.png';// Adjust the path as needed
+import logo from '../assets/WDC.png';// Adjust the path as needed
+import talk from '../assets/talk.png';// Adjust the path as needed
+import twopeople from '../assets/twopeople.png';// Adjust the path as needed
+import one from '../assets/one.png';// Adjust the path as needed
+import notes from '../assets/notes.png';// Adjust the path as needed
 function AdminHome() {
   const navigate = useNavigate();
 

@@ -2,23 +2,23 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login';
 //Main Menus
-import MentorHome from './assets/main_menus/MentorHome';
-import MenteeHome from './assets/main_menus/MenteeHome';
-import AdminHome from './assets/main_menus/AdminHome';
+import MentorHome from './main_menus/MentorHome';
+import MenteeHome from './main_menus/MenteeHome';
+import AdminHome from './main_menus/AdminHome';
 //Mentee Pages
-import InteractWithMentor from './assets/mentee_pages/InteractWithMentor';
-import TodoProgression from './assets/mentee_pages/TodoProgression';
-import MenteeMeetings from './assets/mentee_pages/MenteeMeetings';
+import InteractWithMentor from './mentee_pages/InteractWithMentor';
+import TodoProgression from './mentee_pages/TodoProgression';
+import MenteeMeetings from './mentee_pages/MenteeMeetings';
 //Mentor Pages
-import InteractWithMentee from './assets/mentor_pages/InteractWithMentee';
-import AssignHomework from './assets/mentor_pages/AssignHomework';
-import MentorMeetings from './assets/mentor_pages/MentorMeetings';
-import WriteProgression from './assets/mentor_pages/WriteMenteeProgression';
+import InteractWithMentee from './mentor_pages/InteractWithMentee';
+import AssignHomework from './mentor_pages/AssignHomework';
+import MentorMeetings from './mentor_pages/MentorMeetings';
+import WriteProgression from './mentor_pages/WriteMenteeProgression';
 //Admin Pages
-import SeeInteractions from './assets/admin_pages/SeeInteractions';
-import AssignMentors from './assets/admin_pages/AssignMentor';
-import ViewProgressions from './assets/admin_pages/ViewProgression';
-import CreateAccount from './assets/admin_pages/CreateAccount';
+import SeeInteractions from './admin_pages/SeeInteractions';
+import AssignMentors from './admin_pages/AssignMentor';
+import ViewProgressions from './admin_pages/ViewProgression';
+import CreateAccount from './admin_pages/CreateAccount';
 
 function App() {
   return (
