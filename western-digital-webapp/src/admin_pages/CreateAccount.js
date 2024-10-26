@@ -20,9 +20,15 @@ function CreateAccount() {
     <div className="create-account">
       <h1>Create Mentee/Mentor Account</h1>
       <div className="rectangle">
-
+        <input
+            type="text"
+            value={name}
+            placeholder="Enter First Name"
+        />
       </div>
-      
+      <button className="Submit">
+          Submit
+      </button>
       {/* <div className="account-form">
         <input
           type="text"

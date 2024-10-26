@@ -3,9 +3,9 @@
   text-align: center;
 }
 
-.create-account .account-form {
+/* .create-account .account-form {
   margin: 20px 0;
-}
+} */
 
 .create-account .input, .select {
   margin-right: 10px;
@@ -15,11 +15,7 @@
 }
 
 .create-account button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+  background-color: #65558F;
 }
 
 .create-account .button:hover {
@@ -39,7 +35,7 @@
   width: 500px;             /* Adjust the size as needed */
   height: 600px;           /* Adjust the height */
   border: 2px solid #91BECD; /* Light blue border */
-  background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent white */
   margin: 20px auto;      /* Center the rectangle horizontally */
   display: flex;
   align-items: center;     /* Center content vertically */
