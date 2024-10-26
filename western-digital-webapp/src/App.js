@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login';
-import MentorHome from './MentorHome';
-import MenteeHome from './MenteeHome';
-import AdminHome from './Admin';
+//Main Menus
+import MentorHome from './assets/main_menus/MentorHome';
+import MenteeHome from './assets/main_menus/MenteeHome';
+import AdminHome from './assets/main_menus/AdminHome';
 //Mentee Pages
 import InteractWithMentor from './assets/mentee_pages/InteractWithMentor';
 import TodoProgression from './assets/mentee_pages/TodoProgression';

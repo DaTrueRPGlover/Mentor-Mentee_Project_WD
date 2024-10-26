@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MenteeHome.css'; // Import the CSS file
-import logo from './assets/WDC.png'; // Adjust the path as needed
+import logo from '../WDC.png'; // Adjust the path as needed
 
 function MenteeHome() {
   const navigate = useNavigate();
