@@ -19,7 +19,11 @@ function CreateAccount() {
   return (
     <div className="create-account">
       <h1>Create Mentee/Mentor Account</h1>
-      <div className="account-form">
+      <div className="rectangle">
+
+      </div>
+      
+      {/* <div className="account-form">
         <input
           type="text"
           value={name}
@@ -49,7 +53,7 @@ function CreateAccount() {
             {account.name} ({account.email}) - <strong>{account.type}</strong>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

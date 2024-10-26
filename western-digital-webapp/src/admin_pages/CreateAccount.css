@@ -1,38 +1,51 @@
 .create-account {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .account-form {
-    margin: 20px 0;
-  }
-  
-  input, select {
-    margin-right: 10px;
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
+  padding: 20px;
+  text-align: center;
+}
+
+.create-account .account-form {
+  margin: 20px 0;
+}
+
+.create-account .input, .select {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.create-account button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.create-account .button:hover {
+  background-color: #0056b3;
+}
+
+.create-account .ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.create-account .li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+.rectangle {
+  width: 500px;             /* Adjust the size as needed */
+  height: 600px;           /* Adjust the height */
+  border: 2px solid #91BECD; /* Light blue border */
+  background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
+  margin: 20px auto;      /* Center the rectangle horizontally */
+  display: flex;
+  align-items: center;     /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border-radius: 15px;     /* Optional: Rounded corners */
+  backdrop-filter: blur(5px); /* Optional: Blur the background */
+  transition: transform 0.3s; /* Optional: Add a transition effect */
+}
