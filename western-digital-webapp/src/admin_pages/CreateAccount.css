@@ -2,16 +2,37 @@
   padding: 20px;
   text-align: center;
 }
+.account-form {
+  padding: 20px;
+  text-align: center;
+  background-color: transparent; /* Set to transparent */
+}
 
-/* .create-account .account-form {
-  margin: 20px 0;
-} */
+.create-account input, .create-account select {
+  background-color: white; /* Transparent input fields */
+  width: 300px;
+  border: 1px solid #ccc; /* Optional: Add a border for visibility */
+  padding: 10px;
+}
+
+.create-account h2 {
+  font-size: xx-large;
+  background-color: transparent; /* Transparent heading */
+  padding: 10px;
+}
+.create-account h1 {
+  font-size: large;
+  background-color: transparent; /* Transparent heading */
+  padding: 10px;
+}
 
 .create-account .input, .select {
   margin-right: 10px;
   padding: 10px;
   font-size: 1em;
   margin-bottom: 10px;
+  background-color: transparent;
+
 }
 
 .create-account button {
@@ -45,3 +66,15 @@
   backdrop-filter: blur(5px); /* Optional: Blur the background */
   transition: transform 0.3s; /* Optional: Add a transition effect */
 }
+
+.create-account .logo {
+  width: 120px;
+  height: auto;
+  padding-top: 2%;
+  position: absolute;  /* Use absolute positioning */
+  top: -10px;              /* Align to the top */
+  left: 20px;             /* Align to the left */
+  margin: 10px;        /* Optional: Add some margin for spacing */
+  /* background-color: #ADD8E6; */ /* Optional background */
+}
+
