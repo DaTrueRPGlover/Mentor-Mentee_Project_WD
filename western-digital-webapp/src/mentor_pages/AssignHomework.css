@@ -1,38 +1,58 @@
-.assign-homework {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .homework-form {
-    margin: 20px 0;
-  }
-  
-  input {
-    margin-right: 10px;
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
+.homework-body {
+  background-color: #add8e6;
+  padding: 20px;
+  text-align: center;
+}
+
+.homework-logo {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.homework-form {
+  margin: 20px 0;
+}
+
+.homework-input {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+label {
+  font-size: 1em;
+  cursor: pointer;
+}
+
+select.homework-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.homework-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.homework-button:hover {
+  background-color: #0056b3;
+}
