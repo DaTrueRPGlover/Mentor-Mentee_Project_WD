@@ -52,9 +52,9 @@
   margin: 10px 0;
   font-size: 1.1em;
 }
-.rectangle {
+.create-account .rectangle {
   width: 500px;             /* Adjust the size as needed */
-  height: 600px;           /* Adjust the height */
+  height: 650px;           /* Adjust the height */
   border: 2px solid #91BECD; /* Light blue border */
   background-color: rgba(0, 0, 0, 0.1); /* Transparent white */
   margin: 20px auto;      /* Center the rectangle horizontally */
