@@ -1,3 +1,4 @@
+// login.js
 import React, { useState } from "react";
 import {
   TextField,
@@ -36,19 +37,30 @@ function Login() {
       )
       .then(({ status, body }) => {
         if (status === 200) {
-          localStorage.setItem("userRole", body.role);
+          // Store user info in localStorage
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              userId: body.userId,
+              name: body.name,
+              role: body.role,
+              mentorkey: body.mentorkey,
+              menteekey: body.menteekey,
+              menteeList: body.menteeList || [],
+            })
+          );
+
           console.log("Login successful");
           console.log("User role:", body.role);
+          console.log("Mentor key", body.mentorkey);
+          console.log("Mentee key",body.menteekey);
 
           // Redirect based on role
-          if (body.role === "Mentor") {
-            localStorage.setItem("mentorName", body.name);
-            navigate("/mentor-home");
-          } else if (body.role === "Mentee") {
-            localStorage.setItem("menteeName", body.name);
+          if (body.role.toLowerCase() === "mentor") {
+            navigate("/mentor-home"); // Adjust as needed
+          } else if (body.role.toLowerCase() === "mentee") {
             navigate("/mentee-home");
-          } else if (body.role === "Admin") {
-            localStorage.setItem("adminName", body.name);
+          } else if (body.role.toLowerCase() === "admin") {
             navigate("/admin-home");
           } else {
             console.error("Unknown user role:", body.role);

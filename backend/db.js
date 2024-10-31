@@ -1,21 +1,18 @@
+// db.js
+const mysql = require('mysql2/promise');
 
-const mysql = require('mysql2');
-
-const connection = mysql.createConnection({
-  host: 'localhost',
+// Use environment variables or a config file to store sensitive information
+const dbConfig = {
+  host: 'wdcdb.ct8mmwauelso.us-east-2.rds.amazonaws.com',
   user: 'root',
-  password: 'Wdcslaves@4',
-  database: 'wdc_test'
-});
+  password: 'wdctest309',
+  database: 'wdctables',
+};
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL: ', err.stack);
-    return;
-  }
-  console.log('Connected to MySQL as id ' + connection.threadId);
-});
+async function initialize() {
+  const connection = await mysql.createConnection(dbConfig);
+  console.log('Connected to MySQL database.');
+  return connection;
+}
 
-module.exports = connection;
-
-
+module.exports = initialize;
