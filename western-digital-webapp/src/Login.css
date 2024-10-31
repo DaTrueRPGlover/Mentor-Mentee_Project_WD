@@ -1,11 +1,11 @@
 .login-logo {
-  width: 30% !important; /* Adjust size as needed */
+  width: 15% !important; /* Adjust size as needed */
   height: auto;
   position: relative;
-  top: 50px;
-  left: 50px;
+  top: 20px;
+  left: 20px;
   z-index: 1000;
-  margin: 50px 0; /* Add vertical margin (top and bottom) */
+  margin: 5px; /* Add vertical margin (top and bottom) */
 }
 
 /* Center the form container */

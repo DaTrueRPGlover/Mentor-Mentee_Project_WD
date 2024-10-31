@@ -1,15 +1,25 @@
-.interact-with-mentor {
+.interact-with-mentee {
     padding: 20px;
     text-align: center;
   }
-  .interact-with-mentor-body{
+  .interact-with-mentee-body{
     background-color: #add8e6;
   }
   
-  .interact-with-mentor-message-list {
+  .interact-with-mentee-message-list {
     max-height: 300px;
     overflow-y: scroll;
     margin-bottom: 20px;
+  }
+
+  .interact-with-mentor-logo {
+    width: 15% !important; /* Adjust size as needed */
+    height: auto;
+    position: relative;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    margin: 5px;
   }
   
   ul {
@@ -22,22 +32,22 @@
     font-size: 1.1em;
   }
   
-  .interact-with-mentor-mentor {
+  .interact-with-mentee-mentor {
     text-align: left;
     color: blue;
   }
   
-  .interact-with-mentor-mentee {
+  .interact-with-mentee-mentee {
     text-align: right;
     color: green;
   }
   
-  .interact-with-mentor-timestamp {
+  .interact-with-mentee-timestamp {
     font-size: 0.8em;
     color: gray;
   }
   
-  textarea {
+  .interact-with-mentee-textarea {
     width: 80%;
     height: 80px;
     margin-bottom: 10px;
@@ -45,7 +55,7 @@
     font-size: 1em;
   }
   
-  button {
+  .interact-with-mentee-button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -53,7 +63,7 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .interact-with-mentee-button:hover {
     background-color: #0056b3;
   }
   

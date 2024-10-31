@@ -16,7 +16,7 @@
   }
   
   /* Header styles */
-  .mentor-home .header {
+  .mentor-home-header {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Positions items at opposite ends */
@@ -25,12 +25,17 @@
     background-color: #ADD8E6; /* Light grey background */
   }
   
-  .mentor-home .logo {
-    width: 150px; /* Adjust as needed */
+  .mentor-home-logo {
+    width: 15% !important; /* Adjust size as needed */
     height: auto;
+    position: relative;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    margin: 5px;
   }
   
-  .mentor-home .logout-button {
+  .mentor-home-logout-button {
     padding: 10px 20px;
     border-radius: 50px;
     margin-left: 1800px;
@@ -40,12 +45,12 @@
     cursor: pointer;
   }
   
-  .mentor-home .logout-button:hover {
+  .mentor-home-logout-button:hover {
     background-color: #115293; /* Darker shade on hover */
   }
   
   /* Main content styles */
-  .mentor-home .main-content {
+  .mentor-home-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -53,14 +58,14 @@
     justify-content: center;
   }
   
-  .mentor-home .welcome-message {
+  .mentor-home-welcome-message {
     margin-bottom: 40px;
     font-size: 32px;
     text-align: center;
   }
   
   /* Button container */
-  .mentor-home .button-container {
+  .mentor-home-button-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
