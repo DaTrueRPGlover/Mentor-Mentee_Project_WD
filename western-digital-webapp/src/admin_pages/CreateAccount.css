@@ -37,6 +37,7 @@
 
 .create-account button {
   background-color: #65558F;
+  border-radius: 50px;
 }
 
 .create-account .button:hover {

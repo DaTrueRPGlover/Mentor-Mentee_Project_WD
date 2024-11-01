@@ -6,7 +6,7 @@
 .admin-home .title {
   margin-top: 15px; /* Move it up by 20 pixels */
   font-size: large;
-  background-color: #91BECD;
+  background-color: inherit;
   /* Add other styles as needed */
 }
 
@@ -85,55 +85,25 @@
 .admin-home .logout-button:hover {
   background-color: #2d1960;
 }
-.admin-home .circle {
-  width: 355px;
-  height: 355px;
-  border-radius: 50%;
-  background-color: #91BECD;
 
-  display: flex;               /* Use Flexbox for alignment */
-  flex-direction: column;      /* Stack items vertically */
-  align-items: center;         /* Center items horizontally */
-  justify-content: center;     /* Center items vertically */
-  text-align: center;
-  position: relative;          /* Allow precise control over child elements */
-  margin-bottom: 10%;
-}
-
-.admin-home .Talk {
-  width: 200px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  background-color: #91BECD;
-}
-.admin-home .Twopeople {
-  width: 200px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  background-color: #91BECD;
-}
-.admin-home .One {
-  width: 190px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  background-color: #91BECD;
-}
+.admin-home .Talk,
+.admin-home .Twopeople,
+.admin-home .One,
 .admin-home .Notes {
-  width: 190px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  background-color: #91BECD;
+  width: 190px;
+  height: auto;
+  background-color: inherit;
+  margin-bottom: 5px;
 }
 
 .admin-home .circle-button {
-  width: 100px;
-  height: 40px;
+
   border-radius: 50px;
   border: none;
   font-size: 16px;
   cursor: pointer;
   background-color: #65558F;
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,13 +111,22 @@
   margin-top: 20px;
   margin: 0;
   transition: background-color 0.3s;
+  width: 355px;
+  height: 355px;
+  border-radius: 50%;
+  background-color: #91BECD;
+  flex-direction: column;      /* Stack items vertically */
+  align-items: center;         /* Center items horizontally */
+  justify-content: center;     /* Center items vertically */
+  text-align: center;
+  margin-bottom: 10%;
 }
 
 
 
 
 .admin-home .circle-button:hover {
-  background-color: #2d1960; /* Semi-transparent hover color */
+  background-color: #7CAFB7; /* Semi-transparent hover color */
 }
 
 
@@ -156,4 +135,7 @@
   justify-content: space-around;
   align-items: center;
   width: 50%;
+}
+.admin-home .circle-button:hover {
+  background-color: #7CAFB7; /* Button background on hover */
 }

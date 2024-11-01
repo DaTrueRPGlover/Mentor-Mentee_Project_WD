@@ -36,48 +36,29 @@ function AdminHome() {
 
       <main className="main-content">
         <div className="button-container">
-
-          <div className="circle">
-            <h3 className="title">See Interactions</h3>
-            <img src={talk} alt="Talk" className="Talk" />
-            <button
-              className="circle-button"
-              onClick={() => navigate('/see-interactions')}
-            >
-              Choose
+            
+            <button className="circle-button " onClick={() => navigate('/see-interactions')} >
+              <img src={talk} alt="Talk" className="Talk"/>
+              <h3 className="title">See Interactions</h3>
             </button>
-          </div>
-
-          <div className="circle">
-            <h3 className="title">Assign Mentor to Mentee</h3>
-            <img src={twopeople} alt="Twopeople" className="Twopeople" />
             <button
-              className="circle-button"
+              className="circle-button "
               onClick={() => navigate('/assign-mentor')}
             >
-              Choose
+              <img src={twopeople} alt="Twopeople" className="Twopeople" />
+              <h3 className="title">Assign Mentor to Mentee</h3>
             </button>
-          </div>
-
-          <div className="circle">
-            <h3 className="title">View Progressions</h3>
-            <img src={notes} alt="Notes" className="Notes" />
             <button
-              className="circle-button"
+              className="circle-button "
               onClick={() => navigate('/view-progressions')}
             >
-              Choose
+              <img src={notes} alt="Notes" className="Notes" />
+              <h3 className="title">View Progressions</h3>
             </button>
-          </div>
-
-          <div className="circle">
-            <h3 className="title">Create Mentee/Mentor Account</h3>
-            <img src={one} alt="One" className="One" />
-            <button className="circle-button" onClick={() => navigate('/create-account')}>
-              Choose
+            <button className="circle-button " onClick={() => navigate('/create-account')}>
+              <img src={one} alt="One" className="One" />
+              <h3 className="title">Create Mentee/Mentor Account</h3>
             </button>
-          </div>
-
         </div>
       </main>
     </div>

@@ -1,8 +1,13 @@
 * {
   background-color: #ADD8E6;
+  box-sizing: border-box; /* Ensures padding and margin are included in width/height */
 }
+
 .assign-mentor {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
@@ -13,44 +18,68 @@ ul {
 
 li {
   margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input {
-  margin-left: 10px;
-  padding: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  width: 300px; /* Fixed width for input fields */
+  max-width: 90%; /* Responsive */
 }
 
-button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #28a745;
+.button {
+  margin-top: 10px;
+  padding: 5px 20px;
+  background-color: #65558F; /* Button color */
   color: white;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
-button:hover {
-  background-color: #218838;
+.button:hover {
+  background-color: #65558F; /* Same as original color */
 }
 
 .add-assignment {
   margin-top: 20px;
-}
-
-.add-assignment input {
-  padding: 8px;
-  width: 40%;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .add-assignment button {
-  padding: 8px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 50px;
+  background-color: #65558F; /* Button color */
 }
 
 .add-assignment button:hover {
-  background-color: #0056b3;
+  background-color: #65558F; /* Same as original color */
+}
+
+.assign-mentor .logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.assign-mentor button {
+  padding: 10px 30px;
+  border-radius: 50px;
+  background-color: #65558F; /* Button color */
+}
+
+.assign-mentor button:hover {
+  background-color: #65558F; /* Same as original color */
+}
+.assign-mentor h1 {
+  padding: 20px; /* Add desired padding */
 }
