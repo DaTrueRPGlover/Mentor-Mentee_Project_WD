@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ViewProgression.css';
+import logo from '../assets/WDC.png';
 
 function ViewProgressions() {
   const [progressReports] = useState([
@@ -18,13 +19,19 @@ function ViewProgressions() {
 
   return (
     <div className="view-progressions">
+      <img src={logo} alt="Logo" className="logo" />
       <h1>Mentee Progress Reports</h1>
-      <input
-        type="text"
-        placeholder="Filter by mentee or mentor"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-      />
+      <div className="search">
+        <input
+          type="text"
+          placeholder="Filter by mentee or mentor"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </div>
+      
+
+
       <ul>
         {filteredReports.map((report, index) => (
           <li key={index}>
@@ -32,6 +39,8 @@ function ViewProgressions() {
           </li>
         ))}
       </ul>
+      <div className="rectangle">
+      </div>
     </div>
   );
 }
