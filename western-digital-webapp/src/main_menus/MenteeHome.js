@@ -35,7 +35,7 @@ function MenteeHome() {
             className="circle"
             onClick={() => navigate('/interact-mentor')}
           >
-            <img src={talk} alt="Talk" className="Talk" />
+            <img src={talk} alt="Talk" className="circle-image" />
             <h3 className="title">Interact with Mentor</h3>
           </button>
 
@@ -43,7 +43,7 @@ function MenteeHome() {
             className="circle"
             onClick={() => navigate('/todo-progression')}
           >
-            <img src={notes} alt="Notes" className="Notes" />
+            <img src={notes} alt="Notes" className="circle-image" />
             <h3 className="title">TO-DO/Progressions</h3>
           </button>
 
@@ -51,7 +51,7 @@ function MenteeHome() {
             className="circle"
             onClick={() => navigate('/mentee-meetings')}
           >
-            <img src={one} alt="One" className="One" />
+            <img src={one} alt="One" className="circle-image" />
             <h3 className="title">Mentor Meetings</h3>
           </button>
         </div>
@@ -60,35 +60,4 @@ function MenteeHome() {
   );
 }
 
-
-// export default MenteeHome;
-
-
-// return (
-  //   <div className="mentee-home">
-  //     <header className="header">
-  //       <img src={logo} alt="Logo" className="logo" />
-  //       <button className="logout-button" onClick={handleLogout}>
-  //         Logout
-  //       </button>
-  //     </header>
-  //     <main className="main-content">
-  //       <h1 className="welcome-message">Welcome Mentee {menteeName}</h1>
-  //       <div className="button-container">
-  //         <button className="circle-button" onClick={() => navigate('/interact-mentor')}>
-  //           Interact with Mentor
-  //         </button>
-  //         <button className="circle-button" onClick={() => navigate('/todo-progression')}>
-  //           To-Do/Progression
-  //         </button>
-  //         <button className="circle-button" onClick={() => navigate('/mentee-meetings')}>
-  //           Mentee Meetings
-  //         </button>
-  //       </div>
-  //     </main>
-  //   </div>
-  // );
-
 export default MenteeHome;
-
-
