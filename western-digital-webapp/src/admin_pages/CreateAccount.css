@@ -16,9 +16,8 @@
 }
 
 .create-account h2 {
-  font-size: xx-large;
-  background-color: transparent; /* Transparent heading */
-  padding: 10px;
+  margin-bottom: 30px; /* Add space below the main heading */
+  font-size: 40px;
 }
 .create-account h1 {
   font-size: large;
@@ -71,11 +70,10 @@
 .create-account .logo {
   width: 120px;
   height: auto;
-  padding-top: 2%;
-  position: absolute;  /* Use absolute positioning */
-  top: -10px;              /* Align to the top */
-  left: 20px;             /* Align to the left */
-  margin: 10px;        /* Optional: Add some margin for spacing */
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;        /* Optional: Add some margin for spacing */
   /* background-color: #ADD8E6; */ /* Optional background */
 }
 

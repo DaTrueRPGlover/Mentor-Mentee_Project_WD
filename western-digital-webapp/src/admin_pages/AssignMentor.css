@@ -1,8 +1,10 @@
 * {
   background-color: #ADD8E6;
-  box-sizing: border-box; /* Ensures padding and margin are included in width/height */
 }
-
+.assign-mentor h1 {
+  margin-bottom: 30px; /* Add space below the main heading */
+  font-size: 40px;
+}
 .assign-mentor {
   padding: 20px;
   display: flex;
@@ -24,25 +26,25 @@ li {
 }
 
 input {
-  padding: 10px;
-  margin-top: 10px;
+  padding: 8px;
+  margin-top: 5px;
   text-align: center;
-  width: 300px; /* Fixed width for input fields */
-  max-width: 90%; /* Responsive */
+  width: 60%;
+  max-width: 400px;
 }
 
-.button {
+button {
   margin-top: 10px;
   padding: 5px 20px;
-  background-color: #65558F; /* Button color */
+  background-color: #65558F; /* Updated button color */
   color: white;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  border-radius: 50px;
 }
 
-.button:hover {
-  background-color: #65558F; /* Same as original color */
+button:hover {
+  background-color: #543E6B; /* Darken button on hover */
 }
 
 .add-assignment {
@@ -53,14 +55,26 @@ input {
   width: 100%;
 }
 
+.add-assignment input {
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+
 .add-assignment button {
+  margin-top: 15px;
   padding: 10px 30px;
+  background-color: #65558F; /* Updated button color */
+  color: white;
+  border: none;
+  cursor: pointer;
   border-radius: 50px;
-  background-color: #65558F; /* Button color */
 }
 
 .add-assignment button:hover {
-  background-color: #65558F; /* Same as original color */
+  background-color: #543E6B; /* Darken button on hover */
 }
 
 .assign-mentor .logo {
@@ -70,16 +84,4 @@ input {
   position: absolute;
   top: 20px;
   left: 20px;
-}
-.assign-mentor button {
-  padding: 10px 30px;
-  border-radius: 50px;
-  background-color: #65558F; /* Button color */
-}
-
-.assign-mentor button:hover {
-  background-color: #65558F; /* Same as original color */
-}
-.assign-mentor h1 {
-  padding: 20px; /* Add desired padding */
 }
