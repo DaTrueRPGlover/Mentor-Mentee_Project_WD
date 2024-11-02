@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AssignMentor.css';
+import logo from '../assets/WDC.png';
 
 function AssignMentor() {
   const [mentees, setMentees] = useState([
@@ -27,6 +28,7 @@ function AssignMentor() {
 
   return (
     <div className="assign-mentor">
+      <img src={logo} alt="Logo" className="logo" />
       <h1>Assign Mentor to Mentee</h1>
       <ul>
         {mentees.map((mentee, index) => (

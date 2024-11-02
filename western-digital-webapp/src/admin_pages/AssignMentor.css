@@ -1,8 +1,15 @@
 * {
   background-color: #ADD8E6;
 }
+.assign-mentor h1 {
+  margin-bottom: 30px; /* Add space below the main heading */
+  font-size: 40px;
+}
 .assign-mentor {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
@@ -13,44 +20,68 @@ ul {
 
 li {
   margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input {
-  margin-left: 10px;
-  padding: 5px;
+  padding: 8px;
+  margin-top: 5px;
+  text-align: center;
+  width: 60%;
+  max-width: 400px;
 }
 
 button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #28a745;
+  margin-top: 10px;
+  padding: 5px 20px;
+  background-color: #65558F; /* Updated button color */
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 50px;
 }
 
 button:hover {
-  background-color: #218838;
+  background-color: #543E6B; /* Darken button on hover */
 }
 
 .add-assignment {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .add-assignment input {
-  padding: 8px;
-  width: 40%;
-  margin-right: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
 }
 
 .add-assignment button {
-  padding: 8px 20px;
-  background-color: #007bff;
+  margin-top: 15px;
+  padding: 10px 30px;
+  background-color: #65558F; /* Updated button color */
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 50px;
 }
 
 .add-assignment button:hover {
-  background-color: #0056b3;
+  background-color: #543E6B; /* Darken button on hover */
+}
+
+.assign-mentor .logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }

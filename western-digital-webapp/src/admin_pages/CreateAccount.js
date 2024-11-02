@@ -36,28 +36,28 @@ function CreateAccount() {
       <h2>Create Account</h2>
       <div className="rectangle">
         <form className="account-form" onSubmit={handleCreateAccount}>
-          <h1>First name</h1>
+          {/* <h1>First name</h1> */}
           <input 
             type="text" 
             value={first} 
             placeholder="Enter First Name"
             onChange={(e) => setFirst(e.target.value)}
           />
-          <h1>Last name</h1>
+          {/* <h1>Last name</h1> */}
           <input 
             type="text" 
             value={last} 
             placeholder="Enter Last Name"
             onChange={(e) => setLast(e.target.value)}
           />
-          <h1>Email</h1>
+          {/* <h1>Email</h1> */}
           <input 
             type="text" 
             value={email} 
             placeholder="Enter Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <h1>Password</h1>
+          {/* <h1>Password</h1> */}
           <input 
             type="password" 
             value={password} 
