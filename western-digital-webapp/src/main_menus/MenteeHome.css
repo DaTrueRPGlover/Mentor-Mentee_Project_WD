@@ -102,7 +102,7 @@
 .mentee-home .title {
   margin-top: 15px;
   font-size: large;
-  background-color: inherit !important;
+  background-color: inherit ;
   padding: 5px 10px;
   color: #000000;
 }
