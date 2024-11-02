@@ -83,6 +83,7 @@
 
 input[type="text"],
 input[type="password"] {
+  text-align: left; /* Ensure text is aligned to the left */
   width: 100%;
   color: #000 !important; /* Text color */
   background-color: #fff !important; /* Background color */
