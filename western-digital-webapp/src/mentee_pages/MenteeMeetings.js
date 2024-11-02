@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
-import './MenteeMeetings.css'; // Import the updated CSS file
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './MenteeMeetings.css';
+
+const locales = {
+  'en-US': require('date-fns/locale/en-US'),
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 0 }),
+  getDay,
+  locales,
+});
 
 function MenteeMeetings() {
-  const [meetings, setMeetings] = useState([
-    { date: '2024-10-25', time: '10:00 AM', mentor: 'John Doe' },
-    { date: '2024-11-01', time: '2:00 PM', mentor: 'Jane Smith' },
+  const [meetings] = useState([
+    { title: 'Meeting with John Doe', start: new Date(2024, 9, 25, 10, 0), end: new Date(2024, 9, 25, 11, 0) },
+    { title: 'Meeting with Jane Smith', start: new Date(2024, 10, 1, 14, 0), end: new Date(2024, 10, 1, 15, 0) },
   ]);
 
   return (
     <div className="mentee-meetings">
       <h1>Scheduled Meetings</h1>
-      <ul>
-        {meetings.map((meeting, index) => (
-          <li key={index}>
-            Meeting with {meeting.mentor} on {meeting.date} at {meeting.time}
-          </li>
-        ))}
-      </ul>
+      <Calendar
+        localizer={localizer}
+        events={meetings}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500, margin: '50px' }}
+      />
+      <div className="meeting-box">
+        <textarea placeholder="Add meeting notes here..."></textarea>
+        <button>Add Meeting</button>
+      </div>
     </div>
   );
 }

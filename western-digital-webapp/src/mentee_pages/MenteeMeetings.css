@@ -1,23 +1,44 @@
-.mentee-meetings {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .meeting-box {
-    margin-top: 20px;
-  }
-  
-  .meeting-box textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .meeting-box button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+/* Set a consistent background color for the entire calendar */
+.rbc-calendar {
+  background-color: inherit; /* Match your preferred blue color */
+}
+
+/* Remove the white background from individual cells */
+.rbc-day-bg,
+.rbc-off-range-bg {
+  background-color: transparent !important;
+}
+
+/* Style the header cells to match the rest of the calendar */
+.rbc-header {
+  background-color: inherit; /* Match your preferred blue color */
+  color: #000; /* Adjust text color as needed */
+}
+
+/* Style the event cells, if there are any events */
+.rbc-event {
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+/* Style for the "Add Meeting" button */
+.meeting-box button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Optional: Style the textarea */
+.meeting-box textarea {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
