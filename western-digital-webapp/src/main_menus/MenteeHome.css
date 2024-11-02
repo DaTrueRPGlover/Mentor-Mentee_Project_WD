@@ -1,12 +1,10 @@
 /* MenteeHome.css */
 
-/* Reset default margins and paddings */
 * {
   margin: 0;
   box-sizing: border-box;
 }
 
-/* Container for the whole page */
 .mentee-home {
   display: flex;
   flex-direction: column;
@@ -17,50 +15,53 @@
   justify-content: space-between;
 }
 
-.mentee-home .logo {
-  width: 15% !important; /* Adjust size as needed */
-  height: auto;
-  position: relative;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  margin: 5px;
-}
-
 /* Header styles */
 .mentee-home .header-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  background-color: #ADD8E6;
-  width: 50%;
-  margin: 0 auto;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.mentee-home .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.mentee-home .logo {
+  width: 150px;
+  height: auto;
 }
 
 .mentee-home .logout-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 10px;
   border-radius: 50px;
   border: none;
   cursor: pointer;
-  background-color: #65558F;
-  color: #fff;
+  background-color: #91BECD;
+  font-size: large;
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px;
 }
 
 .mentee-home .logout-button:hover {
-  background-color: #2d1960;
+  background-color: #7CAFB7;
 }
 
 .mentee-home .welcome-message {
-  margin-bottom: 40px;
   font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
 }
 
 /* Main content styles */
 .mentee-home .main-content {
   flex: 1 0 auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,40 +72,11 @@
 .mentee-home .button-container {
   display: flex;
   flex-wrap: wrap;
-  
   justify-content: center;
   gap: 20px;
   width: 100%;
 }
 
-.mentee-home .Talk {
-  width: 200px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  margin-top: 10px;     /* Space above the image */
-
-  background-color: #91BECD;
-}
-
-.mentee-home .Notes {
-  width: 190px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  margin-top: 10px;     /* Space above the image */
-
-  background-color: #91BECD;
-}
-
-.mentee-home .Meetings {
-  width: 190px;            /* Adjust size as needed */
-  height: auto;           /* Maintain aspect ratio */
-  margin-bottom: 5px;     /* Space below the image */
-  margin-top: 10px;     /* Space above the image */
-
-  background-color: #91BECD;
-}
-
-/* Circle container styling */
 .mentee-home .circle {
   width: 355px;
   height: 355px;
@@ -114,34 +86,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10%;
   text-align: center;
   position: relative;
+  margin-bottom: 10%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+.mentee-home .circle:hover {
+  background-color: #7CAFB7;
 }
 
 .mentee-home .title {
   margin-top: 15px;
   font-size: large;
-  background-color: #91BECD;
+  background-color: inherit !important;
+  padding: 5px 10px;
+  color: #000000;
 }
 
-/* Circle button styling */
-.mentee-home .circle-button {
-  width: 100px;
-  height: 40px;
-  border-radius: 50px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #65558F;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  transition: background-color 0.3s;
-}
-
-.mentee-home .circle-button:hover {
-  background-color: #2d1960;
+/* Uniform image styling for all circle images */
+.mentee-home .circle-image {
+  width: 190px;
+  height: auto;
+  object-fit: cover; /* Ensures the image fills the area without distortion */
+  background-color: inherit;
+  margin-bottom: 5px;
 }
