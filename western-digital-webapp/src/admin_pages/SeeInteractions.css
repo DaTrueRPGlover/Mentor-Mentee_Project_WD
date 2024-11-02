@@ -1,15 +1,70 @@
-* {
-  background-color: #ADD8E6;
-}
 .see-interactions {
-    padding: 20px;
-    text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px; /* Add padding to the bottom */
+  text-align: center;
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  min-height: 100vh; /* Ensure the container takes the full height of the viewport */
 }
 
-input {
-  padding: 10px;
+.rectangle {
+  width: 50%; /* Set the width of the rectangle */
+  max-width: 600px; /* Set a maximum width for the rectangle */
+  height: 600px; /* Set the height to make it visible */
+  border: 2px solid #91BECD; /* Light blue border */
+  background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent background */
+  margin-top: 20px; /* Space above the rectangle */
+  display: flex; /* Flexbox layout */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.see-interactions h1 {
+  margin-bottom: 30px; /* Add space below the main heading */
+  font-size: 40px;
+}
+
+.see-interactions h2 {
+  color: gray; /* Add space below the main heading */
+  font-size: 15px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between filter sections */
   margin-bottom: 20px;
-  font-size: 1em;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;
+  gap: 10px; /* Space between elements */
+}
+
+.filter-section input {
+  padding: 8px;
+  font-size: 0.8em;
+  width: 200px;
+}
+
+.filter-section button {
+  padding: 8px 12px;
+  font-size: 0.8em;
+  background-color: #65558F;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-section .button:hover {
+  background-color: #2d1960;
 }
 
 ul {
@@ -25,4 +80,11 @@ li {
 strong {
   font-weight: bold;
 }
-  
+.see-interactions .logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}

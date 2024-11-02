@@ -17,18 +17,18 @@
     font-weight: bold;
   }
   
-  .schedule-form {
+  .mentor-meetings-schedule-form {
     margin-top: 20px;
   }
   
-  input {
+  .mentor-meetings-input {
     margin-right: 10px;
     padding: 10px;
     font-size: 1em;
     margin-bottom: 10px;
   }
   
-  button {
+  .mentor-meetings-button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -36,7 +36,7 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .mentor-meetings-button:hover {
     background-color: #0056b3;
   }
   

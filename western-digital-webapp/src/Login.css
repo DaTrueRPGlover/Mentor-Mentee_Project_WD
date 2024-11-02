@@ -1,11 +1,27 @@
+/* Add this to your CSS file */
+body, html {
+  height: 100%; /* Ensure the body and html take full height */
+  margin: 0; /* Remove default margins */
+}
+
+.center-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  position: relative; /* So logo positions itself relative to the viewport */
+}
+
+
+
 .login-logo {
-  width: 30% !important; /* Adjust size as needed */
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 400px; /* Adjust size as needed */
   height: auto;
-  position: relative;
-  top: 50px;
-  left: 50px;
-  z-index: 1000;
-  margin: 50px 0; /* Add vertical margin (top and bottom) */
+  z-index: 1000; /* Keep logo above other elements */
+  margin: 5px;
 }
 
 /* Center the form container */
@@ -83,6 +99,7 @@
 
 input[type="text"],
 input[type="password"] {
+  text-align: left; /* Ensure text is aligned to the left */
   width: 100%;
   color: #000 !important; /* Text color */
   background-color: #fff !important; /* Background color */

@@ -1,10 +1,39 @@
-* {
-  background-color: #ADD8E6;
-}
+
 .view-progressions {
-  padding: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px; /* Add padding to the bottom */
   text-align: center;
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  min-height: 100vh;
 }
+.rectangle {
+  width: 50%; /* Set the width of the rectangle */
+  max-width: 600px; /* Set a maximum width for the rectangle */
+  height: 600px; /* Set the height to make it visible */
+  border: 2px solid #91BECD; /* Light blue border */
+  background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent background */
+  margin-top: 20px; /* Space above the rectangle */
+  display: flex; /* Flexbox layout */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  border-radius: 8px; /* Rounded corners */
+}
+.view-progressions h1 {
+  margin-bottom: 20px; /* Adjust this value for desired spacing */
+  font-size: 36px; /* Optional: Adjust font size */
+  padding-top: 10px; /* Optional: Add padding at the top if needed */
+}
+.view-progressions .search input {
+  width: 300px; /* Increase width as desired */
+  padding: 15px; /* Increase padding for larger input area */
+  font-size: 1.2em; /* Increase font size */
+  border-radius: 8px; /* Add rounded corners */
+  border: 1px solid #91BECD; /* Optional: add border to match theme */
+}
+
 
 input {
   padding: 10px;
@@ -25,4 +54,11 @@ li {
 strong {
   font-weight: bold;
 }
-  
+.view-progressions .logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
