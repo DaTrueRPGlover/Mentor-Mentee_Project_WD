@@ -17,11 +17,11 @@
     font-weight: bold;
   }
   
-  .progress-form {
+  .write-mentee-progressio-progress-form {
     margin-top: 20px;
   }
   
-  input, textarea {
+  .write-mentee-progressio-input, textarea {
     margin-right: 10px;
     padding: 10px;
     font-size: 1em;

@@ -1,10 +1,10 @@
 // index.js
+import {pool} from './database.js'
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const app = express();
-const initializeDb = require('./db');
 const UserModel = require('./models/userModel');
 let db;
 let userModel;
