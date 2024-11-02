@@ -31,6 +31,7 @@ function MentorHome() {
 
       <main className="main-content">
         <div className="button-container">
+          
           <button
             className="circle"
             onClick={() => navigate('/interact-with-mentee')}
@@ -38,6 +39,7 @@ function MentorHome() {
             <img src={talk} alt="Talk" className="circle-image" />
             <h3 className="title">Interact with Mentee</h3>
           </button>
+
           <button
             className="circle"
             onClick={() => navigate('/assign-homework')}
@@ -45,6 +47,7 @@ function MentorHome() {
             <img src={hw} alt="HW" className="circle-image" />
             <h3 className="title">Assign Homework</h3>
           </button>
+
           <button
             className="circle"
             onClick={() => navigate('/write-mentee-progression')}
