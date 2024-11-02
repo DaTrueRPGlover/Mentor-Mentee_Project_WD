@@ -110,7 +110,7 @@
 /* Uniform image styling for all circle images */
 .mentee-home .circle-image {
   width: 190px;
-  height: 190px;
+  height: auto;
   object-fit: cover; /* Ensures the image fills the area without distortion */
   background-color: inherit;
   margin-bottom: 5px;

@@ -110,7 +110,7 @@
 /* Uniform image styling for all circle images */
 .mentor-home .circle-image {
   width: 190px;
-  height: 190px;
+  height: auto;
   object-fit: cover;
   background-color: inherit;
   margin-bottom: 5px;
