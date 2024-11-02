@@ -117,3 +117,19 @@
   background-color: #7CAFB7;
 }
 
+/* Responsive styles */
+@media (max-width: 768px) {
+  .admin-home .logout-button {
+    font-size: 1rem; /* Smaller font size for smaller screens */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-home .logout-button {
+    font-size: 0.9rem; /* Even smaller font size for very small screens */
+    padding: 6px 12px; /* Adjust padding further for small screens */
+    right: 10px; /* Adjust right positioning for small screens */
+    top: 10px; /* Adjust top positioning for small screens */
+  }
+}
