@@ -4,7 +4,6 @@ import "./MenteeHome.css";
 
 import logo from "../assets/WDC.png";
 import talk from "../assets/talk.png";
-import one from "../assets/one.png";
 import notes from "../assets/notes.png";
 import calendar from "../assets/schedule.png";
 
@@ -54,17 +53,11 @@ function MenteeHome() {
             className="circle"
             onClick={() => navigate("/mentee-meetings")}
           >
-            <img src={one} alt="One" className="circle-image" />
+            <img src={calendar} alt="Calendar" className="circle-image" />
             <h3 className="title">Mentor Meetings</h3>
           </button>
 
-          <button
-            className="circle"
-            onClick={() => navigate("/interact-mentor")}
-          >
-            <img src={calendar} alt="Calendar" className="circle-image" />
-            <h3 className="title">View Calendar</h3>
-          </button>
+       
 
         </div>
       </main>
