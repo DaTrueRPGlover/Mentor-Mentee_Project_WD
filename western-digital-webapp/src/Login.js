@@ -80,8 +80,11 @@ function Login() {
   // Render the login form and the role buttons
   return (
     <>
+       
+
       <CssBaseline />
       <img src={logo} alt="Logo" className="login-logo" />
+      <div className="center-container">
       <Container component="main" maxWidth="xs">
         <div className="login-container">
           <Avatar
@@ -189,7 +192,11 @@ function Login() {
             Admin
           </button>
         </div>
+        
       </Container>
+      </div>
+
+
     </>
   );
 }
