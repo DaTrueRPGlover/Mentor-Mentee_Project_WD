@@ -1,23 +1,151 @@
+/* Reset body margins and paddings */
+*{
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+}
+
+/* Calendar container styling */
 .mentee-meetings {
-    text-align: center;
-    padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white; /* Full white background for calendar */
+}
+
+/* Month and header styling */
+.rbc-toolbar {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.5rem; /* Increased font size for month label */
+  font-weight: bold;
+}
+
+.rbc-toolbar button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #303f9f;
+}
+
+/* Calendar event styling */
+.rbc-event {
+  background-color: #3f51b5 !important;
+  color: white !important;
+  border-radius: 20px !important; /* Circular edges for event */
+  padding: 5px;
+  cursor: pointer;
+}
+
+.rbc-event:hover {
+  background-color: #303f9f !important;
+}
+
+/* Weekday header styling */
+.rbc-header {
+  background-color: #f0f0f0;
+  color: #424242;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Day cells styling */
+.rbc-day-bg,
+.rbc-off-range-bg {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+}
+
+.rbc-current {
+  background-color: #e8eaf6 !important;
+}
+
+/* Dialog styling */
+.MuiDialogTitle-root {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3f51b5;
+  position: relative;
+  padding-right: 48px;
+}
+
+.MuiDialogContent-root {
+  font-size: 1rem;
+  color: #333;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.MuiDialogActions-root {
+  padding: 10px 20px;
+}
+
+.MuiPaper-root {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Meeting info links */
+.MuiDialogContent-root a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.MuiDialogContent-root a:hover {
+  text-decoration: underline;
+}
+
+/* Adjustments for the calendar components */
+.rbc-month-view {
+  border: none;
+}
+
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-month-row {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.calendar {
+  overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rbc-toolbar button {
+    padding: 5px;
+    margin: 0 2px;
+    font-size: 0.9rem;
   }
-  
-  .meeting-box {
-    margin-top: 20px;
+
+  .MuiDialogTitle-root {
+    font-size: 1.2rem;
   }
-  
-  .meeting-box textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .meeting-box button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+}
