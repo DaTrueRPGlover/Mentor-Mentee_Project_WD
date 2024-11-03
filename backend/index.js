@@ -1,4 +1,3 @@
-
 import express from 'express';
 import pool from './database.js'; 
 import bcrpytjs from 'bcryptjs';
