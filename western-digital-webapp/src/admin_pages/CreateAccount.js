@@ -17,8 +17,8 @@ const handleCreateAccount = async (e) => {
 
   // Construct the data object to send to the backend
   const accountData = {
-    firstName: first,
-    lastName: last,
+    name: first,
+    lastname: last,
     email: email,
     password: password,
     department: selectedValue,
@@ -28,7 +28,7 @@ const handleCreateAccount = async (e) => {
   console.log('Account Data:', JSON.stringify(accountData)); // Log account data
 
   try {
-    const response = await fetch('http://localhost:3001/createAccount', {
+    const response = await fetch('http://localhost:3001/api/accounts/createAccount', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(accountData)
@@ -90,9 +90,12 @@ const handleCreateAccount = async (e) => {
           <h1>Department</h1>
           <select value={selectedValue} onChange={(e) => setSelectedValue(e.target.value)}>
             <option value="">--Select Department--</option>
-            <option value="dep1">Dep 1</option>
-            <option value="dep2">Dep 2</option>
-            <option value="dep3">Dep 3</option>
+            <option value="GST">GST</option>
+            <option value="FBU">FBU</option>
+            <option value="WHM">WHM</option>
+            <option value="MP">MP</option>
+            <option value="JAPAN">Japan</option>
+            <option value="WDIN">WDIN</option>
           </select>
           <h1>Role</h1>
           <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
@@ -103,12 +106,11 @@ const handleCreateAccount = async (e) => {
           <button type="submit" className="submit-button">Create Account</button>
         </form>
       </div>
-
       {error && <p className="error">{error}</p>}
       <ul>
         {accounts.map((account, index) => (
           <li key={index}>
-            {account.firstName} {account.lastName} ({account.email}) - 
+            {"Account created succesfully:"} {account.name} {account.lastname} ({account.email}) - 
             <strong> {account.department} / {account.role}</strong>
           </li>
         ))}

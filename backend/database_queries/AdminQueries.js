@@ -1,4 +1,4 @@
-import {pool} from './database.js'; //We import our connection so we can make some queries
+import {pool} from '../database.js'; //We import our connection so we can make some queries
 import bcrypt from 'bcryptjs'; // Ensure bcrypt is imported correctly
 import { v4 as uuidv4 } from 'uuid'; // Importing uuidv4 from the uuid package
 
@@ -63,8 +63,8 @@ export const createMentorMenteeRelationship = async (mentorkey, menteekey) => {
     }
 };
 
-export const createAccount = async (firstName, lastName, email, password, department, role) => {
-    console.log('Creating account with:', { firstName, lastName, email, department, role });
+export const createAccount = async (name, lastname, email, password, department, role) => {
+    console.log('Creating account with:', { name, lastname, email, department, role });
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
     const connection = await pool.getConnection(); // Get a connection from the pool
 
@@ -77,8 +77,8 @@ export const createAccount = async (firstName, lastName, email, password, depart
         console.log('Generated userId:', userId);
 
         // Retrieve department_key from the departments table based on the department name
-        const departmentKeyQuery = `
-            SELECT department_key FROM departments WHERE department_name = ?`;
+        console.log("department name", department)
+        const departmentKeyQuery = `SELECT department_key FROM departments WHERE department_name = ?`;
         const [departmentKeyResult] = await connection.execute(departmentKeyQuery, [department]);
         console.log('Department key result:', departmentKeyResult);
 
@@ -89,39 +89,41 @@ export const createAccount = async (firstName, lastName, email, password, depart
 
         const departmentKey = departmentKeyResult[0].department_key; // Get the department key
 
-        // Insert the new user into the userInfo table
+        // Insert the new user into the userInfo table, using department name instead of department key
         const newUsersql = `
-            INSERT INTO userInfo (name, lastname, email, password, userid)
-            VALUES (?, ?, ?, ?, ?)`;
+            INSERT INTO userInfo (name, lastname, email, password, userid, role, department)
+            VALUES (?, ?, ?, ?, ?, ?, ?)`;
         const [result] = await connection.execute(newUsersql, [
-            firstName,
-            lastName,
+            name,
+            lastname,
             email,
             hashedPassword,
-            userId // Insert the generated UUID here
+            userId, // Insert the generated UUID here
+            role, // Insert the user's role
+            department // Insert the department name
         ]);
 
         console.log('Inserted user into userInfo table with ID:', result.insertId);
 
-        // Prepare the insert statement for the role-specific table
+        // Prepare the insert statement for the role-specific table with the department key
         let insertRoleSql;
         if (role === 'admin') {
             insertRoleSql = `
                 INSERT INTO admin (name, departmentkey, email, adminkey)
                 VALUES (?, ?, ?, ?)`;
-            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
+            await connection.execute(insertRoleSql, [name, departmentKey, email, userId]);
             console.log('Inserted user into admin table');
         } else if (role === 'mentee') {
             insertRoleSql = `
                 INSERT INTO mentee (name, departmentkey, email, menteekey)
-                VALUES (?, ?, ?, ?)`;
-            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
+                VALUES (?, ?, ?, ?)`; 
+            await connection.execute(insertRoleSql, [name, departmentKey, email, userId]);
             console.log('Inserted user into mentee table');
         } else if (role === 'mentor') {
             insertRoleSql = `
                 INSERT INTO mentor (name, departmentkey, email, mentorkey)
                 VALUES (?, ?, ?, ?)`;
-            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
+            await connection.execute(insertRoleSql, [name, departmentKey, email, userId]);
             console.log('Inserted user into mentor table');
         } else {
             throw new Error('Invalid role specified');
@@ -141,6 +143,8 @@ export const createAccount = async (firstName, lastName, email, password, depart
 
 
 
+
+
 /*(async () => { //Previous test to check the connection of the database '8' is the initial key we had in our database's admin table
     try {
         const adminName = await getAdminNameByKey('8');
@@ -155,12 +159,12 @@ export const createAccount = async (firstName, lastName, email, password, depart
 console.log('Admin email: ' + (await getAdminEmailByKey('0c5dbe5d-9885-11ef-a92b-02a12f7436d7'))); //Test for fetching Admin Email; PASSED
 console.log('Admin department key: ' + (await getAdminDepartmentKeyByKey('0c5dbe5d-9885-11ef-a92b-02a12f7436d7'))); //Test for fetching Admin Department Key; PASSED*/
 //console.log('Admin username: ' + (await getAdminUsernameByKey('8'))); //Test for fetching Admin Username; PASSED
-(async () => {
+/*(async () => {
     try {
         console.log('Attempting to create a new account...');
-        const userId = await createAccount('John', 'Lenon', 'sample2@email.com', 'test2password', 'WDIN', 'admin');
+        const userId = await createAccount('Hally', 'Honz', 'sample4@email.com', 'test4password', 'WDIN', 'mentee');
         console.log('Account created successfully with user ID:', userId);
     } catch (error) {
         console.error('Failed to create account:', error); // This will log any error that occurs
     }
-})();
+})();*/
