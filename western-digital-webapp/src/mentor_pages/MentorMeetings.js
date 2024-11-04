@@ -7,6 +7,8 @@ function MentorMeetings({ mentorkey }) {
   const [selectedMentee, setSelectedMentee] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
+  const [zoomLink, setZoomLink] = useState('');
+  const [zoomPassword, setZoomPassword] = useState('');
 
   useEffect(() => {
     // Fetch the mentor's mentee list on component load
@@ -26,11 +28,11 @@ function MentorMeetings({ mentorkey }) {
   }, [mentorkey]);
 
   const handleScheduleMeeting = async () => {
-    if (selectedMentee && newDate.trim() && newTime.trim()) {
+    if (selectedMentee && newDate.trim() && newTime.trim() && zoomLink.trim() && zoomPassword.trim()) {
       const datetime = `${newDate}T${newTime}`;
       const mentorinfo = JSON.parse(localStorage.getItem('user'));
       const mentorkey = mentorinfo.mentorkey;
-      console.log(mentorkey);
+
       try {
         const response = await fetch('http://localhost:3001/create-meeting', {
           method: 'POST',
@@ -38,27 +40,29 @@ function MentorMeetings({ mentorkey }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            mentorkey:mentorkey,
+            mentorkey: mentorkey,
             menteekey: selectedMentee,
             datetime: datetime,
-            zoom_link: 'https://zoom.us/j/123456789', // Example link
-            zoom_password: 'password123', // Example password
+            zoom_link: zoomLink,
+            zoom_password: zoomPassword,
           }),
-          
         });
-        console.log(mentorkey);
 
         if (response.status === 201) {
           setMeetings([...meetings, { mentee: selectedMentee, date: newDate, time: newTime }]);
           setSelectedMentee('');
           setNewDate('');
           setNewTime('');
+          setZoomLink('');
+          setZoomPassword('');
         } else if (response.status === 409) {
           alert('Time conflict! Please select a different time.');
         }
       } catch (error) {
         console.error('Error scheduling meeting:', error);
       }
+    } else {
+      alert("Please fill in all fields.");
     }
   };
 
@@ -95,6 +99,18 @@ function MentorMeetings({ mentorkey }) {
           type="time"
           value={newTime}
           onChange={(e) => setNewTime(e.target.value)}
+        />
+        <input
+          type="text"
+          value={zoomLink}
+          onChange={(e) => setZoomLink(e.target.value)}
+          placeholder="Enter Zoom link"
+        />
+        <input
+          type="text"
+          value={zoomPassword}
+          onChange={(e) => setZoomPassword(e.target.value)}
+          placeholder="Enter Zoom password"
         />
         <button onClick={handleScheduleMeeting}>Schedule Meeting</button>
       </div>
