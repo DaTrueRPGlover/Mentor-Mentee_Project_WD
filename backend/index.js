@@ -1,18 +1,11 @@
 import express from 'express';
-import pool from './database.js';
-import bcrypt from 'bcryptjs';
 import cors from 'cors';
+import userRoutes from './routes/userRoutes.js';
+import meetingRoutes from './routes/meetingRoutes.js';
 
 const app = express();
 app.use(express.json());
-
-// Configure CORS to allow requests from your frontend
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // Replace with your frontend's URL if different
-    credentials: true,
-  })
-);
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 // Test the database connection on server startup
 pool.getConnection();
@@ -85,32 +78,6 @@ app.get('/meetings', async (req, res) => {
   } catch (error) {
     console.error('Error fetching meetings:', error);
     res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-async function createAccount(firstName, lastName, email, password, department, role) {
-  // Hash the password before storing it
-  const hashedPassword = await bcrypt.hash(password, 10);
-  // Execute the SQL insert statement
-  const [result] = await pool.query(
-      'INSERT INTO userInfo (name, lastname, email, password, department, role) VALUES (?, ?, ?, ?, ?, ?)',
-      [firstName, lastName, email, hashedPassword, department, role]
-  );
-  return result.insertId; // Return the ID of the newly created user
-}
-
-
-app.post('/createAccount', async (req, res) => {
-  console.log("Received data:", req.body);  // Log incoming data
-
-  const { firstName, lastName, email, password, department, role } = req.body;
-
-  try {
-    const userId = await createAccount(firstName, lastName, email, password, department, role);
-    res.status(201).json({ userId, firstName, lastName, email, department, role });
-  } catch (error) {
-    console.error('Error creating account:', error);  // Detailed error logging
-    res.status(500).json({ message: 'Error creating account' });
   }
 });
 

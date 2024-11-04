@@ -32,38 +32,29 @@ function MenteeMeetings() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch meetings from the backend
     const fetchMeetings = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user.userId; // Adjust based on where you store the userId
-        const role = user.role; // Adjust based on where you store the role
-        console.log(userId)
-        const response = await axios.get('http://localhost:3001/meetings', {
-          params: {
-            userId: userId,
-          },
+        const userId = user.userId;
+        const response = await axios.get('http://localhost:3001/api/meetings/meetings', {
+          params: { userId },
         });
-
-        // Map the response data to the format expected by the calendar
         const meetingsData = response.data.map((meeting) => ({
           title: `Meeting with ${
             userId === meeting.mentorkey ? meeting.mentee_name : meeting.mentor_name
           }`,
           start: new Date(meeting.datetime),
-          end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000), // Assuming 1-hour meetings
+          end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000),
           mentor: meeting.mentor_name,
           mentee: meeting.mentee_name,
           link: meeting.zoom_link,
           zoom_password: meeting.zoom_password,
         }));
-        console.log(meetingsData)
         setMeetings(meetingsData);
       } catch (error) {
         console.error('Error fetching meetings:', error);
       }
     };
-
     fetchMeetings();
   }, []);
 
@@ -89,20 +80,19 @@ function MenteeMeetings() {
         style={{ backgroundColor: 'white' }}
       />
 
-      {/* Modal for Meeting Details */}
       <Dialog
         open={open}
         onClose={handleClose}
         maxWidth="sm"
         fullWidth={true}
         BackdropProps={{
-          className: 'MuiBackdrop-root', // Applying custom class for the backdrop
+          className: 'custom-backdrop',
         }}
         PaperProps={{
-          className: 'MuiPaper-root', // Applying custom class for the modal paper
+          className: 'custom-paper',
         }}
       >
-        <DialogTitle className="MuiDialogTitle-root">
+        <DialogTitle className="dialog-title">
           Meeting Details
           <IconButton
             aria-label="close"
@@ -117,46 +107,31 @@ function MenteeMeetings() {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className="MuiDialogContent-root">
+        <DialogContent className="dialog-content">
           {selectedMeeting && (
             <div>
-              <p>
-                <strong>Title:</strong> {selectedMeeting.title}
-              </p>
-              <p>
-                <strong>Mentor:</strong> {selectedMeeting.mentor}
-              </p>
-              <p>
-                <strong>Mentee:</strong> {selectedMeeting.mentee}
-              </p>
-              <p>
-                <strong>Start Time:</strong>{' '}
-                {selectedMeeting.start.toLocaleString()}
-              </p>
-              <p>
-                <strong>End Time:</strong> {selectedMeeting.end.toLocaleString()}
-              </p>
+              <p><strong>Title:</strong> {selectedMeeting.title}</p>
+              <p><strong>Mentor:</strong> {selectedMeeting.mentor}</p>
+              <p><strong>Mentee:</strong> {selectedMeeting.mentee}</p>
+              <p><strong>Start Time:</strong> {selectedMeeting.start.toLocaleString()}</p>
+              <p><strong>End Time:</strong> {selectedMeeting.end.toLocaleString()}</p>
               <p>
                 <strong>Meeting Link:</strong>{' '}
                 <a
                   href={selectedMeeting.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="meeting-link" // Added a custom class for the meeting link
+                  className="meeting-link"
                 >
                   {selectedMeeting.link}
                 </a>
               </p>
-              <p>
-                <strong>Zoom Password:</strong> {selectedMeeting.zoom_password}
-              </p>
+              <p><strong>Zoom Password:</strong> {selectedMeeting.zoom_password}</p>
             </div>
           )}
         </DialogContent>
-        <DialogActions className="MuiDialogActions-root">
-          <Button onClick={handleClose} className="MuiButton-root">
-            Close
-          </Button>
+        <DialogActions className="dialog-actions">
+          <Button onClick={handleClose} className="dialog-button">Close</Button>
         </DialogActions>
       </Dialog>
     </div>
