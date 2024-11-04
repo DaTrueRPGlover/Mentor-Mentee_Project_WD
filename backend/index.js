@@ -88,6 +88,32 @@ app.get('/meetings', async (req, res) => {
   }
 });
 
+async function createAccount(firstName, lastName, email, password, department, role) {
+  // Hash the password before storing it
+  const hashedPassword = await bcrypt.hash(password, 10);
+  // Execute the SQL insert statement
+  const [result] = await pool.query(
+      'INSERT INTO userInfo (name, lastname, email, password, department, role) VALUES (?, ?, ?, ?, ?, ?)',
+      [firstName, lastName, email, hashedPassword, department, role]
+  );
+  return result.insertId; // Return the ID of the newly created user
+}
+
+
+app.post('/createAccount', async (req, res) => {
+  console.log("Received data:", req.body);  // Log incoming data
+
+  const { firstName, lastName, email, password, department, role } = req.body;
+
+  try {
+    const userId = await createAccount(firstName, lastName, email, password, department, role);
+    res.status(201).json({ userId, firstName, lastName, email, department, role });
+  } catch (error) {
+    console.error('Error creating account:', error);  // Detailed error logging
+    res.status(500).json({ message: 'Error creating account' });
+  }
+});
+
 // Start the server
 const PORT = 3001;
 app.listen(PORT, () => {
