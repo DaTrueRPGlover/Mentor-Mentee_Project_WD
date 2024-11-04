@@ -22,9 +22,10 @@ function Login() {
 
   // Handle form submission (login)
   const handleSubmit = (e) => {
+    console.log("Login form submitted");
     e.preventDefault();
 
-    fetch("http://localhost:3001/login", {
+    fetch("http://localhost:3001/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }), // Send email and password

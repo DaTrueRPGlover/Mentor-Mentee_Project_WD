@@ -16,7 +16,7 @@ function MentorMeetings({ mentorkey }) {
       try {
         const mentorinfo = JSON.parse(localStorage.getItem('user'));
         const mentorkey = mentorinfo.mentorkey;
-        const response = await fetch(`http://localhost:3001/mentees?mentorkey=${mentorkey}`);
+        const response = await fetch(`http://localhost:3001/api/meetings/mentees?mentorkey=${mentorkey}`);
         const data = await response.json();
         setMentees(data);
       } catch (error) {
@@ -34,7 +34,7 @@ function MentorMeetings({ mentorkey }) {
       const mentorkey = mentorinfo.mentorkey;
 
       try {
-        const response = await fetch('http://localhost:3001/create-meeting', {
+        const response = await fetch('http://localhost:3001/api/meetings/create-meeting', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

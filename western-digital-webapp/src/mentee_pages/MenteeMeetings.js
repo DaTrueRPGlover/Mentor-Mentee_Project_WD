@@ -36,7 +36,7 @@ function MenteeMeetings() {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         const userId = user.userId;
-        const response = await axios.get('http://localhost:3001/meetings', {
+        const response = await axios.get('http://localhost:3001/api/meetings/meetings', {
           params: { userId },
         });
         const meetingsData = response.data.map((meeting) => ({
