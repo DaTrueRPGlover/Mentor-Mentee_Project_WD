@@ -41,7 +41,7 @@ function Login() {
           localStorage.setItem(
             "user",
             JSON.stringify({
-              userId: body.userId,
+              userId: body.userid,
               name: body.name,
               role: body.role,
               mentorkey: body.mentorkey,
@@ -49,12 +49,15 @@ function Login() {
               menteeList: body.menteeList || [],
             })
           );
-
+          const user = JSON.parse(localStorage.getItem('user'));
+          const userName = user.name
+          console.log("whole user", user);
           console.log("Login successful");
+          console.log("User id", body.userid)
           console.log("User role:", body.role);
           console.log("Mentor key", body.mentorkey);
           console.log("Mentee key",body.menteekey);
-
+          console.log("userlocal",userName);
           // Redirect based on role
           if (body.role.toLowerCase() === "mentor") {
             navigate("/mentor-home"); // Adjust as needed

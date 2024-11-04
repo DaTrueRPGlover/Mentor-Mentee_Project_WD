@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -24,27 +25,47 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 });
-//date format (yyyy,mm-1,dd,hr,min)
-function MenteeMeetings() {
-  const [meetings] = useState([
-    {
-      title: 'Meeting with John Doe',
-      start: new Date(2024, 9, 25, 10, 0),
-      end: new Date(2024, 9, 25, 11, 0),
-      mentor: 'John Doe',
-      link: 'https://zoom.us/j/123456789',
-    },
-    {
-      title: 'Meeting with Jane Smith',
-      start: new Date(2024, 10, 1, 14, 0),
-      end: new Date(2024, 10, 1, 15, 0),
-      mentor: 'Jane Smith',
-      link: 'https://zoom.us/j/987654321',
-    },
-  ]);
 
+function MenteeMeetings() {
+  const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // Fetch meetings from the backend
+    const fetchMeetings = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const userId = user.userId; // Adjust based on where you store the userId
+        const role = user.role; // Adjust based on where you store the role
+        console.log(userId)
+        const response = await axios.get('http://localhost:3001/meetings', {
+          params: {
+            userId: userId,
+          },
+        });
+
+        // Map the response data to the format expected by the calendar
+        const meetingsData = response.data.map((meeting) => ({
+          title: `Meeting with ${
+            userId === meeting.mentorkey ? meeting.mentee_name : meeting.mentor_name
+          }`,
+          start: new Date(meeting.datetime),
+          end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000), // Assuming 1-hour meetings
+          mentor: meeting.mentor_name,
+          mentee: meeting.mentee_name,
+          link: meeting.zoom_link,
+          zoom_password: meeting.zoom_password,
+        }));
+        console.log(meetingsData)
+        setMeetings(meetingsData);
+      } catch (error) {
+        console.error('Error fetching meetings:', error);
+      }
+    };
+
+    fetchMeetings();
+  }, []);
 
   const handleSelectEvent = (event) => {
     setSelectedMeeting(event);
@@ -106,12 +127,14 @@ function MenteeMeetings() {
                 <strong>Mentor:</strong> {selectedMeeting.mentor}
               </p>
               <p>
+                <strong>Mentee:</strong> {selectedMeeting.mentee}
+              </p>
+              <p>
                 <strong>Start Time:</strong>{' '}
                 {selectedMeeting.start.toLocaleString()}
               </p>
               <p>
-                <strong>End Time:</strong>{' '}
-                {selectedMeeting.end.toLocaleString()}
+                <strong>End Time:</strong> {selectedMeeting.end.toLocaleString()}
               </p>
               <p>
                 <strong>Meeting Link:</strong>{' '}
@@ -123,6 +146,9 @@ function MenteeMeetings() {
                 >
                   {selectedMeeting.link}
                 </a>
+              </p>
+              <p>
+                <strong>Zoom Password:</strong> {selectedMeeting.zoom_password}
               </p>
             </div>
           )}
