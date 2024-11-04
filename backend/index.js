@@ -90,7 +90,7 @@ app.get('/meetings', async (req, res) => {
 app.get('/mentees', async (req, res) => {
   // const mentorinfo = JSON.parse(localStorage.getItem('user'))
   // console.log("Mentor:", mentorinfo);
-  const mentorkey = req.query.name;
+  const mentorkey = req.query.mentorkey;
   console.log('name',mentorkey);
 
   console.log("Received request to fetch mentees for mentorkey:", mentorkey);

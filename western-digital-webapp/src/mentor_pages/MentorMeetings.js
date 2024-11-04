@@ -12,6 +12,8 @@ function MentorMeetings({ mentorkey }) {
     // Fetch the mentor's mentee list on component load
     const fetchMentees = async () => {
       try {
+        const mentorinfo = JSON.parse(localStorage.getItem('user'));
+        const mentorkey = mentorinfo.mentorkey;
         const response = await fetch(`http://localhost:3001/mentees?mentorkey=${mentorkey}`);
         const data = await response.json();
         setMentees(data);
@@ -26,7 +28,9 @@ function MentorMeetings({ mentorkey }) {
   const handleScheduleMeeting = async () => {
     if (selectedMentee && newDate.trim() && newTime.trim()) {
       const datetime = `${newDate}T${newTime}`;
-      
+      const mentorinfo = JSON.parse(localStorage.getItem('user'));
+      const mentorkey = mentorinfo.mentorkey;
+      console.log(mentorkey);
       try {
         const response = await fetch('http://localhost:3001/create-meeting', {
           method: 'POST',
@@ -34,13 +38,15 @@ function MentorMeetings({ mentorkey }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            mentorkey,
+            mentorkey:mentorkey,
             menteekey: selectedMentee,
             datetime: datetime,
             zoom_link: 'https://zoom.us/j/123456789', // Example link
             zoom_password: 'password123', // Example password
           }),
+          
         });
+        console.log(mentorkey);
 
         if (response.status === 201) {
           setMeetings([...meetings, { mentee: selectedMentee, date: newDate, time: newTime }]);
