@@ -1,42 +1,105 @@
+/* Reset body margins and paddings */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Main container styling */
 .mentor-meetings {
-    padding: 20px;
-    text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+.mentor-meetings h1, .mentor-meetings h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Scheduled meetings list styling */
+.mentor-meetings ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.mentor-meetings ul li {
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+.mentor-meetings ul li strong {
+  color: #3f51b5;
+}
+
+/* Schedule form styling */
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Dropdown (select) styling */
+.schedule-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Input fields styling */
+.schedule-form input[type="text"],
+.schedule-form input[type="date"],
+.schedule-form input[type="time"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* Button styling */
+.schedule-form button {
+  padding: 12px;
+  font-size: 1rem;
+  color: white;
+  background-color: #3f51b5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.schedule-form button:hover {
+  background-color: #303f9f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .mentor-meetings {
+    padding: 15px;
   }
   
-  ul {
-    list-style-type: none;
-    padding: 0;
+  .mentor-meetings h1, .mentor-meetings h2 {
+    font-size: 1.2rem;
   }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
-  strong {
-    font-weight: bold;
-  }
-  
-  .mentor-meetings-schedule-form {
-    margin-top: 20px;
-  }
-  
-  .mentor-meetings-input {
-    margin-right: 10px;
+
+  .schedule-form button {
+    font-size: 0.9rem;
     padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
   }
-  
-  .mentor-meetings-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .mentor-meetings-button:hover {
-    background-color: #0056b3;
-  }
-  
+}
