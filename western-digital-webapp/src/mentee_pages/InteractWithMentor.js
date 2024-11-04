@@ -1,39 +1,10 @@
-// interactwithmentor.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './InteractWithMentor.css';
+import logo from "../assets/WDC.png"; // Adjust the path as needed
 
 function InteractWithMentor() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-
-    if (!user) {
-      console.error('User not logged in');
-      return;
-    }
-
-    const menteekey = user.menteekey;
-    const mentorkey = user.mentorkey;
-
-    if (!menteekey || !mentorkey) {
-      console.error('Keys not found');
-      return;
-    }
-
-    fetch(`http://localhost:3001/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const formattedMessages = data.map((msg) => ({
-          sender: msg.isMentee ? 'Mentee' : 'Mentor',
-          content: msg.isMentee ? msg.menteetext : msg.mentortext,
-          timestamp: new Date(msg.date).toLocaleString(),
-        }));
-        setMessages(formattedMessages);
-      })
-      .catch((error) => console.error('Error fetching messages:', error));
-  }, []);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -93,7 +64,12 @@ function InteractWithMentor() {
 
   return (
     <div className="interact-with-mentor">
-      <h1>Interact with {JSON.parse(localStorage.getItem('user')).role.toLowerCase() === 'mentee' ? 'Mentor' : 'Mentee'}</h1>
+      <header className="header-container">
+        <div className="top-header">
+          <img src={logo} alt="Logo" className="logo" />
+        </div>
+        <h1 className="welcome-message">Interacting</h1>
+      </header>
       <div className="message-list">
         <ul>
           {messages.map((message, index) => (

@@ -1,11 +1,14 @@
+/* AdminHome.css */
+
 * {
   margin: 0;
   box-sizing: border-box;
 }
+
 .admin-home .title {
   margin-top: 15px;
   font-size: large;
-  background-color: inherit !important;
+  background-color: inherit ;
   padding: 5px 10px;
   color: #000000;
 }
@@ -14,13 +17,6 @@
 .admin-home .logo {
   width: 150px;
   height: auto;
-}
-.admin-home .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-top: 20px;
 }
 /* Container for the whole page */
 .admin-home {
@@ -37,6 +33,7 @@
   text-align: center;
   margin: 20px 0;
 }
+/* Header styles */
 .admin-home .top-header {
   display: flex;
   justify-content: space-between;
@@ -55,6 +52,8 @@
   justify-content: center;
 }
 
+
+
 /* Button container */
 .admin-home .button-container {
   display: flex;
@@ -63,57 +62,97 @@
   gap: 20px;
   width: 100%;
 }
+.admin-home .body {
+  margin: 0; /* Remove default body margin */
+  padding: 0;
+  overflow: hidden; /* Prevent overflow if needed */
+}
+
+
+.admin-home .circle-image  {
+  width: 190px;
+  height: auto;
+  background-color: inherit;
+  margin-bottom: 5px;
+}
 
 .admin-home .circle {
+
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #65558F;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin: 0;
+  transition: background-color 0.3s;
   width: 355px;
   height: 355px;
   border-radius: 50%;
   background-color: #91BECD;
+  flex-direction: column;      /* Stack items vertically */
+  align-items: center;         /* Center items horizontally */
+  justify-content: center;     /* Center items vertically */
+  text-align: center;
+  margin-bottom: 10%;
+}
+
+
+
+
+.admin-home .circle:hover {
+  background-color: #7CAFB7; /* Semi-transparent hover color */
+}
+
+
+.admin-home .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  margin-bottom: 10%;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  transition: background-color 0.3s;
+  width: 100%;
+  padding-top: 20px;
 }
-
 .admin-home .circle:hover {
-  background-color: #7CAFB7;
+  background-color: #7CAFB7; /* Button background on hover */
 }
 
-.admin-home .title {
-  margin-top: 15px;
-  font-size: large;
-  background-color: inherit !important;
-  padding: 5px 10px;
-  color: #000000;
-}
 
-/* Uniform image styling for all circle images */
-.admin-home .circle-image {
-  width: 190px;
-  height: auto;
-  object-fit: cover; /* Ensures the image fills the area without distortion */
-  background-color: inherit;
-  margin-bottom: 5px;
-}
 .admin-home .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
   background-color: #91BECD;
-  font-size: large;
+  font-size: 1.2rem; /* Use relative units for font size */
   font-weight: bold;
   color: black;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Padding remains as is */
+  position: absolute; /* Use absolute positioning */
+  right: 20px; /* Position it 20px from the right */
+  top: 20px; /* Position it 20px from the top */
+  transition: background-color 0.3s; /* Smooth transition for hover */
 }
 
 .admin-home .logout-button:hover {
-  background-color: #7CAFB7;
+  background-color: #7CAFB7; /* Hover color */
 }
 
+/* Responsive styles */
+@media (max-width: 768px) {
+  .admin-home .logout-button {
+    font-size: 1rem; /* Smaller font size for smaller screens */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-home .logout-button {
+    font-size: 0.9rem; /* Even smaller font size for very small screens */
+    padding: 6px 12px; /* Adjust padding further for small screens */
+    right: 10px; /* Adjust right positioning for small screens */
+    top: 10px; /* Adjust top positioning for small screens */
+  }
+}
