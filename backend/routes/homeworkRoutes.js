@@ -1,5 +1,5 @@
 import express from 'express';
-import { createHomework, fetchHomeworkByMenteeKey, fetchHomeworkByMentorKey } from '../database_queries/HomeworkQueries';
+import { createHomework, fetchHomeworkByMenteeKey, fetchHomeworkByMentorKey } from '../database_queries/HomeworkQueries.js';
 
 const router = express.Router();
 
