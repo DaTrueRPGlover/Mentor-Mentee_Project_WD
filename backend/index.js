@@ -6,6 +6,7 @@ import createRoutes from './routes/accountRoutes.js';
 import homeworkRoutes from './routes/homeworkRoutes.js';
 import mentorRoutes from './routes/mentorRoutes.js';
 import menteeRoutes from './routes/menteeRoutes.js';
+import menteeNotesRoutes from './routes/menteeNotesRoutes';
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/accounts',createRoutes);
 app.use('/api/homework', homeworkRoutes);
 app.use('/api/mentor', mentorRoutes);
 app.use('/api/mentee', menteeRoutes);
+app.use('/api/menteeNotes', menteeNotesRoutes);
 
 const PORT = 3001;
 app.listen(PORT, () => {

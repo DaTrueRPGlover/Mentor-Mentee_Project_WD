@@ -21,7 +21,76 @@ export const getMenteeNotesByMeetingKey = async (meetingkey) => { //Fetch the me
     }
 };
 
-console.log('Mentee Notes:', JSON.stringify(await getMenteeNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'), null, 2)); //This way makes the output come as a list of attributes with their value
+export const insertMenteeNote = async (meetingkey, menteekey, datetime, profileOfALeader, executiveCommunicationStyle, trustRespectVisibility, motivatingYourTeam, selfAdvocacyAndCareerGrowth, workLifeBalance, additionalComments) => {
+    const sql = `
+        INSERT INTO menteenotes (
+            meetingkey, 
+            menteekey, 
+            datetime, 
+            profile_of_a_leader, 
+            executive_communication_style,
+            trust_respect_visibility, 
+            motivating_your_team, 
+            self_advocacy_and_career_growth,
+            work_life_balance,
+            additional_comments
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    try {
+        // Execute the query with parameterized values for security
+        const [result] = await pool.execute(sql, [
+            meetingkey,
+            menteekey,
+            datetime,
+            profileOfALeader,
+            executiveCommunicationStyle,
+            trustRespectVisibility,
+            motivatingYourTeam,
+            selfAdvocacyAndCareerGrowth,
+            workLifeBalance,
+            additionalComments
+        ]);
+
+        return result; // Returns the result, which includes the inserted row ID
+    } catch (error) {
+        console.error('Error inserting mentee note:', error);
+        throw error; // Rethrow to handle it in the calling function
+    }
+};
+
+/*// Example data to insert
+const meetingkey = 'e7c27601-9ae1-11ef-a92b-02a12f7436d7';
+const menteekey = '2d9f4b3a-987f-11ef-a92b-02a12f7436d7';
+const datetime = new Date();
+const profileOfALeader = 3;
+const executiveCommunicationStyle = 2;
+const trustRespectVisibility = 1;
+const motivatingYourTeam = 3;
+const selfAdvocacyAndCareerGrowth = 1;
+const workLifeBalance = 3;
+const additionalComments = 'Mentee is making good progress on goals.';
+
+try {
+    const result = await insertMenteeNote(
+        meetingkey,
+        menteekey,
+        datetime,
+        profileOfALeader,
+        executiveCommunicationStyle,
+        trustRespectVisibility,
+        motivatingYourTeam,
+        selfAdvocacyAndCareerGrowth,
+        workLifeBalance,
+        additionalComments
+    );
+    console.log('Mentee note inserted successfully:', result);
+} catch (error) {
+    console.error('Error inserting mentee note:', error);
+}*/
+
+
+/*console.log('Mentee Notes:', JSON.stringify(await getMenteeNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'), null, 2)); //This way makes the output come as a list of attributes with their value
 
 
 const menteeNotes = await getMenteeNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'); //This way accesses just the values of each attribute
