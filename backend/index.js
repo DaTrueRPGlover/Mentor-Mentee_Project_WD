@@ -13,7 +13,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 // Use the imported routes
 app.use('/api/users', userRoutes);
-console.log("Login attempted")
+console.log("Login")
 app.use('/api/meetings', meetingRoutes);
 app.use('/api/accounts',createRoutes);
 app.use('/api/homework', homeworkRoutes);
