@@ -42,32 +42,38 @@ export const createMentorMenteeRelationship = async (mentorkey, menteekey) => {
     }
 };
 
-export const createAccount = async (name, lastname, email, password, department, role) => {
-    console.log('Creating account with:', { name, lastname, email, department, role });
+export const createAccount = async (firstName, lastName, email, password, department, role) => {
+    console.log('Creating account with:', { firstName, lastName, email, department, role });
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
     const connection = await pool.getConnection(); // Get a connection from the pool
 
     try {
-        await connection.beginTransaction();
+        await connection.beginTransaction(); // Start a transaction
+        console.log('Transaction started');
 
+        // Generate a new UUID for userId
         const userId = uuidv4();
+        console.log('Generated userId:', userId);
 
         // Retrieve department_key from the departments table based on the department name
-        console.log("department name", department)
         const departmentKeyQuery = `SELECT department_key FROM departments WHERE department_name = ?`;
         const [departmentKeyResult] = await connection.execute(departmentKeyQuery, [department]);
+        console.log('Department key result:', departmentKeyResult);
+
+        // Check if department exists
         if (departmentKeyResult.length === 0) {
             throw new Error('Department not found');
         }
-        const departmentKey = departmentKeyResult[0].department_key;
+
+        const departmentKey = departmentKeyResult[0].department_key; // Get the department key
 
         // Insert the new user into the userInfo table, using department name instead of department key
         const newUsersql = `
             INSERT INTO userInfo (name, lastname, email, password, userid, role, department)
             VALUES (?, ?, ?, ?, ?, ?, ?)`;
         const [result] = await connection.execute(newUsersql, [
-            name,
-            lastname,
+            firstName,
+            lastName,
             email,
             hashedPassword,
             userId, // Insert the generated UUID here
@@ -80,44 +86,38 @@ export const createAccount = async (name, lastname, email, password, department,
         // Prepare the insert statement for the role-specific table with the department key
         let insertRoleSql;
         if (role === 'admin') {
-            roleInsertQuery = `
+            insertRoleSql = `
                 INSERT INTO admin (name, departmentkey, email, adminkey)
-                VALUES (?, ?, ?, ?)
-            `;
-        } else if (role === 'mentor') {
-            roleInsertQuery = `
-                INSERT INTO mentor (name, departmentkey, email, mentorkey)
-                VALUES (?, ?, ?, ?)
-            `;
+                VALUES (?, ?, ?, ?)`;
+            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
+            console.log('Inserted user into admin table');
         } else if (role === 'mentee') {
-            roleInsertQuery = `
+            insertRoleSql = `
                 INSERT INTO mentee (name, departmentkey, email, menteekey)
                 VALUES (?, ?, ?, ?)`; 
-            await connection.execute(insertRoleSql, [name, departmentKey, email, userId]);
+            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
             console.log('Inserted user into mentee table');
         } else if (role === 'mentor') {
             insertRoleSql = `
                 INSERT INTO mentor (name, departmentkey, email, mentorkey)
                 VALUES (?, ?, ?, ?)`;
-            await connection.execute(insertRoleSql, [name, departmentKey, email, userId]);
+            await connection.execute(insertRoleSql, [firstName, departmentKey, email, userId]);
             console.log('Inserted user into mentor table');
         } else {
             throw new Error('Invalid role specified');
         }
-        await connection.execute(roleInsertQuery, [firstName, departmentKey, email, userId]);
 
-        await connection.commit();
-        console.log('Account created successfully with userId:', userId);
-        return userId;
+        await connection.commit(); // Commit the transaction
+        console.log('Transaction committed. New account created with ID:', userId);
+        return userId; // Return the new user's ID
     } catch (error) {
-        await connection.rollback();
-        console.error('Error creating account:', error);
-        throw error;
+        await connection.rollback(); // Rollback the transaction on error
+        console.error('Error creating account:', error); // Better error logging
+        throw error; // Rethrow the error for handling in the controller
     } finally {
-        connection.release();
+        connection.release(); // Release the connection back to the pool
     }
 };
-
 
 
 
