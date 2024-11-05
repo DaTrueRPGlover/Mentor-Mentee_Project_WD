@@ -1,23 +1,66 @@
 .interact-with-mentor {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .chat-box {
-    margin-top: 20px;
-  }
-  
-  .chat-box textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .chat-box button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  justify-content: flex-start; /* Align items at the top */
+  padding-top: 20px; /* Add space at the top */
+}
+
+.interact-with-mentor .header-container {
+  display: flex; /* Use flexbox to align children */
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Keep items aligned to the left */
+  width: 100%; /* Full width of the header */
+}
+
+.interact-with-mentor .top-header {
+  display: flex; /* Keep the logo aligned left */
+  align-items: center; /* Align logo vertically */
+}
+
+.interact-with-mentor .logo {
+  width: 150px; /* Logo width */
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 0px; /* Space from the top */
+}
+
+.welcome-message {
+  text-align: center; /* Center text */
+  margin: 50px 0; /* Space below the logo */
+  font-size: 24px; /* Adjust font size as needed */
+  width: 100%; /* Full width to center */
+}
+
+
+.message-list {
+  flex: 1; /* Allow the message list to grow and fill the space */
+  overflow-y: auto; /* Enable scrolling if there are many messages */
+}
+
+.message-input {
+  display: flex; /* Use flex layout for input and button */
+  flex-direction: column; /* Stack input vertically */
+  align-items: center; /* Center items horizontally */
+  margin: 10px auto; /* Center the input area and give it spacing */
+  width: 1000px; /* Fixed width for the input area */
+}
+
+.message-textarea {
+  width: 80%; /* Set width for textarea relative to its container */
+  height: 60px; /* Set height for textarea */
+  margin-bottom: 10px; /* Space between textarea and button */
+  padding: 10px; /* Add padding inside textarea */
+  resize: none; /* Disable resizing */
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background-color: #65558F;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 20%; /* Set button width to match textarea */
+}
