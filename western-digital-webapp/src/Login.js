@@ -22,9 +22,10 @@ function Login() {
 
   // Handle form submission (login)
   const handleSubmit = (e) => {
+    console.log("Login form submitted");
     e.preventDefault();
 
-    fetch("http://localhost:3001/login", {
+    fetch("http://localhost:3001/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }), // Send email and password
@@ -41,7 +42,7 @@ function Login() {
           localStorage.setItem(
             "user",
             JSON.stringify({
-              userId: body.userId,
+              userId: body.userid,
               name: body.name,
               role: body.role,
               mentorkey: body.mentorkey,
@@ -49,12 +50,15 @@ function Login() {
               menteeList: body.menteeList || [],
             })
           );
-
+          const user = JSON.parse(localStorage.getItem('user'));
+          const userName = user.name
+          console.log("whole user", user);
           console.log("Login successful");
+          console.log("User id", body.userid)
           console.log("User role:", body.role);
           console.log("Mentor key", body.mentorkey);
           console.log("Mentee key",body.menteekey);
-
+          console.log("userlocal",userName);
           // Redirect based on role
           if (body.role.toLowerCase() === "mentor") {
             navigate("/mentor-home"); // Adjust as needed
@@ -80,8 +84,11 @@ function Login() {
   // Render the login form and the role buttons
   return (
     <>
+       
+
       <CssBaseline />
       <img src={logo} alt="Logo" className="login-logo" />
+      <div className="center-container">
       <Container component="main" maxWidth="xs">
         <div className="login-container">
           <Avatar
@@ -189,7 +196,11 @@ function Login() {
             Admin
           </button>
         </div>
+        
       </Container>
+      </div>
+
+
     </>
   );
 }

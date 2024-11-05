@@ -1,25 +1,22 @@
+/* AdminHome.css */
+
 * {
   margin: 0;
-  /* padding: 0; */
   box-sizing: border-box;
 }
+
 .admin-home .title {
-  margin-top: 15px; /* Move it up by 20 pixels */
+  margin-top: 15px;
   font-size: large;
-  background-color: inherit;
-  /* Add other styles as needed */
-}
-.admin-home h1 {
-  margin-top: 60px;
+  background-color: inherit ;
+  padding: 5px 10px;
+  color: #000000;
 }
 
+
 .admin-home .logo {
-  width: 120px;
+  width: 150px;
   height: auto;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 20px;
-  left: 20px; /* Add vertical margin (top and bottom) */
 }
 /* Container for the whole page */
 .admin-home {
@@ -32,17 +29,17 @@
   justify-content: space-between;
 }
 .admin-home .welcome-message {
-  margin-bottom: 40px;
   font-size: 32px;
   text-align: center;
+  margin: 20px 0;
 }
 /* Header styles */
-.admin-home .header {
+.admin-home .top-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  background-color: #ADD8E6;
+  padding: 0 20px;
 }
 
 /* Main content styles */
@@ -70,20 +67,16 @@
   padding: 0;
   overflow: hidden; /* Prevent overflow if needed */
 }
-/* moves log button left and top and center so it dosent extend page */
 
 
-.admin-home .Talk,
-.admin-home .Twopeople,
-.admin-home .One,
-.admin-home .Notes {
+.admin-home .circle-image  {
   width: 190px;
   height: auto;
   background-color: inherit;
   margin-bottom: 5px;
 }
 
-.admin-home .circle-button {
+.admin-home .circle {
 
   border-radius: 50px;
   border: none;
@@ -94,7 +87,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding: 0; */
   margin-top: 20px;
   margin: 0;
   transition: background-color 0.3s;
@@ -112,37 +104,23 @@
 
 
 
-.admin-home .circle-button:hover {
+.admin-home .circle:hover {
   background-color: #7CAFB7; /* Semi-transparent hover color */
 }
 
 
 .admin-home .header-container {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
+  padding-top: 20px;
 }
-.admin-home .circle-button:hover {
+.admin-home .circle:hover {
   background-color: #7CAFB7; /* Button background on hover */
 }
 
-/* .admin-home .logout-button {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: #91BECD;
-  font-size: large;
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px;
-  margin-left: 1350px;
-  margin-top: 20px;
-}
 
-.admin-home .logout-button:hover {
-  background-color: #7CAFB7;
-} */
 .admin-home .logout-button {
   border-radius: 50px;
   border: none;
