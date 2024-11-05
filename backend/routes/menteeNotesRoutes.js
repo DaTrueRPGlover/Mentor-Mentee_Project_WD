@@ -1,5 +1,5 @@
 import express from 'express';
-import { getMenteeNotesByMeetingKey, insertMenteeNote } from './MenteeNotesQueries.js'; // Adjust the import path if needed
+import { getMenteeNotesByMeetingKey, insertMenteeNote } from '../database_queries/MenteeNotesQueries.js'; // Adjust the import path if needed
 
 const router = express.Router();
 

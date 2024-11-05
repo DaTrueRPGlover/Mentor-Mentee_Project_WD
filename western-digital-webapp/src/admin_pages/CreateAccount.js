@@ -132,6 +132,7 @@ const handleLogout = () => {
             <option value="mentee">Mentee</option>
             <option value="mentor">Mentor</option>
           </select>
+          <div className="space"></div>
           <button type="submit" className="submit-button">Create Account</button>
         </form>
       </div>

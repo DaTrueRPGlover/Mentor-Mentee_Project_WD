@@ -1,16 +1,72 @@
 * {
   background-color: #ADD8E6;
 }
-.assign-mentor h1 {
-  margin-bottom: 30px; /* Add space below the main heading */
-  font-size: 40px;
+
+.assign-mentor-container .body {
+  background-color: #ADD8E6; /* Light blue background color */
+  margin: 0; /* Remove default body margin */
+  padding: 0;
 }
-.assign-mentor {
-  padding: 20px;
+
+.assign-mentor-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 20px;
+}
+
+.header-container {
+  position: relative; /* Position relative to allow logo absolute positioning */
+  width: 100%;
+}
+
+.assign-mentor-container .logo {
+  position: absolute; /* Pin logo to top-left */
+  top: 0px;
+  left: 0px;
+  width: 150px; /* Adjust as needed */
+  height: auto;
+}
+
+.logout-button {
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #91BECD;
+  font-size: 1.2rem; /* Use relative units for font size */
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px; /* Padding remains as is */
+  position: absolute; /* Use absolute positioning */
+  right: 0px; /* Position it 20px from the right */
+  top: 0px; /* Position it 20px from the top */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.rectangle {
+  flex: 1;
+  height: 600px;
+  border: 2px solid #91BECD;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.assign-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 ul {
@@ -18,7 +74,7 @@ ul {
   padding: 0;
 }
 
-li {
+.mentee-list-item {
   margin: 10px 0;
   display: flex;
   flex-direction: column;
@@ -26,17 +82,17 @@ li {
 }
 
 input {
-  padding: 8px;
+  padding: 10px; /* Increase padding for better appearance */
   margin-top: 5px;
   text-align: center;
-  width: 60%;
-  max-width: 400px;
+  width: 100%; /* Set to 100% of the parent container */
+  max-width: 400px; /* Maintain a maximum width */
 }
 
 button {
   margin-top: 10px;
   padding: 5px 20px;
-  background-color: #65558F; /* Updated button color */
+  background-color: #65558F;
   color: white;
   border: none;
   cursor: pointer;
@@ -44,7 +100,7 @@ button {
 }
 
 button:hover {
-  background-color: #543E6B; /* Darken button on hover */
+  background-color: #543E6B;
 }
 
 .add-assignment {
@@ -56,17 +112,17 @@ button:hover {
 }
 
 .add-assignment input {
-  padding: 10px;
+  padding: 10px; /* Remove specific width and add padding */
   margin-top: 10px;
   text-align: center;
-  width: 80%;
-  max-width: 400px;
+  width: 100%; /* Set to 100% of the parent container */
+  max-width: 220px; /* Maintain a maximum width */
 }
 
 .add-assignment button {
   margin-top: 15px;
   padding: 10px 30px;
-  background-color: #65558F; /* Updated button color */
+  background-color: #65558F;
   color: white;
   border: none;
   cursor: pointer;
@@ -74,14 +130,5 @@ button:hover {
 }
 
 .add-assignment button:hover {
-  background-color: #543E6B; /* Darken button on hover */
-}
-
-.assign-mentor .logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  background-color: #543E6B;
 }

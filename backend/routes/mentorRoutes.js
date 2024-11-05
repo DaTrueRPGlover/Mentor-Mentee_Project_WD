@@ -6,11 +6,11 @@ import {
     getMentorEmailByKey
 } from '../database_queries/MentorQueries.js';
 import {
-    getMenteeKeyByMentorKey,
+    // getMenteeKeyByMentorKey,
     getMenteeNameByKey,
     getMenteeEmailByKey,
     getMenteeDepartmentKeyByKey
-} from '../database_queries/MenteeQueries';
+} from '../database_queries/MenteeQueries.js';
 
 const router = express.Router();
 
