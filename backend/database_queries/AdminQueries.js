@@ -139,6 +139,21 @@ export const createAccount = async (firstName, lastName, email, password, depart
     }
 };
 
+export const getAllMentorsAndMentees = async () => {
+    const sql = `
+    SELECT userid, name, role FROM userInfo WHERE role IN ('mentor', 'mentee')
+    `;
+
+    try {
+        const [rows] = await pool.execute(sql);
+        return rows; // Returns an array of users with their ids and roles
+    } catch (error) {
+        console.error('Error fetching mentors and mentees:', error);
+        throw error;
+    }
+};
+
+
 
 
 /*(async () => { //Previous test to check the connection of the database '8' is the initial key we had in our database's admin table

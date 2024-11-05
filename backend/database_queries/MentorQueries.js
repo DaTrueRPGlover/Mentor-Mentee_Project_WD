@@ -63,4 +63,4 @@ console.log('Mentor name: ' + await getMentorNameByKey('2f7eddd2-987f-11ef-a92b-
 console.log('Mentor email: ' + await getMentorEmailByKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));
 //console.log('Mentor username: ' + await getMentorUsernameByKey('10'));
 console.log('Mentor departmentkey: ' + await getMentorDepartmentKeyByKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));
-console.log('Mentee key: ' + await getMenteeKeyByMentorKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'))
+console.log('Mentee key: ' + await getMenteeKeyByMentorKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));

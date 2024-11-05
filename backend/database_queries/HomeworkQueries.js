@@ -1,4 +1,4 @@
-import {pool} from './database.js';
+import {pool} from '../database.js';
 
 export const createHomework = async (menteeKey, mentorKey, title, description, assignedDate, dueDate) => {
     const connection = await pool.getConnection();
