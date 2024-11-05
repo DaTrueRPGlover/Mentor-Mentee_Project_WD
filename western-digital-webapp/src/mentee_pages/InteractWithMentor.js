@@ -1,65 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './InteractWithMentor.css';
-import logo from "../assets/WDC.png"; // Adjust the path as needed
+import logo from "../assets/WDC.png";
 
 function InteractWithMentor() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
+    if (user) {
+      const role = user.role.toLowerCase();
+      const key = role === 'mentee' ? user.menteekey : user.mentorkey;
+
+      fetch(`http://localhost:3001/messages?role=${role}&key=${key}`)
+        .then((response) => response.json())
+        .then((data) => setMessages(data))
+        .catch((error) => console.error('Error fetching messages:', error));
+    }
+  }, [user]);
 
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const user = JSON.parse(localStorage.getItem('user'));
-  
-      if (!user) {
-        console.error('User not logged in');
-        return;
-      }
-  
-      const menteekey = user.menteekey;
-      const mentorkey = user.mentorkey;
-  
-      if (!menteekey || !mentorkey) {
-        console.error('Keys not found');
-        return;
-      }
-  
-      // Prepare message data
-      let messageData = {
-        isMentee: user.role.toLowerCase() === 'mentee',
-        isMentor: user.role.toLowerCase() === 'mentor',
-        menteekey: menteekey,
-        mentorkey: mentorkey,
-        menteetext: null,
-        mentortext: null,
-      };
-  
-      // Set the appropriate text field
-      if (user.role.toLowerCase() === 'mentee') {
-        messageData.menteetext = newMessage;
-      } else if (user.role.toLowerCase() === 'mentor') {
-        messageData.mentortext = newMessage;
-      }
-  
-      fetch('http://localhost:3001/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(messageData),
+    const messageData = {
+      isMentee: user.role.toLowerCase() === 'mentee',
+      isMentor: user.role.toLowerCase() === 'mentor',
+      menteekey: user.menteekey,
+      mentorkey: user.mentorkey,
+      menteetext: user.role.toLowerCase() === 'mentee' ? newMessage : null,
+      mentortext: user.role.toLowerCase() === 'mentor' ? newMessage : null,
+    };
+
+    fetch('http://localhost:3001/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(messageData),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        setMessages([
+          ...messages,
+          {
+            sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
+            content: newMessage,
+            timestamp: new Date().toLocaleString(),
+          },
+        ]);
+        setNewMessage('');
       })
-        .then((response) => response.json())
-        .then((data) => {
-          // Update messages state
-          setMessages([
-            ...messages,
-            {
-              sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
-              content: newMessage,
-              timestamp: new Date().toLocaleString(),
-            },
-          ]);
-          setNewMessage('');
-        })
-        .catch((error) => console.error('Error sending message:', error));
-    }
+      .catch((error) => console.error('Error sending message:', error));
   };
 
   return (
@@ -73,9 +60,9 @@ function InteractWithMentor() {
       <div className="message-list">
         <ul>
           {messages.map((message, index) => (
-            <li key={index} className={message.sender.toLowerCase()}>
-              <strong>{message.sender}:</strong> {message.content}{' '}
-              <span className="timestamp">({message.timestamp})</span>
+            <li key={index} className={message.sender_role.toLowerCase()}>
+              <strong>{message.sender_role}:</strong> {message.message_text}{' '}
+              <span className="timestamp">({message.message_time})</span>
             </li>
           ))}
         </ul>
