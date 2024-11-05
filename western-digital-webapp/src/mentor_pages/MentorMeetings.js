@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import logo from '../assets/WDC.png';
 
 function MentorMeetings({ mentorkey }) {
+  const navigate = useNavigate(); // <-- Initialize navigate
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
@@ -66,9 +69,34 @@ function MentorMeetings({ mentorkey }) {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <div className="mentor-meetings">
-      <h1>Scheduled Meetings with Mentees</h1>
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/mentor-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">Schedule Mentee Meetings</h1>
+    </header>
+
+
+
       <ul>
         {meetings.map((meeting, index) => (
           <li key={index}>

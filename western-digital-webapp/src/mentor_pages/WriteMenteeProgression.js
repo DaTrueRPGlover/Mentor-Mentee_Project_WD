@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './WriteMenteeProgression.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import logo from '../assets/WDC.png';
+
+
 
 function WriteMenteeProgression() {
+  const navigate = useNavigate(); // <-- Initialize navigate
+
   const [progressReports, setProgressReports] = useState([
     { mentee: 'Jane Smith', date: '2024-10-10', report: 'Completed first milestone on the project.' },
     { mentee: 'Mark White', date: '2024-10-12', report: 'Improved communication during meetings.' },
@@ -19,17 +25,33 @@ function WriteMenteeProgression() {
       setNewDate('');
     }
   };
+  
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
 
   return (
     <div className="write-mentee-progression">
-      <h1>Write Mentee Progression</h1>
-      <ul>
-        {progressReports.map((report, index) => (
-          <li key={index}>
-            <strong>{report.mentee}</strong> on {report.date}: {report.report}
-          </li>
-        ))}
-      </ul>
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/mentor-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">Write Mentee Progression</h1>
+    </header>
 
       <h2>Add a New Progress Report</h2>
       <div className="progress-form">

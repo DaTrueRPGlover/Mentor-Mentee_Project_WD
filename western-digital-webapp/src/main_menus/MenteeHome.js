@@ -19,12 +19,16 @@ function MenteeHome() {
 
   return (
     <div className="mentee-home">
+
       <header className="header-container">
+       
         <div className="top-header">
+
           <img src={logo} alt="Logo" className="logo" />
-          <button className="logout-button" onClick={handleLogout}>
+           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>
+
         </div>
 
         <h1 className="welcome-message">Welcome Mentee {menteeName}</h1>

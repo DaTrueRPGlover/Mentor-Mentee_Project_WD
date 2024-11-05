@@ -1,7 +1,115 @@
+/* WriteMenteeProgression.css */
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .write-mentee-progression {
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  justify-content: space-between;
+}
+.write-mentee-progression .header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
+
+.write-mentee-progression .logo {
+  width: 150px;
+  height: auto;
+}
+
+.write-mentee-progression .logo-button {
+  background: none; /* Remove default button background */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.write-mentee-progression .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.write-mentee-progression .welcome-message {
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Main content styles */
+.write-mentee-progression .main-content {
+  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.write-mentee-progression .logout-button {
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #91BECD;
+  font-size: 1.2rem; /* Use relative units for font size */
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px; /* Padding remains as is */
+  position: absolute; /* Use absolute positioning */
+  right: 20px; /* Position it 20px from the right */
+  top: 20px; /* Position it 20px from the top */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.write-mentee-progression .logout-button:hover {
+  background-color: #7CAFB7; /* Hover color */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .write-mentee-progression .logout-button {
+    font-size: 1rem; /* Smaller font size for smaller screens */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
   }
+}
+
+@media (max-width: 480px) {
+  .write-mentee-progression .logout-button {
+    font-size: 0.9rem; /* Even smaller font size for very small screens */
+    padding: 6px 12px; /* Adjust padding further for small screens */
+    right: 10px; /* Adjust right positioning for small screens */
+    top: 10px; /* Adjust top positioning for small screens */
+  }
+}
+
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .write-mentee-progression .add-task input {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
+
+/*////////////////*/
+/* BODY STYLES */
+/*////////////////*/
+
+
   
   ul {
     list-style-type: none;

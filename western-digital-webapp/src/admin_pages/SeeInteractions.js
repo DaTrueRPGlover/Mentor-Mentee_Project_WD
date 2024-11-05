@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './SeeInteractions.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 import logo from '../assets/WDC.png';
 
 function SeeInteractions() {
+ 
   const [interactions] = useState([
     { mentor: 'John Doe', mentee: 'Jane Smith', date: '2024-10-15', description: 'Reviewed project progress' },
     { mentor: 'Alice Brown', mentee: 'Mark White', date: '2024-10-16', description: 'Discussed new assignment' },
@@ -18,10 +20,33 @@ function SeeInteractions() {
       interaction.mentee.toLowerCase().includes(menteeFilter.toLowerCase())
   );
 
+  const navigate = useNavigate(); // <-- Initialize navigate
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
-    <div className="see-interactions">
-      <img src={logo} alt="Logo" className="logo" />
-      <h1>Viewing Interactions</h1>
+    <div className="mentor-meetings">
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/admin-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">View Interactions</h1>
+    </header>
+
       <div className="search">
         <div className="filter-section">
           <h2>Search By Mentor</h2>
@@ -53,9 +78,7 @@ function SeeInteractions() {
         ))}
       </ul>
       
-      {/* Move the rectangle below everything */}
-      <div className="rectangle">
-      </div>
+    
     </div>
   );
 }
