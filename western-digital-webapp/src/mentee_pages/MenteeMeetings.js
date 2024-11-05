@@ -13,6 +13,9 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './MenteeMeetings.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import logo from '../assets/WDC.png';
+
 
 const locales = {
   'en-US': require('date-fns/locale/en-US'),
@@ -68,8 +71,35 @@ function MenteeMeetings() {
     setSelectedMeeting(null);
   };
 
+  const navigate = useNavigate(); // <-- Initialize navigate
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
+
   return (
-    <div className="mentee-meetings">
+    
+    <div className="mentor-meetings">
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/mentee-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">View Interactions</h1>
+    </header>
+      
       <Calendar
         localizer={localizer}
         events={meetings}
