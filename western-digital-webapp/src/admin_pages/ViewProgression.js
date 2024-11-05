@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './ViewProgression.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 import logo from '../assets/WDC.png';
 
 function ViewProgressions() {
+  const navigate = useNavigate(); // <-- Initialize navigate
   const [progressReports] = useState([
     { mentee: 'Jane Smith', mentor: 'John Doe', date: '2024-10-15', report: 'Completed first stage of the project.' },
     { mentee: 'Mark White', mentor: 'Alice Brown', date: '2024-10-16', report: 'Improved time management skills.' },
@@ -17,10 +19,37 @@ function ViewProgressions() {
       report.mentor.toLowerCase().includes(filter.toLowerCase())
   );
 
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+  
   return (
+    <div className="mentor-meetings">
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/admin-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">View Mentee Progression</h1>
+    </header>
+
+
+
+
     <div className="view-progressions">
-      <img src={logo} alt="Logo" className="logo" />
-      <h1>Mentee Progress Reports</h1>
       <div className="search">
         <input
           type="text"
@@ -41,6 +70,7 @@ function ViewProgressions() {
       </ul>
       <div className="rectangle">
       </div>
+    </div>
     </div>
   );
 }
