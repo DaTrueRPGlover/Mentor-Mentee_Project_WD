@@ -29,65 +29,63 @@ function AssignMentor() {
     setMentees(updatedMentees);
   };
 
-
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
   return (
-    <div className="mentor-meetings">
+    <div className="assign-mentor-container">
+      <header className="header-container">
+        <div className="top-header">
+            <img src={logo} alt="Logo" className="logo" />
 
-    <header className="header-container">
-    <div className="top-header">
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        <h1 className="welcome-message">Assign Mentor To Mentee</h1>
+      </header>
 
-      <button
-        className="logo-button"
-        onClick={() => navigate("/admin-home")}
-      >
-        <img src={logo} alt="Logo" className="logo" />
-      </button>
+      <div className="content-container">
+        <div className="rectangle">
+          {/* Rectangle content if needed */}
+        </div>
 
-      <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
+        <div className="assign-form">
+          <ul>
+            {mentees.map((mentee, index) => (
+              <li key={index} className="mentee-list-item">
+                {mentee.mentee} is mentored by <strong>{mentee.mentor}</strong>
+                <input
+                  type="text"
+                  placeholder="Update mentor"
+                  onChange={(e) => setNewMentor(e.target.value)}
+                />
+                <button onClick={() => handleUpdateMentor(index)}>Update Mentor</button>
+              </li>
+            ))}
+          </ul>
 
-      </div>
-      <h1 className="welcome-message">Assign Mentor To Mentee</h1>
-    </header>
-
-
-      <ul>
-        {mentees.map((mentee, index) => (
-          <li key={index}>
-            {mentee.mentee} is mentored by <strong>{mentee.mentor}</strong>
+          <div className="add-assignment">
             <input
               type="text"
-              placeholder="Update mentor"
-              onChange={(e) => setNewMentor(e.target.value)}
+              value={newMentee}
+              onChange={(e) => setNewMentee(e.target.value)}
+              placeholder="Enter mentee name"
             />
-            <button onClick={() => handleUpdateMentor(index)}>Update Mentor</button>
-          </li>
-        ))}
-      </ul>
-      <div className="add-assignment">
-        <input
-          type="text"
-          value={newMentee}
-          onChange={(e) => setNewMentee(e.target.value)}
-          placeholder="Enter mentee name"
-        />
-        <input
-          type="text"
-          value={newMentor}
-          onChange={(e) => setNewMentor(e.target.value)}
-          placeholder="Enter mentor name"
-        />
-        <button onClick={handleAssignMentor}>Assign Mentor</button>
+            <input
+              type="text"
+              value={newMentor}
+              onChange={(e) => setNewMentor(e.target.value)}
+              placeholder="Enter mentor name"
+            />
+            <button onClick={handleAssignMentor}>Assign Mentor</button>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default AssignMentor;
-

@@ -6,7 +6,7 @@ import createRoutes from './routes/accountRoutes.js';
 import homeworkRoutes from './routes/homeworkRoutes.js';
 import mentorRoutes from './routes/mentorRoutes.js';
 import menteeRoutes from './routes/menteeRoutes.js';
-import menteeNotesRoutes from './routes/menteeNotesRoutes';
+import menteeNotesRoutes from './routes/menteeNotesRoutes.js';
 
 const app = express();
 app.use(express.json());
