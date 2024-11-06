@@ -19,6 +19,4 @@ pool.getConnection()
         console.error('Error connecting to the database:', err);
     });
 
-    console.log('DB_HOST:', process.env.DB_HOST);
-
 export default pool;

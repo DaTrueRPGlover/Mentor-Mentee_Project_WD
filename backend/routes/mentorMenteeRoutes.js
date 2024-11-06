@@ -1,9 +1,10 @@
 import express from 'express';
-import { createMentorMenteeRelationship } from '../database_queries/AdminQueries.js'; // Adjust the import path as necessary
+import { createMentorMenteeRelationship } from '../database_queries/AdminQueries.js';
+import { getMentorMenteeRelationship } from '../database_queries/RelationshipQueries.js';
 
 const router = express.Router();
 
-router.get('/mentors-and-mentees', async (req, res) => {
+/*router.get('/mentors-and-mentees', async (req, res) => {
     try {
         const users = await getAllMentorsAndMentees();
         res.json(users);
@@ -11,7 +12,15 @@ router.get('/mentors-and-mentees', async (req, res) => {
         console.error('Error fetching mentors and mentees:', error);
         res.status(500).json({ message: 'Failed to fetch users' });
     }
-});
+});*/
+
+/*router.get('/get-relationship-mentee', async (req, res)) => {
+    const { menteekey } = req.body;
+
+    try {
+        const relationship = await getMentorMenteeRelationship()
+    }
+}*/
 
 router.post('/assign-mentor', async (req, res) => {
     const { mentorkey, menteekey } = req.body; // Get keys from request body
