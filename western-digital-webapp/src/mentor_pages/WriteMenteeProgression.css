@@ -12,7 +12,7 @@
   width: 100%;
   font-family: Arial, sans-serif;
   text-align: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* Start the content from the top */
 }
 .write-mentee-progression .header-container {
   display: flex;
@@ -125,11 +125,13 @@
     font-weight: bold;
   }
   
-  .write-mentee-progressio-progress-form {
+  .write-mentee-progression-progress-form {
     margin-top: 20px;
+    position: relative; /* Make the container a reference for absolute positioning */
+
   }
   
-  .write-mentee-progressio-input, textarea {
+  .write-mentee-progression-input, textarea {
     margin-right: 10px;
     padding: 10px;
     font-size: 1em;
@@ -141,15 +143,43 @@
     height: 100px;
   }
   
-  button {
-    padding: 10px 20px;
+  .write-mentee-progression .submit-button {
+    position: absolute; /* Position it absolutely */
+    bottom: 20px; /* Place it 20px from the bottom */
+    right: 20px; /* Place it 20px from the left */
     background-color: #007bff;
     color: white;
     border: none;
+    padding: 10px 20px;
     cursor: pointer;
   }
-  
-  button:hover {
+  .write-mentee-progression button:hover {
     background-color: #0056b3;
   }
-  
+
+
+ /* Additional Styles for Attitude Question */
+.write-mentee-progression .question-group p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.write-mentee-progression .question-group input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+  margin-left: 0;
+  background-color: transparent;
+}
+
+.write-mentee-progression .question-group label {
+  display: inline-block;
+  font-size: 1rem;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.write-mentee-progression .question-group input[type="radio"]:checked + label {
+  color: #007bff;
+}
