@@ -53,7 +53,7 @@ function WriteMenteeProgression() {
       <h1 className="welcome-message">Write Mentee Progression</h1>
     </header>
 
-      <h2>Add a New Progress Report</h2>
+  
       <div className="progress-form">
         <input
           type="text"
