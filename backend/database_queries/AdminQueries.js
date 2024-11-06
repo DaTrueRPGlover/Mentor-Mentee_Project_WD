@@ -118,7 +118,91 @@ export const createAccount = async (firstName, lastName, email, password, depart
         connection.release(); // Release the connection back to the pool
     }
 };
+// Fetch mentor names
+export const getMentorNames = async () => {
+    console.log('Fetching mentor names and roles...');
+    const connection = await pool.getConnection();
 
+    try {
+        const query = `
+            SELECT 
+                name AS mentor_name, 
+                lastname AS mentor_lastname,
+                role AS mentor_role
+            FROM 
+                userInfo
+            WHERE 
+                role = 'mentor';  -- Filter by mentor role
+        `;
+        const [results] = await connection.execute(query);
+        console.log('Fetched mentor names:', results);
+        return results;  // Return the list of mentors
+    } catch (error) {
+        console.error('Error fetching mentor names:', error);
+        throw error;
+    } finally {
+        connection.release();  // Release the connection
+    }
+};
+
+
+export const getMenteeNames = async () => {
+    console.log('Fetching mentee names...');
+    const connection = await pool.getConnection();
+
+    try {
+        const query = `
+            SELECT 
+                name AS mentee_name,
+                lastname AS mentee_lastname,
+                role AS mentee_role
+            FROM 
+                userInfo
+            WHERE 
+                role = 'mentee';  -- Filter by mentee role
+        `;
+        const [results] = await connection.execute(query);
+        console.log('Fetched mentee names:', results);
+        return results;  // Return the list of mentees
+    } catch (error) {
+        console.error('Error fetching mentee names:', error);
+        throw error;
+    } finally {
+        connection.release();  // Release the connection
+    }
+};
+
+
+
+// // Fetch mentee names
+// export const getMenteeNames = async () => {
+//     console.log('Fetching mentee names and roles...');
+//     const connection = await pool.getConnection();
+
+//     try {
+//         const query = `
+//             SELECT 
+//                 ui.name AS mentee_name,
+//                 ui.lastname AS mentee_lastname,
+//                 ui.role AS mentee_role
+//             FROM 
+//                 mentor_mentee_relationship mmr
+//             JOIN 
+//                 userInfo ui ON mmr.menteeId = ui.userid;
+//         `;
+//         const [results] = await connection.execute(query);
+//         console.log('Fetched mentee names:', results);
+//         return results; // Return mentee results
+//     } catch (error) {
+//         console.error('Error fetching mentee names:', error);
+//         throw error;
+//     } finally {
+//         connection.release();
+//     }
+// };
+
+
+  
 
 
 

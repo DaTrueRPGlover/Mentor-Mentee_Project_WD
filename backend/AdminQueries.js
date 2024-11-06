@@ -99,3 +99,52 @@ export const createAccount = async (firstName, lastName, email, password, depart
         connection.release();
     }
 };
+export const getMentorNames = async () => {
+    console.log('Fetching mentor names and roles...');
+    const connection = await pool.getConnection();
+    const query = `
+    SELECT 
+        name, 
+        lastname,
+        role
+    FROM 
+        userInfo
+    WHERE 
+        role = 'mentor';  -- Filter by mentor role
+    `;
+    try {
+        const [results] = await connection.execute(query);
+        console.log('Fetched mentor names:', results);
+        return results;  // Return the list of mentors
+    } catch (error) {
+        console.error('Error fetching mentor names:', error);
+        throw error;
+    } finally {
+        connection.release();  // Release the connection
+    }
+};
+export const getMenteeNames = async () => {
+    console.log('Fetching mentee names...');
+    const connection = await pool.getConnection();
+    const query = `
+    SELECT 
+        name,
+        lastname,
+        role
+    FROM 
+        userInfo
+    WHERE 
+        role = 'mentee';  -- Filter by mentee role
+    `;
+    try {
+        const [results] = await connection.execute(query);
+        console.log('Fetched mentee names:', results);
+        return results;  // Return the list of mentees
+    } catch (error) {
+        console.error('Error fetching mentee names:', error);
+        throw error;
+    } finally {
+        connection.release();  // Release the connection
+    }
+};
+

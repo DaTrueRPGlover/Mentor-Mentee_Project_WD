@@ -1,27 +1,111 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AssignMentor.css';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import logo from '../assets/WDC.png';
 
 function AssignMentor() {
-  const navigate = useNavigate(); // <-- Initialize navigate
+  const navigate = useNavigate(); // Initialize navigate
 
-  const [mentees, setMentees] = useState([
-    { mentee: 'Jane Smith', mentor: 'John Doe' },
-    { mentee: 'Mark White', mentor: 'Alice Brown' },
-  ]);
-
+  const [mentees, setMentees] = useState([]);
   const [newMentee, setNewMentee] = useState('');
   const [newMentor, setNewMentor] = useState('');
+  
+  // State to hold fetched mentor and mentee names
+  const [mentors, setMentors] = useState([]);
+  const [menteesList, setMenteesList] = useState([]);
 
-  const handleAssignMentor = () => {
+  // Loading state to handle loading indicators
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch mentor names
+    const fetchMentorNames = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/mentors', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched Mentor Names:', data);
+          setMentors(data); // Store fetched mentor names in state
+        } else {
+          console.error('Failed to fetch mentor names:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching mentor names:', error);
+      }
+    };
+
+    // Fetch mentee names
+    const fetchMenteeNames = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/mentees', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched Mentee Names:', data);
+          setMenteesList(data); // Store fetched mentee names in state
+        } else {
+          console.error('Failed to fetch mentee names:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching mentee names:', error);
+      }
+    };
+
+    // Fetch both mentor and mentee names
+    const fetchData = async () => {
+      await fetchMentorNames();
+      await fetchMenteeNames();
+      setLoading(false); // Set loading to false once data is fetched
+    };
+
+    fetchData(); // Fetch mentor and mentee names when component mounts
+  }, []);
+
+  // Handle assigning mentor to mentee
+  const handleAssignMentor = async () => {
     if (newMentee.trim() && newMentor.trim()) {
-      setMentees([...mentees, { mentee: newMentee, mentor: newMentor }]);
-      setNewMentee(''); // Clear the input fields after adding
-      setNewMentor('');
+      const newAssignment = { mentee: newMentee, mentor: newMentor };
+      
+      // Update local state to reflect new assignment
+      setMentees((prevMentees) => [...prevMentees, newAssignment]);
+
+      // Send the assignment to the backend
+      try {
+        const response = await fetch('http://localhost:3001/api/assign-mentor', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newAssignment),
+        });
+
+        if (response.ok) {
+          console.log('Mentor assigned successfully');
+          setNewMentee('');
+          setNewMentor('');
+        } else {
+          console.error('Failed to assign mentor:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error assigning mentor:', error);
+      }
+    } else {
+      console.error('Please select both a mentor and a mentee.');
     }
   };
 
+  // Handle updating mentor for an existing mentee
   const handleUpdateMentor = (index) => {
     const updatedMentees = mentees.map((mentee, i) =>
       i === index ? { ...mentee, mentor: newMentor } : mentee
@@ -29,6 +113,7 @@ function AssignMentor() {
     setMentees(updatedMentees);
   };
 
+  // Handle logout functionality
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -38,8 +123,7 @@ function AssignMentor() {
     <div className="assign-mentor-container">
       <header className="header-container">
         <div className="top-header">
-            <img src={logo} alt="Logo" className="logo" />
-
+          <img src={logo} alt="Logo" className="logo" />
           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>
@@ -49,7 +133,35 @@ function AssignMentor() {
 
       <div className="content-container">
         <div className="rectangle">
-          {/* Rectangle content if needed */}
+          {/* Display the fetched mentor and mentee names */}
+          <ul>
+            {loading ? (
+              <li>Loading...</li>
+            ) : (
+              <>
+                <h3>Mentors:</h3>
+                {mentors.length > 0 ? (
+                  mentors.map((mentor, index) => (
+                    <li key={index}>
+                      <strong>{mentor.name} {mentor.lastname} (Mentor)</strong>
+                    </li>
+                  ))
+                ) : (
+                  <li>No mentors found.</li>
+                )}
+                <h3>Mentees:</h3>
+                {menteesList.length > 0 ? (
+                  menteesList.map((mentee, index) => (
+                    <li key={index}>
+                      <span>{mentee.name} {mentee.lastname} (Mentee)</span>
+                    </li>
+                  ))
+                ) : (
+                  <li>No mentees found.</li>
+                )}
+              </>
+            )}
+          </ul>
         </div>
 
         <div className="assign-form">
