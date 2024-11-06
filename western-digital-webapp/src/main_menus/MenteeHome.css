@@ -18,6 +18,7 @@
   width: 150px;
   height: auto;
 }
+
 /* Container for the whole page */
 .mentee-home {
   display: flex;
@@ -33,6 +34,15 @@
   text-align: center;
   margin: 20px 0;
 }
+
+.mentee-home .header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
 /* Header styles */
 .mentee-home .top-header {
   display: flex;
@@ -109,13 +119,7 @@
 }
 
 
-.mentee-home .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-top: 20px;
-}
+
 .mentee-home .circle:hover {
   background-color: #7CAFB7; /* Button background on hover */
 }

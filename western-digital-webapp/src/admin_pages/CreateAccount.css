@@ -6,6 +6,7 @@
   padding: 20px;
   text-align: center;
   background-color: transparent; /* Set to transparent */
+  margin-bottom: 15px;
 }
 
 .create-account input, .create-account select {
@@ -18,10 +19,16 @@
 .create-account h2 {
   margin-bottom: 30px; /* Add space below the main heading */
   font-size: 40px;
+  background-color: inherit; /* Add*/
 }
-.create-account h1 {
+/* .create-account h1 {
   font-size: large;
-  background-color: transparent; /* Transparent heading */
+  background-color: inherit;
+  padding: 10px;
+} */
+.mentor-meetings h1 {
+  font-size: large;
+  background-color: inherit;
   padding: 10px;
 }
 
@@ -75,5 +82,8 @@
   top: 20px;
   left: 20px;        /* Optional: Add some margin for spacing */
   /* background-color: #ADD8E6; */ /* Optional background */
+}
+.create-account .space {
+  background-color: inherit; /* Optional*/
 }
 

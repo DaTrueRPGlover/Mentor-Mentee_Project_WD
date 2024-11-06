@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './InteractWithMentor.css';
-import logo from "../assets/WDC.png";
+import logo from "../assets/WDC.png"; // Adjust the path as needed
 
 function InteractWithMentor() {
   const [messages, setMessages] = useState([]);
@@ -49,14 +49,34 @@ function InteractWithMentor() {
       .catch((error) => console.error('Error sending message:', error));
   };
 
+
+  const navigate = useNavigate(); // <-- Initialize navigate
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
-    <div className="interact-with-mentor">
-      <header className="header-container">
-        <div className="top-header">
-          <img src={logo} alt="Logo" className="logo" />
-        </div>
-        <h1 className="welcome-message">Interacting</h1>
-      </header>
+    <div className="mentor-meetings">
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/mentee-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">View Interactions</h1>
+    </header>
+    
       <div className="message-list">
         <ul>
           {messages.map((message, index) => (

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './CreateAccount.css';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 import logo from '../assets/WDC.png';
+
+
 
 function CreateAccount() {
   const [first, setFirst] = useState('');
@@ -56,11 +59,37 @@ const handleCreateAccount = async (e) => {
   }
 };
 
+const navigate = useNavigate(); // <-- Initialize navigate
+const handleLogout = () => {
+  localStorage.clear();
+  navigate("/");
+};
+
 
   return (
-    <div className="create-account">
-      <img src={logo} alt="Logo" className="logo" />
-      <h2>Create Account</h2>
+    
+  
+    
+    <div className="mentor-meetings">
+
+    <header className="header-container">
+    <div className="top-header">
+
+      <button
+        className="logo-button"
+        onClick={() => navigate("/admin-home")}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+      </button>
+
+      <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+
+      </div>
+      <h1 className="welcome-message">Create Account</h1>
+    </header>
+      
       <div className="rectangle">
         <form className="account-form" onSubmit={handleCreateAccount}>
           <input 
@@ -103,6 +132,7 @@ const handleCreateAccount = async (e) => {
             <option value="mentee">Mentee</option>
             <option value="mentor">Mentor</option>
           </select>
+          <div className="space"></div>
           <button type="submit" className="submit-button">Create Account</button>
         </form>
       </div>
@@ -116,7 +146,9 @@ const handleCreateAccount = async (e) => {
         ))}
       </ul>
     </div>
+   
   );
 }
+
 
 export default CreateAccount;
