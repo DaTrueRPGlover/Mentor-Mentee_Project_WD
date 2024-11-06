@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./WriteMenteeProgression.css";
 import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 import logo from "../assets/WDC.png";
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import MoodIcon from '@mui/icons-material/Mood';
 
 function WriteMenteeProgression() {
   const navigate = useNavigate(); // <-- Initialize navigate
@@ -69,7 +72,9 @@ function WriteMenteeProgression() {
             Logout
           </button>
         </div>
+        <div className="welcome-message-container">
         <h1 className="welcome-message">Write Mentee Progression</h1>
+        </div>
       </header>
 
       <div className="progress-form">
@@ -87,7 +92,10 @@ function WriteMenteeProgression() {
 
          <div className="form-box">
         <div className="question-group">
-          <p>Skipped Meeting?</p>
+        <div className="form-title">
+              <EventBusyOutlinedIcon className="form-title-icon" />
+              <p>Skipped Meeting?</p>
+            </div>
 
           <input
             type="radio"
@@ -111,8 +119,10 @@ function WriteMenteeProgression() {
 
         <div className="form-box">
         <div className="question-group">
+        <div className="form-title">
+        <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
           <p>Mentee Finished HW?</p>
-
+          </div>
           <input
             type="radio"
             name="finishedHW"
@@ -135,16 +145,21 @@ function WriteMenteeProgression() {
 
         <div className="form-box">
         <div className="question-group">
+        <div className="form-title">
+        <MoodIcon className="form-title-icon" />
           <p>Mentee's Attitude Towards Learning</p>
+          </div>
           <input
             type="radio"
-            id="attitude-not-good"
+            id="attitude-very-good"
             name="attitude"
-            value="Not Good"
-            checked={attitude === "Not Good"}
+            value="Very Good"
+            checked={attitude === "Very Good"}
             onChange={(e) => setAttitude(e.target.value)}
           />
-          <label htmlFor="attitude-not-good">Not Good</label>
+          
+          <label htmlFor="attitude-very-good">Very Good</label>
+          
           <input
             type="radio"
             id="attitude-average"
@@ -156,14 +171,15 @@ function WriteMenteeProgression() {
           <label htmlFor="attitude-average">Average</label>
           <input
             type="radio"
-            id="attitude-very-good"
+            id="attitude-not-good"
             name="attitude"
-            value="Very Good"
-            checked={attitude === "Very Good"}
+            value="Not Good"
+            checked={attitude === "Not Good"}
             onChange={(e) => setAttitude(e.target.value)}
           />
-          <label htmlFor="attitude-very-good">Very Good</label>
+          <label htmlFor="attitude-not-good">Not Good</label>
         </div>
+
         </div>
         <div class="comment-container">
         <textarea
@@ -172,7 +188,7 @@ function WriteMenteeProgression() {
           placeholder="Extra comments here"
         />
         <button className="submit-button" onClick={handleAddReport}>
-          Submit Progress Report
+          Submit
         </button>
         </div>
       </div>

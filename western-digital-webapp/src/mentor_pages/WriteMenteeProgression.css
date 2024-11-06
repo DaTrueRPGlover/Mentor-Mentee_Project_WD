@@ -12,7 +12,7 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  font-family: Arial, sans-serif;
+  font-family: "Monograph", monospace;
   text-align: center;
   justify-content: flex-start; /* Start the content from the top */
 }
@@ -46,10 +46,25 @@
   padding: 0 20px;
 }
 
+
+/* Style for the welcome message box */
+.write-mentee-progression .welcome-message-container {
+  background-color: purple; /* Set box color to purple */
+  color: white; /* Set text color to white */
+  padding: 20px; /* Add padding inside the box */
+  margin: 20px 0; /* Space above and below the box */
+  border-radius: 10px; /* Optional: rounded corners */
+  text-align: center; /* Center-align the text */
+  width: fit-content; /* Adjust the box to fit the text content */
+}
+
+
 .write-mentee-progression .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
+  background-color: purple; /* Set box color to purple */
+
 }
 
 /* Main content styles */
@@ -135,7 +150,7 @@
     margin-bottom: 10px;
     width: 40%;
     background-color: white;
-    font-family: Arial, sans-serif;
+    font-family: "Monograph", monospace;
   }
   
   .write-mentee-progression .submit-button {
@@ -147,7 +162,7 @@
     padding: 10px 20px;
     cursor: pointer;
   }
-  .write-mentee-progression button:hover {
+  .write-mentee-progression .submit-button:hover {
     background-color: #0056b3;
   }
 
@@ -164,6 +179,7 @@
   font-weight: bold;
   color: #333;
   background-color: transparent;
+
 
 }
 
@@ -184,11 +200,6 @@
 
 }
 
-.write-mentee-progression .question-group input[type="radio"]:checked + label {
-  color: #007bff;
-  background-color: transparent;
-
-}
 
 /* Form box styling */
 .form-box {
@@ -209,8 +220,9 @@
   max-width: 600px;
   padding: 10px;
   border-radius: 5px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   margin-right: 20px;
+  font-family: "Monograph", monospace;
 }
 
 /* Style for the date picker input */
@@ -219,6 +231,7 @@
   max-width: 600px;
   padding: 10px;
   border-radius: 5px;
+  font-family: "Monograph", monospace;
   background-color: white; /* Make sure the background is white */
 }
 
@@ -238,6 +251,40 @@
   align-items: center; /* Center elements horizontally */
   margin-top: 20px; /* Space above the comment box */
 }
+
+/* Style the form title container */
+.write-mentee-progression .form-title {
+  display: flex;
+  background-color: white; /* Make sure the background is white */
+  margin-bottom: 20px; /* Space below the form title */
+  align-items: center; /* Align items (text and icon) vertically */
+  justify-content: center; /* Center the content horizontally */
+}
+
+/* Style the icon */
+.write-mentee-progression .form-title-icon {
+  width: 26px; /* Adjust the size of the icon */
+  height: 26px; /* Adjust the size of the icon */
+  margin-right: 4px; /* Space between the icon and the text */
+  vertical-align: middle; /* Align the icon vertically in the middle of the text */
+  background-color: white; /* Make sure the background is white */
+
+}
+
+/* Style the form title text */
+.write-mentee-progression .form-title p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0; /* Remove any margin from the paragraph */
+  line-height: 1.5; /* Set a consistent line height */
+}
+
+
+
+
+
+
+
 
 @media (max-width: 768px) {
   .write-mentee-progression .progress-form input[type="text"],
