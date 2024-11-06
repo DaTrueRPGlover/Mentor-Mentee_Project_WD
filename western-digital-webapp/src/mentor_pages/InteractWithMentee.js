@@ -14,8 +14,10 @@ function InteractWithMentee() {
       return;
     }
 
+    console.log(user)
     const menteekey = user.menteekey;
     const mentorkey = user.mentorkey;
+
 
     if (!menteekey || !mentorkey) {
       console.error('Keys not found');

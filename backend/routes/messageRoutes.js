@@ -5,7 +5,7 @@ import {
   getMessagesByMentorKey,
   createCheckConversationKey,
   insertMessage,
-} from '../database_queries/conversationQueries.js';
+} from '../database_queries/ConversationQueries.js';
 
 const router = express.Router();
 
@@ -17,8 +17,10 @@ router.get('/', async (req, res) => {
     let messages;
     if (role === 'mentee') {
       messages = await getMessagesByMenteeKey(key);
+      console.log("Messageing Here:", messages);
     } else if (role === 'mentor') {
       messages = await getMessagesByMentorKey(key);
+      console.log("Messageing Here:",messages);
     } else {
       return res.status(400).json({ error: 'Invalid role' });
     }
