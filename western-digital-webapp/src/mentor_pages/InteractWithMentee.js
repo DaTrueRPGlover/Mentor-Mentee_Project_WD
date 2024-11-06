@@ -5,6 +5,8 @@ import './InteractWithMentee.css';
 function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [menteekey, setMenteeKey] = useState(null);
+  const [mentorkey, setMentorKey] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -14,28 +16,44 @@ function InteractWithMentee() {
       return;
     }
 
-    console.log(user)
-    const menteekey = user.menteekey;
-    const mentorkey = user.mentorkey;
+    console.log('User:', user);
 
 
-    if (!menteekey || !mentorkey) {
-      console.error('Keys not found');
-      return;
-    }
 
-    fetch(`http://localhost:3001/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+    // Fetch the other key
+    fetch(`http://localhost:3001/api/relationships?userid=${user.userId}&role=${user.role}`)
       .then((response) => response.json())
       .then((data) => {
-        const formattedMessages = data.map((msg) => ({
-          sender: msg.isMentee ? 'Mentee' : 'Mentor',
-          content: msg.isMentee ? msg.menteetext : msg.mentortext,
-          timestamp: new Date(msg.date).toLocaleString(),
-        }));
-        setMessages(formattedMessages);
+        console.log('Fetched relationship:', data);
+        if (data.error) {
+          console.error('Error fetching relationship:', data.error);
+          return;
+        }
+        setMentorKey(user.userId);
+        setMenteeKey(data.menteekey);
+        console.log("emntee check",menteekey)
+        console.log("mentor check",mentorkey)
+        if (!menteekey || !mentorkey) {
+          console.error('Keys not found after fetching relationship');
+          return;
+        }
+
+        // Now fetch messages
+        fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Fetched messages:', data);
+            const formattedMessages = data.map((msg) => ({
+              sender: msg.sender_role === 'mentee' ? 'Mentee' : 'Mentor',
+              content: msg.message_text,
+              timestamp: new Date(msg.message_time).toLocaleString(),
+            }));
+            setMessages(formattedMessages);
+          })
+          .catch((error) => console.error('Error fetching messages:', error));
       })
-      .catch((error) => console.error('Error fetching messages:', error));
-  }, []);
+      .catch((error) => console.error('Error fetching relationship:', error));
+  }, [menteekey, mentorkey]);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -45,42 +63,32 @@ function InteractWithMentee() {
         console.error('User not logged in');
         return;
       }
-  
-      const menteekey = user.menteekey;
-      const mentorkey = user.mentorkey;
-  
+      console.log(menteekey)
+      console.log(mentorkey)
       if (!menteekey || !mentorkey) {
         console.error('Keys not found');
         return;
       }
-  
-      // Prepare message data
-      let messageData = {
-        isMentee: user.role.toLowerCase() === 'mentee',
-        isMentor: user.role.toLowerCase() === 'mentor',
+
+      const messageData = {
         menteekey: menteekey,
         mentorkey: mentorkey,
-        menteetext: null,
-        mentortext: null,
+        senderRole: user.role.toLowerCase(),
+        messageText: newMessage,
       };
-  
-      // Set the appropriate text field
-      if (user.role.toLowerCase() === 'mentee') {
-        messageData.menteetext = newMessage;
-      } else if (user.role.toLowerCase() === 'mentor') {
-        messageData.mentortext = newMessage;
-      }
-  
-      fetch('http://localhost:3001/messages', {
+
+      console.log('Sending message with data:', messageData);
+
+      fetch('http://localhost:3001/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(messageData),
       })
         .then((response) => response.json())
         .then((data) => {
-          // Update messages state
-          setMessages([
-            ...messages,
+          console.log('Message sent:', data);
+          setMessages((prevMessages) => [
+            ...prevMessages,
             {
               sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
               content: newMessage,
