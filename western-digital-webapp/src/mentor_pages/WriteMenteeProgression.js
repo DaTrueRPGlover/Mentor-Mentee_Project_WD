@@ -22,25 +22,36 @@ function WriteMenteeProgression() {
   const [newMentee, setNewMentee] = useState("");
   const [newReport, setNewReport] = useState("");
   const [newDate, setNewDate] = useState("");
-  const [skippedMeeting, setSkippedMeeting] = useState(null); // For skipped meeting question
-  const [finishedHW, setFinishedHW] = useState(null); // For finished HW question
+  const [skippedMeeting, setSkippedMeeting] = useState(""); // Changed to empty string for consistency
+  const [finishedHW, setFinishedHW] = useState(""); // Changed to empty string for consistency
   const [attitude, setAttitude] = useState(""); // New state for attitude
 
   const handleAddReport = () => {
     if (newMentee.trim() && newReport.trim() && newDate.trim()) {
-      setProgressReports([
-        ...progressReports,
-        { mentee: newMentee, date: newDate, report: newReport },
-      ]);
+      const newReportData = {
+        mentee: newMentee,
+        date: newDate,
+        report: newReport,
+        skippedMeeting, // Add skipped meeting value
+        finishedHW, // Add finished HW value
+        attitude, // Add attitude value
+      };
+
+      console.log("New Report Submitted:", newReportData);
+
+      setProgressReports([...progressReports, newReportData]);
       setNewMentee("");
       setNewReport("");
       setNewDate("");
+      setSkippedMeeting(null); // Reset skipped meeting selection
+      setFinishedHW(null); // Reset finished HW selection
+      setAttitude(null); // Reset attitude selection
     }
   };
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/"); // Redirect user to the home page after logout
   };
 
   return (
@@ -74,6 +85,7 @@ function WriteMenteeProgression() {
           onChange={(e) => setNewDate(e.target.value)}
         />
 
+         <div className="form-box">
         <div className="question-group">
           <p>Skipped Meeting?</p>
 
@@ -84,7 +96,7 @@ function WriteMenteeProgression() {
             checked={skippedMeeting === "Yes"}
             onChange={(e) => setSkippedMeeting(e.target.value)}
           />
-          <label htmlFor="skippedMeeting">Yes</label>
+          <label htmlFor="skippedMeetingYes">Yes</label>
 
           <input
             type="radio"
@@ -93,8 +105,11 @@ function WriteMenteeProgression() {
             checked={skippedMeeting === "No"}
             onChange={(e) => setSkippedMeeting(e.target.value)}
           />
-          <label htmlFor="skippedMeeting">No</label>
+          <label htmlFor="skippedMeetingNo">No</label>
         </div>
+        </div>
+
+        <div className="form-box">
         <div className="question-group">
           <p>Mentee Finished HW?</p>
 
@@ -105,7 +120,7 @@ function WriteMenteeProgression() {
             checked={finishedHW === "Yes"}
             onChange={(e) => setFinishedHW(e.target.value)}
           />
-          <label htmlFor="skippedMeeting">Yes</label>
+          <label htmlFor="finishedHWYes">Yes</label>
 
           <input
             type="radio"
@@ -114,9 +129,11 @@ function WriteMenteeProgression() {
             checked={finishedHW === "No"}
             onChange={(e) => setFinishedHW(e.target.value)}
           />
-          <label htmlFor="skippedMeeting">No</label>
+          <label htmlFor="finishedHWNo">No</label>
+        </div>
         </div>
 
+        <div className="form-box">
         <div className="question-group">
           <p>Mentee's Attitude Towards Learning</p>
           <input
@@ -124,6 +141,7 @@ function WriteMenteeProgression() {
             id="attitude-not-good"
             name="attitude"
             value="Not Good"
+            checked={attitude === "Not Good"}
             onChange={(e) => setAttitude(e.target.value)}
           />
           <label htmlFor="attitude-not-good">Not Good</label>
@@ -132,6 +150,7 @@ function WriteMenteeProgression() {
             id="attitude-average"
             name="attitude"
             value="Average"
+            checked={attitude === "Average"}
             onChange={(e) => setAttitude(e.target.value)}
           />
           <label htmlFor="attitude-average">Average</label>
@@ -140,11 +159,13 @@ function WriteMenteeProgression() {
             id="attitude-very-good"
             name="attitude"
             value="Very Good"
+            checked={attitude === "Very Good"}
             onChange={(e) => setAttitude(e.target.value)}
           />
           <label htmlFor="attitude-very-good">Very Good</label>
         </div>
-
+        </div>
+        <div class="comment-container">
         <textarea
           value={newReport}
           onChange={(e) => setNewReport(e.target.value)}
@@ -153,6 +174,7 @@ function WriteMenteeProgression() {
         <button className="submit-button" onClick={handleAddReport}>
           Submit Progress Report
         </button>
+        </div>
       </div>
     </div>
   );
