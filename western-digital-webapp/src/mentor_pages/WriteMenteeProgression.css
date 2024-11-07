@@ -49,7 +49,7 @@
 
 /* Style for the welcome message box */
 .write-mentee-progression .welcome-message-container {
-  background-color: purple; /* Set box color to purple */
+  background-color: #a34eff; /* Set box color to purple */
   color: white; /* Set text color to white */
   padding: 20px; /* Add padding inside the box */
   margin: 20px 0; /* Space above and below the box */
@@ -63,7 +63,7 @@
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
-  background-color: purple; /* Set box color to purple */
+  background-color: #a34eff; /* Set box color to purple */
 
 }
 
