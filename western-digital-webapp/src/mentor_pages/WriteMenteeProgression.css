@@ -12,7 +12,7 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  font-family: "Monograph", monospace;
+  font-family: Arial, sans-serif;
   text-align: center;
   justify-content: flex-start; /* Start the content from the top */
 }
@@ -150,7 +150,7 @@
     margin-bottom: 10px;
     width: 40%;
     background-color: white;
-    font-family: "Monograph", monospace;
+    font-family: Arial, sans-serif;
   }
   
   .write-mentee-progression .submit-button {
@@ -161,6 +161,7 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    margin-bottom: 10px;
   }
   .write-mentee-progression .submit-button:hover {
     background-color: #0056b3;
@@ -222,7 +223,7 @@
   border-radius: 5px;
   background-color: #ffffff;
   margin-right: 20px;
-  font-family: "Monograph", monospace;
+  font-family: Arial, sans-serif;
 }
 
 /* Style for the date picker input */
@@ -231,7 +232,7 @@
   max-width: 600px;
   padding: 10px;
   border-radius: 5px;
-  font-family: "Monograph", monospace;
+  font-family: Arial, sans-serif;
   background-color: white; /* Make sure the background is white */
 }
 
