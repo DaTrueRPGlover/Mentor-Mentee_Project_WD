@@ -49,6 +49,8 @@ strong {
   padding: 0 20px;
 }
 
+
+
 .todo-progression .welcome-message {
   font-size: 32px;
   text-align: center;
@@ -214,6 +216,11 @@ background-color: transparent;
 
 }
 
+
+.todo-progression .tasks-section button,
+.todo-progression .form-section button{
+  background-color: #53a5ff;
+}
 
 /* Form box styling */
 .todo-progression .tasks-section .form-box,
