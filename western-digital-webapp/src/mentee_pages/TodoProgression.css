@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+strong {
+  background-color: white; /* Make sure the background is white */
+  margin-right: 10px;
+}
+
 .todo-progression {
   display: flex;
   flex-direction: column;
@@ -44,10 +49,24 @@
   padding: 0 20px;
 }
 
+
+
 .todo-progression .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
+  background-color: #a34eff; 
+
+}
+
+.todo-progression .welcome-message-container {
+  background-color: #a34eff; 
+  color: white; 
+  padding: 20px; 
+  margin: 20px 0; 
+  border-radius: 10px; 
+  text-align: center; 
+  width: fit-content; 
 }
 
 /* Main content styles */
@@ -60,22 +79,49 @@
   justify-content: center;
 }
 
-/* List styles */
-ul {
+
+/* Ensure list items and forms look cohesive */
+.todo-progression ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
+  background-color: white; /* Make sure the background is white */
+
+  
 }
 
-/* List item styles */
-li {
+/* Adjust form-box style within form-section */
+.todo-progression .form-section .form-box {
+  width: 100%; /* Full width inside form-section */
+  margin: 0 auto 20px auto;
+  
+}
+
+
+
+
+.todo-progression .tasks-section li {
   margin: 10px 0;
+  background-color: white; /* Make sure the background is white */
+
 }
 
+.todo-progression .comment-container textarea {
+  height: 200px;
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: white;
+  font-family: "Monograph", monospace;
+}
 
 
 /* Add task section styles */
 .add-task {
   margin-top: 20px;
+  background-color: white; /* Make sure the background is white */
+
 }
 
 /* Input styles for new tasks */
@@ -122,6 +168,146 @@ li {
   background-color: #7CAFB7; /* Hover color */
 }
 
+
+.todo-progression .submit-button {
+
+
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.todo-progression .submit-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Additional Styles for Attitude Question */
+
+.question-group {
+background-color: transparent; /* Ensure no background color in the question group */
+}
+
+.todo-progression .question-group p {
+font-size: 1.2rem;
+margin-bottom: 10px;
+font-weight: bold;
+color: #333;
+background-color: transparent;
+
+
+}
+
+.todo-progression .question-group input[type="radio"] {
+width: auto;
+margin-right: 8px;
+margin-left: 0;
+background-color: transparent;
+transform: scale(1.5); /* Increase size of radio buttons */
+}
+
+.todo-progression .question-group label {
+display: inline-block;
+font-size: 1rem;
+margin-right: 20px;
+cursor: pointer;
+background-color: transparent;
+
+}
+
+
+.todo-progression .tasks-section button,
+.todo-progression .form-section button{
+  background-color: #53a5ff;
+}
+
+/* Form box styling */
+.todo-progression .tasks-section .form-box,
+.todo-progression .form-section .form-box  {
+width: 100%;
+margin: 20px auto;
+padding: 20px;
+border: 1px solid #ddd;
+border-radius: 8px;
+background-color: #ffffff !important; /* Force background to white in case of inheritance issues */
+background: #ffffff !important; /* Ensure no conflicting background styles */
+
+}
+
+
+
+
+/* Add box shadow to all form elements */
+.todo-progression .progress-form input[type="text"],
+.todo-progression .progress-form input[type="date"],
+.todo-progression .form-box 
+{
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow with larger blur radius and opacity */
+}
+
+
+/* Styling for the comment box container */
+.todo-progression .comment-container {
+display: flex;
+flex-direction: column; /* Stack the elements vertically */
+align-items: center; /* Center elements horizontally */
+margin-top: 20px; /* Space above the comment box */
+background-color: #ff0057;
+width: 100%; /* Full width inside form-section */
+
+}
+
+/* Style the form title container */
+.todo-progression .form-title {
+display: flex;
+background-color: white; /* Make sure the background is white */
+margin-bottom: 20px; /* Space below the form title */
+align-items: center; /* Align items (text and icon) vertically */
+justify-content: center; /* Center the content horizontally */
+}
+
+/* Style the icon */
+.todo-progression .form-title-icon {
+width: 26px; /* Adjust the size of the icon */
+height: 26px; /* Adjust the size of the icon */
+margin-right: 4px; /* Space between the icon and the text */
+vertical-align: middle; /* Align the icon vertically in the middle of the text */
+background-color: white; /* Make sure the background is white */
+
+}
+
+/* Style the form title text */
+.todo-progression .form-title p {
+font-size: 1.2rem;
+font-weight: bold;
+margin: 0; /* Remove any margin from the paragraph */
+line-height: 1.5; /* Set a consistent line height */
+}
+
+
+/* Container for tasks and form split */
+.todo-progression .content-split {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the top */
+  gap: 20px; /* Space between tasks and form */
+  margin: 0 auto;
+  width: 80%; /* Adjust width as needed */
+}
+
+/* Style for the tasks section */
+.todo-progression .tasks-section,
+.todo-progression .form-section {
+  flex: 1 1 100%;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ff0057;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .todo-progression .logout-button {
@@ -144,5 +330,14 @@ li {
 @media (max-width: 768px) {
   .todo-progression .add-task input {
     width: 100%; /* Full width on smaller screens */
+  }
+}
+
+
+/* Responsive styles for split layout */
+@media (max-width: 768px) {
+  .todo-progression .content-split {
+    flex-direction: column; /* Stack vertically on small screens */
+    width: 90%;
   }
 }
