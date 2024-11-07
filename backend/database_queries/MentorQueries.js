@@ -26,6 +26,22 @@ export const getMenteeKeyByMentorKey = async (mentorkey) => {
     }
 };
 
+/*export const getMenteesNamesByMentorKey = async (mentorkey) => {
+    const sql = `
+    SELECT mentee.name AS mentee_name
+    FROM mentee
+    JOIN mentor_mentee_relationship ON mentee.menteekey = mentor_mentee_relationship.menteekey
+    WHERE mentor_mentee_relationship.mentorkey = ?;
+    `;
+    try {
+        const[rows] = await pool.execute(sql, [mentorkey]);
+        return rows.length > 0 ? rows[0].mentee_name : null; // Returns the mentee's UUID or null if not found
+    } catch (error) {
+        console.error('Error getting the mentee names with mentorkey: ', error);
+        throw error;
+    }
+}*/
+
 export const getMentorDepartmentKeyByKey = async (mentorkey) => { 
     const sql = 'SELECT mentor.departmentkey FROM mentor WHERE mentorkey = ?'; 
     try {
@@ -59,6 +75,7 @@ export const getMentorEmailByKey = async (mentorkey) => {
     }
 };*/
 
+console.log('Mentees names for this mentor: ' + await getMenteesNamesByMentorKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));
 // console.log('Mentor name: ' + await getMentorNameByKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));
 // console.log('Mentor email: ' + await getMentorEmailByKey('2f7eddd2-987f-11ef-a92b-02a12f7436d7'));
 // //console.log('Mentor username: ' + await getMentorUsernameByKey('10'));
