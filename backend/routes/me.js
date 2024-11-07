@@ -1,6 +1,5 @@
 import express from 'express';
 import { getMenteeNames } from '../database_queries/AdminQueries.js'; // Adjust path if necessary
-
 const router = express.Router();
 
 // Fetch mentee names
