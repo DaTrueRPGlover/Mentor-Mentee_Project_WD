@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
 function MentorMeetings({ mentorkey }) {
-  const navigate = useNavigate(); // <-- Initialize navigate
+  const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
@@ -14,7 +14,6 @@ function MentorMeetings({ mentorkey }) {
   const [zoomPassword, setZoomPassword] = useState('');
 
   useEffect(() => {
-    // Fetch the mentor's mentee list on component load
     const fetchMentees = async () => {
       try {
         const mentorinfo = JSON.parse(localStorage.getItem('user'));
@@ -27,7 +26,20 @@ function MentorMeetings({ mentorkey }) {
       }
     };
 
+    const fetchMeetings = async () => {
+      try {
+        const mentorinfo = JSON.parse(localStorage.getItem('user'));
+        const mentorkey = mentorinfo.mentorkey;
+        const response = await fetch(`http://localhost:3001/api/meetings?userId=${mentorkey}`);
+        const data = await response.json();
+        setMeetings(data);
+      } catch (error) {
+        console.error('Error fetching meetings:', error);
+      }
+    };
+
     fetchMentees();
+    fetchMeetings();
   }, [mentorkey]);
 
   const handleScheduleMeeting = async () => {
@@ -50,9 +62,9 @@ function MentorMeetings({ mentorkey }) {
             zoom_password: zoomPassword,
           }),
         });
-
         if (response.status === 201) {
-          setMeetings([...meetings, { mentee: selectedMentee, date: newDate, time: newTime }]);
+          const mentee = mentees.find(m => m.menteekey === selectedMentee);
+          setMeetings([...meetings, { mentee_name: mentee.mentee_name, date: newDate, time: newTime }]);
           setSelectedMentee('');
           setNewDate('');
           setNewTime('');
@@ -77,30 +89,25 @@ function MentorMeetings({ mentorkey }) {
   return (
     <div className="mentor-meetings">
 
-    <header className="header-container">
-    <div className="top-header">
-
-      <button
-        className="logo-button"
-        onClick={() => navigate("/mentor-home")}
-      >
-        <img src={logo} alt="Logo" className="logo" />
-      </button>
-
-      <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-
-      </div>
-      <h1 className="welcome-message">Schedule Mentee Meetings</h1>
-    </header>
-
-
+      <header className="header-container">
+        <div className="top-header">
+          <button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        <h1 className="welcome-message">Schedule Mentee Meetings</h1>
+      </header>
 
       <ul>
         {meetings.map((meeting, index) => (
           <li key={index}>
-            Meeting with <strong>{meeting.mentee}</strong> on {meeting.date} at {meeting.time}
+            Meeting with <strong>{meeting.mentee_name}</strong> on {meeting.date} at {meeting.time}
           </li>
         ))}
       </ul>
