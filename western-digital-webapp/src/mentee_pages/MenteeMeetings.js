@@ -97,7 +97,7 @@ function MenteeMeetings() {
         </button>
 
       </div>
-      <h1 className="welcome-message">View Interactions</h1>
+     
     </header>
       
       <Calendar
@@ -107,7 +107,7 @@ function MenteeMeetings() {
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
         className="calendar"
-        style={{ backgroundColor: 'white' }}
+        style={{ backgroundColor: '#ADD8E6' }}
       />
 
       <Dialog
