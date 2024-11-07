@@ -1,14 +1,13 @@
 import express from 'express';
-import { getMenteeNames } from '../database_queries/AdminQueries.js'; // Adjust path if necessary
+import { getMenteeNames } from '../database_queries/AdminQueries.js';
 
 const router = express.Router();
 
 // Fetch mentee names
-router.get('/mentees', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const mentees = await getMenteeNames();
-        console.log('Fetched mentees:', mentees); // Log the mentees
-        res.json(mentees); // Send the fetched mentee names to the client
+        res.json(mentees);
     } catch (error) {
         console.error('Error fetching mentee names:', error);
         res.status(500).json({ error: 'Failed to fetch mentee names' });

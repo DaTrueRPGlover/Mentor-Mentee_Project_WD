@@ -1,119 +1,3 @@
-// import React, { useState } from 'react';
-// import './InteractWithMentor.css';
-// import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
-// import logo from '../assets/WDC.png';
-
-// function InteractWithMentor() {
-//   const [messages, setMessages] = useState([]);
-//   const [newMessage, setNewMessage] = useState('');
-
-//   const handleSendMessage = () => {
-//     if (newMessage.trim()) {
-//       const user = JSON.parse(localStorage.getItem('user'));
-  
-//       if (!user) {
-//         console.error('User not logged in');
-//         return;
-//       }
-  
-//       const menteekey = user.menteekey;
-//       const mentorkey = user.mentorkey;
-  
-//       if (!menteekey || !mentorkey) {
-//         console.error('Keys not found');
-//         return;
-//       }
-  
-//       // Prepare message data
-//       let messageData = {
-//         isMentee: user.role.toLowerCase() === 'mentee',
-//         isMentor: user.role.toLowerCase() === 'mentor',
-//         menteekey: menteekey,
-//         mentorkey: mentorkey,
-//         menteetext: null,
-//         mentortext: null,
-//       };
-  
-//       // Set the appropriate text field
-//       if (user.role.toLowerCase() === 'mentee') {
-//         messageData.menteetext = newMessage;
-//       } else if (user.role.toLowerCase() === 'mentor') {
-//         messageData.mentortext = newMessage;
-//       }
-  
-//       fetch('http://localhost:3001/messages', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(messageData),
-//       })
-//         .then((response) => response.json())
-//         .then((data) => {
-//           // Update messages state
-//           setMessages([
-//             ...messages,
-//             {
-//               sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
-//               content: newMessage,
-//               timestamp: new Date().toLocaleString(),
-//             },
-//           ]);
-//           setNewMessage('');
-//         })
-//         .catch((error) => console.error('Error sending message:', error));
-//     }
-//   };
-
-
-//   const navigate = useNavigate(); // <-- Initialize navigate
-//   const handleLogout = () => {
-//     localStorage.clear();
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="mentor-meetings">
-
-//     <header className="header-container">
-//     <div className="top-header">
-
-//       <button
-//         className="logo-button"
-//         onClick={() => navigate("/mentee-home")}
-//       >
-//         <img src={logo} alt="Logo" className="logo" />
-//       </button>
-
-//       <button className="logout-button" onClick={handleLogout}>
-//           Logout
-//         </button>
-
-//       </div>
-//       <h1 className="welcome-message">View Interactions</h1>
-//     </header>
-    
-//       <div className="message-list">
-//         <ul>
-//           {messages.map((message, index) => (
-//             <li key={index} className={message.sender.toLowerCase()}>
-//               <strong>{message.sender}:</strong> {message.content}{' '}
-//               <span className="timestamp">({message.timestamp})</span>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//       <div className="message-input">
-//         <textarea
-//           value={newMessage}
-//           onChange={(e) => setNewMessage(e.target.value)}
-//           placeholder="Type your message here..."
-//         />
-//         <button onClick={handleSendMessage}>Send Message</button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default InteractWithMentor;
 // InteractWithMentor.js
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentor.css';
@@ -121,44 +5,35 @@ import './InteractWithMentor.css';
 function InteractWithMentor() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [menteekey, setMenteeKey] = useState(null);
-  const [mentorkey, setMentorKey] = useState(null);
+  const [mentorKey, setMentorKey] = useState(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (!user) {
-      console.error('User not logged in');
+    if (!user || user.role.toLowerCase() !== 'mentee') {
+      console.error('User not logged in or not a mentee');
       return;
     }
 
-    console.log('User:', user);
-
-
-
-    // Fetch the other key
-    fetch(`http://localhost:3001/api/relationships?userid=${user.userId}&role=${user.role}`)
+    // Fetch the mentor assigned to the mentee
+    fetch(`http://localhost:3001/api/relationships/mentor?menteekey=${user.userId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log('Fetched relationship:', data);
+        console.log('Fetched mentor:', data);
         if (data.error) {
-          console.error('Error fetching relationship:', data.error);
-          return;
-        }
-        setMentorKey(data.mentorkey);
-      
-      
-        setMenteeKey(user.userId);
-        
-        console.log("emntee check",menteekey)
-        console.log("mentor check",mentorkey)
-        if (!menteekey || !mentorkey) {
-          console.error('Keys not found after fetching relationship');
+          console.error('Error fetching mentor:', data.error);
           return;
         }
 
-        // Now fetch messages
-        fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+        if (data.length === 0) {
+          console.error('No mentor assigned to this mentee');
+          return;
+        }
+
+        setMentorKey(data[0].mentorkey);
+
+        // Fetch messages with the mentor
+        fetch(`http://localhost:3001/api/messages?menteekey=${user.userId}&mentorkey=${data[0].mentorkey}`)
           .then((response) => response.json())
           .then((data) => {
             console.log('Fetched messages:', data);
@@ -171,32 +46,29 @@ function InteractWithMentor() {
           })
           .catch((error) => console.error('Error fetching messages:', error));
       })
-      .catch((error) => console.error('Error fetching relationship:', error));
-  }, [menteekey, mentorkey]);
+      .catch((error) => console.error('Error fetching mentor:', error));
+  }, []);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
       const user = JSON.parse(localStorage.getItem('user'));
-  
+
       if (!user) {
         console.error('User not logged in');
         return;
       }
-      console.log(menteekey)
-      console.log(mentorkey)
-      if (!menteekey || !mentorkey) {
+
+      if (!user.userId || !mentorKey) {
         console.error('Keys not found');
         return;
       }
 
       const messageData = {
-        menteekey: menteekey,
-        mentorkey: mentorkey,
+        menteekey: user.userId,
+        mentorkey: mentorKey,
         senderRole: user.role.toLowerCase(),
         messageText: newMessage,
       };
-
-      console.log('Sending message with data:', messageData);
 
       fetch('http://localhost:3001/api/messages', {
         method: 'POST',
@@ -205,11 +77,10 @@ function InteractWithMentor() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Message sent:', data);
           setMessages((prevMessages) => [
             ...prevMessages,
             {
-              sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
+              sender: 'Mentee',
               content: newMessage,
               timestamp: new Date().toLocaleString(),
             },
@@ -221,26 +92,32 @@ function InteractWithMentor() {
   };
 
   return (
-    <div className="interact-with-mentee">
-      <h1>Interact with {JSON.parse(localStorage.getItem('user')).role.toLowerCase() === 'mentee' ? 'Mentor' : 'Mentee'}</h1>
-      <div className="message-list">
-        <ul>
-          {messages.map((message, index) => (
-            <li key={index} className={message.sender.toLowerCase()}>
-              <strong>{message.sender}:</strong> {message.content}{' '}
-              <span className="timestamp">({message.timestamp})</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="message-input">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message here..."
-        />
-        <button onClick={handleSendMessage}>Send Message</button>
-      </div>
+    <div className="interact-with-mentor">
+      <h1>Interact with Mentor</h1>
+      {mentorKey ? (
+        <>
+          <div className="message-list">
+            <ul>
+              {messages.map((message, index) => (
+                <li key={index} className={message.sender.toLowerCase()}>
+                  <strong>{message.sender}:</strong> {message.content}{' '}
+                  <span className="timestamp">({message.timestamp})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="message-input">
+            <textarea
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message here..."
+            />
+            <button onClick={handleSendMessage}>Send Message</button>
+          </div>
+        </>
+      ) : (
+        <p>You have no mentor assigned.</p>
+      )}
     </div>
   );
 }

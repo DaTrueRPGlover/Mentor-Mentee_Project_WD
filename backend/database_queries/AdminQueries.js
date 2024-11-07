@@ -28,17 +28,71 @@ export const getAdminEmailByKey = async (adminkey) => {
 
 // Function to create a mentor-mentee relationship
 export const createMentorMenteeRelationship = async (mentorkey, menteekey) => {
-    const sql = `
-        INSERT INTO mentor_mentee_relationship (mentorkey, menteekey, start_date)
-        VALUES (?, ?, CURDATE())
-    `;
+    console.log('Creating mentor-mentee relationship...');
+    const connection = await pool.getConnection();
+
     try {
-        const [result] = await pool.execute(sql, [mentorkey, menteekey]);
+        // Check if the relationship already exists
+        const checkSql = `
+            SELECT COUNT(*) AS count FROM mentor_mentee_relationship
+            WHERE mentorkey = ? AND menteekey = ? AND end_date IS NULL
+        `;
+        const [checkResult] = await connection.execute(checkSql, [mentorkey, menteekey]);
+
+        if (checkResult[0].count > 0) {
+            throw new Error('Mentor and mentee are already assigned to each other');
+        }
+
+        // Relationship doesn't exist, proceed to create it
+        const insertSql = `
+            INSERT INTO mentor_mentee_relationship (mentorkey, menteekey, start_date)
+            VALUES (?, ?, CURDATE())
+        `;
+        const [result] = await connection.execute(insertSql, [mentorkey, menteekey]);
         console.log('Created mentor-mentee relationship with ID:', result.insertId);
         return result.insertId;
     } catch (error) {
         console.error('Error creating mentor-mentee relationship:', error);
         throw error;
+    } finally {
+        connection.release();
+    }
+};
+
+// Fetch mentor-mentee relationships
+export const getMentorMenteeRelationships = async () => {
+    console.log('Fetching mentor-mentee relationships...');
+    const connection = await pool.getConnection();
+
+    try {
+        const query = `
+            SELECT
+                mmr.relationshipkey,
+                mmr.mentorkey,
+                mmr.menteekey,
+                mmr.start_date,
+                mmr.end_date,
+                mentor.name AS mentor_name,
+                mentor.lastname AS mentor_lastname,
+                mentee.name AS mentee_name,
+                mentee.lastname AS mentee_lastname
+            FROM
+                mentor_mentee_relationship mmr
+            JOIN
+                userInfo mentor ON mmr.mentorkey = mentor.userid
+            JOIN
+                userInfo mentee ON mmr.menteekey = mentee.userid
+            WHERE
+                mmr.end_date IS NULL;
+        `;
+        const [results] = await connection.execute(query);
+        console.log('Fetched relationships:', results);
+        return results;
+    } catch (error) {
+        console.error('Error fetching relationships:', error);
+        throw error;
+    } finally {
+        connection.release();
     }
 };
 
@@ -126,26 +180,27 @@ export const getMentorNames = async () => {
     try {
         const query = `
             SELECT 
-                name AS mentor_name, 
-                lastname AS mentor_lastname,
-                role AS mentor_role
+                userid,
+                name,
+                lastname,
+                role
             FROM 
                 userInfo
             WHERE 
-                role = 'mentor';  -- Filter by mentor role
+                role = 'mentor';
         `;
         const [results] = await connection.execute(query);
         console.log('Fetched mentor names:', results);
-        return results;  // Return the list of mentors
+        return results;
     } catch (error) {
         console.error('Error fetching mentor names:', error);
         throw error;
     } finally {
-        connection.release();  // Release the connection
+        connection.release();
     }
 };
 
-
+// Fetch mentee names
 export const getMenteeNames = async () => {
     console.log('Fetching mentee names...');
     const connection = await pool.getConnection();
@@ -153,22 +208,23 @@ export const getMenteeNames = async () => {
     try {
         const query = `
             SELECT 
-                name AS mentee_name,
-                lastname AS mentee_lastname,
-                role AS mentee_role
+                userid,
+                name,
+                lastname,
+                role
             FROM 
                 userInfo
             WHERE 
-                role = 'mentee';  -- Filter by mentee role
+                role = 'mentee';
         `;
         const [results] = await connection.execute(query);
         console.log('Fetched mentee names:', results);
-        return results;  // Return the list of mentees
+        return results;
     } catch (error) {
         console.error('Error fetching mentee names:', error);
         throw error;
     } finally {
-        connection.release();  // Release the connection
+        connection.release();
     }
 };
 
@@ -229,3 +285,25 @@ console.log('Admin department key: ' + (await getAdminDepartmentKeyByKey('0c5dbe
         console.error('Failed to create account:', error); // This will log any error that occurs
     }
 })();*/
+
+export const updateMentorForMentee = async (menteekey, newMentorkey) => {
+    console.log('Updating mentor for mentee...');
+    const connection = await pool.getConnection();
+
+    try {
+        const sql = `
+            UPDATE mentor_mentee_relationship
+            SET mentorkey = ?
+            WHERE menteekey = ? AND end_date IS NULL
+        `;
+        await connection.execute(sql, [newMentorkey, menteekey]);
+        console.log('Mentor updated for mentee', menteekey);
+    } catch (error) {
+        console.error('Error updating mentor:', error);
+        throw error;
+    } finally {
+        connection.release();
+    }
+};
+
+

@@ -1,24 +1,26 @@
+// AssignMentor.js
+
 import React, { useState, useEffect } from 'react';
 import './AssignMentor.css';
 import { useNavigate } from "react-router-dom"; 
 import logo from '../assets/WDC.png';
 
 function AssignMentor() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  const [mentees, setMentees] = useState([]);
-  const [newMentee, setNewMentee] = useState('');
-  const [newMentor, setNewMentor] = useState('');
-  
-  // State to hold fetched mentor and mentee names
+  const [newMentee, setNewMentee] = useState(null);
+  const [newMentor, setNewMentor] = useState(null);
+
   const [mentors, setMentors] = useState([]);
   const [menteesList, setMenteesList] = useState([]);
+  const [relationships, setRelationships] = useState([]);
 
-  // Loading state to handle loading indicators
   const [loading, setLoading] = useState(true);
 
+  // State for error messages
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
-    // Fetch mentor names
     const fetchMentorNames = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/mentors', {
@@ -30,8 +32,7 @@ function AssignMentor() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Fetched Mentor Names:', data);
-          setMentors(data); // Store fetched mentor names in state
+          setMentors(data);
         } else {
           console.error('Failed to fetch mentor names:', response.statusText);
         }
@@ -40,7 +41,6 @@ function AssignMentor() {
       }
     };
 
-    // Fetch mentee names
     const fetchMenteeNames = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/mentees', {
@@ -52,8 +52,7 @@ function AssignMentor() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Fetched Mentee Names:', data);
-          setMenteesList(data); // Store fetched mentee names in state
+          setMenteesList(data);
         } else {
           console.error('Failed to fetch mentee names:', response.statusText);
         }
@@ -62,27 +61,45 @@ function AssignMentor() {
       }
     };
 
-    // Fetch both mentor and mentee names
+    const fetchRelationships = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/relationships', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setRelationships(data);
+        } else {
+          console.error('Failed to fetch relationships:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching relationships:', error);
+      }
+    };
+
     const fetchData = async () => {
       await fetchMentorNames();
       await fetchMenteeNames();
-      setLoading(false); // Set loading to false once data is fetched
+      await fetchRelationships();
+      setLoading(false);
     };
 
-    fetchData(); // Fetch mentor and mentee names when component mounts
+    fetchData();
   }, []);
 
-  // Handle assigning mentor to mentee
   const handleAssignMentor = async () => {
-    if (newMentee.trim() && newMentor.trim()) {
-      const newAssignment = { mentee: newMentee, mentor: newMentor };
-      
-      // Update local state to reflect new assignment
-      setMentees((prevMentees) => [...prevMentees, newAssignment]);
+    if (newMentee && newMentor) {
+      const newAssignment = {
+        menteekey: newMentee.userid,
+        mentorkey: newMentor.userid,
+      };
 
-      // Send the assignment to the backend
       try {
-        const response = await fetch('http://localhost:3001/api/assign-mentor', {
+        const response = await fetch('http://localhost:3001/api/relationships/assign', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -92,28 +109,70 @@ function AssignMentor() {
 
         if (response.ok) {
           console.log('Mentor assigned successfully');
-          setNewMentee('');
-          setNewMentor('');
+          await fetchRelationships();
+          setNewMentee(null);
+          setNewMentor(null);
+          setErrorMessage(''); // Clear any previous error messages
         } else {
-          console.error('Failed to assign mentor:', response.statusText);
+          const errorData = await response.json();
+          console.error('Failed to assign mentor:', errorData.error);
+          setErrorMessage(errorData.error); // Set the error message to display
         }
       } catch (error) {
         console.error('Error assigning mentor:', error);
+        setErrorMessage('An unexpected error occurred.');
       }
     } else {
       console.error('Please select both a mentor and a mentee.');
+      setErrorMessage('Please select both a mentor and a mentee.');
     }
   };
 
-  // Handle updating mentor for an existing mentee
-  const handleUpdateMentor = (index) => {
-    const updatedMentees = mentees.map((mentee, i) =>
-      i === index ? { ...mentee, mentor: newMentor } : mentee
-    );
-    setMentees(updatedMentees);
+  const handleUpdateMentor = async (menteekey, newMentorkey) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/relationships/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ menteekey, mentorkey: newMentorkey }),
+      });
+
+      if (response.ok) {
+        console.log('Mentor updated successfully');
+        await fetchRelationships();
+        setErrorMessage(''); // Clear any previous error messages
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to update mentor:', errorData.error);
+        setErrorMessage(errorData.error); // Set the error message to display
+      }
+    } catch (error) {
+      console.error('Error updating mentor:', error);
+      setErrorMessage('An unexpected error occurred.');
+    }
   };
 
-  // Handle logout functionality
+  const fetchRelationships = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/relationships', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setRelationships(data);
+      } else {
+        console.error('Failed to fetch relationships:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching relationships:', error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -133,65 +192,90 @@ function AssignMentor() {
 
       <div className="content-container">
         <div className="rectangle">
-          {/* Display the fetched mentor and mentee names */}
-          <ul>
-            {loading ? (
-              <li>Loading...</li>
-            ) : (
-              <>
-                <h3>Mentors:</h3>
-                {mentors.length > 0 ? (
-                  mentors.map((mentor, index) => (
-                    <li key={index}>
-                      <strong>{mentor.name} {mentor.lastname} (Mentor)</strong>
-                    </li>
-                  ))
-                ) : (
-                  <li>No mentors found.</li>
-                )}
-                <h3>Mentees:</h3>
-                {menteesList.length > 0 ? (
-                  menteesList.map((mentee, index) => (
-                    <li key={index}>
-                      <span>{mentee.name} {mentee.lastname} (Mentee)</span>
-                    </li>
-                  ))
-                ) : (
-                  <li>No mentees found.</li>
-                )}
-              </>
-            )}
-          </ul>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <h3>Mentors:</h3>
+              {mentors.length > 0 ? (
+                mentors.map((mentor) => (
+                  <p key={mentor.userid}>
+                    {mentor.name} {mentor.lastname}
+                  </p>
+                ))
+              ) : (
+                <p>No mentors found.</p>
+              )}
+              <h3>Mentees:</h3>
+              {menteesList.length > 0 ? (
+                menteesList.map((mentee) => (
+                  <p key={mentee.userid}>
+                    {mentee.name} {mentee.lastname}
+                  </p>
+                ))
+              ) : (
+                <p>No mentees found.</p>
+              )}
+            </>
+          )}
         </div>
 
         <div className="assign-form">
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <h3>Existing Assignments:</h3>
           <ul>
-            {mentees.map((mentee, index) => (
-              <li key={index} className="mentee-list-item">
-                {mentee.mentee} is mentored by <strong>{mentee.mentor}</strong>
-                <input
-                  type="text"
-                  placeholder="Update mentor"
-                  onChange={(e) => setNewMentor(e.target.value)}
-                />
-                <button onClick={() => handleUpdateMentor(index)}>Update Mentor</button>
+            {relationships.map((rel) => (
+              <li key={rel.relationship_id} className="mentee-list-item">
+                {rel.mentee_name} {rel.mentee_lastname} is mentored by <strong>{rel.mentor_name} {rel.mentor_lastname}</strong>
+                <select
+                  onChange={(e) => {
+                    const newMentorkey = e.target.value;
+                    if (newMentorkey) {
+                      handleUpdateMentor(rel.menteekey, newMentorkey);
+                    }
+                  }}
+                >
+                  <option value="">Change Mentor</option>
+                  {mentors.map((mentor) => (
+                    <option key={mentor.userid} value={mentor.userid}>
+                      {mentor.name} {mentor.lastname}
+                    </option>
+                  ))}
+                </select>
               </li>
             ))}
           </ul>
 
           <div className="add-assignment">
-            <input
-              type="text"
-              value={newMentee}
-              onChange={(e) => setNewMentee(e.target.value)}
-              placeholder="Enter mentee name"
-            />
-            <input
-              type="text"
-              value={newMentor}
-              onChange={(e) => setNewMentor(e.target.value)}
-              placeholder="Enter mentor name"
-            />
+            <h3>Assign a Mentor to a Mentee:</h3>
+            <select
+              value={newMentee ? newMentee.userid : ''}
+              onChange={(e) => {
+                const mentee = menteesList.find(m => m.userid === e.target.value);
+                setNewMentee(mentee);
+              }}
+            >
+              <option value="">Select Mentee</option>
+              {menteesList.map((mentee) => (
+                <option key={mentee.userid} value={mentee.userid}>
+                  {mentee.name} {mentee.lastname}
+                </option>
+              ))}
+            </select>
+            <select
+              value={newMentor ? newMentor.userid : ''}
+              onChange={(e) => {
+                const mentor = mentors.find(m => m.userid === e.target.value);
+                setNewMentor(mentor);
+              }}
+            >
+              <option value="">Select Mentor</option>
+              {mentors.map((mentor) => (
+                <option key={mentor.userid} value={mentor.userid}>
+                  {mentor.name} {mentor.lastname}
+                </option>
+              ))}
+            </select>
             <button onClick={handleAssignMentor}>Assign Mentor</button>
           </div>
         </div>
