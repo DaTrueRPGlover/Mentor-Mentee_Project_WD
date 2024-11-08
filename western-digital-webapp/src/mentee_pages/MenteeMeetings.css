@@ -7,22 +7,15 @@ body, html, #root {
 
 /* Calendar container styling */
 .mentee-meetings {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  align-items: center; /* Center all content horizontally */
-
-  justify-content: space-between;
 }
 
 .calendar {
   flex-grow: 1;
   padding: 20px;
   background-color: white;
-  width: 100%;
 }
 
 /* Custom styles for dialog overlay effect */
@@ -40,7 +33,6 @@ body, html, #root {
 .dialog-title {
   font-size: 1.5rem;
   font-weight: bold;
-  background-color: #ffffff;
   color: #3f51b5;
   padding-right: 48px;
 }
@@ -48,32 +40,26 @@ body, html, #root {
 .dialog-content {
   font-size: 1rem;
   color: #333;
-  background-color: #ADD8E6;
   padding: 20px;
   line-height: 1.6;
 }
 
 .dialog-actions {
   padding: 10px 20px;
-  
 }
 
 .dialog-button {
   background-color: #3f51b5;
-  color: #ADD8E6;
+  color: white;
 }
 
 .dialog-button:hover {
   background-color: #303f9f;
 }
 
-
-
-
 /* Meeting info links */
 .dialog-content a {
   color: #3f51b5;
-  
   text-decoration: none;
 }
 
@@ -83,7 +69,7 @@ body, html, #root {
 
 /* Additional styling for the calendar and responsive adjustments */
 .rbc-toolbar {
-  background-color: #ADD8E6;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
@@ -93,30 +79,10 @@ body, html, #root {
 .rbc-toolbar-label {
   font-size: 1.5rem;
   font-weight: bold;
-  background-color: #ADD8E6;
-}
-
-
-
-
-/* Remove background and padding in date cells */
-.rbc-month-view .rbc-date-cell {
-  background-color: transparent; /* Makes the date background transparent */
-  padding: 0; /* Adjust padding to align numbers without covering borders */
-  z-index: 1; /* Keeps the number below the day cell for grid continuity */
-}
-
-
-
-
-
-.rbc-toolbar button {
-  background-color: #e3e3e3
 }
 
 .rbc-event {
   background-color: #3f51b5 !important;
-  
   color: white !important;
   border-radius: 20px !important;
   padding: 5px;
@@ -128,22 +94,10 @@ body, html, #root {
 }
 
 .rbc-header {
+  background-color: #f0f0f0;
   color: #424242;
   font-weight: bold;
   padding: 10px;
-}
-
-.rbc-date-cell.rbc-off-range{
-background-color: #ADD8E6;
-color: black;
-
-}
-.rbc-day-bg.rbc-off-range-bg{
-background-color: #ADD8E6;
-}
-
-.rbc-date-cell.rbc-now.rbc-current{
-  background-color: #eaf6ff;
 }
 
 @media (max-width: 768px) {

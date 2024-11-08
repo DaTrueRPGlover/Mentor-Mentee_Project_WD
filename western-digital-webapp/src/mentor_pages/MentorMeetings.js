@@ -1,10 +1,13 @@
+// import stuff
 import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
+// main function mentor meetings 
 function MentorMeetings({ mentorkey }) {
   const navigate = useNavigate();
+  // all the features we need for meeting
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
@@ -13,7 +16,9 @@ function MentorMeetings({ mentorkey }) {
   const [zoomLink, setZoomLink] = useState('');
   const [zoomPassword, setZoomPassword] = useState('');
 
+  // 
   useEffect(() => {
+    //fetching mentees that the mentor has so they can choose who to schedule meeting with
     const fetchMentees = async () => {
       try {
         const mentorinfo = JSON.parse(localStorage.getItem('user'));
@@ -25,7 +30,7 @@ function MentorMeetings({ mentorkey }) {
         console.error('Error fetching mentees:', error);
       }
     };
-
+    // fetch all the current meetings the mentor has 
     const fetchMeetings = async () => {
       try {
         const mentorinfo = JSON.parse(localStorage.getItem('user'));
@@ -41,7 +46,7 @@ function MentorMeetings({ mentorkey }) {
     fetchMentees();
     fetchMeetings();
   }, [mentorkey]);
-
+  //handling creating the meeting 
   const handleScheduleMeeting = async () => {
     if (selectedMentee && newDate.trim() && newTime.trim() && zoomLink.trim() && zoomPassword.trim()) {
       const datetime = `${newDate}T${newTime}`;
@@ -85,7 +90,7 @@ function MentorMeetings({ mentorkey }) {
     localStorage.clear();
     navigate("/");
   };
-
+  //displaying everything on the website
   return (
     <div className="mentor-meetings">
 

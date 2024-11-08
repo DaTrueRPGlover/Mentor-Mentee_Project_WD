@@ -90,7 +90,7 @@ function InteractWithMentor() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
-
+  //rendering all the infromation onto the page
   return (
     <div className="interact-with-mentor">
       <h1>Interact with Mentor</h1>

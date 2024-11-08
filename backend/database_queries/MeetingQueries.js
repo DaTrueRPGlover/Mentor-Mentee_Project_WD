@@ -1,6 +1,6 @@
 import pool from '../database.js';
 
-// Query to get meetings for a user
+//get meeting for user query
 export const getMeetingsForUser = async (userId) => {
   const [rows] = await pool.query(
     `
@@ -24,7 +24,7 @@ export const getMeetingsForUser = async (userId) => {
   return rows;
 };
 
-// Query to fetch mentees for a specific mentor
+//query to get mentees for mentor
 export const getMenteesForMentor = async (mentorkey) => {
   const [rows] = await pool.query(
     `
@@ -38,7 +38,7 @@ export const getMenteesForMentor = async (mentorkey) => {
   return rows;
 };
 
-// Query to check for time conflict before scheduling a meeting
+// time conflict check before schedule
 export const checkMeetingConflict = async (mentorkey, datetime) => {
   const [rows] = await pool.query(
     `

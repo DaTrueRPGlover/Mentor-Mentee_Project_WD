@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-// Route to get all messages between a mentor and mentee
+// route to get all messages between a mentor and mentee
 router.get('/', async (req, res) => {
   const { menteekey, mentorkey } = req.query;
 
@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Route to send a message
+// route to send a message
 router.post('/', async (req, res) => {
   const { menteekey, mentorkey, senderRole, messageText } = req.body;
 

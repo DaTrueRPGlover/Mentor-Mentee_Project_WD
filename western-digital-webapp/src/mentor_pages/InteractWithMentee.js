@@ -16,7 +16,7 @@ function InteractWithMentee() {
       return;
     }
 
-    // Fetch mentees assigned to the mentor
+    //fetch all mentees assigned to said mentor
     fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${user.userId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -32,7 +32,7 @@ function InteractWithMentee() {
     const user = JSON.parse(localStorage.getItem('user'));
     const menteekey = selectedMentee;
     const mentorkey = user.userId;
-
+    //fetch all the messages between the selected mentee and the mentor
     fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
       .then((response) => response.json())
       .then((data) => {
@@ -46,7 +46,7 @@ function InteractWithMentee() {
       })
       .catch((error) => console.error('Error fetching messages:', error));
   }, [selectedMentee]);
-
+  //post messages on to the database
   const handleSendMessage = () => {
     if (newMessage.trim() && selectedMentee) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -80,7 +80,7 @@ function InteractWithMentee() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
-
+  //renders all the information onto the website
   return (
     <div className="interact-with-mentee">
       <h1>Interact with Mentees</h1>
