@@ -6,7 +6,7 @@ function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [mentees, setMentees] = useState([]);
-  const [selectedMentee, setSelectedMentee] = useState(null);
+  const [selectedMentee, setSelectedMentee] = useState('');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -88,7 +88,7 @@ function InteractWithMentee() {
         <div>
           <label>Select a Mentee:</label>
           <select
-            value={selectedMentee || ''}
+            value={selectedMentee}
             onChange={(e) => setSelectedMentee(e.target.value)}
           >
             <option value="" disabled>

@@ -1,8 +1,8 @@
 // relationshipRoutes.js
 
 import express from 'express';
-import { createMentorMenteeRelationship, getMentorMenteeRelationships, updateMentorForMentee } from '../database_queries/AdminQueries.js';
-
+import { createMentorMenteeRelationship,  updateMentorForMentee } from '../database_queries/AdminQueries.js';
+import {getMentorMenteeRelationships }from '../database_queries/RelationshipQueries.js';
 const router = express.Router();
 
 // Fetch mentor-mentee relationships
@@ -16,18 +16,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/mentor', async (req, res) => {
-  const { menteekey } = req.query;
-  try {
-    const relationships = await getMentorMenteeRelationships(menteekey, 'mentee');
-    res.json(relationships);
-  } catch (error) {
-    console.error('Error fetching mentor:', error);
-    res.status(500).json({ error: 'Failed to fetch mentor' });
-  }
-});
-
-// Fetch mentees assigned to a mentor
 router.get('/mentees', async (req, res) => {
   const { mentorkey } = req.query;
   try {
@@ -36,6 +24,18 @@ router.get('/mentees', async (req, res) => {
   } catch (error) {
     console.error('Error fetching mentees:', error);
     res.status(500).json({ error: 'Failed to fetch mentees' });
+  }
+});
+
+// Fetch mentor assigned to a mentee
+router.get('/mentor', async (req, res) => {
+  const { menteekey } = req.query;
+  try {
+    const relationships = await getMentorMenteeRelationships(menteekey, 'mentee');
+    res.json(relationships);
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    res.status(500).json({ error: 'Failed to fetch mentor' });
   }
 });
 
