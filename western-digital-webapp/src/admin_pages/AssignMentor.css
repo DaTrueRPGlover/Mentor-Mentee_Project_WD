@@ -1,10 +1,8 @@
+/* Global Styles */
 * {
   background-color: #ADD8E6;
-}
-
-.assign-mentor-container .body {
-  background-color: #ADD8E6; /* Light blue background color */
-  margin: 0; /* Remove default body margin */
+  font-family: Arial, sans-serif;
+  margin: 0;
   padding: 0;
 }
 
@@ -12,115 +10,172 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   padding: 20px;
 }
 
-.header-container {
-  position: relative; /* Position relative to allow logo absolute positioning */
+.assign-mentor-container .header-container {
+  position: relative;
   width: 100%;
 }
 
 .assign-mentor-container .logo {
-  position: absolute; /* Pin logo to top-left */
-  top: 0px;
-  left: 0px;
-  width: 150px; /* Adjust as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
   height: auto;
 }
 
-.logout-button {
+.assign-mentor-container .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
   background-color: #91BECD;
-  font-size: 1.2rem; /* Use relative units for font size */
+  font-size: 1.2rem;
   font-weight: bold;
   color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 0px; /* Position it 20px from the right */
-  top: 0px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
+  padding: 10px 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: background-color 0.3s;
 }
 
-.content-container {
+.assign-mentor-container .logout-button:hover {
+  background-color: #7A99A5;
+}
+
+.assign-mentor-container .content-container {
   display: flex;
   width: 100%;
   max-width: 1200px;
   margin-top: 20px;
+  gap: 20px;
 }
 
-.rectangle {
+.assign-mentor-container .rectangle {
   flex: 1;
-  height: 600px;
+  max-height: 600px; /* Set max height */
+  max-width: 400px;
   border: 2px solid #91BECD;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #91BECD;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
   border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
-.assign-form {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.assign-mentor-container .mentor-list, .mentee-list {
+  width: 45%;
+  max-height: 500px; /* Set max height for each list */
+  overflow-y: auto; /* Allow scrolling for long lists */
+  background-color: rgba(0, 0, 0, 0.1); /* Same background as rectangle */
 }
 
-ul {
+.assign-mentor-container .mentor-list ul, .mentee-list ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
-.mentee-list-item {
+.assign-mentor-container .mentor-list h3, .mentee-list h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.assign-mentor-container .mentor-list li, .mentee-list li {
   margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f7f9fc; /* Light gray for list items */
+}
+
+.assign-mentor-container .mentor-list li {
+  background-color: #e0f7fa; /* Light blue for mentors */
+}
+
+.assign-mentor-container .mentee-list li {
+  background-color: #ffecb3; /* Light yellow for mentees */
+}
+
+.assign-mentor-container .assign-form {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-input {
-  padding: 10px; /* Increase padding for better appearance */
-  margin-top: 5px;
-  text-align: center;
-  width: 100%; /* Set to 100% of the parent container */
-  max-width: 400px; /* Maintain a maximum width */
+.assign-mentor-container h3 {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
 }
 
-button {
+.assign-mentor-container .mentor-list, .mentee-list {
+  width: 100%;
+}
+
+.assign-mentor-container .select-dropdown {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  width: 200px;
+  max-width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.assign-mentor-container .add-assignment {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.assign-mentor-container .add-assignment select {
+  padding: 10px;
   margin-top: 10px;
-  padding: 5px 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 220px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.assign-mentor-container .add-assignment button {
+  margin-top: 15px;
+  padding: 10px 30px;
   background-color: #65558F;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 50px;
+  transition: background-color 0.3s;
 }
 
-button:hover {
+.assign-mentor-container .add-assignment button:hover {
   background-color: #543E6B;
 }
 
-.add-assignment {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+.assign-mentor-container .error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.add-assignment input {
-  padding: 10px; /* Remove specific width and add padding */
+.assign-mentor-container .button {
   margin-top: 10px;
-  text-align: center;
-  width: 100%; /* Set to 100% of the parent container */
-  max-width: 220px; /* Maintain a maximum width */
-}
-
-.add-assignment button {
-  margin-top: 15px;
   padding: 10px 30px;
   background-color: #65558F;
   color: white;
@@ -129,6 +184,87 @@ button:hover {
   border-radius: 50px;
 }
 
-.add-assignment button:hover {
+.assign-mentor-container button:hover {
   background-color: #543E6B;
+}
+
+.assign-mentor-container .mentee-list-item {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .assign-mentor-container .content-container {
+    flex-direction: column;
+  }
+
+  .assign-mentor-container .rectangle {
+    flex-direction: column;
+  }
+
+  .assign-mentor-container .mentor-list, .mentee-list {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .assign-mentor-container .assign-form {
+    width: 100%;
+  }
+}
+ul,li,h3 {
+  background-color: inherit;
+}
+.assignments-scrollable {
+  max-height: 300px; /* Set a fixed height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  width: 100%;
+  background-color: #91BECD;;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.delete-button {
+  padding: 5px 10px;
+  margin-left: 10px;
+  color: #fff;
+  background-color: #FF6347;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #FF4500;
+}
+/* Style for the list section container */
+.list-section {
+   /* Replace with the desired background color */
+  padding: 1em;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  background-color: inherit;
+}
+
+/* Style for the section titles */
+.section-title {
+  color: #333; /* Adjust color if needed */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* Style for mentor and mentee lists */
+.mentor-list, .mentee-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mentor-list li, .mentee-list li {
+  color: black; /* Ensure text color stands out against the background */
+  padding: 0.3em 0;
 }
