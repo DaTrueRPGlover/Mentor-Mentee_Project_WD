@@ -1,3 +1,4 @@
+/* Main styling format for container */
 .see-interactions {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -8,7 +9,7 @@
   justify-content: center;
   min-height: 100vh;
 }
-
+/* creates the clear background rectangle */
 .rectangle {
   width: 50%;
   max-width: 300px;
@@ -21,17 +22,17 @@
   justify-content: center;
   border-radius: 8px;
 }
-
+/* formatting h1 headers */
 .see-interactions h1 {
   margin-bottom: 30px;
   font-size: 40px;
 }
-
+/* formatting h2 headers */
 .see-interactions h2 {
   color: gray;
   font-size: 15px;
 }
-
+/* formats search container */
 .search {
   display: flex;
   justify-content: center;
@@ -39,19 +40,19 @@
   margin-bottom: 20px;
   color: gray;
 }
-
+/* formats filtered section container */
 .filter-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
-
+/* formats filtered section container for inputs */
 .filter-section input {
   font-size: 0.8em;
   width: 200px;
 }
-
+/* formats filtered section for all buttons inside containers */
 .filter-section button {
   padding: 8px 12px;
   font-size: 0.8em;
@@ -62,16 +63,16 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
+/* Changes the color when hovering the button */
 .filter-section button:hover {
   background-color: #2d1960;
 }
-
+/* formats listing */
 ul {
   list-style-type: none;
   padding: 0;
 }
-
+/* formats listing */
 li {
   margin: 10px 0;
   font-size: 1.1em;
@@ -79,11 +80,11 @@ li {
   display: flex;
   flex-direction: column;
 }
-
+/* formats font */
 strong {
   font-weight: bold;
 }
-
+/* formats logo positioning and size */
 .see-interactions .logo {
   width: 120px;
   height: auto;
@@ -92,7 +93,7 @@ strong {
   top: 20px;
   left: 20px;
 }
-
+/* formats message lists into the rectangle */
 .message-list1 {
   width: 90%;
   max-height: 500px;
@@ -101,11 +102,11 @@ strong {
   padding: 10px;
   border-radius: 8px;
 }
-
+/* formats message lists into the rectangle */
 .message-list1 li {
   padding: 10px 15px;
   border-radius: 10px;
-  max-width: 100%; /* Ensure full width */
+  max-width: 100%; 
   margin-bottom: 8px;
   word-wrap: break-word;
   position: relative;
@@ -129,15 +130,15 @@ strong {
   color: #155724;
   border-radius: 10px 10px 0 10px;
   text-align: right;
-  max-width: 100%; /* Allow mentor messages to take full width */
+  max-width: 100%; 
 }
-
+/* formats time stamp to be inside the rectangle */
 .timestamp {
   font-size: 0.8em;
   color: #666;
   display: block;
   margin-top: 5px;
-  margin-bottom: 5px; /* Adding space below the timestamp */
+  margin-bottom: 5px;
 }
 
 /* Mentee Name at the very left */
@@ -163,12 +164,12 @@ strong {
 /* Positioning the mentor's name above the timestamp */
 .mentor-name {
   position: relative;
-  top: 0; /* Keep it close to the message */
+  top: 0;
 }
 
 /* Mentor name should appear before the timestamp */
 .mentor-name {
-  margin-bottom: 10px; /* Adding some space before the timestamp */
+  margin-bottom: 10px; 
 }
 
 button.logout-button {

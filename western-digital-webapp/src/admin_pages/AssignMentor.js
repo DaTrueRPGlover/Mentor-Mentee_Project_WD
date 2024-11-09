@@ -13,7 +13,7 @@ function AssignMentor() {
   const [relationships, setRelationships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-
+// handles name fetching for relationship
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -27,7 +27,7 @@ function AssignMentor() {
     };
     fetchData();
   }, []);
-
+// fetches all mentor names
   const fetchMentorNames = async () => {
     const response = await fetch('http://localhost:3001/api/mentors');
     if (response.ok) {
@@ -35,7 +35,7 @@ function AssignMentor() {
       setMentors(data);
     }
   };
-
+// fetches all mentee names
   const fetchMenteeNames = async () => {
     const response = await fetch('http://localhost:3001/api/mentees');
     if (response.ok) {
@@ -43,7 +43,7 @@ function AssignMentor() {
       setMenteesList(data);
     }
   };
-
+// fetches all relationships
   const fetchRelationships = async () => {
     const response = await fetch('http://localhost:3001/api/relationships');
     if (response.ok) {
@@ -51,7 +51,7 @@ function AssignMentor() {
       setRelationships(data);
     }
   };
-
+// assignes mentors and fetches from database
   const handleAssignMentor = async () => {
     if (newMentee && newMentor) {
       const newAssignment = {
@@ -79,7 +79,7 @@ function AssignMentor() {
       setErrorMessage('Please select both a mentor and a mentee.');
     }
   };
-
+// updates mentor relationship
   const handleUpdateMentor = async (menteekey, newMentorkey) => {
     try {
       const response = await fetch('http://localhost:3001/api/relationships/update', {
@@ -96,7 +96,7 @@ function AssignMentor() {
       setErrorMessage('An unexpected error occurred');
     }
   };
-
+// deletes relationships
   const handleDeleteAssignment = async (relationship_id) => {
     try {
       const response = await fetch(`http://localhost:3001/api/relationships/${relationship_id}`, {
@@ -131,7 +131,7 @@ function AssignMentor() {
         </div>
         <h1 className="welcome-message">Assign Mentor To Mentee</h1>
       </header>
-
+{/* lists mentors and mentee */}
       <div className="content-container">
         <div className="rectangle">
         {loading ? (
@@ -159,7 +159,7 @@ function AssignMentor() {
           )}
 
         </div>
-
+{/* assign mentee to mentor */}
         <div className="assign-form">
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <h3>Existing Assignments:</h3>

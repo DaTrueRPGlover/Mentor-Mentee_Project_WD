@@ -265,6 +265,6 @@ ul,li,h3 {
 }
 
 .mentor-list li, .mentee-list li {
-  color: black; /* Ensure text color stands out against the background */
+  color: black;
   padding: 0.3em 0;
 }

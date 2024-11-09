@@ -10,7 +10,7 @@ function SeeInteractions() {
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState(null);
   const [selectedMenteeName, setSelectedMenteeName] = useState('');
-
+// function to auhenticate
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -21,7 +21,7 @@ function SeeInteractions() {
       .then((data) => setMentees(data))
       .catch((error) => console.error('Error fetching mentees:', error));
   }, []);
-
+// function to grab messages from source
   useEffect(() => {
     if (!selectedMentee) return;
 
@@ -61,7 +61,7 @@ function SeeInteractions() {
         </div>
         <h1 className="welcome-message">View Interactions</h1>
       </header>
-
+    {/* has dropdown for all mentees */}
       <div className="search">
         <div className="filter-section">
           <h2>Search</h2>
@@ -85,7 +85,7 @@ function SeeInteractions() {
           )}
         </div>
       </div>
-
+          {/* puts messages in rectnagle */}
       <div className="rectangle">
         {selectedMentee && (
           <div className="message-list1">

@@ -88,13 +88,14 @@ function ViewProgressions() {
     setDecisionMaking("");
   };
 
-  // Log out by clearing local storage and navigating back to the login page
+  // Log out
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
   return (
+    // main containers
     <div className="todo-progression">
       <header className="header-container">
         <div className="top-header">
