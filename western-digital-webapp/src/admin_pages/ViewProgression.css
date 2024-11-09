@@ -1,59 +1,70 @@
-
+/* Main container styling for the view-progressions page layout */
 .view-progressions {
   padding-top: 40px;
-  padding-bottom: 40px; /* Add padding to the bottom */
+  padding-bottom: 40px;
   text-align: center;
-  display: flex; /* Enable Flexbox */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
 }
+
+/* Styling for the central rectangle area */
 .rectangle {
-  width: 50%; /* Set the width of the rectangle */
-  max-width: 600px; /* Set a maximum width for the rectangle */
-  height: 600px; /* Set the height to make it visible */
-  border: 2px solid #91BECD; /* Light blue border */
-  background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent background */
-  margin-top: 20px; /* Space above the rectangle */
-  display: flex; /* Flexbox layout */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  border-radius: 8px; /* Rounded corners */
+  width: 50%;
+  max-width: 600px;
+  height: 600px;
+  border: 2px solid #91BECD;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
 }
+
+/* Styling for the main heading in view-progressions */
 .view-progressions h1 {
-  margin-bottom: 20px; /* Adjust this value for desired spacing */
-  font-size: 36px; /* Optional: Adjust font size */
-  padding-top: 10px; /* Optional: Add padding at the top if needed */
+  margin-bottom: 20px;
+  font-size: 36px;
+  padding-top: 10px;
 }
+
+/* Styling for the search input field */
 .view-progressions .search input {
-  width: 300px; /* Increase width as desired */
-  padding: 15px; /* Increase padding for larger input area */
-  font-size: 1.2em; /* Increase font size */
-  border-radius: 8px; /* Add rounded corners */
-  border: 1px solid #91BECD; /* Optional: add border to match theme */
+  width: 300px;
+  padding: 15px;
+  font-size: 1.2em;
+  border-radius: 8px;
+  border: 1px solid #91BECD;
 }
 
-
+/* General input styling */
 input {
   padding: 10px;
   margin-bottom: 20px;
   font-size: 1em;
 }
 
+/* Styling for unordered list to remove bullet points */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* Styling for list items within unordered lists */
 li {
   margin: 10px 0;
   font-size: 1.1em;
 }
 
+/* Styling for bold text within the view-progressions */
 strong {
   font-weight: bold;
 }
+
+/* Styling for the logo on the view-progressions page */
 .view-progressions .logo {
   width: 120px;
   height: auto;
