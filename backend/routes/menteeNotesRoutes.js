@@ -42,5 +42,21 @@ router.post('/menteenotes', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+// Route to get mentee notes by both meetingkey and menteekey
+router.get('/menteenotes/:meetingkey/:menteekey', async (req, res) => {
+    const { meetingkey, menteekey } = req.params;
+    try {
+        const notes = await getMenteeNotesByKeys(meetingkey, menteekey);
+        if (notes) {
+            res.json(notes);
+        } else {
+            res.status(404).json({ message: 'No notes found for this meeting and mentee key.' });
+        }
+    } catch (error) {
+        console.error('Error fetching mentee notes:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
 
 export default router;
