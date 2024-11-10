@@ -4,8 +4,6 @@ import { pool } from '../database.js';
 export const getMessagesByMentorAndMentee = async (mentorkey, menteekey) => {
   console.log('getMessagesByMentorAndMentee called with', mentorkey, menteekey);
 
-  
-
   const sql = `
     SELECT 
       c.conversation_key,

@@ -1,28 +1,35 @@
 // database_queries/RelationshipQueries.js
 import { pool } from '../database.js';
 
-export const getMentorMenteeRelationship = async (userid, role) => {
+export const getMentorMenteeRelationships = async (userid, role) => {
   let sql, params;
-  console.log("checking relationship");
-  console.log("Role",role);
-  console.log("userid",userid);
+  console.log('Checking relationship');
+  console.log('Role:', role);
+  console.log('UserID:', userid);
+
   if (role.toLowerCase() === 'mentee') {
-    sql = `SELECT mentorkey FROM mentor_mentee_relationship WHERE menteekey = ?`;
+    sql = `
+      SELECT m.mentorkey, u.name AS mentorName
+      FROM mentor_mentee_relationship AS m
+      JOIN userInfo AS u ON m.mentorkey = u.userId
+      WHERE m.menteekey = ?
+    `;
     params = [userid];
   } else if (role.toLowerCase() === 'mentor') {
-    sql = `SELECT menteekey FROM mentor_mentee_relationship WHERE mentorkey = ?`;
+    sql = `
+      SELECT m.menteekey, u.name AS menteeName
+      FROM mentor_mentee_relationship AS m
+      JOIN userInfo AS u ON m.menteekey = u.userId
+      WHERE m.mentorkey = ?
+    `;
     params = [userid];
   } else {
     throw new Error('Invalid role');
   }
 
-  console.log('getMentorMenteeRelationship sql:', sql, 'params:', params);
-
   const [rows] = await pool.execute(sql, params);
 
-  if (rows.length === 0) {
-    throw new Error('No relationship found');
-  }
+  console.log('Fetched relationships:', rows);
 
-  return rows[0];
+  return rows;
 };

@@ -5,11 +5,11 @@ import userRoutes from './routes/userRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import createRoutes from './routes/accountRoutes.js';
 import homeworkRoutes from './routes/homeworkRoutes.js';
-import mentorRoutes from './routes/men.js';  // Assuming these are valid routes
-import menteeRoutes from './routes/me.js';   // Assuming these are valid routes
+import mentorRoutes from './routes/MentorlookupRoutes.js';
+import menteeRoutes from './routes/MenteelookupRoutes.js';
 import menteeNotesRoutes from './routes/menteeNotesRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
-import relationshipRoutes from './routes/relationshipRoutes.js'; // Added this line
+import relationshipRoutes from './routes/relationshipRoutes.js';
 
 const app = express();
 
@@ -23,7 +23,9 @@ app.use('/api/accounts', createRoutes);
 app.use('/api/homework', homeworkRoutes);
 app.use('/api/menteeNotes', menteeNotesRoutes);
 app.use('/api/messages', messageRoutes);
-app.use('/api/relationships', relationshipRoutes); // Added this line
+app.use('/api/relationships', relationshipRoutes);
+app.use('/api/mentors', mentorRoutes);
+app.use('/api/mentees', menteeRoutes);
 
 const PORT = 3001;
 app.listen(PORT, () => {

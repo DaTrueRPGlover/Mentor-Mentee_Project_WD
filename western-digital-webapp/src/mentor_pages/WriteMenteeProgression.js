@@ -34,7 +34,7 @@ function WriteMenteeProgression() {
       const newReportData = {
         mentee: newMentee,
         date: newDate,
-        report: newReport,
+        notes: newReport,
         skippedMeeting, // Add skipped meeting value
         finishedHW, // Add finished HW value
         attitude, // Add attitude value
