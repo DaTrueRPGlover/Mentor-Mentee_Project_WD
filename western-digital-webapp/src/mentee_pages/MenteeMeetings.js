@@ -13,14 +13,16 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './MenteeMeetings.css';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
+//imports 
 
-
+//get current time
 const locales = {
   'en-US': require('date-fns/locale/en-US'),
 };
 
+//parse time
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -29,6 +31,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+//main mentee meetings function
 function MenteeMeetings() {
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
@@ -38,68 +41,75 @@ function MenteeMeetings() {
     const fetchMeetings = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user.userId;
+        const userId = user.userId; 
+        console.log('User ID:', userId); 
+
         const response = await axios.get('http://localhost:3001/api/meetings/meetings', {
           params: { userId },
         });
-        const meetingsData = response.data.map((meeting) => ({
-          title: `Meeting with ${
-            userId === meeting.mentorkey ? meeting.mentee_name : meeting.mentor_name
-          }`,
-          start: new Date(meeting.datetime),
-          end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000),
-          mentor: meeting.mentor_name,
-          mentee: meeting.mentee_name,
-          link: meeting.zoom_link,
-          zoom_password: meeting.zoom_password,
-        }));
-        setMeetings(meetingsData);
+        //get all the meertings for loggined user
+
+        // console.log('Fetched meetings:', response.data); 
+        //parse through the returned json to get each thing we need to display 
+        const meetingsData = response.data.map((meeting) => {
+          console.log('Processing meeting:', meeting); // Debugging
+          console.log('User ID:', userId, 'Mentor Key:', meeting.mentorkey, 'Mentee Key:', meeting.menteekey); // Debugging
+
+          return {
+            title: `Meeting with ${
+              userId === meeting.mentorkey ? meeting.mentee_name : meeting.mentor_name
+            }`,
+            start: new Date(meeting.datetime),
+            end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000),
+            mentor: meeting.mentor_name,
+            mentee: meeting.mentee_name,
+            link: meeting.zoom_link,
+            zoom_password: meeting.zoom_password,
+          }; //parse through the returned json to get each thing we need to display 
+        });
+        setMeetings(meetingsData); 
       } catch (error) {
         console.error('Error fetching meetings:', error);
       }
     };
     fetchMeetings();
   }, []);
-
+  //when meeting is clicked
   const handleSelectEvent = (event) => {
-    setSelectedMeeting(event);
+    setSelectedMeeting(event); 
     setOpen(true);
   };
-
+  //when meeting is closed
   const handleClose = () => {
     setOpen(false);
     setSelectedMeeting(null);
   };
 
-  const navigate = useNavigate(); // <-- Initialize navigate
+  const navigate = useNavigate();
+  //logout
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
-
-
+  //displaying everything in a calendar with a popup dailog box when they click on a certian event
   return (
-    
     <div className="mentor-meetings">
+      <header className="header-container">
+        <div className="top-header">
+          <button
+            className="logo-button"
+            onClick={() => navigate("/mentee-home")}
+          >
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
 
-    <header className="header-container">
-    <div className="top-header">
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        <h1 className="welcome-message">View Meetings</h1>
+      </header>
 
-      <button
-        className="logo-button"
-        onClick={() => navigate("/mentee-home")}
-      >
-        <img src={logo} alt="Logo" className="logo" />
-      </button>
-
-      <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-
-      </div>
-     
-    </header>
-      
       <Calendar
         localizer={localizer}
         events={meetings}
@@ -107,7 +117,7 @@ function MenteeMeetings() {
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
         className="calendar"
-        style={{ backgroundColor: '#ADD8E6' }}
+        style={{ backgroundColor: 'white' }}
       />
 
       <Dialog

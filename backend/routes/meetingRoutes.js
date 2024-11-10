@@ -8,6 +8,8 @@ import {
 
 const router = express.Router();
 
+
+//route to get all the meetings
 router.get('/meetings', async (req, res) => {
   const userId = req.query.userId;
   try {
@@ -19,6 +21,7 @@ router.get('/meetings', async (req, res) => {
   }
 });
 
+//route to get all mentees for said mentor
 router.get('/mentees', async (req, res) => {
   const mentorkey = req.query.mentorkey;
   try {
@@ -30,6 +33,8 @@ router.get('/mentees', async (req, res) => {
   }
 });
 
+
+//route to create meeting
 router.post('/create-meeting', async (req, res) => {
   const { mentorkey, menteekey, datetime, zoom_link, zoom_password } = req.body;
   try {

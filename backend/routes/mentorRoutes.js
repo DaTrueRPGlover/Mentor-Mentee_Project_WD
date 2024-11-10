@@ -66,7 +66,7 @@ router.get('/mentor/email/:mentorkey', async (req, res) => {
     }
 });
 
-// Route to fetch mentees' names by mentor key
+// Route to fetch mentees' data by mentor key
 router.get('/:mentorkey/mentees', async (req, res) => {
     const { mentorkey } = req.params;
 
@@ -91,5 +91,8 @@ router.get('/:mentorkey/mentees', async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch mentee details', error: error.message });
     }
 });
+
+
+
 
 export default router;

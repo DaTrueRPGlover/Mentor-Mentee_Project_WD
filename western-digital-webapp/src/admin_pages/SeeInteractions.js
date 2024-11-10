@@ -1,26 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SeeInteractions.css';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
 function SeeInteractions() {
- 
-  const [interactions] = useState([
-    { mentor: 'John Doe', mentee: 'Jane Smith', date: '2024-10-15', description: 'Reviewed project progress' },
-    { mentor: 'Alice Brown', mentee: 'Mark White', date: '2024-10-16', description: 'Discussed new assignment' },
-    { mentor: 'John Doe', mentee: 'Mark White', date: '2024-10-17', description: 'Provided feedback on homework' },
-  ]);
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [mentees, setMentees] = useState([]);
+  const [selectedMentee, setSelectedMentee] = useState(null);
+  const [selectedMenteeName, setSelectedMenteeName] = useState('');
+// function to auhenticate
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
 
-  const [mentorFilter, setMentorFilter] = useState('');
-  const [menteeFilter, setMenteeFilter] = useState('');
+    if (!user || user.role.toLowerCase() !== 'mentor') return;
 
-  const filteredInteractions = interactions.filter(
-    interaction =>
-      interaction.mentor.toLowerCase().includes(mentorFilter.toLowerCase()) &&
-      interaction.mentee.toLowerCase().includes(menteeFilter.toLowerCase())
-  );
+    fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${user.userId}`)
+      .then((response) => response.json())
+      .then((data) => setMentees(data))
+      .catch((error) => console.error('Error fetching mentees:', error));
+  }, []);
+// function to grab messages from source
+  useEffect(() => {
+    if (!selectedMentee) return;
 
-  const navigate = useNavigate(); // <-- Initialize navigate
+    const user = JSON.parse(localStorage.getItem('user'));
+    const menteekey = selectedMentee;
+    const mentorkey = user.userId;
+
+    const selectedMenteeData = mentees.find(mentee => mentee.menteekey === menteekey);
+    const menteeName = selectedMenteeData ? selectedMenteeData.menteeName : '';
+    setSelectedMenteeName(menteeName); 
+
+    fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const formattedMessages = data.map((msg) => ({
+          sender: msg.sender_role === 'mentee' ? 'Mentee' : 'Mentor',
+          content: msg.message_text,
+          timestamp: new Date(msg.message_time).toLocaleString(),
+        }));
+        setMessages(formattedMessages);
+      })
+      .catch((error) => console.error('Error fetching messages:', error));
+  }, [selectedMentee, mentees]);
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -28,57 +52,68 @@ function SeeInteractions() {
 
   return (
     <div className="mentor-meetings">
-
-    <header className="header-container">
-    <div className="top-header">
-
-      <button
-        className="logo-button"
-        onClick={() => navigate("/admin-home")}
-      >
-        <img src={logo} alt="Logo" className="logo" />
-      </button>
-
-      <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-
-      </div>
-      <h1 className="welcome-message">View Interactions</h1>
-    </header>
-
+      <header className="header-container">
+        <div className="top-header">
+          <button className="logo-button" onClick={() => navigate("/admin-home")}>
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+        <h1 className="welcome-message">View Interactions</h1>
+      </header>
+    {/* has dropdown for all mentees */}
       <div className="search">
         <div className="filter-section">
-          <h2>Search By Mentor</h2>
-          <input
-            type="text"
-            placeholder="Filter by Mentor"
-            value={mentorFilter}
-            onChange={(e) => setMentorFilter(e.target.value)}
-          />
-          <button className="button">Filter Mentor</button>
-        </div>
-        <div className="filter-section">
-          <h2>Search By Mentee</h2>
-          <input
-            type="text"
-            placeholder="Filter by Mentee"
-            value={menteeFilter}
-            onChange={(e) => setMenteeFilter(e.target.value)}
-          />
-          <button className="button">Filter Mentee</button>
+          <h2>Search</h2>
+          {mentees.length > 0 ? (
+            <div>
+              <label>Select a Mentee:</label>
+              <select
+                value={selectedMentee || ''}
+                onChange={(e) => setSelectedMentee(e.target.value)}
+              >
+                <option value="" disabled>Select a mentee</option>
+                {mentees.map((mentee) => (
+                  <option key={mentee.menteekey} value={mentee.menteekey}>
+                    {mentee.menteeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <p>{mentees.length === 0 ? 'No mentees available' : 'Loading mentees...'}</p>
+          )}
         </div>
       </div>
-
-      <ul>
-        {filteredInteractions.map((interaction, index) => (
-          <li key={index}>
-            <strong>{interaction.mentor}</strong> with <strong>{interaction.mentee}</strong> on {interaction.date}: {interaction.description}
-          </li>
-        ))}
-      </ul>
-      
-    
+          {/* puts messages in rectnagle */}
+      <div className="rectangle">
+        {selectedMentee && (
+          <div className="message-list1">
+            <ul>
+              {messages.map((message, index) => (
+                <li
+                  key={index}
+                  className={`message-item ${message.sender.toLowerCase() === 'mentee' ? 'mentee' : 'mentor'}`}
+                >
+                  {message.sender === 'Mentee' ? (
+                    <>
+                      <strong>{message.sender}:</strong> {message.content}
+                      <span className="timestamp">({message.timestamp})</span>
+                      <span className="mentee-name">{selectedMenteeName}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="mentor-name">{selectedMenteeName}</span>
+                      <strong>{message.sender}:</strong> {message.content}
+                      <span className="timestamp">({message.timestamp})</span>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

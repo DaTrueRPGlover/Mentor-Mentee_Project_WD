@@ -1,10 +1,13 @@
+// import stuff
 import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
+// main function mentor meetings 
 function MentorMeetings({ mentorkey }) {
-  const navigate = useNavigate(); // <-- Initialize navigate
+  const navigate = useNavigate();
+  // all the features we need for meeting
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
@@ -13,8 +16,9 @@ function MentorMeetings({ mentorkey }) {
   const [zoomLink, setZoomLink] = useState('');
   const [zoomPassword, setZoomPassword] = useState('');
 
+  // 
   useEffect(() => {
-    // Fetch the mentor's mentee list on component load
+    //fetching mentees that the mentor has so they can choose who to schedule meeting with
     const fetchMentees = async () => {
       try {
         const mentorinfo = JSON.parse(localStorage.getItem('user'));
@@ -26,10 +30,23 @@ function MentorMeetings({ mentorkey }) {
         console.error('Error fetching mentees:', error);
       }
     };
+    // fetch all the current meetings the mentor has 
+    const fetchMeetings = async () => {
+      try {
+        const mentorinfo = JSON.parse(localStorage.getItem('user'));
+        const mentorkey = mentorinfo.mentorkey;
+        const response = await fetch(`http://localhost:3001/api/meetings?userId=${mentorkey}`);
+        const data = await response.json();
+        setMeetings(data);
+      } catch (error) {
+        console.error('Error fetching meetings:', error);
+      }
+    };
 
     fetchMentees();
+    fetchMeetings();
   }, [mentorkey]);
-
+  //handling creating the meeting 
   const handleScheduleMeeting = async () => {
     if (selectedMentee && newDate.trim() && newTime.trim() && zoomLink.trim() && zoomPassword.trim()) {
       const datetime = `${newDate}T${newTime}`;
@@ -50,9 +67,9 @@ function MentorMeetings({ mentorkey }) {
             zoom_password: zoomPassword,
           }),
         });
-
         if (response.status === 201) {
-          setMeetings([...meetings, { mentee: selectedMentee, date: newDate, time: newTime }]);
+          const mentee = mentees.find(m => m.menteekey === selectedMentee);
+          setMeetings([...meetings, { mentee_name: mentee.mentee_name, date: newDate, time: newTime }]);
           setSelectedMentee('');
           setNewDate('');
           setNewTime('');
@@ -73,34 +90,29 @@ function MentorMeetings({ mentorkey }) {
     localStorage.clear();
     navigate("/");
   };
-
+  //displaying everything on the website
   return (
     <div className="mentor-meetings">
 
-    <header className="header-container">
-    <div className="top-header">
-
-      <button
-        className="logo-button"
-        onClick={() => navigate("/mentor-home")}
-      >
-        <img src={logo} alt="Logo" className="logo" />
-      </button>
-
-      <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-
-      </div>
-      <h1 className="welcome-message">Schedule Mentee Meetings</h1>
-    </header>
-
-
+      <header className="header-container">
+        <div className="top-header">
+          <button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        <h1 className="welcome-message">Schedule Mentee Meetings</h1>
+      </header>
 
       <ul>
         {meetings.map((meeting, index) => (
           <li key={index}>
-            Meeting with <strong>{meeting.mentee}</strong> on {meeting.date} at {meeting.time}
+            Meeting with <strong>{meeting.mentee_name}</strong> on {meeting.date} at {meeting.time}
           </li>
         ))}
       </ul>
