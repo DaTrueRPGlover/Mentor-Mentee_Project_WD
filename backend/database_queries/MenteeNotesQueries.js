@@ -58,6 +58,29 @@ export const insertMenteeNote = async (meetingkey, menteekey, datetime, profileO
         throw error; // Rethrow to handle it in the calling function
     }
 };
+export const getMenteeNotesByKeys = async (meetingkey, menteekey) => {
+    const sql = `
+        SELECT menteenotes.menteekey, 
+        menteenotes.datetime, 
+        menteenotes.profile_of_a_leader, 
+        menteenotes.executive_communication_style,
+        menteenotes.trust_respect_visibility, 
+        menteenotes.motivating_your_team, 
+        menteenotes.self_advocacy_and_career_growth,
+        menteenotes.work_life_balance,
+        menteenotes.additional_comments 
+        FROM menteenotes 
+        WHERE meetingkey = ? AND menteekey = ?
+    `;
+    try {
+      const [rows] = await pool.execute(sql, [meetingkey, menteekey]);
+      return rows.length > 0 ? rows[0] : null;
+    } catch (error) {
+      console.error('Error getting the mentee notes:', error);
+      throw error;
+    }
+  };
+  
 
 /*// Example data to insert
 const meetingkey = 'e7c27601-9ae1-11ef-a92b-02a12f7436d7';
