@@ -59,20 +59,56 @@ export const insertMenteeNote = async (meetingkey, menteekey, datetime, profileO
     }
 };
 
-/*// Example data to insert
+export const updateMenteeNote = async (meetingkey, menteekey, datetime, profileOfALeader, executiveCommunicationStyle, trustRespectVisibility, motivatingYourTeam, selfAdvocacyAndCareerGrowth, workLifeBalance, additionalComments) => {
+    const sql = `
+    UPDATE menteenotes
+    SET
+    datetime = ?,
+    profile_of_a_leader = ?,
+    executive_communication_style = ?,
+    trust_respect_visibility = ?,
+    motivating_your_team = ?,
+    self_advocacy_and_career_growth = ?,
+    work_life_balance = ?,
+    additional_comments = ?
+    WHERE meetingkey = ? AND menteekey = ?`;
+
+    try{
+        const [result] = await pool.execute(sql, [
+            datetime,
+            profileOfALeader,
+            executiveCommunicationStyle,
+            trustRespectVisibility,
+            motivatingYourTeam,
+            selfAdvocacyAndCareerGrowth,
+            workLifeBalance,
+            additionalComments,
+            meetingkey,
+            menteekey
+        ]);
+
+        return result;
+    } catch (error) {
+        console.error('Error updating the mentee note:', error);
+        throw error;
+    }
+}
+
+
+// Example data to insert
 const meetingkey = 'e7c27601-9ae1-11ef-a92b-02a12f7436d7';
 const menteekey = '2d9f4b3a-987f-11ef-a92b-02a12f7436d7';
 const datetime = new Date();
-const profileOfALeader = 3;
-const executiveCommunicationStyle = 2;
+const profileOfALeader = 1;
+const executiveCommunicationStyle = 1;
 const trustRespectVisibility = 1;
-const motivatingYourTeam = 3;
+const motivatingYourTeam = 1;
 const selfAdvocacyAndCareerGrowth = 1;
-const workLifeBalance = 3;
-const additionalComments = 'Mentee is making good progress on goals.';
+const workLifeBalance = 1;
+const additionalComments = 'Mentee is making okay progress on goals.';
 
 try {
-    const result = await insertMenteeNote(
+    const result = await updateMenteeNote(
         meetingkey,
         menteekey,
         datetime,
@@ -84,10 +120,10 @@ try {
         workLifeBalance,
         additionalComments
     );
-    console.log('Mentee note inserted successfully:', result);
+    console.log('Mentee note updated successfully:', result);
 } catch (error) {
-    console.error('Error inserting mentee note:', error);
-}*/
+    console.error('Error updating mentee note:', error);
+}
 
 
 /*console.log('Mentee Notes:', JSON.stringify(await getMenteeNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'), null, 2)); //This way makes the output come as a list of attributes with their value
