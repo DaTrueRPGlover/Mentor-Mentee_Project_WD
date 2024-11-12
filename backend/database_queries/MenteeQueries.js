@@ -59,8 +59,8 @@ export const getMenteeDepartmentKeyByKey = async (menteekey) => {
     }
 };*/
 
-console.log('Mentee name: ' + await getMenteeNameByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
-console.log('Mentee mentorkey: ' + await getMentorKeyByMenteeKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
-console.log('Mentee email: ' + await getMenteeEmailByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
-//console.log('Mentee username: ' + await getMenteeUsernameByKey('10'));
-console.log('Mentee departmentkey: ' + await getMenteeDepartmentKeyByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
+// console.log('Mentee name: ' + await getMenteeNameByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
+// console.log('Mentee mentorkey: ' + await getMentorKeyByMenteeKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
+// console.log('Mentee email: ' + await getMenteeEmailByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));
+// //console.log('Mentee username: ' + await getMenteeUsernameByKey('10'));
+// console.log('Mentee departmentkey: ' + await getMenteeDepartmentKeyByKey('2d9f4b3a-987f-11ef-a92b-02a12f7436d7'));

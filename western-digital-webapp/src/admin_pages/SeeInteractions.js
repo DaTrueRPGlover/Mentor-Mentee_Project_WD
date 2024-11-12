@@ -1,60 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SeeInteractions.css';
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
 function SeeInteractions() {
-  const [interactions] = useState([
-    { mentor: 'John Doe', mentee: 'Jane Smith', date: '2024-10-15', description: 'Reviewed project progress' },
-    { mentor: 'Alice Brown', mentee: 'Mark White', date: '2024-10-16', description: 'Discussed new assignment' },
-    { mentor: 'John Doe', mentee: 'Mark White', date: '2024-10-17', description: 'Provided feedback on homework' },
-  ]);
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([]);
+  const [mentors, setMentors] = useState([]);
+  const [mentees, setMentees] = useState([]);
+  const [selectedMentor, setSelectedMentor] = useState('');
+  const [selectedMentee, setSelectedMentee] = useState('');
 
-  const [mentorFilter, setMentorFilter] = useState('');
-  const [menteeFilter, setMenteeFilter] = useState('');
+  useEffect(() => {
+    fetch('http://localhost:3001/api/mentors')
+      .then(response => response.json())
+      .then(data => setMentors(data))
+      .catch(error => console.error('Error fetching mentors:', error));
 
-  const filteredInteractions = interactions.filter(
-    interaction =>
-      interaction.mentor.toLowerCase().includes(mentorFilter.toLowerCase()) &&
-      interaction.mentee.toLowerCase().includes(menteeFilter.toLowerCase())
-  );
+    fetch('http://localhost:3001/api/mentees')
+      .then(response => response.json())
+      .then(data => setMentees(data))
+      .catch(error => console.error('Error fetching mentees:', error));
+  }, []);
+
+  useEffect(() => {
+    if (!selectedMentor || !selectedMentee) return;
+
+    fetch(`http://localhost:3001/api/messages?mentorkey=${selectedMentor}&menteekey=${selectedMentee}`)
+      .then(response => response.json())
+      .then(data => {
+        const formattedMessages = data.map((msg) => ({
+          sender: msg.sender_role === 'mentee' ? 'Mentee' : 'Mentor',
+          content: msg.message_text,
+          timestamp: new Date(msg.message_time).toLocaleString(),
+        }));
+        setMessages(formattedMessages);
+      })
+      .catch(error => console.error('Error fetching messages:', error));
+  }, [selectedMentor, selectedMentee]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <div className="see-interactions">
-      <img src={logo} alt="Logo" className="logo" />
-      <h1>Viewing Interactions</h1>
+      <header className="header-container">
+        <div className="top-header">
+          <button className="logo-button" onClick={() => navigate("/admin-home")}>
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+        <h1 className="welcome-message">View Interactions</h1>
+      </header>
       <div className="search">
         <div className="filter-section">
-          <h2>Search By Mentor</h2>
-          <input
-            type="text"
-            placeholder="Filter by Mentor"
-            value={mentorFilter}
-            onChange={(e) => setMentorFilter(e.target.value)}
-          />
-          <button className="button">Filter Mentor</button>
-        </div>
-        <div className="filter-section">
-          <h2>Search By Mentee</h2>
-          <input
-            type="text"
-            placeholder="Filter by Mentee"
-            value={menteeFilter}
-            onChange={(e) => setMenteeFilter(e.target.value)}
-          />
-          <button className="button">Filter Mentee</button>
+          <h2>Search</h2>
+          <label>Select a Mentor:</label>
+          <select
+            value={selectedMentor}
+            onChange={(e) => setSelectedMentor(e.target.value)}
+          >
+            <option value="" disabled>Select a mentor</option>
+            {mentors.map((mentor) => (
+              <option key={mentor.userid} value={mentor.userid}>
+                {mentor.name}
+              </option>
+            ))}
+          </select>
+
+          <label>Select a Mentee:</label>
+          <select
+            value={selectedMentee}
+            onChange={(e) => setSelectedMentee(e.target.value)}
+          >
+            <option value="" disabled>Select a mentee</option>
+            {mentees.map((mentee) => (
+              <option key={mentee.userid} value={mentee.userid}>
+                {mentee.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
-
-      <ul>
-        {filteredInteractions.map((interaction, index) => (
-          <li key={index}>
-            <strong>{interaction.mentor}</strong> with <strong>{interaction.mentee}</strong> on {interaction.date}: {interaction.description}
-          </li>
-        ))}
-      </ul>
-      
-      {/* Move the rectangle below everything */}
       <div className="rectangle">
+        {selectedMentor && selectedMentee && (
+          <div className="message-list1">
+            <ul>
+              {messages.map((message, index) => (
+                <li key={index} className={`message-item ${message.sender.toLowerCase()}`}>
+                  <strong>{message.sender}:</strong> {message.content}
+                  <span className="timestamp">({message.timestamp})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

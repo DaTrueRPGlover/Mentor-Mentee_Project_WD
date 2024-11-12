@@ -5,82 +5,72 @@ import './InteractWithMentee.css';
 function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [mentees, setMentees] = useState([]);
+  const [selectedMentee, setSelectedMentee] = useState('');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (!user) {
-      console.error('User not logged in');
+    if (!user || user.role.toLowerCase() !== 'mentor') {
+      console.error('User not logged in or not a mentor');
       return;
     }
 
-    const menteekey = user.menteekey;
-    const mentorkey = user.mentorkey;
-
-    if (!menteekey || !mentorkey) {
-      console.error('Keys not found');
-      return;
-    }
-
-    fetch(`http://localhost:3001/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+    //fetch all mentees assigned to said mentor
+    fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${user.userId}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log('Fetched mentees:', data);
+        setMentees(data);
+      })
+      .catch((error) => console.error('Error fetching mentees:', error));
+  }, []);
+
+  useEffect(() => {
+    if (!selectedMentee) return;
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const menteekey = selectedMentee;
+    const mentorkey = user.userId;
+    //fetch all the messages between the selected mentee and the mentor
+    fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Fetched messages:', data);
         const formattedMessages = data.map((msg) => ({
-          sender: msg.isMentee ? 'Mentee' : 'Mentor',
-          content: msg.isMentee ? msg.menteetext : msg.mentortext,
-          timestamp: new Date(msg.date).toLocaleString(),
+          sender: msg.sender_role === 'mentee' ? 'Mentee' : 'Mentor',
+          content: msg.message_text,
+          timestamp: new Date(msg.message_time).toLocaleString(),
         }));
         setMessages(formattedMessages);
       })
       .catch((error) => console.error('Error fetching messages:', error));
-  }, []);
-
+  }, [selectedMentee]);
+  //post messages on to the database
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
+    if (newMessage.trim() && selectedMentee) {
       const user = JSON.parse(localStorage.getItem('user'));
-  
-      if (!user) {
-        console.error('User not logged in');
-        return;
-      }
-  
-      const menteekey = user.menteekey;
-      const mentorkey = user.mentorkey;
-  
-      if (!menteekey || !mentorkey) {
-        console.error('Keys not found');
-        return;
-      }
-  
-      // Prepare message data
-      let messageData = {
-        isMentee: user.role.toLowerCase() === 'mentee',
-        isMentor: user.role.toLowerCase() === 'mentor',
+      const menteekey = selectedMentee;
+      const mentorkey = user.userId;
+
+      const messageData = {
         menteekey: menteekey,
         mentorkey: mentorkey,
-        menteetext: null,
-        mentortext: null,
+        senderRole: user.role.toLowerCase(),
+        messageText: newMessage,
       };
-  
-      // Set the appropriate text field
-      if (user.role.toLowerCase() === 'mentee') {
-        messageData.menteetext = newMessage;
-      } else if (user.role.toLowerCase() === 'mentor') {
-        messageData.mentortext = newMessage;
-      }
-  
-      fetch('http://localhost:3001/messages', {
+
+      fetch('http://localhost:3001/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(messageData),
       })
         .then((response) => response.json())
         .then((data) => {
-          // Update messages state
-          setMessages([
-            ...messages,
+          setMessages((prevMessages) => [
+            ...prevMessages,
             {
-              sender: user.role.toLowerCase() === 'mentee' ? 'Mentee' : 'Mentor',
+              sender: 'Mentor',
               content: newMessage,
               timestamp: new Date().toLocaleString(),
             },
@@ -90,28 +80,52 @@ function InteractWithMentee() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
-
+  //renders all the information onto the website
   return (
     <div className="interact-with-mentee">
-      <h1>Interact with {JSON.parse(localStorage.getItem('user')).role.toLowerCase() === 'mentee' ? 'Mentor' : 'Mentee'}</h1>
-      <div className="message-list">
-        <ul>
-          {messages.map((message, index) => (
-            <li key={index} className={message.sender.toLowerCase()}>
-              <strong>{message.sender}:</strong> {message.content}{' '}
-              <span className="timestamp">({message.timestamp})</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="message-input">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message here..."
-        />
-        <button onClick={handleSendMessage}>Send Message</button>
-      </div>
+      <h1>Interact with Mentees</h1>
+      {mentees.length > 0 ? (
+        <div>
+          <label>Select a Mentee:</label>
+          <select
+            value={selectedMentee}
+            onChange={(e) => setSelectedMentee(e.target.value)}
+          >
+            <option value="" disabled>
+              Select a mentee
+            </option>
+            {mentees.map((mentee) => (
+              <option key={mentee.menteekey} value={mentee.menteekey}>
+                {mentee.menteeName}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <p>You have no mentees assigned.</p>
+      )}
+      {selectedMentee && (
+        <>
+          <div className="message-list">
+            <ul>
+              {messages.map((message, index) => (
+                <li key={index} className={message.sender.toLowerCase()}>
+                  <strong>{message.sender}:</strong> {message.content}{' '}
+                  <span className="timestamp">({message.timestamp})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="message-input">
+            <textarea
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message here..."
+            />
+            <button onClick={handleSendMessage}>Send Message</button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

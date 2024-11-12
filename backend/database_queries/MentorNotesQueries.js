@@ -1,26 +1,58 @@
 import {pool} from '../database.js'
 
-export const getMentorNotesByMeetingKey = async (meetingkey) => { // Fetch the mentor notes using the corresponding meetingkey
+export const getMentorNotesByMeetingKey = async (meetingkey) => {
     const sql = `
-        SELECT mentornotes.mentorkey,
-               mentornotes.datetime,
-               mentornotes.skipped,
-               mentornotes.finished_homework,
-               mentornotes.attitude_towards_learning,
-               mentornotes.additional_comments
-        FROM mentornotes 
-        WHERE meetingkey = ?`; // Query to fetch mentor notes by meetingkey
-
+      SELECT mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments
+      FROM mentornotes
+      WHERE meetingkey = ?
+    `;
+  
     try {
-        const [rows] = await pool.execute(sql, [meetingkey]); // Execute the query with the provided meetingkey
-        return rows.length > 0 ? rows[0] : null; // Return the first row if exists, otherwise null
+      const [rows] = await pool.execute(sql, [meetingkey]);
+      return rows.length > 0 ? rows[0] : null;
     } catch (error) {
-        console.error('Error getting the mentor notes:', error); // Log error with context
-        throw error;
+      console.error('Error fetching mentor notes:', error);
+      throw error;
+    }
+  };
+  
+  export const insertMentorNotes = async (meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments) => {
+    const sql = `
+      INSERT INTO mentornotes (meetingkey, mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+  
+    try {
+      const [result] = await pool.execute(sql, [meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments]);
+      return result.insertId;
+    } catch (error) {
+      console.error('Error inserting mentor notes:', error);
+      throw error;
     }
 };
+export const getMentorNotesByKeys = async (meetingkey, mentorkey) => {
+    const sql = `
+        SELECT mentornotes.mentorkey, 
+        mentornotes.datetime, 
+        mentornotes.skipped, 
+        mentornotes.finished_homework, 
+        mentornotes.attitude_towards_learning, 
+        mentornotes.additional_comments
+        FROM mentornotes 
+        WHERE meetingkey = ? AND mentorkey = ?
+    `;
+    try {
+      const [rows] = await pool.execute(sql, [meetingkey, mentorkey]);
+      return rows.length > 0 ? rows[0] : null;
+    } catch (error) {
+      console.error('Error getting the mentor notes:', error);
+      throw error;
+    }
+  };
 
-export const insertMentorNotes = async (
+
+
+export const updateMentorNotes = async (
     meetingkey, 
     mentorkey, 
     datetime, 
@@ -30,36 +62,72 @@ export const insertMentorNotes = async (
     additionalComments = ''
 ) => {
     const sql = `
-        INSERT INTO mentornotes (
-            meetingkey, 
-            mentorkey, 
-            datetime, 
-            skipped, 
-            finished_homework, 
-            attitude_towards_learning, 
-            additional_comments
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        UPDATE mentornotes
+        SET
+            datetime = ?, 
+            skipped = ?, 
+            finished_homework = ?, 
+            attitude_towards_learning = ?, 
+            additional_comments = ?
+        WHERE 
+            meetingkey = ? AND mentorkey = ?
     `;
 
     try {
         const [result] = await pool.execute(sql, [
-            meetingkey, 
-            mentorkey, 
             datetime, 
             skipped, 
             finishedHomework, 
             attitudeTowardsLearning, 
-            additionalComments
+            additionalComments, 
+            meetingkey, 
+            mentorkey
         ]);
-        console.log('Mentor notes inserted with meetingkey:', meetingkey);
-        return meetingkey;
+
+        if (result.affectedRows === 0) {
+            console.log('No mentor note found to update for the provided meetingkey and mentorkey.');
+            return null;
+        }
+
+        console.log('Mentor notes updated for meetingkey:', meetingkey);
+        return result;
     } catch (error) {
-        console.error('Error inserting mentor notes:', error);
+        console.error('Error updating mentor notes:', error);
         throw error;
     }
 };
 
+/*
+// Test function for updateMentorNotes
+async function testUpdateMentorNotes() {
+    const meetingkey = '2f7adff3-9943-11ef-a92b-02a12f7436d7'; // replace with an actual meeting key
+    const mentorkey = '2f7eddd2-987f-11ef-a92b-02a12f7436d7';   // replace with an actual mentor key
+    const datetime = new Date();
+    const skipped = 1;
+    const finishedHomework = 1;
+    const attitudeTowardsLearning = 3; // Example value
+    const additionalComments = 'This is a test update for mentor notes.';
 
+    try {
+        const result = await updateMentorNotes(
+            meetingkey,
+            mentorkey,
+            datetime,
+            skipped,
+            finishedHomework,
+            attitudeTowardsLearning,
+            additionalComments
+        );
+        console.log('Update test result:', result);
+    } catch (error) {
+        console.error('Error during testUpdateMentorNotes:', error);
+    }
+}
+
+// Run the test function
+testUpdateMentorNotes();*/
+
+/*
 console.log('Mentor Notes:', JSON.stringify(await getMentorNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'), null, 2)); // This outputs mentor notes as a JSON with attributes and values
 
 const mentorNotes = await getMentorNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'); // Retrieves individual values for each attribute
@@ -69,3 +137,4 @@ console.log('Skipped:', mentorNotes.skipped);
 console.log('Finished Homework:', mentorNotes.finished_homework);
 console.log('Attitude Towards Learning:', mentorNotes.attitude_towards_learning);
 console.log('Additional Comments:', mentorNotes.additional_comments);
+*/

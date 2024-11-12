@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+
 import './AssignHomework.css';
-import WDCLogo from '../assets/WDC.png';
+import logo from '../assets/WDC.png';
 
 const menteesData = [
   { name: 'John Doe', skills: ['Profile of a leader', 'Work-Life Balance'] },
@@ -19,6 +21,7 @@ const skillsList = [
 ];
 
 function AssignHomework() {
+  const navigate = useNavigate(); // <-- Initialize navigate
   const [homeworkList, setHomeworkList] = useState([]);
   const [newHomework, setNewHomework] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -49,9 +52,35 @@ function AssignHomework() {
       (selectedSkill ? mentee.skills.includes(selectedSkill) : true)
   );
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
-    <div className="homework-body">
-      <img src={WDCLogo} alt="Company Logo" className="homework-logo" />
+    <div className="assign-hw">
+
+      <header className="header-container">
+      <div className="top-header">
+
+        <button
+          className="logo-button"
+          onClick={() => navigate("/mentor-home")}
+        >
+          <img src={logo} alt="Logo" className="logo" />
+        </button>
+
+        <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+
+        </div>
+        <h1 className="welcome-message">Assign Mentee Homework</h1>
+      </header>
+   
+   
+   <div className="homework-body">
+
 
       <div className="search-filter-container">
         <div className="search-container">
@@ -125,6 +154,7 @@ function AssignHomework() {
       >
         Assign Homework to Selected Mentees
       </button>
+    </div>
     </div>
   );
 }

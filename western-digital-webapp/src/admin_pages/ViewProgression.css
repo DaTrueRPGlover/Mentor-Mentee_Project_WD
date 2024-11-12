@@ -1,64 +1,159 @@
-
-.view-progressions {
-  padding-top: 40px;
-  padding-bottom: 40px; /* Add padding to the bottom */
-  text-align: center;
-  display: flex; /* Enable Flexbox */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  min-height: 100vh;
-}
-.rectangle {
-  width: 50%; /* Set the width of the rectangle */
-  max-width: 600px; /* Set a maximum width for the rectangle */
-  height: 600px; /* Set the height to make it visible */
-  border: 2px solid #91BECD; /* Light blue border */
-  background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent background */
-  margin-top: 20px; /* Space above the rectangle */
-  display: flex; /* Flexbox layout */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  border-radius: 8px; /* Rounded corners */
-}
-.view-progressions h1 {
-  margin-bottom: 20px; /* Adjust this value for desired spacing */
-  font-size: 36px; /* Optional: Adjust font size */
-  padding-top: 10px; /* Optional: Add padding at the top if needed */
-}
-.view-progressions .search input {
-  width: 300px; /* Increase width as desired */
-  padding: 15px; /* Increase padding for larger input area */
-  font-size: 1.2em; /* Increase font size */
-  border-radius: 8px; /* Add rounded corners */
-  border: 1px solid #91BECD; /* Optional: add border to match theme */
-}
-
-
-input {
-  padding: 10px;
-  margin-bottom: 20px;
-  font-size: 1em;
-}
-
-ul {
-  list-style-type: none;
+/* Global Styles */
+* {
+  background-color: #ADD8E6;
+  font-family: Arial, sans-serif;
+  margin: 0;
   padding: 0;
 }
 
-li {
-  margin: 10px 0;
-  font-size: 1.1em;
+.todo-progression {
+  padding-top: 40px; /* Standard top padding */
+  padding-bottom: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
-strong {
+/* Header styling */
+.todo-progression .header-container {
+  width: 100%; /* Full width */
+  background-color: #ADD8E6; /* Header background color */
+  margin-top: 0; /* Remove any extra margin at the top */
+  margin-bottom: 100px; /* Adds space below the header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Add padding for spacing */
+}
+
+.todo-progression .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.todo-progression .logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remove extra padding */
+}
+
+.todo-progression .logo {
+  position: absolute;
+  top: 20px; /* Adjust logo's vertical position */
+  left: 40px; /* Move logo to the very left */
+  width: 150px; /* Adjust the size of the logo */
+}
+
+/* Logout button */
+.logout-button {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todo-progression .logout-button:hover {
+  background-color: #c9302c;
+}
+
+/* Welcome message container styling */
+.todo-progression .welcome-message-container {
+  margin-top: 20px; /* Adjusted margin for spacing below the header */
+}
+
+.todo-progression .welcome-message {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+}
+
+/* Dropdown container styling */
+.todo-progression .dropdown-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.todo-progression .dropdown-container label {
+  margin-bottom: 8px;
   font-weight: bold;
 }
-.view-progressions .logo {
-  width: 120px;
-  height: auto;
+
+.todo-progression .dropdown-container select {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #91BECD;
+}
+
+/* Error message styling */
+.todo-progression .error-message {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Styling for the central content area */
+.todo-progression .content-split {
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo-progression .form-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo-progression .form-box {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #91BECD;
+  border-radius: 8px;
+  padding: 20px;
   margin-bottom: 20px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-progression .question-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.todo-progression .todo-progression .form-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todo-progression .form-title-icon {
+  margin-right: 8px;
+  color: #91BECD;
+}
+
+.todo-progression input[type="number"], textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #91BECD;
+  background-color: #f9f9f9;
+}
+
+.todo-progression textarea {
+  resize: vertical;
 }
