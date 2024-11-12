@@ -59,4 +59,34 @@ router.get('/menteenotes/:meetingkey/:menteekey', async (req, res) => {
 });
 
 
+// Route to update an existing mentee note
+router.put('/menteenotes/:meetingkey/:menteekey', async (req, res) => {
+    const { meetingkey, menteekey } = req.params;
+    const { datetime, profileOfALeader, executiveCommunicationStyle, trustRespectVisibility, motivatingYourTeam, selfAdvocacyAndCareerGrowth, workLifeBalance, additionalComments } = req.body;
+
+    try {
+        const result = await updateMenteeNote(
+            meetingkey,
+            menteekey,
+            datetime,
+            profileOfALeader,
+            executiveCommunicationStyle,
+            trustRespectVisibility,
+            motivatingYourTeam,
+            selfAdvocacyAndCareerGrowth,
+            workLifeBalance,
+            additionalComments
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Mentee note not found or not updated.' });
+        }
+
+        res.status(200).json({ message: 'Mentee note updated successfully.' });
+    } catch (error) {
+        console.error('Error updating mentee note:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
 export default router;
