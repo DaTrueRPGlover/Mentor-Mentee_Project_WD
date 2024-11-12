@@ -51,6 +51,23 @@ export const checkMeetingConflict = async (mentorkey, datetime) => {
   return rows;
 };
 
+
+export const getMeetingsByMenteeKey = async (menteekey) => {
+    const sql = `
+        SELECT meetingkey, mentorkey, menteekey, datetime, zoom_link, zoom_password
+        FROM meetings
+        WHERE menteekey = ?
+        ORDER BY datetime DESC
+    `;
+    try {
+        const [rows] = await pool.execute(sql, [menteekey]);
+        return rows;
+    } catch (error) {
+        console.error('Error fetching meetings by menteekey:', error);
+        throw error;
+    }
+};
+
 // Query to create a new meeting
 export const createMeeting = async (mentorkey, menteekey, datetime, zoom_link, zoom_password) => {
   await pool.query(
