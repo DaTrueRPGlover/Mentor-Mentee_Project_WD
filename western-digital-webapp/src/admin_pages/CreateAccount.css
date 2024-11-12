@@ -152,3 +152,7 @@
   width: 150px;
   height: auto;
 }
+.create-account .header {
+  background-color: #91BECD;
+  align-items: center;
+}

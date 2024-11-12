@@ -17,6 +17,10 @@ function ViewProgressions() {
   const [menteeNotes, setMenteeNotes] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+
+  const [mentorsList, setMentorsList] = useState([]);
+  const [selectedMentor, setSelectedMentor] = useState('');
+  const [mentorNotes, setMentorNotes] = useState(null);
   // Fetch mentee notes by meeting key and mentee key
   const fetchMenteeNotes = async (meetingkey, menteekey) => {
     try {
@@ -26,7 +30,7 @@ function ViewProgressions() {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          setMenteeNotes(data); // Set mentee notes state with the fetched data
+          setMenteeNotes(data);
           setErrorMessage('');
         } else {
           setErrorMessage('No notes found for this meeting and mentee key.');
@@ -41,6 +45,31 @@ function ViewProgressions() {
       console.error(error);
       setErrorMessage('Error fetching mentee notes');
       setMenteeNotes(null);
+    }
+  };
+  const fetchMentorNotes = async (meetingkey, mentorkey) => {
+    try {
+      console.log("Mentor Key:", mentorkey);
+      console.log("Meeting Key:", meetingkey);
+      const response = await fetch(`http://localhost:3001/api/mentorNotes/mentornotes/${meetingkey}/${mentorkey}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setMentorNotes(data); // Set mentee notes state with the fetched data
+          setErrorMessage('');
+        } else {
+          setErrorMessage('No notes found for this meeting and mentee key.');
+          setMentorNotes(null);
+        }
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentor notes');
+        setMentorNotes(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentor notes');
+      setMentorNotes(null);
     }
   };
 
@@ -58,6 +87,22 @@ function ViewProgressions() {
     } catch (error) {
       console.error(error);
       setErrorMessage('Error fetching mentee data');
+    }
+  };
+
+  const fetchMentorNames = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/mentors');
+      if (response.ok) {
+        const data = await response.json();
+        setMentorsList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentor data');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentor data');
     }
   };
 
@@ -79,9 +124,27 @@ function ViewProgressions() {
       setMeetingsList([]);
     }
   };
+  const fetchMeetingsByMentor = async (mentorkey) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/meetings/mentors/${mentorkey}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMeetingsList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching meetings data');
+        setMeetingsList([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching meetings data');
+      setMeetingsList([]);
+    }
+  };
 
   useEffect(() => {
     fetchMenteeNames();
+    fetchMentorNames();
   }, []);
 
   useEffect(() => {
@@ -94,10 +157,25 @@ function ViewProgressions() {
   }, [selectedMentee]);
 
   useEffect(() => {
+    if (selectedMentor) {
+      fetchMeetingsByMentor(selectedMentor);
+      setSelectedMeeting(''); // Reset selected meeting when mentee changes
+      setMentorNotes(null); // Clear previous notes
+      setErrorMessage('');
+    }
+  }, [selectedMentor]);
+
+  useEffect(() => {
     if (selectedMentee && selectedMeeting) {
       fetchMenteeNotes(selectedMeeting, selectedMentee);
     }
   }, [selectedMentee, selectedMeeting]);
+
+  useEffect(() => {
+    if (selectedMentor && selectedMeeting) {
+      fetchMentorNotes(selectedMeeting, selectedMentor);
+    }
+  }, [selectedMentor, selectedMeeting]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -107,10 +185,11 @@ function ViewProgressions() {
   return (
     <div className="todo-progression">
       <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/admin-home")}>
+      <button className="logo-button" onClick={() => navigate("/admin-home")}>
             <img src={logo} alt="Logo" className="logo" />
           </button>
+        <div className="top-header">
+        
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
         <div className="welcome-message-container">
@@ -135,24 +214,61 @@ function ViewProgressions() {
         </select>
       </div>
 
+      <div className="dropdown-container">
+        <label htmlFor="mentor-select">Select Mentor:</label>
+        <select
+          id="mentor-select"
+          value={selectedMentor}
+          onChange={(e) => setSelectedMentor(e.target.value)}
+        >
+          <option value="">-- Select Mentor --</option>
+          {mentorsList.map((mentor) => (
+            <option key={mentor.userid} value={mentor.userid}>
+              {mentor.name} {mentor.lastname}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Meeting selection */}
-      {selectedMentee && (
-        <div className="dropdown-container">
-          <label htmlFor="meeting-select">Select Meeting:</label>
-          <select
-            id="meeting-select"
-            value={selectedMeeting}
-            onChange={(e) => setSelectedMeeting(e.target.value)}
-          >
-            <option value="">-- Select Meeting --</option>
-            {meetingsList.map((meeting) => (
-              <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+{/* Meeting selection for mentee */}
+{selectedMentee && (
+  <div className="dropdown-container">
+    <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
+    <select
+      id="meeting-select-mentee"
+      value={selectedMeeting}
+      onChange={(e) => setSelectedMeeting(e.target.value)}
+    >
+      <option value="">-- Select Meeting --</option>
+      {meetingsList.map((meeting) => (
+        <option key={meeting.meetingkey} value={meeting.meetingkey}>
+          {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
+
+{/* Meeting selection for mentor */}
+{selectedMentor && (
+  <div className="dropdown-container">
+    <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
+    <select
+      id="meeting-select-mentor"
+      value={selectedMeeting}
+      onChange={(e) => setSelectedMeeting(e.target.value)}
+    >
+      <option value="">-- Select Meeting --</option>
+      {meetingsList.map((meeting) => (
+        <option key={meeting.meetingkey} value={meeting.meetingkey}>
+          {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
+
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
@@ -264,6 +380,69 @@ function ViewProgressions() {
             </>
           )}
         </div>
+        {/* MENTOR FORM NOW  */}
+        {mentorNotes && (
+    <>
+      <div className="form-box">
+        <div className="question-group">
+          <div className="form-title">
+            <EventBusyOutlinedIcon className="form-title-icon" />
+            <p>Skipped Meeting?</p>
+          </div>
+          <input
+            type="number"
+            value={mentorNotes.skipped}
+            readOnly
+          />
+        </div>
+      </div>
+
+      <div className="form-box">
+        <div className="question-group">
+          <div className="form-title">
+            <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
+            <p>Mentee Finished HW?</p>
+          </div>
+          <input
+            type="number"
+            value={mentorNotes.finished_homework}
+            readOnly
+          />
+        </div>
+      </div>
+
+      <div className="form-box">
+        <div className="question-group">
+          <div className="form-title">
+            <MoodIcon className="form-title-icon" />
+            <p>Mentee's Attitude Towards Learning</p>
+          </div>
+          <input
+            type="number"
+            value={mentorNotes.attitude_towards_learning}
+            readOnly
+          />
+        </div>
+      </div>
+
+      {/* Additional Comments */}
+      {mentorNotes.additional_comments && (
+        <div className="form-box">
+          <div className="question-group">
+            <div className="form-title">
+              <p>Additional Comments</p>
+            </div>
+            <textarea
+              value={mentorNotes.additional_comments}
+              readOnly
+              rows="4"
+              cols="50"
+            />
+          </div>
+        </div>
+      )}
+    </>
+  )}
       </div>
     </div>
   );

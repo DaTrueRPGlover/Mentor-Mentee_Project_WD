@@ -29,7 +29,28 @@ export const getMentorNotesByMeetingKey = async (meetingkey) => {
       console.error('Error inserting mentor notes:', error);
       throw error;
     }
+};
+export const getMentorNotesByKeys = async (meetingkey, mentorkey) => {
+    const sql = `
+        SELECT mentornotes.mentorkey, 
+        mentornotes.datetime, 
+        mentornotes.skipped, 
+        mentornotes.finished_homework, 
+        mentornotes.attitude_towards_learning, 
+        mentornotes.additional_comments
+        FROM mentornotes 
+        WHERE meetingkey = ? AND mentorkey = ?
+    `;
+    try {
+      const [rows] = await pool.execute(sql, [meetingkey, mentorkey]);
+      return rows.length > 0 ? rows[0] : null;
+    } catch (error) {
+      console.error('Error getting the mentor notes:', error);
+      throw error;
+    }
   };
+
+
 
 export const updateMentorNotes = async (
     meetingkey, 

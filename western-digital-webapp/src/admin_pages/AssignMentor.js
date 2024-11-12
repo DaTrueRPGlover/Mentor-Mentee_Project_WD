@@ -129,8 +129,9 @@ function AssignMentor() {
           </button>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
-        <h1 className="welcome-message">Assign Mentor To Mentee</h1>
+        
       </header>
+      <h1 className="welcome-message">Assign Mentor To Mentee</h1>
 {/* lists mentors and mentee */}
       <div className="content-container">
         <div className="rectangle">
