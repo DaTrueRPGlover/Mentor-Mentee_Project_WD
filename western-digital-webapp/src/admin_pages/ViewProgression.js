@@ -107,10 +107,11 @@ function ViewProgressions() {
   return (
     <div className="todo-progression">
       <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/admin-home")}>
+      <button className="logo-button" onClick={() => navigate("/admin-home")}>
             <img src={logo} alt="Logo" className="logo" />
           </button>
+        <div className="top-header">
+        
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
         <div className="welcome-message-container">

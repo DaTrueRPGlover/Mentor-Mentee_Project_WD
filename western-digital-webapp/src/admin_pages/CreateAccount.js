@@ -84,13 +84,13 @@ function CreateAccount() {
             Logout
           </button>
         </div>
-        <div className="container">
+        
+      </header>
+      <div className="container">
           <h1 className="welcome-message">Create Mentor/Mentee Account</h1>
         </div>
-      </header>
-
-      <div className="rectangle">
-        <div className="whiterectangle">
+      {/* <div className="rectangle" > */}
+        <div className="whiterectangle" >
           <form className="account-form" onSubmit={handleCreateAccount}>
             <input 
               type="text" 
@@ -136,7 +136,7 @@ function CreateAccount() {
             <button type="submit" className="submit-button">Create Account</button>
           </form>
         </div>
-      </div>
+      {/* </div> */}
 
       {error && <p className="error">{error}</p>}
       <ul>
