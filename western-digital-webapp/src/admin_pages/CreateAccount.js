@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
 
 function CreateAccount() {
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [selectedValue, setSelectedValue] = useState('');
-  const [accountType, setAccountType] = useState('');
-  const [accounts, setAccounts] = useState([]);
+  //Initialize navigate
+  const navigate = useNavigate();
+
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [accountType, setAccountType] = useState("");
   const [error, setError] = useState(null);
 
   const handleCreateAccount = async (e) => {
@@ -58,7 +60,7 @@ function CreateAccount() {
     }
   };
 
-  const navigate = useNavigate();
+
 
   const handleLogout = () => {
     localStorage.clear();

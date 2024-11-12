@@ -1,55 +1,48 @@
 import React, { useState } from "react";
 import "./WriteMenteeProgression.css";
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/WDC.png";
-import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
-import MoodIcon from '@mui/icons-material/Mood';
+import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
+import MoodIcon from "@mui/icons-material/Mood";
 
 function WriteMenteeProgression() {
-  const navigate = useNavigate(); // <-- Initialize navigate
+  //Initialize navigate
+  const navigate = useNavigate();
 
-  const [progressReports, setProgressReports] = useState([
-    {
-      mentee: "Jane Smith",
-      date: "2024-10-10",
-      report: "Completed first milestone on the project.",
-    },
-    {
-      mentee: "Mark White",
-      date: "2024-10-12",
-      report: "Improved communication during meetings.",
-    },
-  ]);
+  //Store user input by intializing state variables
+  const [mentee, setMentee] = useState("");
+  const [date, setDate] = useState("");
+  const [skippedMeeting, setSkippedMeeting] = useState("");
+  const [finishedHW, setFinishedHW] = useState("");
+  const [attitude, setAttitude] = useState("");
+  const [comments, setComments] = useState("");
 
-  const [newMentee, setNewMentee] = useState("");
-  const [newReport, setNewReport] = useState("");
-  const [newDate, setNewDate] = useState("");
-  const [skippedMeeting, setSkippedMeeting] = useState(""); // Changed to empty string for consistency
-  const [finishedHW, setFinishedHW] = useState(""); // Changed to empty string for consistency
-  const [attitude, setAttitude] = useState(""); // New state for attitude
+  const [note, setNote] = useState([]);
 
-  const handleAddReport = () => {
-    if (newMentee.trim() && newReport.trim() && newDate.trim()) {
-      const newReportData = {
-        mentee: newMentee,
-        date: newDate,
-        notes: newReport,
-        skippedMeeting, // Add skipped meeting value
-        finishedHW, // Add finished HW value
-        attitude, // Add attitude value
-      };
+  const handleInsertMentorNotes = async (e) => {
+    e.preventDefault();
 
-      console.log("New Report Submitted:", newReportData);
+    // Construct the data object to send to the backend
+    const mentorNote = {
+      mentee: mentee,
+      date: date,
+      skippedMeeting: skippedMeeting,
+      finishedHW: finishedHW,
+      attitude: attitude,
+      comments: comments,
+    };
 
-      setProgressReports([...progressReports, newReportData]);
-      setNewMentee("");
-      setNewReport("");
-      setNewDate("");
-      setSkippedMeeting(null); // Reset skipped meeting selection
-      setFinishedHW(null); // Reset finished HW selection
-      setAttitude(null); // Reset attitude selection
-    }
+    console.log("Mentor Note:", JSON.stringify(mentorNote));
+
+    setNote([...note, mentorNote]);
+    // Clear input fields after creation
+    setMentee("");
+    setComments("");
+    setDate("");
+    setSkippedMeeting("");
+    setFinishedHW("");
+    setAttitude("");
   };
 
   const handleLogout = () => {
@@ -73,123 +66,122 @@ function WriteMenteeProgression() {
           </button>
         </div>
         <div className="welcome-message-container">
-        <h1 className="welcome-message">Write Mentee Progression</h1>
+          <h1 className="welcome-message">Write Mentee Progression</h1>
         </div>
       </header>
 
       <div className="progress-form">
         <input
           type="text"
-          value={newMentee}
-          onChange={(e) => setNewMentee(e.target.value)}
+          value={mentee}
+          onChange={(e) => setMentee(e.target.value)}
           placeholder="Enter mentee name"
         />
         <input
           type="date"
-          value={newDate}
-          onChange={(e) => setNewDate(e.target.value)}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
 
-         <div className="form-box">
-        <div className="question-group">
-        <div className="form-title">
+        <div className="form-box">
+          <div className="question-group">
+            <div className="form-title">
               <EventBusyOutlinedIcon className="form-title-icon" />
               <p>Skipped Meeting?</p>
             </div>
 
-          <input
-            type="radio"
-            name="skippedMeeting"
-            value="Yes"
-            checked={skippedMeeting === "Yes"}
-            onChange={(e) => setSkippedMeeting(e.target.value)}
-          />
-          <label htmlFor="skippedMeetingYes">Yes</label>
+            <input
+              type="radio"
+              name="skippedMeeting"
+              value="1"
+              checked={skippedMeeting === "1"}
+              onChange={(e) => setSkippedMeeting(e.target.value)}
+            />
+            <label htmlFor="skippedMeetingYes">Yes</label>
 
-          <input
-            type="radio"
-            name="skippedMeeting"
-            value="No"
-            checked={skippedMeeting === "No"}
-            onChange={(e) => setSkippedMeeting(e.target.value)}
-          />
-          <label htmlFor="skippedMeetingNo">No</label>
-        </div>
+            <input
+              type="radio"
+              name="skippedMeeting"
+              value="0"
+              checked={skippedMeeting === "0"}
+              onChange={(e) => setSkippedMeeting(e.target.value)}
+            />
+            <label htmlFor="skippedMeetingNo">No</label>
+          </div>
         </div>
 
         <div className="form-box">
-        <div className="question-group">
-        <div className="form-title">
-        <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-          <p>Mentee Finished HW?</p>
-          </div>
-          <input
-            type="radio"
-            name="finishedHW"
-            value="Yes"
-            checked={finishedHW === "Yes"}
-            onChange={(e) => setFinishedHW(e.target.value)}
-          />
-          <label htmlFor="finishedHWYes">Yes</label>
+          <div className="question-group">
+            <div className="form-title">
+              <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
+              <p>Mentee Finished HW?</p>
+            </div>
+            <input
+              type="radio"
+              name="finishedHW"
+              value="1"
+              checked={finishedHW === "1"}
+              onChange={(e) => setFinishedHW(e.target.value)}
+            />
+            <label htmlFor="finishedHWYes">Yes</label>
 
-          <input
-            type="radio"
-            name="finishedHW"
-            value="No"
-            checked={finishedHW === "No"}
-            onChange={(e) => setFinishedHW(e.target.value)}
-          />
-          <label htmlFor="finishedHWNo">No</label>
-        </div>
+            <input
+              type="radio"
+              name="finishedHW"
+              value="0"
+              checked={finishedHW === "0"}
+              onChange={(e) => setFinishedHW(e.target.value)}
+            />
+            <label htmlFor="finishedHWNo">No</label>
+          </div>
         </div>
 
         <div className="form-box">
-        <div className="question-group">
-        <div className="form-title">
-        <MoodIcon className="form-title-icon" />
-          <p>Mentee's Attitude Towards Learning</p>
-          </div>
-          <input
-            type="radio"
-            id="attitude-very-good"
-            name="attitude"
-            value="Very Good"
-            checked={attitude === "Very Good"}
-            onChange={(e) => setAttitude(e.target.value)}
-          />
-          
-          <label htmlFor="attitude-very-good">Very Good</label>
-          
-          <input
-            type="radio"
-            id="attitude-average"
-            name="attitude"
-            value="Average"
-            checked={attitude === "Average"}
-            onChange={(e) => setAttitude(e.target.value)}
-          />
-          <label htmlFor="attitude-average">Average</label>
-          <input
-            type="radio"
-            id="attitude-not-good"
-            name="attitude"
-            value="Not Good"
-            checked={attitude === "Not Good"}
-            onChange={(e) => setAttitude(e.target.value)}
-          />
-          <label htmlFor="attitude-not-good">Not Good</label>
-        </div>
+          <div className="question-group">
+            <div className="form-title">
+              <MoodIcon className="form-title-icon" />
+              <p>Mentee's Attitude Towards Learning</p>
+            </div>
+            <input
+              type="radio"
+              id="attitude-very-good"
+              name="attitude"
+              value="3"
+              checked={attitude === "3"}
+              onChange={(e) => setAttitude(e.target.value)}
+            />
 
+            <label htmlFor="attitude-very-good">Very Good</label>
+
+            <input
+              type="radio"
+              id="attitude-average"
+              name="attitude"
+              value="2"
+              checked={attitude === "2"}
+              onChange={(e) => setAttitude(e.target.value)}
+            />
+            <label htmlFor="attitude-average">Average</label>
+            <input
+              type="radio"
+              id="attitude-not-good"
+              name="attitude"
+              value="1"
+              checked={attitude === "1"}
+              onChange={(e) => setAttitude(e.target.value)}
+            />
+            <label htmlFor="attitude-not-good">Not Good</label>
+          </div>
         </div>
         <div class="comment-container">
-        <textarea
-          value={newReport}
-          onChange={(e) => setNewReport(e.target.value)}
-          placeholder="Extra comments here"
-        />
-        <button className="submit-button" onClick={handleAddReport}>
-          Submit
-        </button>
+          <textarea
+            value={comments}
+            onChange={(e) => setComments(e.target.value)}
+            placeholder="Extra comments here"
+          />
+          <button className="submit-button" onClick={handleInsertMentorNotes}>
+            Submit
+          </button>
         </div>
       </div>
     </div>
