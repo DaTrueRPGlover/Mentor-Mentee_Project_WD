@@ -1,7 +1,8 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs/index.js';
 import { getUserByEmail, updateUserPassword } from '../database_queries/userQueries.js';
 const router = express.Router();
+// const bcrypt = require('bcryptjs');
 
 router.post('/login', async (req, res) => {
     console.log("login here");

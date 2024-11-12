@@ -11,39 +11,37 @@ const router = express.Router();
 router.get('/mentornotes/:meetingkey', async (req, res) => {
     const { meetingkey } = req.params;
     try {
-        const mentorNotes = await getMentorNotesByMeetingKey(meetingkey);
-        if (mentorNotes) {
-            res.json(mentorNotes);
-        } else {
-            res.status(404).json({ message: 'No mentor notes found for the provided meeting key.' });
-        }
+      const notes = await getMentorNotesByMeetingKey(meetingkey);
+      if (notes) {
+        res.json(notes);
+      } else {
+        res.status(404).json({ message: 'No mentor notes found for this meeting key.' });
+      }
     } catch (error) {
-        console.error('Error fetching mentor notes:', error);
-        res.status(500).json({ message: 'Internal server error.' });
+      console.error('Error fetching mentor notes:', error);
+      res.status(500).json({ message: 'Internal server error.' });
     }
-});
-
-// Route to insert new mentor notes
-router.post('/mentornotes', async (req, res) => {
+  });
+  
+  router.post('/mentornotes', async (req, res) => {
     const { meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments } = req.body;
-
+  
     try {
-        const result = await insertMentorNotes(
-            meetingkey, 
-            mentorkey, 
-            datetime, 
-            skipped, 
-            finishedHomework, 
-            attitudeTowardsLearning, 
-            additionalComments
-        );
-        res.status(201).json({ message: 'Mentor notes inserted successfully.', meetingkey: result });
+      const result = await insertMentorNotes(
+        meetingkey, 
+        mentorkey, 
+        datetime, 
+        skipped, 
+        finishedHomework, 
+        attitudeTowardsLearning, 
+        additionalComments
+      );
+      res.status(201).json({ message: 'Mentor notes inserted successfully.', meetingkey: result });
     } catch (error) {
-        console.error('Error inserting mentor notes:', error);
-        res.status(500).json({ message: 'Internal server error.' });
+      console.error('Error inserting mentor notes:', error);
+      res.status(500).json({ message: 'Internal server error.' });
     }
-});
-
+  });
 // Route to update existing mentor notes
 router.put('/mentornotes/:meetingkey/:mentorkey', async (req, res) => {
     const { meetingkey, mentorkey } = req.params;

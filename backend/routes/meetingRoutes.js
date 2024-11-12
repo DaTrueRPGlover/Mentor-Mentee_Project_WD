@@ -4,7 +4,9 @@ import {
   getMenteesForMentor,
   checkMeetingConflict,
   createMeeting,
-  getMeetingsByMenteeKey
+  getMeetingsByMenteeKey,
+  cancelMeeting, 
+  rescheduleMeeting
 } from '../database_queries/meetingQueries.js';
 
 const router = express.Router();
@@ -66,5 +68,48 @@ router.get('/mentees/:menteekey', async (req, res) => {
       res.status(500).json({ message: 'Internal server error.' });
   }
 });
+
+router.post('/cancel', async (req, res) => {
+  const { meetingKey } = req.body;
+  try {
+    await cancelMeeting(meetingKey);
+    res.status(200).json({ message: 'Meeting canceled successfully' });
+  } catch (error) {
+    console.error('Error canceling meeting:', error);
+    res.status(500).json({ message: 'Error canceling meeting' });
+  }
+});
+
+// Route for rescheduling
+router.post('/reschedule', async (req, res) => {
+  const { meetingKey, newDateTime } = req.body;
+
+  try {
+    // Retrieve the original meeting details to calculate duration
+    const [originalMeeting] = await pool.query('SELECT * FROM meetings WHERE meetingkey = ?', [meetingKey]);
+
+    if (!originalMeeting) {
+      return res.status(404).json({ message: 'Meeting not found' });
+    }
+
+    const { mentorkey, menteekey, datetime: oldDateTime } = originalMeeting;
+    const duration = (new Date(originalMeeting.endtime) - new Date(originalMeeting.datetime)) / (1000 * 60); // Duration in minutes
+
+    // Check for conflicts
+    const conflict = await checkMeetingConflict(mentorkey, menteekey, newDateTime, duration, meetingKey);
+
+    if (conflict.length > 0) {
+      return res.status(409).json({ message: 'Time conflict detected' });
+    }
+
+    // If no conflict, update meeting time
+    await rescheduleMeeting(meetingKey, newDateTime);
+    res.status(200).json({ message: 'Meeting rescheduled successfully' });
+  } catch (error) {
+    console.error('Error rescheduling meeting:', error);
+    res.status(500).json({ message: 'Error rescheduling meeting' });
+  }
+});
+
 
 export default router;

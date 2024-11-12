@@ -1,5 +1,5 @@
 import {pool} from '../database.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs/index.js';
 
 export const changePassword = async (userId, newPassword) => {
     // Hash the new password

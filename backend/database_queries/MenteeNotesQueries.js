@@ -119,34 +119,34 @@ export const updateMenteeNote = async (meetingkey, menteekey, datetime, profileO
 
 
 // Example data to insert
-const meetingkey = 'e7c27601-9ae1-11ef-a92b-02a12f7436d7';
-const menteekey = '2d9f4b3a-987f-11ef-a92b-02a12f7436d7';
-const datetime = new Date();
-const profileOfALeader = 1;
-const executiveCommunicationStyle = 1;
-const trustRespectVisibility = 1;
-const motivatingYourTeam = 1;
-const selfAdvocacyAndCareerGrowth = 1;
-const workLifeBalance = 1;
-const additionalComments = 'Mentee is making okay progress on goals.';
+// const meetingkey = 'e7c27601-9ae1-11ef-a92b-02a12f7436d7';
+// const menteekey = '2d9f4b3a-987f-11ef-a92b-02a12f7436d7';
+// const datetime = new Date();
+// const profileOfALeader = 1;
+// const executiveCommunicationStyle = 1;
+// const trustRespectVisibility = 1;
+// const motivatingYourTeam = 1;
+// const selfAdvocacyAndCareerGrowth = 1;
+// const workLifeBalance = 1;
+// const additionalComments = 'Mentee is making okay progress on goals.';
 
-try {
-    const result = await updateMenteeNote(
-        meetingkey,
-        menteekey,
-        datetime,
-        profileOfALeader,
-        executiveCommunicationStyle,
-        trustRespectVisibility,
-        motivatingYourTeam,
-        selfAdvocacyAndCareerGrowth,
-        workLifeBalance,
-        additionalComments
-    );
-    console.log('Mentee note updated successfully:', result);
-} catch (error) {
-    console.error('Error updating mentee note:', error);
-}
+// try {
+//     const result = await updateMenteeNote(
+//         meetingkey,
+//         menteekey,
+//         datetime,
+//         profileOfALeader,
+//         executiveCommunicationStyle,
+//         trustRespectVisibility,
+//         motivatingYourTeam,
+//         selfAdvocacyAndCareerGrowth,
+//         workLifeBalance,
+//         additionalComments
+//     );
+//     console.log('Mentee note updated successfully:', result);
+// } catch (error) {
+//     console.error('Error updating mentee note:', error);
+// }
 
 
 /*console.log('Mentee Notes:', JSON.stringify(await getMenteeNotesByMeetingKey('2f7adff3-9943-11ef-a92b-02a12f7436d7'), null, 2)); //This way makes the output come as a list of attributes with their value

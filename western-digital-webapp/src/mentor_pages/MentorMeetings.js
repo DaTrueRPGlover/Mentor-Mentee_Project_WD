@@ -3,11 +3,25 @@ import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+const locales = {
+  'en-US': require('date-fns/locale/en-US'),
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 0 }),
+  getDay,
+  locales,
+});
 
 // main function mentor meetings 
 function MentorMeetings({ mentorkey }) {
   const navigate = useNavigate();
-  // all the features we need for meeting
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
@@ -16,7 +30,6 @@ function MentorMeetings({ mentorkey }) {
   const [zoomLink, setZoomLink] = useState('');
   const [zoomPassword, setZoomPassword] = useState('');
 
-  // 
   useEffect(() => {
     //fetching mentees that the mentor has so they can choose who to schedule meeting with
     const fetchMentees = async () => {
@@ -30,6 +43,7 @@ function MentorMeetings({ mentorkey }) {
         console.error('Error fetching mentees:', error);
       }
     };
+
     // fetch all the current meetings the mentor has 
     const fetchMeetings = async () => {
       try {
@@ -37,7 +51,18 @@ function MentorMeetings({ mentorkey }) {
         const mentorkey = mentorinfo.mentorkey;
         const response = await fetch(`http://localhost:3001/api/meetings?userId=${mentorkey}`);
         const data = await response.json();
-        setMeetings(data);
+
+        // Map meetings to include start and end dates for the calendar
+        const mappedMeetings = data.map(meeting => ({
+          title: `Meeting with ${meeting.mentee_name}`,
+          start: new Date(meeting.datetime),
+          end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000), // assuming 1-hour meetings
+          mentee_name: meeting.mentee_name,
+          zoomLink: meeting.zoom_link,
+          zoomPassword: meeting.zoom_password,
+        }));
+
+        setMeetings(mappedMeetings);
       } catch (error) {
         console.error('Error fetching meetings:', error);
       }
@@ -46,6 +71,7 @@ function MentorMeetings({ mentorkey }) {
     fetchMentees();
     fetchMeetings();
   }, [mentorkey]);
+
   //handling creating the meeting 
   const handleScheduleMeeting = async () => {
     if (selectedMentee && newDate.trim() && newTime.trim() && zoomLink.trim() && zoomPassword.trim()) {
@@ -69,7 +95,12 @@ function MentorMeetings({ mentorkey }) {
         });
         if (response.status === 201) {
           const mentee = mentees.find(m => m.menteekey === selectedMentee);
-          setMeetings([...meetings, { mentee_name: mentee.mentee_name, date: newDate, time: newTime }]);
+          setMeetings([...meetings, {
+            title: `Meeting with ${mentee.mentee_name}`,
+            start: new Date(datetime),
+            end: new Date(new Date(datetime).getTime() + 60 * 60 * 1000),
+            mentee_name: mentee.mentee_name
+          }]);
           setSelectedMentee('');
           setNewDate('');
           setNewTime('');
@@ -90,10 +121,9 @@ function MentorMeetings({ mentorkey }) {
     localStorage.clear();
     navigate("/");
   };
-  //displaying everything on the website
+
   return (
     <div className="mentor-meetings">
-
       <header className="header-container">
         <div className="top-header">
           <button
@@ -109,10 +139,22 @@ function MentorMeetings({ mentorkey }) {
         <h1 className="welcome-message">Schedule Mentee Meetings</h1>
       </header>
 
+      {/* Calendar displaying meetings */}
+      <div className="calendar-container">
+        <Calendar
+          localizer={localizer}
+          events={meetings}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500, margin: '20px 0' }}
+          className="calendar"
+        />
+      </div>
+
       <ul>
         {meetings.map((meeting, index) => (
           <li key={index}>
-            Meeting with <strong>{meeting.mentee_name}</strong> on {meeting.date} at {meeting.time}
+            Meeting with <strong>{meeting.mentee_name}</strong> on {meeting.start.toLocaleDateString()} at {meeting.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </li>
         ))}
       </ul>

@@ -1,5 +1,5 @@
 import pool from '../database.js';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 // Function to fetch admin name by key

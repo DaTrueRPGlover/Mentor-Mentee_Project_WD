@@ -39,17 +39,24 @@ export const getMenteesForMentor = async (mentorkey) => {
 };
 
 // time conflict check before schedule
-export const checkMeetingConflict = async (mentorkey, datetime) => {
+// Query to check for conflicting meetings
+export const checkMeetingConflict = async (mentorkey, menteekey, datetime, duration, meetingKey = null) => {
   const [rows] = await pool.query(
     `
     SELECT * FROM meetings 
-    WHERE mentorkey = ? AND 
-          datetime BETWEEN DATE_SUB(?, INTERVAL 30 MINUTE) AND DATE_ADD(?, INTERVAL 30 MINUTE)
+    WHERE (mentorkey = ? OR menteekey = ?) 
+      AND meetingkey != ?
+      AND (
+        (datetime <= ? AND DATE_ADD(datetime, INTERVAL ? MINUTE) > ?) 
+        OR 
+        (datetime >= ? AND datetime < DATE_ADD(?, INTERVAL ? MINUTE))
+      )
     `,
-    [mentorkey, datetime, datetime]
+    [mentorkey, menteekey, meetingKey, datetime, duration, datetime, datetime, datetime, duration]
   );
   return rows;
 };
+
 
 
 export const getMeetingsByMenteeKey = async (menteekey) => {
@@ -76,5 +83,15 @@ export const createMeeting = async (mentorkey, menteekey, datetime, zoom_link, z
     VALUES (UUID(), ?, ?, ?, ?, ?)
     `,
     [mentorkey, menteekey, datetime, zoom_link, zoom_password]
+  );
+};
+export const cancelMeeting = async (meetingKey) => {
+  await pool.query('DELETE FROM meetings WHERE meetingkey = ?', [meetingKey]);
+};
+
+export const rescheduleMeeting = async (meetingKey, newDateTime) => {
+  await pool.query(
+    'UPDATE meetings SET datetime = ? WHERE meetingkey = ?',
+    [newDateTime, meetingKey]
   );
 };
