@@ -5,7 +5,7 @@ import {
   checkMeetingConflict,
   createMeeting,
   getMeetingsByMenteeKey
-} from '../database_queries/meetingQueries.js';
+} from '../database_queries/MeetingQueries.js';
 
 const router = express.Router();
 

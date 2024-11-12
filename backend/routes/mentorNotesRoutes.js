@@ -2,7 +2,8 @@ import express from 'express';
 import { 
     getMentorNotesByMeetingKey, 
     insertMentorNotes, 
-    updateMentorNotes 
+    updateMentorNotes,
+    getMentorNotesByKeys 
 } from '../database_queries/MentorNotesQueries.js'; // Adjust path as needed
 
 const router = express.Router();
@@ -40,6 +41,21 @@ router.post('/mentornotes', async (req, res) => {
         res.status(201).json({ message: 'Mentor notes inserted successfully.', meetingkey: result });
     } catch (error) {
         console.error('Error inserting mentor notes:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+router.get('/mentornotes/:meetingkey/:mentorkey', async (req, res) => {
+    const { meetingkey, mentorkey } = req.params;
+    try {
+        const notes = await getMentorNotesByKeys(meetingkey, mentorkey);
+        if (notes) {
+            res.json(notes);
+        } else {
+            res.status(404).json({ message: 'No notes found for this meeting and mentor key.' });
+        }
+    } catch (error) {
+        console.error('Error fetching mentor notes:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
