@@ -27,7 +27,7 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/relationships', relationshipRoutes);
 app.use('/api/mentors', mentorRoutes);
 app.use('/api/mentees', menteeRoutes);
-app.use('/api.mentorNotes', mentorNotesRoutes);
+app.use('/api/mentorNotes', mentorNotesRoutes);
 
 const PORT = 3001;
 app.listen(PORT, () => {
