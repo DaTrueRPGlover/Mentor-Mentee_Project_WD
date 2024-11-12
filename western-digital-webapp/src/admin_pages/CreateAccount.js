@@ -14,6 +14,8 @@ function CreateAccount() {
   const [selectedValue, setSelectedValue] = useState("");
   const [accountType, setAccountType] = useState("");
   const [error, setError] = useState(null);
+  const [accounts, setAccounts] = useState([]);
+
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
