@@ -9,6 +9,7 @@
   justify-content: center;
   min-height: 100vh;
 }
+
 /* creates the clear background rectangle */
 .rectangle {
   width: 50%;
@@ -26,6 +27,9 @@
 .see-interactions h1 {
   margin-bottom: 30px;
   font-size: 40px;
+}
+.purple {
+  background-color: #a34eff;
 }
 /* formatting h2 headers */
 .see-interactions h2 {
@@ -86,12 +90,25 @@ strong {
 }
 /* formats logo positioning and size */
 .see-interactions .logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 20px;
+  /* position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 150px;
+  height: auto; */
   position: absolute;
   top: 20px;
   left: 20px;
+  z-index: 1; /* Place logo in front of button */
+  width: 150px;
+  height: auto;
+  cursor: pointer; /* Makes it clickable */
+  
+}
+.see-interactions .logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remove extra padding */
 }
 /* formats message lists into the rectangle */
 .message-list1 {
@@ -173,13 +190,19 @@ strong {
 }
 
 button.logout-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #f44336;
-  color: white;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
-  border-radius: 8px;
+  background-color: #91BECD;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: background-color 0.3s;
+  margin-top: 0%;
 }
 
 button.logout-button:hover {

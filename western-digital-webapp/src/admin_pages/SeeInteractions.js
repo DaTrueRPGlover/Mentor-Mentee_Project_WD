@@ -53,7 +53,10 @@ function SeeInteractions() {
           </button>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
-        <h1 className="welcome-message">View Interactions</h1>
+        <div className="purple">
+          <h1 className="welcome-message">View Interactions</h1>
+        </div>
+        
       </header>
       <div className="search">
         <div className="filter-section">
