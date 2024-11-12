@@ -11,26 +11,44 @@
 }
 
 /* creates the clear background rectangle */
-.rectangle {
-  width: 50%;
-  max-width: 300px;
+.see-interactions .rectangle {
+  width: 40%;  /* Use percentage for flexible width */
   height: 600px;
   border: 2px solid #91BECD;
-  /* background-color: rgba(0, 0, 0, 0.1); */
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
 }
+
 /* formatting h1 headers */
 .see-interactions h1 {
   margin-bottom: 30px;
   font-size: 40px;
 }
+/* Create a purple rectangle background */
+/* Create a purple rectangle background */
 .purple {
   background-color: #a34eff;
+  width: 100%;  /* Make the purple section span the full width */
+  height: 100px;  /* Adjust the height as needed */
+  display: flex;
+  align-items: center;  /* Vertically center content */
+  justify-content: center;  /* Horizontally center content */
+  border-radius: 8px;  /* Optional: adds rounded corners */
 }
+
+/* Apply a purple background to the text inside the purple section */
+.purple h1 {
+  background-color: #a34eff;  /* Purple background for the text */
+  color: white;  /* Text color to contrast with purple */
+  padding: 10px 20px;  /* Optional: adds padding around the text */
+  border-radius: 8px;  /* Optional: adds rounded corners to the text background */
+  margin: 0;  /* Remove any default margin for proper centering */
+}
+
+
 /* formatting h2 headers */
 .see-interactions h2 {
   color: gray;
@@ -38,11 +56,12 @@
 }
 /* formats search container */
 .search {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
-  color: gray;
+  color: white;
 }
 /* formats filtered section container */
 .filter-section {
