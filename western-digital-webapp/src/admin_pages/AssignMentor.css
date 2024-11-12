@@ -17,6 +17,10 @@
   position: relative;
   width: 100%;
 }
+.welcome-message {
+  font-size: 40px;
+}
+
 
 /* resixes and positions the logo */
 .assign-mentor-container .logo {

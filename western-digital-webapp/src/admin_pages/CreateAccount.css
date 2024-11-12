@@ -25,7 +25,7 @@
 }
 /* Formats the headers */
 .create-account h1 {
-  font-size: 32px;
+  font-size: 40px;
   text-align: center;
   background-color: #a34eff;
   margin: 20px 0;
@@ -114,6 +114,7 @@
   justify-content: center;
   width: 100%;
   max-width: 800px;
+  margin-top: 50px;
 }
 /* formats the rectangle inside the gray rectangle */
 .whiterectangle {
