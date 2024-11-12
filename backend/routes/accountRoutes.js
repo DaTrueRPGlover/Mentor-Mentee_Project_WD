@@ -1,5 +1,5 @@
 import express from 'express';
-import { createAccount, getAdminNameByKey, getAdminEmailByKey, createMentorMenteeRelationship } from 
+import { createAccount, updateAccount, getAdminNameByKey, getAdminEmailByKey, createMentorMenteeRelationship } from 
 '../database_queries/AdminQueries.js';
 
 const router = express.Router();
@@ -19,6 +19,30 @@ router.post('/createAccount', async (req, res) => {
     } catch (error) {
         console.error('Failed to create account:', error);
         res.status(500).json({ message: 'Failed to create account' });
+    }
+});
+
+// Route to update an existing account
+router.put('/updateAccount', async (req, res) => {
+    const { userId, name, lastname, email, password, department, role } = req.body;
+    try {
+        const updatedUserId = await updateAccount(userId, { firstName: name, lastName: lastname, email, password, department, role });
+        
+        if (updatedUserId) {
+            res.status(200).json({
+                userId: updatedUserId,
+                name,
+                lastname,
+                email,
+                department,
+                role
+            });
+        } else {
+            res.status(404).json({ message: 'Account not found or no changes made' });
+        }
+    } catch (error) {
+        console.error('Failed to update account:', error);
+        res.status(500).json({ message: 'Failed to update account' });
     }
 });
 
