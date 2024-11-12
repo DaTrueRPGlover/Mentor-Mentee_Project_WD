@@ -1,5 +1,6 @@
+// MenteeNotesRoutes.js
 import express from 'express';
-import { getMenteeNotesByMeetingKey, insertMenteeNote } from '../database_queries/MenteeNotesQueries.js'; // Adjust the import path if needed
+import { getMenteeNotesByMeetingKey, insertMenteeNote, getMenteeNotesByKeys } from '../database_queries/MenteeNotesQueries.js';
 
 const router = express.Router();
 
@@ -42,6 +43,7 @@ router.post('/menteenotes', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+
 // Route to get mentee notes by both meetingkey and menteekey
 router.get('/menteenotes/:meetingkey/:menteekey', async (req, res) => {
     const { meetingkey, menteekey } = req.params;

@@ -4,6 +4,7 @@ import {
   getMenteesForMentor,
   checkMeetingConflict,
   createMeeting,
+  getMeetingsByMenteeKey
 } from '../database_queries/meetingQueries.js';
 
 const router = express.Router();
@@ -49,6 +50,20 @@ router.post('/create-meeting', async (req, res) => {
   } catch (error) {
     console.error('Error scheduling meeting:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+router.get('/mentees/:menteekey', async (req, res) => {
+  const { menteekey } = req.params;
+  try {
+      const meetings = await getMeetingsByMenteeKey(menteekey);
+      if (meetings.length > 0) {
+          res.json(meetings);
+      } else {
+          res.status(404).json({ message: 'No meetings found for this mentee.' });
+      }
+  } catch (error) {
+      console.error('Error fetching meetings:', error);
+      res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
