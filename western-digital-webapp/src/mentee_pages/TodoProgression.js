@@ -1,117 +1,147 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+// todoprogression.js
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TodoProgression.css";
-import logo from "../assets/WDC.png"; // <-- Import the logo
+import logo from "../assets/WDC.png";
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import MoodIcon from '@mui/icons-material/Mood';
 
-
 function TodoProgression() {
-  const navigate = useNavigate(); // <-- Initialize navigate
-
-  const [tasks, setTasks] = useState([
-    { task: "Complete assignment 1", status: "Pending" },
-    { task: "Review feedback from mentor", status: "In Progress" },
-  ]);
-
-  const [progressReports, setProgressReports] = useState([
-  ]);
-
+  const navigate = useNavigate();
+  const [meetings, setMeetings] = useState([]);
+  const [selectedMeeting, setSelectedMeeting] = useState("");
   const [newReport, setNewReport] = useState("");
-  const [newTask, setNewTask] = useState("");
-  const [communication, setCommunication] = useState(""); 
-  const [influence, setInfluence] = useState(""); 
-  const [managingProjects, setManagingProjects] = useState(""); 
-  const [innovation, setInnovation] = useState(""); 
-  const [emotionalIntelligence, setEmotionalIntelligence] = useState("");
-  const [decisionMaking, setDecisionMaking] = useState(""); 
- 
+  const [communication, setCommunication] = useState(null);
+  const [influence, setInfluence] = useState(null);
+  const [managingProjects, setManagingProjects] = useState(null);
+  const [innovation, setInnovation] = useState(null);
+  const [emotionalIntelligence, setEmotionalIntelligence] = useState(null);
+  const [decisionMaking, setDecisionMaking] = useState(null);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    // Retrieve the menteekey from localStorage
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const menteeKey = userInfo?.menteekey;
 
+    if (menteeKey) {
+      fetch(`http://localhost:3001/api/menteenotes/meetings/${menteeKey}`)
+        .then(response => response.json())
+        .then(data => setMeetings(data))
+        .catch(error => console.error("Error fetching meetings:", error));
+    } else {
+      console.error("Menteekey not found in local storage.");
+      setError("Menteekey not found.");
+    }
+  }, []);
 
-
-  const handleAddReport = () => {
-    
-    const newReportData = {
-      notes: newReport,
-      communication, 
-      influence, 
-      managingProjects, 
-      innovation,
-      emotionalIntelligence,
-      decisionMaking,
-    };
-
-    console.log("New Report Submitted:", newReportData);
-
-    setProgressReports([...progressReports, newReportData]);
-    setNewReport(""); 
-    setCommunication(null); 
-    setInfluence(null); 
-    setManagingProjects(null); 
-    setInnovation(null);
-    setEmotionalIntelligence(null);
-    setDecisionMaking(null);
-
-  };
-
-
-  const handleAddTask = () => {
-    if (newTask.trim()) {
-      setTasks([...tasks, { task: newTask, status: "Pending" }]);
-      setNewTask(""); // Clear input after adding
+  const ratingToScore = (rating) => {
+    switch (rating) {
+      case "Very Helpful": return 3;
+      case "Somewhat Helpful": return 2;
+      case "Not Helpful": return 1;
+      default: return null;
     }
   };
 
-  const handleStatusUpdate = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, status: "Completed" } : task
-    );
-    setTasks(updatedTasks);
-  };
+  const handleAddReport = async (e) => {
+    e.preventDefault();
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const menteeKey = userInfo?.menteekey;
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
+    if (!menteeKey) {
+      setError("Menteekey is missing. Please log in again.");
+      return;
+    }
+
+    const newReportData = {
+      meetingkey: selectedMeeting,
+      menteekey: menteeKey, // Add menteekey to the data being sent
+      notes: newReport,
+      communication: ratingToScore(communication),
+      influence: ratingToScore(influence),
+      managingProjects: ratingToScore(managingProjects),
+      innovation: ratingToScore(innovation),
+      emotionalIntelligence: ratingToScore(emotionalIntelligence),
+      decisionMaking: ratingToScore(decisionMaking),
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/menteenotes/menteenotes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReportData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Report added:", result);
+        setNewReport("");
+        setSelectedMeeting("");
+        setCommunication(null);
+        setInfluence(null);
+        setManagingProjects(null);
+        setInnovation(null);
+        setEmotionalIntelligence(null);
+        setDecisionMaking(null);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Error pushing new report");
+      }
+    } catch (error) {
+      console.error("Error pushing new report:", error);
+      setError("Error pushing new report");
+    }
   };
 
   return (
     <div className="todo-progression">
-
       <header className="header-container">
         <div className="top-header">
-
           <button
             className="logo-button"
             onClick={() => navigate("/mentee-home")}
           >
             <img src={logo} alt="Logo" className="logo" />
           </button>
-
-          <button className="logout-button" onClick={handleLogout}>
+          <button className="logout-button" onClick={() => {
+            localStorage.clear();
+            navigate("/");
+          }}>
             Logout
           </button>
-
         </div>
         <div className="welcome-message-container">
-        <h1 className="welcome-message">To-Do / Progression</h1>
+          <h1 className="welcome-message">To-Do / Progression</h1>
         </div>
       </header>
 
-
       <div className="content-split">
-
-        {/* Form Section */}
         <div className="form-section">
+          <div className="form-box">
+            <label htmlFor="meetingSelect">Select Meeting:</label>
+            <select
+              id="meetingSelect"
+              value={selectedMeeting}
+              onChange={(e) => setSelectedMeeting(e.target.value)}
+            >
+              <option value="">Choose a meeting</option>
+              {meetings.map((meeting) => (
+                <option key={meeting.meetingkey} value={meeting.meetingkey}>
+                  {new Date(meeting.datetime).toLocaleString()}
+                </option>
+              ))}
+            </select>
+          </div>
 
+          {/* Communication Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
                 <EventBusyOutlinedIcon className="form-title-icon" />
                 <p>Communication</p>
               </div>
-
               <input
                 type="radio"
                 id="communication-very-helpful"
@@ -120,7 +150,6 @@ function TodoProgression() {
                 checked={communication === "Very Helpful"}
                 onChange={(e) => setCommunication(e.target.value)}
               />
-
               <label htmlFor="communication-very-helpful">Very Helpful</label>
 
               <input
@@ -132,26 +161,26 @@ function TodoProgression() {
                 onChange={(e) => setCommunication(e.target.value)}
               />
               <label htmlFor="communication-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="communication-not-good"
                 name="communication"
-                value="Not Good"
-                checked={communication === "Not Good"}
+                value="Not Helpful"
+                checked={communication === "Not Helpful"}
                 onChange={(e) => setCommunication(e.target.value)}
               />
               <label htmlFor="communication-not-good">Not Helpful</label>
-
             </div>
           </div>
 
+          {/* Influence Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Influence</p>
               </div>
-             
               <input
                 type="radio"
                 id="influence-very-helpful"
@@ -160,7 +189,6 @@ function TodoProgression() {
                 checked={influence === "Very Helpful"}
                 onChange={(e) => setInfluence(e.target.value)}
               />
-
               <label htmlFor="influence-very-helpful">Very Helpful</label>
 
               <input
@@ -172,19 +200,20 @@ function TodoProgression() {
                 onChange={(e) => setInfluence(e.target.value)}
               />
               <label htmlFor="influence-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="influence-not-good"
                 name="influence"
-                value="Not Good"
-                checked={influence === "Not Good"}
+                value="Not Helpful"
+                checked={influence === "Not Helpful"}
                 onChange={(e) => setInfluence(e.target.value)}
               />
               <label htmlFor="influence-not-good">Not Helpful</label>
-
             </div>
           </div>
 
+          {/* Managing Projects Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
@@ -199,7 +228,6 @@ function TodoProgression() {
                 checked={managingProjects === "Very Helpful"}
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
-
               <label htmlFor="managingProjects-very-helpful">Very Helpful</label>
 
               <input
@@ -211,25 +239,26 @@ function TodoProgression() {
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
               <label htmlFor="managingProjects-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="managingProjects-not-good"
                 name="managingProjects"
-                value="Not Good"
-                checked={managingProjects === "Not Good"}
+                value="Not Helpful"
+                checked={managingProjects === "Not Helpful"}
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
               <label htmlFor="managingProjects-not-good">Not Helpful</label>
             </div>
           </div>
 
+          {/* Innovation Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Innovation</p>
               </div>
-             
               <input
                 type="radio"
                 id="innovation-very-helpful"
@@ -238,7 +267,6 @@ function TodoProgression() {
                 checked={innovation === "Very Helpful"}
                 onChange={(e) => setInnovation(e.target.value)}
               />
-
               <label htmlFor="innovation-very-helpful">Very Helpful</label>
 
               <input
@@ -250,26 +278,26 @@ function TodoProgression() {
                 onChange={(e) => setInnovation(e.target.value)}
               />
               <label htmlFor="innovation-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="innovation-not-good"
                 name="innovation"
-                value="Not Good"
-                checked={innovation === "Not Good"}
+                value="Not Helpful"
+                checked={innovation === "Not Helpful"}
                 onChange={(e) => setInnovation(e.target.value)}
               />
               <label htmlFor="innovation-not-good">Not Helpful</label>
-
             </div>
           </div>
 
+          {/* Emotional Intelligence Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Emotional Intelligence</p>
               </div>
-             
               <input
                 type="radio"
                 id="emotionalIntelligence-very-helpful"
@@ -278,7 +306,6 @@ function TodoProgression() {
                 checked={emotionalIntelligence === "Very Helpful"}
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
-
               <label htmlFor="emotionalIntelligence-very-helpful">Very Helpful</label>
 
               <input
@@ -290,26 +317,26 @@ function TodoProgression() {
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
               <label htmlFor="emotionalIntelligence-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="emotionalIntelligence-not-good"
                 name="emotionalIntelligence"
-                value="Not Good"
-                checked={emotionalIntelligence === "Not Good"}
+                value="Not Helpful"
+                checked={emotionalIntelligence === "Not Helpful"}
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
               <label htmlFor="emotionalIntelligence-not-good">Not Helpful</label>
-
             </div>
           </div>
 
+          {/* Decision Making Section */}
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Decision Making</p>
               </div>
-             
               <input
                 type="radio"
                 id="decisionMaking-very-helpful"
@@ -318,7 +345,6 @@ function TodoProgression() {
                 checked={decisionMaking === "Very Helpful"}
                 onChange={(e) => setDecisionMaking(e.target.value)}
               />
-
               <label htmlFor="decisionMaking-very-helpful">Very Helpful</label>
 
               <input
@@ -330,20 +356,20 @@ function TodoProgression() {
                 onChange={(e) => setDecisionMaking(e.target.value)}
               />
               <label htmlFor="decisionMaking-somewhat-helpful">Somewhat Helpful</label>
+
               <input
                 type="radio"
                 id="decisionMaking-not-good"
                 name="decisionMaking"
-                value="Not Good"
-                checked={decisionMaking === "Not Good"}
+                value="Not Helpful"
+                checked={decisionMaking === "Not Helpful"}
                 onChange={(e) => setDecisionMaking(e.target.value)}
               />
               <label htmlFor="decisionMaking-not-good">Not Helpful</label>
-
             </div>
           </div>
 
-          <div class="comment-container">
+          <div className="comment-container">
             <textarea
               value={newReport}
               onChange={(e) => setNewReport(e.target.value)}
@@ -353,39 +379,6 @@ function TodoProgression() {
               Submit
             </button>
           </div>
-        </div>
-
-        {/* Tasks Section */}
-        <div className="tasks-section">
-       
-        <div className="form-box">
-
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>
-              {task.task} - <strong>{task.status}</strong>
-              {task.status !== "Completed" && (
-                <button onClick={() => handleStatusUpdate(index)}>
-                  Mark as Completed
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-        </div>
-        <div className="form-box">
-
-        <div className="add-task">
-          <input
-            type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            placeholder="Enter new task"
-          />
-          <button onClick={handleAddTask}>Add Task</button>
-        </div>
-        </div>
-        
         </div>
       </div>
     </div>

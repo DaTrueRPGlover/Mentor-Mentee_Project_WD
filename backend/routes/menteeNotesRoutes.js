@@ -2,7 +2,7 @@
 import express from 'express';
 import { getMenteeNotesByMeetingKey, 
     insertMenteeNote, 
-    getMenteeNotesByKeys 
+    getMenteeNotesByKeys, getMenteeMeetings
 } from '../database_queries/MenteeNotesQueries.js';
 
 const router = express.Router();
@@ -23,27 +23,51 @@ router.get('/menteenotes/:meetingkey', async (req, res) => {
     }
 });
 
+
+router.get("/meetings/:menteekey", async (req, res) => {
+    const { menteekey } = req.params;
+    try {
+        const meetings = await getMenteeMeetings(menteekey);
+        res.json(meetings);
+    } catch (error) {
+        console.error("Error fetching meetings:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
 // Route to insert a mentee note
-router.post('/menteenotes', async (req, res) => {
-    const { meetingkey, menteekey, datetime, profileOfALeader, executiveCommunicationStyle, trustRespectVisibility, motivatingYourTeam, selfAdvocacyAndCareerGrowth, workLifeBalance, additionalComments } = req.body;
+router.post("/menteenotes", async (req, res) => {
+    const {
+        meetingkey = null,
+        menteekey = null,
+        datetime = new Date(),
+        communication = null,
+        influence = null,
+        managingProjects = null,
+        innovation = null,
+        emotionalIntelligence = null,
+        decisionMaking = null,
+        additionalComments = null
+    } = req.body;
 
     try {
         const result = await insertMenteeNote(
             meetingkey,
             menteekey,
             datetime,
-            profileOfALeader,
-            executiveCommunicationStyle,
-            trustRespectVisibility,
-            motivatingYourTeam,
-            selfAdvocacyAndCareerGrowth,
-            workLifeBalance,
+            communication,
+            influence,
+            managingProjects,
+            innovation,
+            emotionalIntelligence,
+            decisionMaking,
             additionalComments
         );
-        res.status(201).json({ message: 'Mentee note inserted successfully.', insertId: result.insertId });
+        res.status(201).json({ message: "Mentee note inserted successfully.", insertId: result.insertId });
     } catch (error) {
-        console.error('Error inserting mentee note:', error);
-        res.status(500).json({ message: 'Internal server error.' });
+        console.error("Error inserting mentee note:", error);
+        res.status(500).json({ message: "Internal server error." });
     }
 });
 

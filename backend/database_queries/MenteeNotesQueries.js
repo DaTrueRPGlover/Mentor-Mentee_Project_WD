@@ -21,7 +21,24 @@ export const getMenteeNotesByMeetingKey = async (meetingkey) => { //Fetch the me
     }
 };
 
-export const insertMenteeNote = async (meetingkey, menteekey, datetime, profileOfALeader, executiveCommunicationStyle, trustRespectVisibility, motivatingYourTeam, selfAdvocacyAndCareerGrowth, workLifeBalance, additionalComments) => {
+export const getMenteeMeetings = async (menteekey) => {
+    const sql = `
+        SELECT meetingkey, datetime
+        FROM meetings
+        WHERE menteekey = ?
+    `;
+    try {
+        const [rows] = await pool.execute(sql, [menteekey]);
+        return rows;
+    } catch (error) {
+        console.error("Error fetching mentee meetings:", error);
+        throw error;
+    }
+};
+
+
+
+export const insertMenteeNote = async (meetingkey, menteekey, datetime, communication, influence, managingProjects, innovation, emotionalIntelligence, decisionMaking, additionalComments) => {
     const sql = `
         INSERT INTO menteenotes (
             meetingkey, 
@@ -38,26 +55,26 @@ export const insertMenteeNote = async (meetingkey, menteekey, datetime, profileO
     `;
 
     try {
-        // Execute the query with parameterized values for security
         const [result] = await pool.execute(sql, [
             meetingkey,
             menteekey,
             datetime,
-            profileOfALeader,
-            executiveCommunicationStyle,
-            trustRespectVisibility,
-            motivatingYourTeam,
-            selfAdvocacyAndCareerGrowth,
-            workLifeBalance,
+            communication,
+            influence,
+            managingProjects,
+            innovation,
+            emotionalIntelligence,
+            decisionMaking,
             additionalComments
         ]);
 
-        return result; // Returns the result, which includes the inserted row ID
+        return result;
     } catch (error) {
-        console.error('Error inserting mentee note:', error);
-        throw error; // Rethrow to handle it in the calling function
+        console.error("Error inserting mentee note:", error);
+        throw error;
     }
 };
+
 export const getMenteeNotesByKeys = async (meetingkey, menteekey) => {
     const sql = `
         SELECT menteenotes.menteekey, 
