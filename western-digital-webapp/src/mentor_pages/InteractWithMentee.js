@@ -1,7 +1,6 @@
-// InteractWithMentee.js
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentee.css';
-
+import logo from '../assets/WDC.png';
 function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -16,7 +15,7 @@ function InteractWithMentee() {
       return;
     }
 
-    //fetch all mentees assigned to said mentor
+    // Fetch all mentees assigned to this mentor
     fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${user.userId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -32,7 +31,8 @@ function InteractWithMentee() {
     const user = JSON.parse(localStorage.getItem('user'));
     const menteekey = selectedMentee;
     const mentorkey = user.userId;
-    //fetch all the messages between the selected mentee and the mentor
+
+    // Fetch all messages between the selected mentee and the mentor
     fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${mentorkey}`)
       .then((response) => response.json())
       .then((data) => {
@@ -46,7 +46,8 @@ function InteractWithMentee() {
       })
       .catch((error) => console.error('Error fetching messages:', error));
   }, [selectedMentee]);
-  //post messages on to the database
+
+  // Post a new message to the database
   const handleSendMessage = () => {
     if (newMessage.trim() && selectedMentee) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -80,9 +81,23 @@ function InteractWithMentee() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
-  //renders all the information onto the website
+
   return (
     <div className="interact-with-mentee">
+      <div className="top-header">
+
+        <button
+          className="logo-button"
+          onClick={() => navigate("/mentor-home")}
+        >
+          <img src={logo} alt="Logo" className="logo" />
+        </button>
+
+        <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+
+      </div>
       <h1>Interact with Mentees</h1>
       {mentees.length > 0 ? (
         <div>
@@ -105,7 +120,7 @@ function InteractWithMentee() {
         <p>You have no mentees assigned.</p>
       )}
       {selectedMentee && (
-        <>
+        <div className="rectangle">
           <div className="message-list">
             <ul>
               {messages.map((message, index) => (
@@ -124,7 +139,7 @@ function InteractWithMentee() {
             />
             <button onClick={handleSendMessage}>Send Message</button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
