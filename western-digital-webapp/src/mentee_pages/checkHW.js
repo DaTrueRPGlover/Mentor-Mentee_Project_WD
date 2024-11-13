@@ -1,9 +1,10 @@
-// HomeworkPage.js
+// CheckHW.js
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 import './checkHW.css';
 
-const HomeworkPage = () => {
+const CheckHW = () => {
   const [homeworkData, setHomeworkData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,8 +16,8 @@ const HomeworkPage = () => {
       setLoading(true);
       try {
         const response = await fetch(`http://localhost:3001/api/homework/mentee/${menteeKey}`);
-        const data = await response.json(); // Parse JSON response
-        setHomeworkData(data || []); // Default to an empty array if data is undefined
+        const data = await response.json();
+        setHomeworkData(data || []);
       } catch (error) {
         setError('Failed to fetch homework. Please try again later.');
         console.error('Error fetching homework:', error);
@@ -43,7 +44,7 @@ const HomeworkPage = () => {
       ) : (
         <div className="homework-list">
           {homeworkData.map((hw) => (
-            <div key={hw.homework_id} className="homework-card">
+            <Link to={`/homework/${hw.homework_id}`} key={hw.homework_id} className="homework-card">
               <h2 className="homework-title">{hw.title}</h2>
               <p className="homework-description">{hw.description}</p>
               <p className="homework-date">
@@ -52,7 +53,7 @@ const HomeworkPage = () => {
               <p className="homework-date">
                 Due: {format(new Date(hw.due_date), 'MMMM dd, yyyy')}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
@@ -60,4 +61,4 @@ const HomeworkPage = () => {
   );
 };
 
-export default HomeworkPage;
+export default CheckHW;

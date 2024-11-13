@@ -74,6 +74,26 @@ export const fetchHomeworkByMentorKey = async (mentorKey) => {
     }
 };
 
+export const fetchHomeworkById = async (homeworkId) => {
+    const connection = await pool.getConnection();
+    console.log("Fetchinghwbyid");
+    try {
+      const fetchHomeworkQuery = `
+        SELECT homework_id, mentorkey, menteekey, title, description, assigned_date, due_date
+        FROM homework
+        WHERE homework_id = ?`;
+      
+      const [homeworkResults] = await connection.execute(fetchHomeworkQuery, [homeworkId]);
+  
+      return homeworkResults[0]; // Return the single homework item
+    } catch (error) {
+      console.error('Error fetching homework by ID:', error);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
 
 /*// Example mentor key
 const mentorKey = '1b43e495-ffe9-4593-8c61-61261433a97f'; // Replace with an actual mentor key

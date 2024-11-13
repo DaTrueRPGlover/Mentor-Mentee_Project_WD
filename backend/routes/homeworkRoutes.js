@@ -1,5 +1,5 @@
 import express from 'express';
-import { createHomework, fetchHomeworkByMenteeKey, fetchHomeworkByMentorKey } from '../database_queries/HomeworkQueries.js';
+import { createHomework, fetchHomeworkByMenteeKey, fetchHomeworkByMentorKey, fetchHomeworkById } from '../database_queries/HomeworkQueries.js';
 
 const router = express.Router();
 
@@ -17,6 +17,19 @@ router.post('/assign-homework', async (req, res) => {
     } catch (error) {
       console.error('Error in /assign-homework route:', error);
       res.status(500).json({ message: 'Failed to assign homework', error: error.message });
+    }
+  });
+
+  router.get('/:homeworkId', async (req, res) => {
+    const { homeworkId } = req.params;
+  
+    try {
+      const homework = await fetchHomeworkById(homeworkId);
+      res.status(200).json(homework);
+      console.log("get HW", homework);
+    } catch (error) {
+      console.error('Error fetching homework by ID:', error);
+      res.status(500).json({ message: 'Failed to fetch homework by ID', error: error.message });
     }
   });
 

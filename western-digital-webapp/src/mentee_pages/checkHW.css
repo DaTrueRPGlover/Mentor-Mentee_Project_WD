@@ -41,6 +41,7 @@
   .homework-title {
     font-size: 1.3em;
     color: #333;
+    text-align: center;
   }
   
   .homework-description {
@@ -52,5 +53,6 @@
     font-size: 0.9em;
     color: #888;
     margin-top: 5px;
+    text-align: center;
   }
   
