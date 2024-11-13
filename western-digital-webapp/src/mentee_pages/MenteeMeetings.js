@@ -151,6 +151,7 @@ function MenteeMeetings() {
             Logout
           </button>
         </div>
+        
         <h1 className="welcome-message">View Meetings</h1>
       </header>
 
