@@ -6,6 +6,7 @@ import logo from "../assets/WDC.png";
 import talk from "../assets/talk.png";
 import notes from "../assets/notes.png";
 import calendar from "../assets/schedule.png";
+import hw from '../assets/hw.png';
 
 
 function MenteeHome() {
@@ -52,7 +53,13 @@ function MenteeHome() {
             <img src={notes} alt="Notes" className="circle-image" />
             <h3 className="title">TO-DO/Progressions</h3>
           </button>
-
+          <button
+            className="circle"
+            onClick={() => navigate("/check-hw")}
+          >
+            <img src={hw} alt="HW" className="circle-image" />
+            <h3 className="title">Assignments</h3>
+          </button>
           <button
             className="circle"
             onClick={() => navigate("/mentee-meetings")}

@@ -5,10 +5,35 @@ import {
   createMentorMenteeRelationship, 
   updateMentorForMentee, 
   deleteMentorMenteeRelationship, 
-  getAllMentorMenteeRelationships 
+  getAllMentorMenteeRelationships,
+  getMentorMenteeRelationships
+
 } from '../database_queries/RelationshipQueries.js';
 
 const router = express.Router();
+router.get('/mentees', async (req, res) => {
+  const { mentorkey } = req.query;
+  try {
+    const relationships = await getMentorMenteeRelationships(mentorkey, 'mentor');
+    res.json(relationships);
+  } catch (error) {
+    console.error('Error fetching mentees:', error);
+    res.status(500).json({ error: 'Failed to fetch mentees' });
+  }
+});
+
+// Fetch mentor assigned to a mentee
+router.get('/mentor', async (req, res) => {
+  const { menteekey } = req.query;
+  try {
+    const relationships = await getMentorMenteeRelationships(menteekey, 'mentee');
+    res.json(relationships);
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    res.status(500).json({ error: 'Failed to fetch mentor' });
+  }
+});
+
 
 // Fetch all mentor-mentee relationships
 router.get('/', async (req, res) => {

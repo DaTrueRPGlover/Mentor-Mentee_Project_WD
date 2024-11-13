@@ -1,160 +1,122 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
-
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './AssignHomework.css';
 import logo from '../assets/WDC.png';
 
-const menteesData = [
-  { name: 'John Doe', skills: ['Profile of a leader', 'Work-Life Balance'] },
-  { name: 'Jane Smith', skills: ['Executive Communication Style', 'Trust, Respect and Visibility'] },
-  { name: 'Emily Johnson', skills: ['Motivating your team', 'Self-advocacy and your career growth'] },
-  { name: 'Michael Brown', skills: ['Profile of a leader', 'Trust, Respect and Visibility'] },
-];
-
-const skillsList = [
-  'Profile of a leader',
-  'Executive Communication Style',
-  'Trust, Respect and Visibility',
-  'Motivating your team',
-  'Self-advocacy and your career growth',
-  'Work-Life Balance',
-];
-
 function AssignHomework() {
-  const navigate = useNavigate(); // <-- Initialize navigate
-  const [homeworkList, setHomeworkList] = useState([]);
-  const [newHomework, setNewHomework] = useState('');
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [assignedDate, setAssignedDate] = useState('');
+  const [assignedTime, setAssignedTime] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [dueTime, setDueTime] = useState('');
   const [selectedMentees, setSelectedMentees] = useState([]);
-  const [selectedSkill, setSelectedSkill] = useState('');
+  const [mentees, setMentees] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem('user'));
+  const mentorKey = userInfo.mentorkey;
 
-  const handleAddHomework = () => {
-    if (newHomework.trim() && dueDate && selectedMentees.length > 0) {
-      setHomeworkList([...homeworkList, { title: newHomework, dueDate, mentees: selectedMentees }]);
-      setNewHomework('');
-      setDueDate('');
-      setSelectedMentees([]);
+  useEffect(() => {
+    const fetchMentees = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${mentorKey}`);
+        if (response.ok) {
+          const menteesData = await response.json();
+          setMentees(menteesData);
+        } else {
+          throw new Error('Failed to fetch mentees');
+        }
+      } catch (error) {
+        console.error('Error fetching mentees:', error);
+      }
+    };
+    fetchMentees();
+  }, [mentorKey]);
+
+  const handleAssignHomework = async () => {
+    const homeworkData = {
+      title,
+      description,
+      assignedDateTime: `${assignedDate}T${assignedTime}`,
+      dueDateTime: `${dueDate}T${dueTime}`,
+      mentees: selectedMentees,
+      mentorKey,
+    };
+    try {
+      const response = await fetch('http://localhost:3001/api/homework/assign-homework', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(homeworkData),
+      });
+      if (response.ok) {
+        alert('Homework assigned successfully!');
+        setTitle('');
+        setDescription('');
+        setAssignedDate('');
+        setAssignedTime('');
+        setDueDate('');
+        setDueTime('');
+        setSelectedMentees([]);
+      } else {
+        throw new Error('Failed to assign homework');
+      }
+    } catch (error) {
+      console.error('Error assigning homework:', error);
     }
   };
 
-  const handleMenteeSelection = (mentee) => {
-    if (selectedMentees.includes(mentee)) {
-      setSelectedMentees(selectedMentees.filter(m => m !== mentee));
-    } else {
-      setSelectedMentees([...selectedMentees, mentee]);
-    }
-  };
-
-  const filteredMentees = menteesData.filter(
-    mentee =>
-      mentee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedSkill ? mentee.skills.includes(selectedSkill) : true)
-  );
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
+  const handleMenteeSelection = (menteeId) => {
+    setSelectedMentees((prevSelected) =>
+      prevSelected.includes(menteeId) ? prevSelected.filter((id) => id !== menteeId) : [...prevSelected, menteeId]
+    );
   };
 
   return (
     <div className="assign-hw">
-
       <header className="header-container">
-      <div className="top-header">
-
-        <button
-          className="logo-button"
-          onClick={() => navigate("/mentor-home")}
-        >
-          <img src={logo} alt="Logo" className="logo" />
-        </button>
-
-        <button className="logout-button" onClick={handleLogout}>
-            Logout
+        <div className="top-header">
+          <button className="logo-button" onClick={() => navigate("/mentor-home")}>
+            <img src={logo} alt="Logo" className="logo" />
           </button>
-
+          <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
         </div>
-        <h1 className="welcome-message">Assign Mentee Homework</h1>
+        <h1 className="welcome-message">Assign Homework to Mentees</h1>
       </header>
-   
-   
-   <div className="homework-body">
 
+      <div className="homework-body">
+        <div className="homework-form">
+          <input type="text" placeholder="Homework Title" value={title} onChange={(e) => setTitle(e.target.value)} className="homework-input title-input" />
+          <textarea placeholder="Homework Description" value={description} onChange={(e) => setDescription(e.target.value)} className="homework-input description-input" />
 
-      <div className="search-filter-container">
-        <div className="search-container">
-          <input
-            type="text"
-            className="homework-input"
-            placeholder="Search for mentees"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+          <div className="date-time-container">
+            <label>Assigned Date and Time</label>
+            <input type="date" value={assignedDate} onChange={(e) => setAssignedDate(e.target.value)} className="date-input" />
+            <input type="time" value={assignedTime} onChange={(e) => setAssignedTime(e.target.value)} className="time-input" />
+          </div>
 
-        <div className="filter-container">
-          <select
-            className="homework-input"
-            value={selectedSkill}
-            onChange={(e) => setSelectedSkill(e.target.value)}
-          >
-            <option value="">All Skills</option>
-            {skillsList.map(skill => (
-              <option key={skill} value={skill}>
-                {skill}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+          <div className="date-time-container">
+            <label>Due Date and Time</label>
+            <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="date-input" />
+            <input type="time" value={dueTime} onChange={(e) => setDueTime(e.target.value)} className="time-input" />
+          </div>
 
-      <div className="mentees-container">
-        <div className="mentees-list">
-          <h3>Available Mentees</h3>
-          <ul>
-            {filteredMentees.map(mentee => (
-              <li key={mentee.name} onClick={() => handleMenteeSelection(mentee.name)}>
-                {mentee.name} (Skills: {mentee.skills.join(', ')})
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="mentees-container">
+            <h3>Select Mentees</h3>
+            <div className="mentee-list">
+              {mentees.map((mentee) => (
+                <div key={mentee.menteekey} className="mentee-item">
+                  <label>
+                    <input type="checkbox" checked={selectedMentees.includes(mentee.menteekey)} onChange={() => handleMenteeSelection(mentee.menteekey)} />
+                    {mentee.menteeName}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <div className="selected-mentees-list">
-          <h3>Selected Mentees</h3>
-          <ul>
-            {selectedMentees.map(mentee => (
-              <li key={mentee}>{mentee}</li>
-            ))}
-          </ul>
+          <button onClick={handleAssignHomework} disabled={!title || !description || !assignedDate || !assignedTime || !dueDate || !dueTime || selectedMentees.length === 0} className="homework-button">Assign Homework</button>
         </div>
       </div>
-
-      <div className="date-picker-container">
-        <input
-          type="date"
-          className="homework-input"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-        />
-      </div>
-
-      <textarea
-        className="homework-input"
-        placeholder="Enter homework task (paragraph length)"
-        value={newHomework}
-        onChange={(e) => setNewHomework(e.target.value)}
-      />
-
-      <button
-        className="homework-button"
-        onClick={handleAddHomework}
-        disabled={!newHomework || !dueDate || selectedMentees.length === 0}
-      >
-        Assign Homework to Selected Mentees
-      </button>
-    </div>
     </div>
   );
 }
