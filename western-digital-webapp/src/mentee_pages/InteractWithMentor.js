@@ -1,4 +1,3 @@
-// InteractWithMentor.js
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentor.css';
 
@@ -31,9 +30,11 @@ function InteractWithMentor() {
         }
 
         setMentorKey(data[0].mentorkey);
-
+        console.log('Mentor assigned to', data[0].mentorkey);
+        console.log(data);
         // Fetch messages with the mentor
         fetch(`http://localhost:3001/api/messages?menteekey=${user.userId}&mentorkey=${data[0].mentorkey}`)
+
           .then((response) => response.json())
           .then((data) => {
             console.log('Fetched messages:', data);
@@ -90,12 +91,12 @@ function InteractWithMentor() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
-  //rendering all the infromation onto the page
+
   return (
     <div className="interact-with-mentor">
       <h1>Interact with Mentor</h1>
       {mentorKey ? (
-        <>
+        <div className="rectangle-container">
           <div className="message-list">
             <ul>
               {messages.map((message, index) => (
@@ -114,7 +115,7 @@ function InteractWithMentor() {
             />
             <button onClick={handleSendMessage}>Send Message</button>
           </div>
-        </>
+        </div>
       ) : (
         <p>You have no mentor assigned.</p>
       )}
