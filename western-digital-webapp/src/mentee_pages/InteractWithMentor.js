@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentor.css';
-
+// import logo from '../assets/WDC.png';
 function InteractWithMentor() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -94,6 +94,18 @@ function InteractWithMentor() {
 
   return (
     <div className="interact-with-mentor">
+      {/* <header className="header-container">
+        <button className="logo-button" onClick={() => navigate("/admin-home")}>
+              <img src={logo} alt="Logo" className="logo" />
+            </button>
+          <div className="top-header">
+          
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+          </div>
+          <div className="welcome-message-container">
+            <h1 className="welcome-message">View Progression</h1>
+          </div>
+      </header> */}
       <h1>Interact with Mentor</h1>
       {mentorKey ? (
         <div className="rectangle-container">
