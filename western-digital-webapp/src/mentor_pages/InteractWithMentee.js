@@ -84,7 +84,7 @@ function InteractWithMentee() {
 
   return (
     <div className="interact-with-mentee">
-      <div className="top-header">
+      {/* <div className="top-header">
 
         <button
           className="logo-button"
@@ -97,7 +97,7 @@ function InteractWithMentee() {
             Logout
           </button>
 
-      </div>
+      </div> */}
       <h1>Interact with Mentees</h1>
       {mentees.length > 0 ? (
         <div>
