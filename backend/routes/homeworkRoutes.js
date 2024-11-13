@@ -5,16 +5,20 @@ const router = express.Router();
 
 // Route to assign homework
 router.post('/assign-homework', async (req, res) => {
-    const { menteeKey, mentorKey, title, description, assignedDate, dueDate } = req.body;
-
+    const { mentees, mentorKey, title, description, assignedDate, dueDate } = req.body;
+  
     try {
-        const homeworkId = await createHomework(menteeKey, mentorKey, title, description, assignedDate, dueDate);
-        res.status(201).json({ message: 'Homework assigned successfully', homeworkId });
+      const homeworkIds = await Promise.all(
+        mentees.map(menteeKey =>
+          createHomework(menteeKey, mentorKey, title, description, assignedDate, dueDate)
+        )
+      );
+      res.status(201).json({ message: 'Homework assigned successfully', homeworkIds });
     } catch (error) {
-        console.error('Error in /assign-homework route:', error);
-        res.status(500).json({ message: 'Failed to assign homework', error: error.message });
+      console.error('Error in /assign-homework route:', error);
+      res.status(500).json({ message: 'Failed to assign homework', error: error.message });
     }
-});
+  });
 
 // Route to fetch homework by menteeKey
 router.get('/mentee/:menteeKey', async (req, res) => {
@@ -22,6 +26,7 @@ router.get('/mentee/:menteeKey', async (req, res) => {
 
     try {
         const homework = await fetchHomeworkByMenteeKey(menteeKey);
+        console.log(homework);
         res.status(200).json(homework);
     } catch (error) {
         console.error('Error in /homework/mentee route:', error);

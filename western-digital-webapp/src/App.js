@@ -9,6 +9,7 @@ import AdminHome from './main_menus/AdminHome';
 import InteractWithMentor from './mentee_pages/InteractWithMentor';
 import TodoProgression from './mentee_pages/TodoProgression';
 import MenteeMeetings from './mentee_pages/MenteeMeetings';
+import CheckHW from './mentee_pages/checkHW';
 //Mentor Pages
 import InteractWithMentee from './mentor_pages/InteractWithMentee';
 import AssignHomework from './mentor_pages/AssignHomework';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/interact-mentor" element={<InteractWithMentor />} />
         <Route path="/todo-progression" element={<TodoProgression />} />
         <Route path="/mentee-meetings" element={<MenteeMeetings />} />
+        <Route path= "/check-hw" element={<CheckHW/>} />
 
       </Routes>
     </Router>

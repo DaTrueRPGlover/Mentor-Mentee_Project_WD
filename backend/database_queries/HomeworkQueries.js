@@ -2,57 +2,31 @@ import {pool} from '../database.js';
 
 export const createHomework = async (menteeKey, mentorKey, title, description, assignedDate, dueDate) => {
     const connection = await pool.getConnection();
-
+    
     try {
-        await connection.beginTransaction();
-        console.log('Transaction started');
-
-        // Check if mentor exists in the mentor table
-        const mentorCheckQuery = `
-            SELECT 1 FROM mentor WHERE mentorkey = ?`;
-        const [mentorResult] = await connection.execute(mentorCheckQuery, [mentorKey]);
-
-        if (mentorResult.length === 0) {
-            throw new Error('Mentor not found');
-        }
-        console.log('Mentor exists with mentorkey:', mentorKey);
-
-        // Check if mentee exists in the mentee table
-        const menteeCheckQuery = `
-            SELECT 1 FROM mentee WHERE menteekey = ?`;
-        const [menteeResult] = await connection.execute(menteeCheckQuery, [menteeKey]);
-
-        if (menteeResult.length === 0) {
-            throw new Error('Mentee not found');
-        }
-        console.log('Mentee exists with menteekey:', menteeKey);
-
-        // Insert new homework entry into the homework table
-        const insertHomeworkQuery = `
-            INSERT INTO homework (mentorkey, menteekey, title, description, assigned_date, due_date)
-            VALUES (?, ?, ?, ?, ?, ?)`;
-        const [result] = await connection.execute(insertHomeworkQuery, [
-            mentorKey,
-            menteeKey,
-            title,
-            description,
-            assignedDate,
-            dueDate
-        ]);
-
-        console.log('Inserted homework with ID:', result.insertId);
-
-        await connection.commit();
-        console.log('Transaction committed. Homework entry created.');
-        return result.insertId; // Return the new homework's ID
+      await connection.beginTransaction();
+      const insertHomeworkQuery = `
+        INSERT INTO homework (mentorkey, menteekey, title, description, assigned_date, due_date)
+        VALUES (?, ?, ?, ?, ?, ?)`;
+        
+      const [result] = await connection.execute(insertHomeworkQuery, [
+        mentorKey,
+        menteeKey,
+        title,
+        description,
+        assignedDate,
+        dueDate,
+      ]);
+  
+      await connection.commit();
+      return result.insertId;
     } catch (error) {
-        await connection.rollback();
-        console.error('Error creating homework entry:', error);
-        throw error;
+      await connection.rollback();
+      throw error;
     } finally {
-        connection.release();
+      connection.release();
     }
-};
+  };
 
 export const fetchHomeworkByMenteeKey = async (menteeKey) => {
     const connection = await pool.getConnection();
