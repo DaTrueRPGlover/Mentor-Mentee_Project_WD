@@ -1,91 +1,81 @@
 .interact-with-mentee {
-    padding: 20px;
-    text-align: center;
-  }
-  .interact-with-mentee-body{
-    background-color: #add8e6;
-  }
-  
-  .interact-with-mentee-message-list {
-    max-height: 300px;
-    overflow-y: scroll;
-    margin-bottom: 20px;
-  }
+  text-align: center;
+  padding: 20px;
+}
 
-  .interact-with-mentor-logo {
-    width: 15% !important; /* Adjust size as needed */
-    height: auto;
-    position: relative;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    margin: 5px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
-  .interact-with-mentee-mentor {
-    text-align: left;
-    color: blue;
-  }
-  
-  .interact-with-mentee-mentee {
-    text-align: right;
-    color: green;
-  }
-  
-  .interact-with-mentee-timestamp {
-    font-size: 0.8em;
-    color: gray;
-  }
-  
-  .interact-with-mentee-textarea {
-    width: 80%;
-    height: 80px;
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 1em;
-  }
-  
-  .interact-with-mentee-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .interact-with-mentee-button:hover {
-    background-color: #0056b3;
-  }
-   */
-   .interact-with-mentee {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .chat-box {
-    margin-top: 20px;
-  }
-  
-  .chat-box textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .chat-box button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
+.rectangle {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #91BECD;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;  /* Adjusted the gap to create spacing between elements */
+  box-sizing: border-box; /* Ensure padding is included in the width/height calculation */
+}
+
+.message-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.message-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%; /* Ensure it spans the full width of the parent container */
+}
+
+.message-input textarea {
+  width: 100%; /* Ensure it spans the entire width of the parent container */
+  max-width: 100%; /* Prevent overflow */
+  padding: 10px;
+  height: 60px;  /* Reduced the height for a more compact input box */
+  font-size: 1rem; /* Adjusted font size */
+  box-sizing: border-box; /* Ensures padding is part of the element's width/height */
+  resize: none; /* Disable resizing */
+  margin-bottom: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 10px;
+  width: auto;  /* Button width will adjust based on content */
+}
+
+.message-input button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.mentor {
+  text-align: left;
+  color: blue;
+}
+
+.mentee {
+  text-align: right;
+  color: green;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: gray;
+}

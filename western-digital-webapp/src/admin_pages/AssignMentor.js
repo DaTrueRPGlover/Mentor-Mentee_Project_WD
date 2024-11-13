@@ -131,7 +131,10 @@ function AssignMentor() {
         </div>
         
       </header>
-      <h1 className="welcome-message">Assign Mentor To Mentee</h1>
+      <div className='purple1'>
+        <h1 className="welcome-message">Assign Mentor To Mentee</h1>
+      </div>
+      
 {/* lists mentors and mentee */}
       <div className="content-container">
         <div className="rectangle">

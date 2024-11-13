@@ -12,6 +12,8 @@
   align-items: center;
   padding: 20px;
 }
+
+
 /* formats everything in header container makes everything relative to its position */
 .assign-mentor-container .header-container {
   position: relative;
@@ -20,6 +22,29 @@
 .welcome-message {
   font-size: 40px;
 }
+
+.purple1 {
+  background-color: #a34eff;
+  padding: 20px;
+  margin: 10px auto;
+  width: 50%;
+  height: 100px;
+  max-width: 600px;
+  text-align: center;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 10px;
+  display: flex; /* add this */
+  justify-content: center; /* centers horizontally */
+  align-items: center; /* centers vertically */
+}
+
+.purple1 h1 {
+  font-size: 40px;
+  margin: 0; /* remove default margin */
+  background-color: inherit;
+}
+
 
 
 /* resixes and positions the logo */
