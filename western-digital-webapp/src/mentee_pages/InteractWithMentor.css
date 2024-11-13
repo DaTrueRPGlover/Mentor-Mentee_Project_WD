@@ -5,8 +5,9 @@
   width: 100%;
   font-family: Arial, sans-serif;
   text-align: center;
-  justify-content: flex-start; /* Align items at the top */
-  padding-top: 20px; /* Add space at the top */
+  align-items: center; /* Center all content horizontally */
+
+  justify-content: space-between;
 }
 
 .rectangle-container {

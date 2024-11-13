@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentor.css';
-// import logo from '../assets/WDC.png';
+import logo from '../assets/WDC.png';
+import { useNavigate } from "react-router-dom";
+
 function InteractWithMentor() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [mentorKey, setMentorKey] = useState(null);
@@ -90,23 +98,28 @@ function InteractWithMentor() {
         })
         .catch((error) => console.error('Error sending message:', error));
     }
+  
+
   };
 
   return (
-    <div className="interact-with-mentor">
-      {/* <header className="header-container">
-        <button className="logo-button" onClick={() => navigate("/admin-home")}>
-              <img src={logo} alt="Logo" className="logo" />
-            </button>
-          <div className="top-header">
-          
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-          </div>
-          <div className="welcome-message-container">
-            <h1 className="welcome-message">View Progression</h1>
-          </div>
-      </header> */}
-      <h1>Interact with Mentor</h1>
+<div className="assign-mentor">
+      <header className="header-container">
+        <div className="top-header">
+          <button
+            className="logo-button"
+            onClick={() => navigate("/mentee-home")}
+          >
+            <img src={logo} alt="Logo" className="logo" />
+          </button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+     
+      <div className='container'>
+        <h1 className="welcome-message">Interact With Mentor</h1>
+      </div>
+      </header>
+
       {mentorKey ? (
         <div className="rectangle-container">
           <div className="message-list">

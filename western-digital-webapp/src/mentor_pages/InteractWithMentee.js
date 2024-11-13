@@ -90,6 +90,8 @@ function InteractWithMentee() {
 
   return (
     <div className="interact-with-mentee">
+         <header className="header-container">
+   
       <div className="top-header">
 
         <button
@@ -103,9 +105,18 @@ function InteractWithMentee() {
             Logout
           </button>
 
-      </div>
-      <h1>Interact with Mentees</h1>
-      {mentees.length > 0 ? (
+        </div>
+        <div className="container">
+          <h1 className="welcome-message">Interact with Mentees</h1>
+         
+        </div>
+        {mentees.length === 0 && (
+          <p className="no-mentees-message">You have no mentees assigned.</p>
+        )}
+      </header>
+      
+      <div className="content-container">
+      {mentees.length > 0 && (
         <div>
           <label>Select a Mentee:</label>
           <select
@@ -122,9 +133,8 @@ function InteractWithMentee() {
             ))}
           </select>
         </div>
-      ) : (
-        <p>You have no mentees assigned.</p>
       )}
+      
       {selectedMentee && (
         <div className="rectangle">
           <div className="message-list">
@@ -146,7 +156,8 @@ function InteractWithMentee() {
             <button onClick={handleSendMessage}>Send Message</button>
           </div>
         </div>
-      )}
+        )}
+        </div>
     </div>
   );
 }
