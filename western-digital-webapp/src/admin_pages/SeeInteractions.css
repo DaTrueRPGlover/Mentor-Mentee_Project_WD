@@ -1,6 +1,6 @@
 /* Main styling format for container */
 .see-interactions {
-  padding-top: 40px;
+  padding-top: 20px; /* Removes top padding */
   padding-bottom: 40px;
   text-align: center;
   display: flex;
@@ -31,24 +31,26 @@
 /* Create a purple rectangle background */
 .purple {
   background-color: #a34eff;
-  width: 100%;  /* Make the purple section span the full width */
-  height: 100px;  /* Adjust the height as needed */
-  display: flex;
-  align-items: center;  /* Vertically center content */
-  justify-content: center;  /* Horizontally center content */
+  width: fit-content;  /* Makes the purple rectangle fit the content (title) */
+  padding: 20px 40px;  /* Adds padding around the title */
+  margin: 0 auto;  /* Centers the purple rectangle */
   border-radius: 8px;  /* Optional: adds rounded corners */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Apply a purple background to the text inside the purple section */
 .purple h1 {
-  background-color: #a34eff;  /* Purple background for the text */
   color: white;  /* Text color to contrast with purple */
-  padding: 10px 20px;  /* Optional: adds padding around the text */
-  border-radius: 8px;  /* Optional: adds rounded corners to the text background */
   margin: 0;  /* Remove any default margin for proper centering */
+  background-color: inherit;
 }
 
-
+.header-container {
+  position: relative;
+  width: 100%;
+}
 /* formatting h2 headers */
 .see-interactions h2 {
   color: gray;
@@ -108,21 +110,17 @@ strong {
   font-weight: bold;
 }
 /* formats logo positioning and size */
-.see-interactions .logo {
-  /* position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 150px;
-  height: auto; */
+/* formats logo positioning and size */
+.see-interactions .logo-button {
   position: absolute;
-  top: 20px;
+  top: 0; /* Keep it at the top of the screen */
   left: 20px;
-  z-index: 1; /* Place logo in front of button */
-  width: 150px;
-  height: auto;
-  cursor: pointer; /* Makes it clickable */
-  
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remove extra padding */
 }
+
 .see-interactions .logo-button {
   background: none;
   border: none;
@@ -219,9 +217,8 @@ button.logout-button {
   padding: 10px 20px;
   position: absolute;
   right: 20px;
-  top: 20px;
+  top: 20px;  /* Adjusted to move it higher */
   transition: background-color 0.3s;
-  margin-top: 0%;
 }
 
 button.logout-button:hover {

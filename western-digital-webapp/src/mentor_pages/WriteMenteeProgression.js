@@ -90,7 +90,10 @@ function WriteMenteeProgression() {
     <div className="todo-progression">
       <header className="header-container">
         <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/mentee-home")}>
+          <button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
             <img src={logo} alt="Logo" className="logo" />
           </button>
           <button

@@ -32,17 +32,20 @@ const HomeworkEach = () => {
 
   return (
     <div className="homework-detail">
-      <h1>{homework.title}</h1>
-      {/* Wrap description in Linkify to auto-detect links */}
-      <Linkify>
-        <p className="homework-description">{homework.description}</p>
-      </Linkify>
-      <p className="homework-date">
-        Assigned: {format(new Date(homework.assigned_date), 'MMMM dd, yyyy')}
-      </p>
-      <p className="homework-date">
-        Due: {format(new Date(homework.due_date), 'MMMM dd, yyyy')}
-      </p>
+      <div className="white">
+        <h1>{homework.title}</h1>
+        {/* Wrap description in Linkify to auto-detect links */}
+        <Linkify>
+          <p className="homework-description">{homework.description}</p>
+        </Linkify>
+        <p className="homework-date">
+          Assigned: {format(new Date(homework.assigned_date), 'MMMM dd, yyyy')}
+        </p>
+        <p className="homework-date">
+          Due: {format(new Date(homework.due_date), 'MMMM dd, yyyy')}
+        </p>
+      </div>
+
     </div>
   );
 };

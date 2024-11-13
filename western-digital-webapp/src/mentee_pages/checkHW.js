@@ -38,25 +38,28 @@ const CheckHW = () => {
 
   return (
     <div className="homework-page">
-      <h1>Assigned Homework</h1>
-      {homeworkData.length === 0 ? (
-        <p className="no-homework">No homework assignments found.</p>
-      ) : (
-        <div className="homework-list">
-          {homeworkData.map((hw) => (
-            <Link to={`/homework/${hw.homework_id}`} key={hw.homework_id} className="homework-card">
-              <h2 className="homework-title">{hw.title}</h2>
-              <p className="homework-description">{hw.description}</p>
-              <p className="homework-date">
-                Assigned: {format(new Date(hw.assigned_date), 'MMMM dd, yyyy')}
-              </p>
-              <p className="homework-date">
-                Due: {format(new Date(hw.due_date), 'MMMM dd, yyyy')}
-              </p>
-            </Link>
-          ))}
-        </div>
-      )}
+      <div className="whiteR">
+          <h1>Assigned Homework</h1>
+          {homeworkData.length === 0 ? (
+            <p className="no-homework">No homework assignments found.</p>
+          ) : (
+            <div className="homework-list">
+              {homeworkData.map((hw) => (
+                <Link to={`/homework/${hw.homework_id}`} key={hw.homework_id} className="homework-card">
+                  <h2 className="homework-title">{hw.title}</h2>
+                  <p className="homework-description">{hw.description}</p>
+                  <p className="homework-date">
+                    Assigned: {format(new Date(hw.assigned_date), 'MMMM dd, yyyy')}
+                  </p>
+                  <p className="homework-date">
+                    Due: {format(new Date(hw.due_date), 'MMMM dd, yyyy')}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          )}
+      </div>
+
     </div>
   );
 };
