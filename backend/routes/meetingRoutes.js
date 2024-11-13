@@ -1,4 +1,5 @@
 import express from 'express';
+import pool from '../database.js';
 import {
   getMeetingsForUser,
   getMeetingsByMentorKey,
@@ -12,10 +13,10 @@ import {
 
 const router = express.Router();
 
-
-//route to get all the meetings
 router.get('/meetings', async (req, res) => {
+  console.log(req.query);
   const userId = req.query.userId;
+  console.log("meeting userId",userId);
   try {
     const rows = await getMeetingsForUser(userId);
     res.json(rows);
@@ -25,7 +26,6 @@ router.get('/meetings', async (req, res) => {
   }
 });
 
-//route to get all mentees for said mentor
 router.get('/mentees', async (req, res) => {
   const mentorkey = req.query.mentorkey;
   try {
@@ -37,13 +37,10 @@ router.get('/mentees', async (req, res) => {
   }
 });
 
-
-
-//route to create meeting
 router.post('/create-meeting', async (req, res) => {
   const { mentorkey, menteekey, datetime, zoom_link, zoom_password } = req.body;
   try {
-    const existingMeetings = await checkMeetingConflict(mentorkey, datetime);
+    const existingMeetings = await checkMeetingConflict(mentorkey, menteekey, datetime, 60);
 
     if (existingMeetings.length > 0) {
       return res.status(409).json({ message: 'Meeting time conflict detected' });
@@ -56,6 +53,7 @@ router.post('/create-meeting', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 router.get('/mentees/:menteekey', async (req, res) => {
   const { menteekey } = req.params;
   try {
@@ -102,24 +100,22 @@ router.post('/reschedule', async (req, res) => {
   const { meetingKey, newDateTime } = req.body;
 
   try {
-    // Retrieve the original meeting details to calculate duration
-    const [originalMeeting] = await pool.query('SELECT * FROM meetings WHERE meetingkey = ?', [meetingKey]);
+    const [rows] = await pool.query('SELECT * FROM meetings WHERE meetingkey = ?', [meetingKey]);
+    const originalMeeting = rows[0];
 
     if (!originalMeeting) {
       return res.status(404).json({ message: 'Meeting not found' });
     }
 
-    const { mentorkey, menteekey, datetime: oldDateTime } = originalMeeting;
-    const duration = (new Date(originalMeeting.endtime) - new Date(originalMeeting.datetime)) / (1000 * 60); // Duration in minutes
+    const { mentorkey, menteekey } = originalMeeting;
+    const duration = 60; // Duration in minutes
 
-    // Check for conflicts
     const conflict = await checkMeetingConflict(mentorkey, menteekey, newDateTime, duration, meetingKey);
 
     if (conflict.length > 0) {
       return res.status(409).json({ message: 'Time conflict detected' });
     }
 
-    // If no conflict, update meeting time
     await rescheduleMeeting(meetingKey, newDateTime);
     res.status(200).json({ message: 'Meeting rescheduled successfully' });
   } catch (error) {
@@ -127,6 +123,5 @@ router.post('/reschedule', async (req, res) => {
     res.status(500).json({ message: 'Error rescheduling meeting' });
   }
 });
-
 
 export default router;

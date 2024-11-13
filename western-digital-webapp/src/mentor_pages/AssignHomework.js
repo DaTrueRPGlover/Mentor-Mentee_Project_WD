@@ -34,14 +34,22 @@ function AssignHomework() {
   }, [mentorKey]);
 
   const handleAssignHomework = async () => {
+    if (!title || !description || !assignedDate || !assignedTime || !dueDate || !dueTime || selectedMentees.length === 0) {
+      alert("Please fill out all fields and select at least one mentee.");
+      return;
+    }
+  
     const homeworkData = {
       title,
       description,
-      assignedDateTime: `${assignedDate}T${assignedTime}`,
-      dueDateTime: `${dueDate}T${dueTime}`,
+      assignedDateTime: `${assignedDate} ${assignedTime}`,
+      dueDateTime: `${dueDate} ${dueTime}`,
       mentees: selectedMentees,
       mentorKey,
     };
+  
+    console.log("Homework Data to Send:", homeworkData); // Debugging log
+  
     try {
       const response = await fetch('http://localhost:3001/api/homework/assign-homework', {
         method: 'POST',
@@ -64,6 +72,8 @@ function AssignHomework() {
       console.error('Error assigning homework:', error);
     }
   };
+  
+  
 
   const handleMenteeSelection = (menteeId) => {
     setSelectedMentees((prevSelected) =>

@@ -5,20 +5,31 @@ const router = express.Router();
 
 // Route to assign homework
 router.post('/assign-homework', async (req, res) => {
-    const { mentees, mentorKey, title, description, assignedDate, dueDate } = req.body;
-  
-    try {
+  const { title, description, assignedDateTime, dueDateTime, mentees, mentorKey } = req.body;
+
+  // Convert assignedDateTime and dueDateTime to date-only format (YYYY-MM-DD) for database compatibility
+  const formattedAssignedDate = assignedDateTime ? assignedDateTime.split(' ')[0] : null;
+  const formattedDueDate = dueDateTime ? dueDateTime.split(' ')[0] : null;
+
+  try {
+      // Ensure all fields are present
+      if (!title || !description || !formattedAssignedDate || !formattedDueDate || !mentees || !mentorKey) {
+          return res.status(400).json({ message: 'Missing required fields' });
+      }
+
+      // Assign homework for each mentee
       const homeworkIds = await Promise.all(
-        mentees.map(menteeKey =>
-          createHomework(menteeKey, mentorKey, title, description, assignedDate, dueDate)
-        )
+          mentees.map(menteeKey => 
+              createHomework(menteeKey, mentorKey, title, description, formattedAssignedDate, formattedDueDate)
+          )
       );
+
       res.status(201).json({ message: 'Homework assigned successfully', homeworkIds });
-    } catch (error) {
+  } catch (error) {
       console.error('Error in /assign-homework route:', error);
       res.status(500).json({ message: 'Failed to assign homework', error: error.message });
-    }
-  });
+  }
+});
 
   router.get('/:homeworkId', async (req, res) => {
     const { homeworkId } = req.params;

@@ -1,32 +1,45 @@
 import {pool} from '../database.js';
 
 export const createHomework = async (menteeKey, mentorKey, title, description, assignedDate, dueDate) => {
-    const connection = await pool.getConnection();
-    
-    try {
-      await connection.beginTransaction();
-      const insertHomeworkQuery = `
-        INSERT INTO homework (mentorkey, menteekey, title, description, assigned_date, due_date)
-        VALUES (?, ?, ?, ?, ?, ?)`;
-        
-      const [result] = await connection.execute(insertHomeworkQuery, [
-        mentorKey,
-        menteeKey,
-        title,
-        description,
-        assignedDate,
-        dueDate,
-      ]);
-  
-      await connection.commit();
-      return result.insertId;
-    } catch (error) {
-      await connection.rollback();
-      throw error;
-    } finally {
-      connection.release();
-    }
-  };
+  const connection = await pool.getConnection();
+
+  try {
+    // Ensure no undefined values are passed to the query
+    console.log("mentorKey:", mentorKey);
+    console.log("menteeKey:", menteeKey);
+    console.log("title:", title);
+    console.log("description:", description);
+    console.log("assignedDate:", assignedDate);
+    console.log("dueDate:", dueDate);
+    const validatedMentorKey = mentorKey || null;
+    const validatedMenteeKey = menteeKey || null;
+    const validatedTitle = title || null;
+    const validatedDescription = description || null;
+    const validatedAssignedDate = assignedDate || null;
+    const validatedDueDate = dueDate || null;
+    await connection.beginTransaction();
+    const insertHomeworkQuery = `
+      INSERT INTO homework (mentorkey, menteekey, title, description, assigned_date, due_date)
+      VALUES (?, ?, ?, ?, ?, ?)`;
+
+    const [result] = await connection.execute(insertHomeworkQuery, [
+      validatedMentorKey,
+      validatedMenteeKey,
+      validatedTitle,
+      validatedDescription,
+      validatedAssignedDate,
+      validatedDueDate,
+    ]);
+
+    await connection.commit();
+    return result.insertId;
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
+};
 
 export const fetchHomeworkByMenteeKey = async (menteeKey) => {
     const connection = await pool.getConnection();

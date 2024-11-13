@@ -1,6 +1,5 @@
 import pool from '../database.js';
 
-//get meeting for user query
 export const getMeetingsForUser = async (userId) => {
   const [rows] = await pool.query(
     `
@@ -24,7 +23,6 @@ export const getMeetingsForUser = async (userId) => {
   return rows;
 };
 
-//query to get mentees for mentor
 export const getMenteesForMentor = async (mentorkey) => {
   const [rows] = await pool.query(
     `
@@ -38,28 +36,20 @@ export const getMenteesForMentor = async (mentorkey) => {
   return rows;
 };
 
-
-
-// time conflict check before schedule
-// Query to check for conflicting meetings
 export const checkMeetingConflict = async (mentorkey, menteekey, datetime, duration, meetingKey = null) => {
   const [rows] = await pool.query(
     `
     SELECT * FROM meetings 
     WHERE (mentorkey = ? OR menteekey = ?) 
-      AND meetingkey != ?
+      AND (meetingkey != ? OR ? IS NULL)
       AND (
-        (datetime <= ? AND DATE_ADD(datetime, INTERVAL ? MINUTE) > ?) 
-        OR 
-        (datetime >= ? AND datetime < DATE_ADD(?, INTERVAL ? MINUTE))
+        datetime < DATE_ADD(?, INTERVAL ? MINUTE) AND DATE_ADD(datetime, INTERVAL ? MINUTE) > ?
       )
     `,
-    [mentorkey, menteekey, meetingKey, datetime, duration, datetime, datetime, datetime, duration]
+    [mentorkey, menteekey, meetingKey, meetingKey, datetime, duration, duration, datetime]
   );
   return rows;
 };
-
-
 
 export const getMeetingsByMenteeKey = async (menteekey) => {
     const sql = `
@@ -77,8 +67,7 @@ export const getMeetingsByMenteeKey = async (menteekey) => {
     }
 };
 
-
-export const getMeetingsByMentorKey = async (menteekey) => {
+export const getMeetingsByMentorKey = async (mentorkey) => {
   const sql = `
       SELECT meetingkey, mentorkey, menteekey, datetime, zoom_link, zoom_password
       FROM meetings
@@ -86,7 +75,7 @@ export const getMeetingsByMentorKey = async (menteekey) => {
       ORDER BY datetime DESC
   `;
   try {
-      const [rows] = await pool.execute(sql, [menteekey]);
+      const [rows] = await pool.execute(sql, [mentorkey]);
       return rows;
   } catch (error) {
       console.error('Error fetching meetings by mentorkey:', error);
@@ -94,7 +83,6 @@ export const getMeetingsByMentorKey = async (menteekey) => {
   }
 };
 
-// Query to create a new meeting
 export const createMeeting = async (mentorkey, menteekey, datetime, zoom_link, zoom_password) => {
   await pool.query(
     `
@@ -104,6 +92,7 @@ export const createMeeting = async (mentorkey, menteekey, datetime, zoom_link, z
     [mentorkey, menteekey, datetime, zoom_link, zoom_password]
   );
 };
+
 export const cancelMeeting = async (meetingKey) => {
   await pool.query('DELETE FROM meetings WHERE meetingkey = ?', [meetingKey]);
 };
