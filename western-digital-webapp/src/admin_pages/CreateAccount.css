@@ -1,8 +1,35 @@
 /* formating for all things inside containers */
 .create-account {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
   text-align: center;
+  align-items: center; /* Center all content horizontally */
+
+  justify-content: space-between;
 }
+
+.create-account .header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.create-account .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+
+
+
 /* formating for all things inside this container */
 .account-form {
   padding: 20px;
@@ -98,10 +125,7 @@
 .create-account .space {
   background-color: inherit;
 }
-/* styles over all container */
-.mentor-meetings {
-  padding-bottom: 60px;
-}
+
 /* styles over all container */
 .container {
   background-color: #a34eff;
@@ -135,21 +159,14 @@
 
 /* Adjusted styles for logo image and button */
 .create-account .logo-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 60px;
-  height: 60px;
-  background: transparent;
-  border: none;
-  z-index: 1;
-  cursor: pointer;
+  background: none; /* Remove default button background */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
 }
 /* Adjusted styles for logo image*/
 .create-account .logo {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 150px;
   height: auto;
 }
