@@ -9,43 +9,29 @@
   padding-top: 20px; /* Add space at the top */
 }
 
-.interact-with-mentor .header-container {
-  display: flex; /* Use flexbox to align children */
-  flex-direction: column; /* Stack items vertically */
-  align-items: flex-start; /* Keep items aligned to the left */
-  width: 100%; /* Full width of the header */
+.rectangle-container {
+  background-color: #91BECD;
+  padding: 20px;
+  margin: 20px auto;
+  width: 70%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-
-.interact-with-mentor .top-header {
-  display: flex; /* Keep the logo aligned left */
-  align-items: center; /* Align logo vertically */
-}
-
-.interact-with-mentor .logo {
-  width: 150px; /* Logo width */
-  height: auto; /* Maintain aspect ratio */
-  margin-top: 0px; /* Space from the top */
-}
-
-.welcome-message {
-  text-align: center; /* Center text */
-  margin: 50px 0; /* Space below the logo */
-  font-size: 24px; /* Adjust font size as needed */
-  width: 100%; /* Full width to center */
-}
-
 
 .message-list {
   flex: 1; /* Allow the message list to grow and fill the space */
   overflow-y: auto; /* Enable scrolling if there are many messages */
+  max-height: 300px; /* Limit the height to allow scrolling */
 }
 
 .message-input {
   display: flex; /* Use flex layout for input and button */
   flex-direction: column; /* Stack input vertically */
   align-items: center; /* Center items horizontally */
-  margin: 10px auto; /* Center the input area and give it spacing */
-  width: 1000px; /* Fixed width for the input area */
 }
 
 .message-textarea {
@@ -56,11 +42,51 @@
   resize: none; /* Disable resizing */
 }
 
+.message-input textarea {
+  width: 80%;
+  height: 60px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
 .message-input button {
   padding: 10px 20px;
-  background-color: #65558F;
+  background-color: #65558f;
   color: white;
   border: none;
   cursor: pointer;
-  width: 20%; /* Set button width to match textarea */
+  width: 40%;
+  border-radius: 8px; /* Rounded button corners */
+}
+
+.message-input button:hover {
+  background-color: #514173;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.mentor {
+  text-align: left;
+  color: blue;
+}
+
+.mentee {
+  text-align: right;
+  color: green;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: gray;
 }

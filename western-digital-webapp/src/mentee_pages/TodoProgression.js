@@ -11,7 +11,7 @@ function TodoProgression() {
   const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState("");
-  const [newReport, setNewReport] = useState("");
+  
   const [communication, setCommunication] = useState(null);
   const [influence, setInfluence] = useState(null);
   const [managingProjects, setManagingProjects] = useState(null);
@@ -19,6 +19,7 @@ function TodoProgression() {
   const [emotionalIntelligence, setEmotionalIntelligence] = useState(null);
   const [decisionMaking, setDecisionMaking] = useState(null);
   const [error, setError] = useState(null);
+  const [newReport, setNewReport] = useState("");
 
   useEffect(() => {
     // Retrieve the menteekey from localStorage
