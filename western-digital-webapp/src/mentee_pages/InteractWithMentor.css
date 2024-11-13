@@ -23,6 +23,20 @@
   gap: 20px;
 }
 
+.no-mentor-message {
+  background-color: #ff6b6b; /* Light red background for visibility */
+  color: white;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
 .message-list {
   flex: 1; /* Allow the message list to grow and fill the space */
   overflow-y: auto; /* Enable scrolling if there are many messages */
