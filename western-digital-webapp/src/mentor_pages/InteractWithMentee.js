@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './InteractWithMentee.css';
 import logo from '../assets/WDC.png';
+import { useNavigate } from "react-router-dom";
 function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -81,10 +83,14 @@ function InteractWithMentee() {
         .catch((error) => console.error('Error sending message:', error));
     }
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <div className="interact-with-mentee">
-      {/* <div className="top-header">
+      <div className="top-header">
 
         <button
           className="logo-button"
@@ -97,7 +103,7 @@ function InteractWithMentee() {
             Logout
           </button>
 
-      </div> */}
+      </div>
       <h1>Interact with Mentees</h1>
       {mentees.length > 0 ? (
         <div>
