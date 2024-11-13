@@ -1,35 +1,50 @@
 import {pool} from '../database.js'
 
 export const getMentorNotesByMeetingKey = async (meetingkey) => {
-  console.log("meetingkeyquery", meetingkey)
-    const sql = `
-      SELECT mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments
-      FROM mentornotes
-      WHERE meetingkey = ?
-    `;
-  
-    try {
-      const [rows] = await pool.execute(sql, [meetingkey]);
-      return rows.length > 0 ? rows[0] : null;
-    } catch (error) {
-      console.error('Error fetching mentor notes:', error);
+  const sql = `
+    SELECT mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments
+    FROM mentornotes
+    WHERE meetingkey = ?
+  `;
+
+  try {
+    const [rows] = await pool.execute(sql, [meetingkey]);
+    return rows.length > 0 ? rows[0] : null;
+  } catch (error) {
+    console.error('Error fetching mentor notes:', error);
+    throw error;
+  }
+};
+
+export const insertMentorNotes = async (meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments) => {
+  const sql = `
+    INSERT INTO mentornotes (meetingkey, mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  try {
+    const [result] = await pool.execute(sql, [meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments]);
+    return result.insertId;
+  } catch (error) {
+    console.error('Error inserting mentor notes:', error);
+    throw error;
+  }
+};
+export const getMentorMeetings = async (mentorkey,menteekey) => {
+  console.log("query called",mentorkey,menteekey)
+  const sql = `
+      SELECT meetingkey, datetime
+      FROM meetings
+      WHERE mentorkey = ? AND menteekey = ?
+  `;
+  try {
+      const [rows] = await pool.execute(sql, [mentorkey,menteekey]);
+      console.log("quereis row", rows);
+      return rows;
+  } catch (error) {
+      console.error("Error fetching mentee meetings:", error);
       throw error;
-    }
-  };
-  
-  export const insertMentorNotes = async (meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments) => {
-    const sql = `
-      INSERT INTO mentornotes (meetingkey, mentorkey, datetime, skipped, finished_homework, attitude_towards_learning, additional_comments)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-  
-    try {
-      const [result] = await pool.execute(sql, [meetingkey, mentorkey, datetime, skipped, finishedHomework, attitudeTowardsLearning, additionalComments]);
-      return result.insertId;
-    } catch (error) {
-      console.error('Error inserting mentor notes:', error);
-      throw error;
-    }
+  }
 };
 export const getMentorNotesByKeys = async (meetingkey, mentorkey) => {
     const sql = `
