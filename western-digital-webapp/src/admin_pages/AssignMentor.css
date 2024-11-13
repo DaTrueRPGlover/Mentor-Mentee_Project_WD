@@ -48,3 +48,19 @@
 .delete-button:hover {
   background-color: #FF4500;
 }
+.assignments-table .header-container {
+  position: relative;
+  width: 100%;
+  padding-top: 20px; /* Add padding to move content down */
+}
+
+/* Move the logo button down */
+.assignments-table  .logo-button {
+  position: absolute;
+  top: 0px; /* Increase this value to move the logo down further */
+  left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remove extra padding */
+}

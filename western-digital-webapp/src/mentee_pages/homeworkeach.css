@@ -1,0 +1,67 @@
+/* Ensure the page background is not affected by the container */
+body {
+    background-color: #f0f4f8; /* Light background for the page */
+    font-family: Arial, sans-serif;
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
+  }
+  
+  /* Center the white rectangle container */
+  .homework-detail {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    min-height: 100vh; /* Full viewport height */
+    padding: 20px; /* Add some padding around */
+  }
+  
+  /* White rectangle styling */
+  .white {
+    background-color: #ffffff; /* White background */
+    padding: 30px; /* Padding inside the rectangle */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
+    max-width: 800px; /* Maximum width of the rectangle */
+    color: #333; /* Text color */
+    overflow-y: auto; /* Enables vertical scrolling if the content overflows */
+    max-height: 80vh; /* Limits the height of the rectangle to 80% of the viewport height */
+  }
+  
+  /* Ensure all child elements inside .white have a white background */
+  .white * {
+    background-color: #ffffff; /* Make sure all elements inside have a white background */
+  }
+  
+  /* Heading styling */
+  .white h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Homework description styling */
+  .homework-description {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* Homework date styling */
+  .homework-date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 5px;
+  }
+  
+  /* Loading and error messages */
+  .loading,
+  .error {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 20px;
+    color: #ff6b6b; /* Red for error */
+  }
+  
