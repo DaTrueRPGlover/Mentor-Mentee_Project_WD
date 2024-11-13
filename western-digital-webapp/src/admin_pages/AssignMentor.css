@@ -1,3 +1,84 @@
+.assign-mentor {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center; /* Center all content horizontally */
+
+  justify-content: space-between;
+}
+
+/* Header Styles */
+.assign-mentor .header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.assign-mentor .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+.assign-mentor .logout-button {
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #91BECD;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: background-color 0.3s;
+}
+/* hover effect on log button */
+.assign-mentor .logout-button:hover {
+  background-color: #7A99A5;
+}
+.assign-mentor .logo-button {
+  background: none; /* Remove default button background */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+/* Adjusted styles for logo image*/
+.assign-mentor .logo {
+  width: 150px;
+  height: auto;
+}
+
+.container {
+  background-color: #a34eff;
+  color: white;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
+}
+
+.assign-mentor .welcome-message {
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+  background-color: inherit;
+  color: white;
+}
+
 /* Table Styling */
 .assignments-table {
   width: 100%;

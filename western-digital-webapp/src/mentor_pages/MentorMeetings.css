@@ -46,10 +46,26 @@
   padding: 0 20px;
 }
 
+.container {
+  background-color: #a34eff;
+  color: white;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
+}
+
 .mentor-meetings .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
+  background-color: inherit;
+  color: white;
 }
 
 /* Main content styles */

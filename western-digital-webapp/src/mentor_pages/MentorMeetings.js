@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import './MentorMeetings.css';
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/WDC.png';
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import { format, parse, startOfWeek, getDay } from 'date-fns';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import logo from "../assets/WDC.png";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const locales = {
-  'en-US': require('date-fns/locale/en-US'),
+  "en-US": require("date-fns/locale/en-US"),
 };
 
 const localizer = dateFnsLocalizer({
@@ -38,13 +38,13 @@ function MentorMeetings({ mentorkey }) {
         const data = await response.json();
         setMentees(data);
       } catch (error) {
-        console.error('Error fetching mentees:', error);
+        console.error("Error fetching mentees:", error);
       }
     };
 
     const fetchMeetings = async () => {
       try {
-        const mentorinfo = JSON.parse(localStorage.getItem('user'));
+        const mentorinfo = JSON.parse(localStorage.getItem("user"));
         const mentorkey = mentorinfo.mentorkey;
         const response = await fetch(`http://localhost:3001/api/meetings/meetings?userId=${mentorkey}`);
         const data = await response.json();
@@ -59,7 +59,7 @@ function MentorMeetings({ mentorkey }) {
         }));
         setMeetings(mappedMeetings);
       } catch (error) {
-        console.error('Error fetching meetings:', error);
+        console.error("Error fetching meetings:", error);
       }
     };
 
@@ -118,7 +118,13 @@ function MentorMeetings({ mentorkey }) {
   };
 
   const handleScheduleMeeting = async () => {
-    if (selectedMentee && newDate.trim() && newTime.trim() && zoomLink.trim() && zoomPassword.trim()) {
+    if (
+      selectedMentee &&
+      newDate.trim() &&
+      newTime.trim() &&
+      zoomLink.trim() &&
+      zoomPassword.trim()
+    ) {
       const datetime = `${newDate}T${newTime}`;
       const mentorinfo = JSON.parse(localStorage.getItem('user'));
 
@@ -149,10 +155,10 @@ function MentorMeetings({ mentorkey }) {
           setZoomLink('');
           setZoomPassword('');
         } else if (response.status === 409) {
-          alert('Time conflict! Please select a different time.');
+          alert("Time conflict! Please select a different time.");
         }
       } catch (error) {
-        console.error('Error scheduling meeting:', error);
+        console.error("Error scheduling meeting:", error);
       }
     } else {
       alert("Please fill in all fields.");
@@ -168,7 +174,9 @@ function MentorMeetings({ mentorkey }) {
           </button>
           <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
         </div>
-        <h1 className="welcome-message">Schedule Mentee Meetings</h1>
+        <div className="container">
+          <h1 className="welcome-message">Schedule Mentee Meetings</h1>
+        </div>
       </header>
 
       <div className="calendar-container">
@@ -177,7 +185,7 @@ function MentorMeetings({ mentorkey }) {
           events={meetings}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500, margin: '20px 0' }}
+          style={{ height: 500, margin: "20px 0" }}
           className="calendar"
           onSelectEvent={handleSelectMeeting}
         />
