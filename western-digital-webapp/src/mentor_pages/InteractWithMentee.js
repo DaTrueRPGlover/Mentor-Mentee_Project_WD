@@ -90,50 +90,36 @@ function InteractWithMentee() {
 
   return (
     <div className="interact-with-mentee">
-         <header className="header-container">
-   
-      <div className="top-header">
-
-        <button
-          className="logo-button"
-          onClick={() => navigate("/mentor-home")}
-        >
-          <img src={logo} alt="Logo" className="logo" />
-        </button>
-
-        <button className="logout-button" onClick={handleLogout}>
-            Logout
+      <header className="header-container">
+        <div className="top-header">
+          <button className="logo-button" onClick={() => navigate("/mentor-home")}>
+            <img src={logo} alt="Logo" className="logo" />
           </button>
-
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
         <div className="container">
           <h1 className="welcome-message">Interact with Mentees</h1>
-         
         </div>
         {mentees.length === 0 && (
           <p className="no-mentees-message">You have no mentees assigned.</p>
         )}
+        {mentees.length > 0 && (
+          <div className="mentee-selection">
+            <label>Select a Mentee:</label>
+            <select
+              value={selectedMentee}
+              onChange={(e) => setSelectedMentee(e.target.value)}
+            >
+              <option value="" disabled>Select a mentee</option>
+              {mentees.map((mentee) => (
+                <option key={mentee.menteekey} value={mentee.menteekey}>
+                  {mentee.menteeName}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </header>
-      
-      <div className="content-container">
-      {mentees.length > 0 && (
-        <div>
-          <label>Select a Mentee:</label>
-          <select
-            value={selectedMentee}
-            onChange={(e) => setSelectedMentee(e.target.value)}
-          >
-            <option value="" disabled>
-              Select a mentee
-            </option>
-            {mentees.map((mentee) => (
-              <option key={mentee.menteekey} value={mentee.menteekey}>
-                {mentee.menteeName}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
       
       {selectedMentee && (
         <div className="rectangle">
@@ -156,8 +142,7 @@ function InteractWithMentee() {
             <button onClick={handleSendMessage}>Send Message</button>
           </div>
         </div>
-        )}
-        </div>
+      )}
     </div>
   );
 }
