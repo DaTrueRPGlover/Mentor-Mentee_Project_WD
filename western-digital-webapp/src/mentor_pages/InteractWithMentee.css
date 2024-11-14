@@ -61,7 +61,7 @@
   background-color: #7CAFB7; /* Hover color */
 }
 
-.container {
+.interact-with-mentee .container {
   background-color: #a34eff;
   color: white;
   padding: 20px;
@@ -83,7 +83,7 @@
   color: white;
 }
 
-.no-mentees-message {
+.interact-with-mentee .no-mentees-message {
   background-color: #ff6b6b; /* Light red background for visibility */
   color: white;
   padding: 10px;
@@ -97,10 +97,10 @@
 }
 
 
-.rectangle {
+.interact-with-mentee .rectangle {
   padding: 20px;
   margin: 20px auto;
-  max-width: 600px;
+  width: 45%;
   background-color: #91BECD;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -110,20 +110,20 @@
   box-sizing: border-box;
 }
 
-.message-list {
+.interact-with-mentee .message-list {
   max-height: 300px;
   overflow-y: auto;
   margin-bottom: 20px;
 }
 
-.message-input {
+.interact-with-mentee .message-input {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 100%;
 }
 
-.message-input textarea {
+.interact-with-mentee .message-input textarea {
   width: 100%;
   max-width: 100%;
   padding: 10px;
@@ -159,17 +159,22 @@ li {
   font-size: 1.1em;
 }
 
-.mentor {
+.interact-with-mentee .mentor {
   text-align: left;
   color: blue;
 }
 
-.mentee {
+.interact-with-mentee .mentee-selection {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.interact-with-mentee .mentee {
   text-align: right;
   color: green;
 }
 
-.timestamp {
+.interact-with-mentee .timestamp {
   font-size: 0.8em;
   color: gray;
 }

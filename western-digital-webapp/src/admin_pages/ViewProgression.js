@@ -204,8 +204,8 @@ function ViewProgressions() {
     </header>
 
       {/* Mentee selection */}
-      
-  <div className="search">
+
+  <div className="main-content">
   {/* Mentor and Mentee Dropdowns Side by Side */}
   <div className="mentor-mentee-container">
     <div className="dropdown-container">
