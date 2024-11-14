@@ -57,7 +57,7 @@
   height: auto;
 }
 
-.container {
+.assign-mentor .container {
   background-color: #a34eff;
   color: white;
   padding: 20px;
@@ -77,6 +77,12 @@
   margin: 20px 0;
   background-color: inherit;
   color: white;
+}
+
+/* Header Styles End */
+
+.add-assignment{
+  margin-bottom: 20px;
 }
 
 /* Table Styling */
@@ -135,13 +141,3 @@
   padding-top: 20px; /* Add padding to move content down */
 }
 
-/* Move the logo button down */
-.assignments-table  .logo-button {
-  position: absolute;
-  top: 0px; /* Increase this value to move the logo down further */
-  left: 0px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0; /* Remove extra padding */
-}
