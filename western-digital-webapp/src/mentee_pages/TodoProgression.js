@@ -3,15 +3,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TodoProgression.css";
 import logo from "../assets/WDC.png";
-import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
-import MoodIcon from '@mui/icons-material/Mood';
+import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
+import MoodIcon from "@mui/icons-material/Mood";
 
 function TodoProgression() {
   const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState("");
-  
+
   const [communication, setCommunication] = useState(null);
   const [influence, setInfluence] = useState(null);
   const [managingProjects, setManagingProjects] = useState(null);
@@ -23,14 +23,14 @@ function TodoProgression() {
 
   useEffect(() => {
     // Retrieve the menteekey from localStorage
-    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     const menteeKey = userInfo?.menteekey;
 
     if (menteeKey) {
       fetch(`http://localhost:3001/api/menteenotes/meetings/${menteeKey}`)
-        .then(response => response.json())
-        .then(data => setMeetings(data))
-        .catch(error => console.error("Error fetching meetings:", error));
+        .then((response) => response.json())
+        .then((data) => setMeetings(data))
+        .catch((error) => console.error("Error fetching meetings:", error));
     } else {
       console.error("Menteekey not found in local storage.");
       setError("Menteekey not found.");
@@ -39,16 +39,20 @@ function TodoProgression() {
 
   const ratingToScore = (rating) => {
     switch (rating) {
-      case "Very Helpful": return 3;
-      case "Somewhat Helpful": return 2;
-      case "Not Helpful": return 1;
-      default: return null;
+      case "Very Helpful":
+        return 3;
+      case "Somewhat Helpful":
+        return 2;
+      case "Not Helpful":
+        return 1;
+      default:
+        return null;
     }
   };
 
   const handleAddReport = async (e) => {
     e.preventDefault();
-    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     const menteeKey = userInfo?.menteekey;
 
     if (!menteeKey) {
@@ -69,11 +73,14 @@ function TodoProgression() {
     };
 
     try {
-      const response = await fetch('http://localhost:3001/api/menteenotes/menteenotes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newReportData),
-      });
+      const response = await fetch(
+        "http://localhost:3001/api/menteenotes/menteenotes",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newReportData),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -95,30 +102,33 @@ function TodoProgression() {
       setError("Error pushing new report");
     }
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <div className="todo-progression">
-      <header className="header-container">
-        <div className="top-header">
-          <button
-            className="logo-button"
-            onClick={() => navigate("/mentee-home")}
-          >
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={() => {
-            localStorage.clear();
-            navigate("/");
-          }}>
-            Logout
-          </button>
-        </div>
-        <div className="welcome-message-container">
-          <h1 className="welcome-message">To-Do / Progression</h1>
-        </div>
-      </header>
+    <header className="header-container">
+      <div className="top-header">
+        <button
+          className="logo-button"
+          onClick={() => navigate("/mentee-home")}
+        >
+          <img src={logo} alt="Logo" className="logo" />
+        </button>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
 
-      <div className="content-split">
+      <div className="container">
+        <h1 className="welcome-message">To-Do/Progression</h1>
+      </div>
+    </header>
+
+   
+    <div className="content-container">
         <div className="form-section">
           <div className="form-box">
             <label htmlFor="meetingSelect">Select Meeting:</label>
@@ -161,7 +171,9 @@ function TodoProgression() {
                 checked={communication === "Somewhat Helpful"}
                 onChange={(e) => setCommunication(e.target.value)}
               />
-              <label htmlFor="communication-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="communication-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -200,7 +212,9 @@ function TodoProgression() {
                 checked={influence === "Somewhat Helpful"}
                 onChange={(e) => setInfluence(e.target.value)}
               />
-              <label htmlFor="influence-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="influence-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -229,7 +243,9 @@ function TodoProgression() {
                 checked={managingProjects === "Very Helpful"}
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
-              <label htmlFor="managingProjects-very-helpful">Very Helpful</label>
+              <label htmlFor="managingProjects-very-helpful">
+                Very Helpful
+              </label>
 
               <input
                 type="radio"
@@ -239,7 +255,9 @@ function TodoProgression() {
                 checked={managingProjects === "Somewhat Helpful"}
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
-              <label htmlFor="managingProjects-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="managingProjects-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -278,7 +296,9 @@ function TodoProgression() {
                 checked={innovation === "Somewhat Helpful"}
                 onChange={(e) => setInnovation(e.target.value)}
               />
-              <label htmlFor="innovation-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="innovation-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -307,7 +327,9 @@ function TodoProgression() {
                 checked={emotionalIntelligence === "Very Helpful"}
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
-              <label htmlFor="emotionalIntelligence-very-helpful">Very Helpful</label>
+              <label htmlFor="emotionalIntelligence-very-helpful">
+                Very Helpful
+              </label>
 
               <input
                 type="radio"
@@ -317,7 +339,9 @@ function TodoProgression() {
                 checked={emotionalIntelligence === "Somewhat Helpful"}
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
-              <label htmlFor="emotionalIntelligence-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="emotionalIntelligence-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -327,7 +351,9 @@ function TodoProgression() {
                 checked={emotionalIntelligence === "Not Helpful"}
                 onChange={(e) => setEmotionalIntelligence(e.target.value)}
               />
-              <label htmlFor="emotionalIntelligence-not-good">Not Helpful</label>
+              <label htmlFor="emotionalIntelligence-not-good">
+                Not Helpful
+              </label>
             </div>
           </div>
 
@@ -356,7 +382,9 @@ function TodoProgression() {
                 checked={decisionMaking === "Somewhat Helpful"}
                 onChange={(e) => setDecisionMaking(e.target.value)}
               />
-              <label htmlFor="decisionMaking-somewhat-helpful">Somewhat Helpful</label>
+              <label htmlFor="decisionMaking-somewhat-helpful">
+                Somewhat Helpful
+              </label>
 
               <input
                 type="radio"
@@ -380,9 +408,9 @@ function TodoProgression() {
               Submit
             </button>
           </div>
-        </div>
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
 

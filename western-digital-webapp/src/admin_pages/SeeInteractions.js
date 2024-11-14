@@ -46,18 +46,22 @@ function SeeInteractions() {
 
   return (
     <div className="see-interactions">
-      <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/admin-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
-        </div>
-        <div className="purple">
-          <h1 className="welcome-message">View Interactions</h1>
-        </div>
-        
+    <header className="header-container">
+      <div className="top-header">
+        <button
+          className="logo-button"
+          onClick={() => navigate("/admin-home")}
+        >
+          <img src={logo} alt="Logo" className="logo" />
+        </button>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
+      </div>
+   
+    <div className='container'>
+      <h1 className="welcome-message">View Interactions</h1>
+    </div>
       </header>
+      
       <div className="search">
         <div className="filter-section">
           <h2>Search</h2>
