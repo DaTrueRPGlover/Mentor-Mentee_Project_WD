@@ -183,95 +183,104 @@ function ViewProgressions() {
   };
 
   return (
-    <div className="todo-progression">
-      <header className="header-container">
-      <button className="logo-button" onClick={() => navigate("/admin-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-        <div className="top-header">
-        
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
-        </div>
-        <div className="welcome-message-container">
-          <h1 className="welcome-message">View Progression</h1>
-        </div>
-      </header>
+    <div className="view-progression">
+    <header className="header-container">
+      <div className="top-header">
+        <button
+          className="logo-button"
+          onClick={() => navigate("/admin-home")}
+        >
+          <img src={logo} alt="Logo" className="logo" />
+        </button>
+
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+      
+      <div className="container">
+        <h1 className="welcome-message">View Progression</h1>
+      </div>
+    </header>
 
       {/* Mentee selection */}
-      <div className="dropdown-container">
-        <label htmlFor="mentee-select">Select Mentee:</label>
-        <select
-          id="mentee-select"
-          value={selectedMentee}
-          onChange={(e) => setSelectedMentee(e.target.value)}
-        >
-          <option value="">-- Select Mentee --</option>
-          {menteesList.map((mentee) => (
-            <option key={mentee.userid} value={mentee.userid}>
-              {mentee.name} {mentee.lastname}
-            </option>
-          ))}
-        </select>
-      </div>
+      
+  <div className="search">
+  {/* Mentor and Mentee Dropdowns Side by Side */}
+  <div className="mentor-mentee-container">
+    <div className="dropdown-container">
+      <label htmlFor="mentee-select">Select Mentee:</label>
+      <select
+        id="mentee-select"
+        value={selectedMentee}
+        onChange={(e) => setSelectedMentee(e.target.value)}
+      >
+        <option value="">-- Select Mentee --</option>
+        {menteesList.map((mentee) => (
+          <option key={mentee.userid} value={mentee.userid}>
+            {mentee.name} {mentee.lastname}
+          </option>
+        ))}
+      </select>
+    </div>
 
-      <div className="dropdown-container">
-        <label htmlFor="mentor-select">Select Mentor:</label>
-        <select
-          id="mentor-select"
-          value={selectedMentor}
-          onChange={(e) => setSelectedMentor(e.target.value)}
-        >
-          <option value="">-- Select Mentor --</option>
-          {mentorsList.map((mentor) => (
-            <option key={mentor.userid} value={mentor.userid}>
-              {mentor.name} {mentor.lastname}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Meeting selection */}
-{/* Meeting selection for mentee */}
-{selectedMentee && (
-  <div className="dropdown-container">
-    <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
-    <select
-      id="meeting-select-mentee"
-      value={selectedMeeting}
-      onChange={(e) => setSelectedMeeting(e.target.value)}
-    >
-      <option value="">-- Select Meeting --</option>
-      {meetingsList.map((meeting) => (
-        <option key={meeting.meetingkey} value={meeting.meetingkey}>
-          {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
-        </option>
-      ))}
-    </select>
+    <div className="dropdown-container">
+      <label htmlFor="mentor-select">Select Mentor:</label>
+      <select
+        id="mentor-select"
+        value={selectedMentor}
+        onChange={(e) => setSelectedMentor(e.target.value)}
+      >
+        <option value="">-- Select Mentor --</option>
+        {mentorsList.map((mentor) => (
+          <option key={mentor.userid} value={mentor.userid}>
+            {mentor.name} {mentor.lastname}
+          </option>
+        ))}
+      </select>
+    </div>
   </div>
-)}
 
-{/* Meeting selection for mentor */}
-{selectedMentor && (
-  <div className="dropdown-container">
-    <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
-    <select
-      id="meeting-select-mentor"
-      value={selectedMeeting}
-      onChange={(e) => setSelectedMeeting(e.target.value)}
-    >
-      <option value="">-- Select Meeting --</option>
-      {meetingsList.map((meeting) => (
-        <option key={meeting.meetingkey} value={meeting.meetingkey}>
-          {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
-        </option>
-      ))}
-    </select>
-  </div>
-)}
+  {/* Other Dropdowns Stacked Below */}
+  {selectedMentee && (
+    <div className="dropdown-container">
+      <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
+      <select
+        id="meeting-select-mentee"
+        value={selectedMeeting}
+        onChange={(e) => setSelectedMeeting(e.target.value)}
+      >
+        <option value="">-- Select Meeting --</option>
+        {meetingsList.map((meeting) => (
+          <option key={meeting.meetingkey} value={meeting.meetingkey}>
+            {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
+          </option>
+        ))}
+      </select>
+    </div>
+  )}
 
+  {selectedMentor && (
+    <div className="dropdown-container">
+      <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
+      <select
+        id="meeting-select-mentor"
+        value={selectedMeeting}
+        onChange={(e) => setSelectedMeeting(e.target.value)}
+      >
+        <option value="">-- Select Meeting --</option>
+        {meetingsList.map((meeting) => (
+          <option key={meeting.meetingkey} value={meeting.meetingkey}>
+            {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
+          </option>
+        ))}
+      </select>
+    </div>
+  )}
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+  {errorMessage && <p className="error-message">{errorMessage}</p>}
+     
+      
       <div className="content-split">
         <div className="form-section">
           {/* Display mentee notes */}
@@ -444,7 +453,9 @@ function ViewProgressions() {
     </>
   )}
       </div>
+      </div>
     </div>
+    
   );
 }
 
