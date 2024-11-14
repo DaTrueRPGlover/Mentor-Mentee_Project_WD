@@ -10,6 +10,7 @@ import {
   cancelMeeting, 
   rescheduleMeeting
 } from '../database_queries/meetingQueries.js';
+import { fetchHomeworkByMenteeKey } from '../database_queries/HomeworkQueries.js';
 
 const router = express.Router();
 
@@ -22,6 +23,18 @@ router.get('/meetings', async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error('Error fetching meetings:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.get('/combinedEvents', async (req, res) => {
+  const userId = req.query.userId;
+  try {
+    const meetings = await getMeetingsForUser(userId);
+    const homework = await fetchHomeworkByMenteeKey(userId);
+    res.json({ meetings, homework });
+  } catch (error) {
+    console.error('Error fetching combined events:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

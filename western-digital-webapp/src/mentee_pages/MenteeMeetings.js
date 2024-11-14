@@ -19,86 +19,81 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+const linkify = (text) => {
+  // Updated pattern to match URLs with http(s), ftp, or those starting with www.
+  const urlPattern = /(\b(?:https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  
+  return text.split(urlPattern).map((part, index) => {
+    if (urlPattern.test(part)) {
+      // Ensure URLs without a protocol default to https://
+      const href = part.startsWith("www.") ? `https://${part}` : part;
+      return (
+        <a key={index} href={href} target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
+
+
 function MenteeMeetings() {
   const navigate = useNavigate();
-  const [meetings, setMeetings] = useState([]);
-  const [selectedMeeting, setSelectedMeeting] = useState(null);
-  const [newDate, setNewDate] = useState('');
-  const [newTime, setNewTime] = useState('');
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
-    const fetchMeetings = async () => {
+    const fetchEvents = async () => {
       try {
         const menteeInfo = JSON.parse(localStorage.getItem('user'));
         const userId = menteeInfo.userId;
-        const response = await fetch(`http://localhost:3001/api/meetings/meetings?userId=${userId}`);
-        const data = await response.json();
-        const mappedMeetings = data.map(meeting => ({
+        const [meetingsResponse, homeworkResponse] = await Promise.all([
+          fetch(`http://localhost:3001/api/meetings/meetings?userId=${userId}`),
+          fetch(`http://localhost:3001/api/homework/mentee/${userId}`)
+        ]);
+
+        const meetingsData = await meetingsResponse.json();
+        const homeworkData = await homeworkResponse.json();
+
+        const mappedMeetings = meetingsData.map(meeting => ({
           title: `Meeting with ${meeting.mentor_name}`,
           start: new Date(meeting.datetime),
           end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000),
+          type: 'meeting',
           mentor_name: meeting.mentor_name,
           zoomLink: meeting.zoom_link,
           zoomPassword: meeting.zoom_password,
           meetingKey: meeting.meetingkey,
         }));
-        setMeetings(mappedMeetings);
+
+        const mappedHomework = homeworkData.map(homework => ({
+          title: `Homework: ${homework.title}`,
+          start: new Date(homework.due_date),
+          end: new Date(homework.due_date),
+          type: 'homework',
+          description: homework.description,
+          assignedDate: homework.assigned_date,
+          dueDate: homework.due_date,
+          homeworkId: homework.homework_id,
+        }));
+
+        setEvents([...mappedMeetings, ...mappedHomework]);
       } catch (error) {
-        console.error('Error fetching meetings:', error);
+        console.error('Error fetching events:', error);
       }
     };
 
-    fetchMeetings();
+    fetchEvents();
   }, []);
 
-  const handleSelectMeeting = (event) => {
-    setSelectedMeeting(event);
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
   };
 
   const handleClosePopup = () => {
-    setSelectedMeeting(null);
-    setNewDate('');
-    setNewTime('');
-  };
-
-  const handleCancelMeeting = async () => {
-    try {
-      await fetch('http://localhost:3001/api/meetings/cancel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ meetingKey: selectedMeeting.meetingKey }),
-      });
-      setMeetings(meetings.filter(meeting => meeting.meetingKey !== selectedMeeting.meetingKey));
-      handleClosePopup();
-    } catch (error) {
-      console.error('Error canceling meeting:', error);
-    }
-  };
-
-  const handleRescheduleMeeting = async () => {
-    const newDateTime = `${newDate}T${newTime}`;
-    try {
-      const response = await fetch('http://localhost:3001/api/meetings/reschedule', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ meetingKey: selectedMeeting.meetingKey, newDateTime }),
-      });
-
-      if (response.status === 409) {
-        alert('Time conflict! Please select a different time.');
-      } else if (response.ok) {
-        setMeetings(meetings.map(meeting =>
-          meeting.meetingKey === selectedMeeting.meetingKey
-            ? { ...meeting, start: new Date(newDateTime), end: new Date(new Date(newDateTime).getTime() + 60 * 60 * 1000) }
-            : meeting
-        ));
-        handleClosePopup();
-      } else {
-        alert('Error rescheduling meeting.');
-      }
-    } catch (error) {
-      console.error('Error rescheduling meeting:', error);
-    }
+    setSelectedEvent(null);
   };
 
   const handleLogout = () => {
@@ -118,48 +113,45 @@ function MenteeMeetings() {
           </button>
         </div>
         
-        <h1 className="welcome-message">View Meetings</h1>
+        <h1 className="welcome-message">View Meetings and Homework</h1>
       </header>
 
       <div className="calendar-container">
         <Calendar
           localizer={localizer}
-          events={meetings}
+          events={events}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500, margin: '20px 0' }}
           className="calendar"
-          onSelectEvent={handleSelectMeeting}
+          onSelectEvent={handleSelectEvent}
         />
       </div>
 
-      {selectedMeeting && (
-  <div className="popup">
-    <div className="popup-content">
-      <h3>Meeting with {selectedMeeting.mentor_name}</h3>
-      <p>
-        Zoom Link: 
-        <a 
-          href={selectedMeeting.zoomLink} 
-          target="_blank" 
-          rel="noopener noreferrer"
-        >
-          {selectedMeeting.zoomLink}
-        </a>
-      </p>
-      <p>Zoom Password: {selectedMeeting.zoomPassword}</p>
-      <p>Date: {selectedMeeting.start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-      <p>Time: {selectedMeeting.start.toLocaleTimeString()}</p>
-
-      <h4>Reschedule Meeting</h4>
-      <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
-      <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
-      <button onClick={handleRescheduleMeeting}>Reschedule</button>
-      <button onClick={handleCancelMeeting}>Cancel Meeting</button>
-      <button onClick={handleClosePopup}>Close</button>
-    </div>
-  </div>
-)}
+      {selectedEvent && (
+        <div className="popup">
+          <div className="popup-content">
+            {selectedEvent.type === 'meeting' ? (
+              <>
+                <h3>Meeting with {selectedEvent.mentor_name}</h3>
+                <p>Zoom Link: <a href={selectedEvent.zoomLink} target="_blank" rel="noopener noreferrer">{selectedEvent.zoomLink}</a></p>
+                <p>Zoom Password: {selectedEvent.zoomPassword}</p>
+                <p>Date: {selectedEvent.start.toLocaleDateString()}</p>
+                <p>Time: {selectedEvent.start.toLocaleTimeString()}</p>
+                <button onClick={handleClosePopup}>Close</button>
+              </>
+            ) : (
+              <>
+                <h3>{selectedEvent.title}</h3>
+                <p>Description: {linkify(selectedEvent.description)}</p>
+                <p>Assigned Date: {new Date(selectedEvent.assignedDate).toLocaleDateString()}</p>
+                <p>Due Date: {new Date(selectedEvent.dueDate).toLocaleDateString()}</p>
+                <button onClick={handleClosePopup}>Close</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
