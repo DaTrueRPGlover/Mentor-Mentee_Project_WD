@@ -31,6 +31,13 @@ function AssignHomework() {
       }
     };
     fetchMentees();
+
+    // Set default assigned date and time
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const currentTime = now.toTimeString().split(':').slice(0, 2).join(':'); // Format: HH:MM
+    setAssignedDate(currentDate);
+    setAssignedTime(currentTime);
   }, [mentorKey]);
 
   const handleAssignHomework = async () => {
@@ -72,8 +79,6 @@ function AssignHomework() {
       console.error('Error assigning homework:', error);
     }
   };
-  
-  
 
   const handleMenteeSelection = (menteeId) => {
     setSelectedMentees((prevSelected) =>
