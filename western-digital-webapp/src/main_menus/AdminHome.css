@@ -1,14 +1,9 @@
 /* AdminHome.css */
 
 * {
-  margin: 0;
-  box-sizing: border-box;
-}
-/* Global Styles */
-* {
-  background-color: #ADD8E6;
   font-family: Arial, sans-serif;
   margin: 0;
+  box-sizing: border-box;
   padding: 0;
 }
 

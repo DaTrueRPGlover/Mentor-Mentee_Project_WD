@@ -152,51 +152,6 @@ function Login() {
             </button>
           </form>
         </div>
-
-        {/* Add the buttons for direct navigation below the login form */}
-        <Typography
-          component="h1"
-          variant="h6"
-          className="welcome-message"
-          style={{ textAlign: "center", marginTop: "20px" }}
-        >
-          Or choose your role:
-        </Typography>
-        <div
-          className="button-container"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "10px",
-            marginTop: "20px",
-          }}
-        >
-          <button
-            variant="contained"
-            className="circle-button"
-            onClick={() => navigate("/mentee-home")}
-            style={{ borderRadius: "50%", padding: "20px 30px" }}
-          >
-            Mentee
-          </button>
-          <button
-            variant="contained"
-            className="circle-button"
-            onClick={() => navigate("/mentor-home")}
-            style={{ borderRadius: "50%", padding: "20px 30px" }}
-          >
-            Mentor
-          </button>
-          <button
-            variant="contained"
-            className="circle-button"
-            onClick={() => navigate("/admin-home")}
-            style={{ borderRadius: "50%", padding: "20px 30px" }}
-          >
-            Admin
-          </button>
-        </div>
-        
       </Container>
       </div>
 
