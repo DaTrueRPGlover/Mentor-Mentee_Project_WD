@@ -1,180 +1,199 @@
-.interact-with-mentee {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  align-items: center; /* Center all content horizontally */
+  .interact-with-mentee {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    align-items: center; /* Center all content horizontally */
 
-  justify-content: space-between;
-}
-
-
-
-.interact-with-mentee .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-top: 20px;
-}
+    justify-content: space-between;
+  }
 
 
-.interact-with-mentee .logo {
-  width: 150px;
-  height: auto;
-}
 
-.interact-with-mentee .logo-button {
-  background: none; /* Remove default button background */
-  border: none; /* Remove default border */
-  cursor: pointer; /* Change cursor to pointer */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-}
-
-.interact-with-mentee .top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-}
-
-.interact-with-mentee .logout-button {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: #91BECD;
-  font-size: 1.2rem; /* Use relative units for font size */
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
-}
-
-.interact-with-mentee .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
-}
-
-.interact-with-mentee .container {
-  background-color: #a34eff;
-  color: white;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 800px;
-  margin-top: 50px;
-}
-
-.interact-with-mentee .welcome-message {
-  font-size: 32px;
-  text-align: center;
-  margin: 20px 0;
-  background-color: inherit;
-  color: white;
-}
-
-.interact-with-mentee .no-mentees-message {
-  background-color: #ff6b6b; /* Light red background for visibility */
-  color: white;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
-  max-width: 600px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  .interact-with-mentee .header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+  }
 
 
-.interact-with-mentee .rectangle {
-  padding: 20px;
-  margin: 20px auto;
-  width: 45%;
-  background-color: #91BECD;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  box-sizing: border-box;
-}
+  .interact-with-mentee .logo {
+    width: 150px;
+    height: auto;
+  }
 
-.interact-with-mentee .message-list {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-}
+  .interact-with-mentee .logo-button {
+    background: none; /* Remove default button background */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Change cursor to pointer */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
 
-.interact-with-mentee .message-input {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
+  .interact-with-mentee .top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+  }
 
-.interact-with-mentee .message-input textarea {
-  width: 100%;
-  max-width: 100%;
-  padding: 10px;
-  height: 60px;
-  font-size: 1rem;
-  box-sizing: border-box;
-  resize: none;
-  margin-bottom: 10px;
-}
+  .interact-with-mentee .logout-button {
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    background-color: #91BECD;
+    font-size: 1.2rem; /* Use relative units for font size */
+    font-weight: bold;
+    color: black;
+    padding: 10px 20px; /* Padding remains as is */
+    position: absolute; /* Use absolute positioning */
+    right: 20px; /* Position it 20px from the right */
+    top: 20px; /* Position it 20px from the top */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+  }
 
-.message-input button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 10px;
-  width: auto;
-}
+  .interact-with-mentee .logout-button:hover {
+    background-color: #7CAFB7; /* Hover color */
+  }
 
-.message-input button:hover {
-  background-color: #0056b3;
-}
+  .interact-with-mentee .container {
+    background-color: #a34eff;
+    color: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 50px;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  .interact-with-mentee .welcome-message {
+    font-size: 32px;
+    text-align: center;
+    margin: 20px 0;
+    background-color: inherit;
+    color: white;
+  }
 
-li {
-  margin: 10px 0;
-  font-size: 1.1em;
-}
+  .interact-with-mentee .no-mentees-message {
+    background-color: #ff6b6b; /* Light red background for visibility */
+    color: white;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-.interact-with-mentee .mentor {
-  text-align: left;
-  color: blue;
-}
 
-.interact-with-mentee .mentee-selection {
-  margin: 20px 0;
-  text-align: center;
-}
+  .interact-with-mentee .rectangle {
+    padding: 20px;
+    margin: 20px auto;
+    width: 45%;
+    background-color: #91BECD;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-sizing: border-box;
+  }
 
-.interact-with-mentee .mentee {
-  text-align: right;
-  color: green;
-}
+  .interact-with-mentee .message-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
 
-.interact-with-mentee .timestamp {
-  font-size: 0.8em;
-  color: gray;
-}
+  .interact-with-mentee .message-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .interact-with-mentee .message-input textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    height: 60px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    resize: none;
+    margin-bottom: 10px;
+  }
+
+  .message-input button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 10px;
+    width: auto;
+  }
+
+  .message-input button:hover {
+    background-color: #0056b3;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+
+  .interact-with-mentee .mentor {
+    text-align: left;
+    color: blue;
+  }
+
+  .interact-with-mentee .mentee-selection {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .interact-with-mentee .mentee {
+    text-align: right;
+    color: green;
+  }
+
+  .interact-with-mentee .timestamp {
+    font-size: 0.8em;
+    color: gray;
+  }
+  .chat-container {
+    width: 70%;
+    margin: auto;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .mentee-selection {
+    margin: 20px;
+    text-align: center;
+  }
+  .mentee-selection select {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  

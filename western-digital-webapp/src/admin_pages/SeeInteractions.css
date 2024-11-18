@@ -1,4 +1,4 @@
-/* Main styling format for container */
+/* General Layout */
 .see-interactions {
   display: flex;
   flex-direction: column;
@@ -6,13 +6,12 @@
   width: 100%;
   font-family: Arial, sans-serif;
   text-align: center;
-  align-items: center; /* Center all content horizontally */
-
+  align-items: center;
   justify-content: space-between;
 }
 
 /* Header Styles */
-.see-interactions .header-container {
+.header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,18 +19,19 @@
   padding-top: 20px;
 }
 
-.see-interactions .top-header {
+.top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0 20px;
 }
-.see-interactions .logout-button {
+
+.logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
-  background-color: #91BECD;
+  background-color: #91becd;
   font-size: 1.2rem;
   font-weight: bold;
   color: black;
@@ -41,72 +41,32 @@
   top: 20px;
   transition: background-color 0.3s;
 }
-/* hover effect on log button */
-.see-interactions .logout-button:hover {
-  background-color: #7A99A5;
+
+.logout-button:hover {
+  background-color: #7a99a5;
 }
-.see-interactions .logo-button {
-  background: none; /* Remove default button background */
-  border: none; /* Remove default border */
-  cursor: pointer; /* Change cursor to pointer */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
+
+.logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
 }
-/* Adjusted styles for logo image*/
-.see-interactions .logo {
+
+.logo {
   width: 150px;
   height: auto;
 }
 
-.container {
-  background-color: #a34eff;
-  color: white;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 800px;
-  margin-top: 50px;
-}
-
-.see-interactions .welcome-message {
+.welcome-message {
   font-size: 32px;
-  text-align: center;
   margin: 20px 0;
   background-color: inherit;
-  color: white;
+  color: #333;
 }
 
-/* Header Styles End */
-
-/* creates the clear background rectangle */
-.see-interactions .rectangle {
-  width: 40%;  /* Use percentage for flexible width */
-  height: 600px;
-  border: 2px solid #91BECD;
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-}
-
-/* formatting h1 headers */
-.see-interactions h1 {
-  margin-bottom: 30px;
-  font-size: 40px;
-}
-
-
-/* formatting h2 headers */
-.see-interactions h2 {
-  color: gray;
-  font-size: 15px;
-}
-/* formats search container */
+/* Search Section */
 .search {
   margin-top: 10px;
   display: flex;
@@ -115,73 +75,71 @@
   margin-bottom: 20px;
   color: white;
 }
-/* formats filtered section container */
+
 .filter-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
-/* formats filtered section container for inputs */
-.filter-section input {
-  font-size: 0.8em;
-  width: 200px;
+
+.filter-section select {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
-/* formats filtered section for all buttons inside containers */
+
 .filter-section button {
   padding: 8px 12px;
-  font-size: 0.8em;
-  background-color: #65558F;
+  font-size: 1rem;
+  background-color: #65558f;
   color: white;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-/* Changes the color when hovering the button */
+
 .filter-section button:hover {
   background-color: #2d1960;
 }
-/* formats listing */
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-/* formats listing */
-li {
-  margin: 10px 0;
-  font-size: 1.1em;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-/* formats font */
-strong {
-  font-weight: bold;
+
+/* Chat Container */
+.chat-container {
+  width: 60%;
+  height: 600px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-/* formats message lists into the rectangle */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 90%;
+  }
+}
+
+/* Message Styles */
 .message-list1 {
   width: 90%;
   max-height: 500px;
   overflow-y: auto;
-  /* background-color: rgba(0, 0, 0, 0.1); */
   padding: 10px;
   border-radius: 8px;
 }
-/* formats message lists into the rectangle */
+
 .message-list1 li {
   padding: 10px 15px;
   border-radius: 10px;
-  max-width: 100%; 
   margin-bottom: 8px;
   word-wrap: break-word;
-  position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* Mentee messages aligned left */
 .message-list1 li.mentee {
   align-self: flex-start;
   background-color: rgba(145, 190, 205, 0.3);
@@ -190,52 +148,30 @@ strong {
   text-align: left;
 }
 
-/* Mentor messages aligned right */
 .message-list1 li.mentor {
   align-self: flex-end;
   background-color: rgba(145, 190, 205, 0.2);
   color: #155724;
   border-radius: 10px 10px 0 10px;
   text-align: right;
-  max-width: 100%; 
 }
-/* formats time stamp to be inside the rectangle */
+
 .timestamp {
   font-size: 0.8em;
   color: #666;
   display: block;
   margin-top: 5px;
-  margin-bottom: 5px;
 }
 
-/* Mentee Name at the very left */
-.mentee-name {
-  font-size: 0.8em;
-  color: #fff;
-  background-color: inherit; /* Mentee background color */
-  margin-top: 10px;
-  padding: 2px 6px;
-  border-radius: 5px;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .header-container,
+  .search {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search {
+    gap: 10px;
+  }
 }
-
-.mentor-name {
-  font-size: 0.8em;
-  color: #fff;
-  background-color: #2d1960; /* Mentor background color */
-  margin-bottom: 10px;
-  padding: 2px 6px;
-  border-radius: 5px;
-}
-
-
-/* Positioning the mentor's name above the timestamp */
-.mentor-name {
-  position: relative;
-  top: 0;
-}
-
-/* Mentor name should appear before the timestamp */
-.mentor-name {
-  margin-bottom: 10px; 
-}
-
