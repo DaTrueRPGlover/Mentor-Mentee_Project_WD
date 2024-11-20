@@ -4,6 +4,19 @@ body, html, #root {
   padding: 0;
   height: 100%;
 }
+.mentor-meetings .purple {
+  background-color: #a34eff;
+  color: white;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
+}
 
 /* Calendar container styling */
 .mentee-meetings {

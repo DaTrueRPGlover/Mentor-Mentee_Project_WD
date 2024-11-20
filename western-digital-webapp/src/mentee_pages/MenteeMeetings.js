@@ -112,8 +112,9 @@ function MenteeMeetings() {
             Logout
           </button>
         </div>
-        
-        <h1 className="welcome-message">View Meetings and Homework</h1>
+        <div className="purple">
+          <h1 className="welcome-message">View Meetings and Homework</h1>
+        </div>
       </header>
 
       <div className="calendar-container">
