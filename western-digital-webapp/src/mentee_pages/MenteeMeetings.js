@@ -6,6 +6,20 @@ import logo from '../assets/WDC.png';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Link,
+} from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
 
 const locales = {
   'en-US': require('date-fns/locale/en-US'),
@@ -18,26 +32,6 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 });
-
-const linkify = (text) => {
-  // Updated pattern to match URLs with http(s), ftp, or those starting with www.
-  const urlPattern = /(\b(?:https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-  
-  return text.split(urlPattern).map((part, index) => {
-    if (urlPattern.test(part)) {
-      // Ensure URLs without a protocol default to https://
-      const href = part.startsWith("www.") ? `https://${part}` : part;
-      return (
-        <a key={index} href={href} target="_blank" rel="noopener noreferrer">
-          {part}
-        </a>
-      );
-    }
-    return part;
-  });
-};
-
-
 
 function MenteeMeetings() {
   const navigate = useNavigate();
@@ -65,7 +59,6 @@ function MenteeMeetings() {
           mentor_name: meeting.mentor_name,
           zoomLink: meeting.zoom_link,
           zoomPassword: meeting.zoom_password,
-          meetingKey: meeting.meetingkey,
         }));
 
         const mappedHomework = homeworkData.map(homework => ({
@@ -74,9 +67,6 @@ function MenteeMeetings() {
           end: new Date(homework.due_date),
           type: 'homework',
           description: homework.description,
-          assignedDate: homework.assigned_date,
-          dueDate: homework.due_date,
-          homeworkId: homework.homework_id,
         }));
 
         setEvents([...mappedMeetings, ...mappedHomework]);
@@ -88,33 +78,26 @@ function MenteeMeetings() {
     fetchEvents();
   }, []);
 
-  const handleSelectEvent = (event) => {
-    setSelectedEvent(event);
-  };
-
-  const handleClosePopup = () => {
-    setSelectedEvent(null);
-  };
-
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
   return (
-    <div className="mentor-meetings">
-      <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/mentee-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={handleLogout}>
+    <div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" onClick={() => navigate("/mentee-home")}>
+            <HomeIcon />
+          </IconButton>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            View Meetings and Homework
+          </Typography>
+          <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />}>
             Logout
-          </button>
-        </div>
-        
-        <h1 className="welcome-message">View Meetings and Homework</h1>
-      </header>
+          </Button>
+        </Toolbar>
+      </AppBar>
 
       <div className="calendar-container">
         <Calendar
@@ -122,35 +105,37 @@ function MenteeMeetings() {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500, margin: '20px 0' }}
-          className="calendar"
-          onSelectEvent={handleSelectEvent}
+          style={{ height: 500, margin: '20px' }}
+          onSelectEvent={(event) => setSelectedEvent(event)}
         />
       </div>
 
       {selectedEvent && (
-        <div className="popup">
-          <div className="popup-content">
+        <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)}>
+          <DialogTitle>
+            {selectedEvent.type === 'meeting'
+              ? `Meeting with ${selectedEvent.mentor_name}`
+              : selectedEvent.title}
+          </DialogTitle>
+          <DialogContent>
             {selectedEvent.type === 'meeting' ? (
               <>
-                <h3>Meeting with {selectedEvent.mentor_name}</h3>
-                <p>Zoom Link: <a href={selectedEvent.zoomLink} target="_blank" rel="noopener noreferrer">{selectedEvent.zoomLink}</a></p>
-                <p>Zoom Password: {selectedEvent.zoomPassword}</p>
-                <p>Date: {selectedEvent.start.toLocaleDateString()}</p>
-                <p>Time: {selectedEvent.start.toLocaleTimeString()}</p>
-                <button onClick={handleClosePopup}>Close</button>
+                <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
+                <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
+                <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
+                <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
               </>
             ) : (
               <>
-                <h3>{selectedEvent.title}</h3>
-                <p>Description: {linkify(selectedEvent.description)}</p>
-                <p>Assigned Date: {new Date(selectedEvent.assignedDate).toLocaleDateString()}</p>
-                <p>Due Date: {new Date(selectedEvent.dueDate).toLocaleDateString()}</p>
-                <button onClick={handleClosePopup}>Close</button>
+                <Typography>Description: {selectedEvent.description}</Typography>
+                <Typography>Due Date: {new Date(selectedEvent.start).toLocaleDateString()}</Typography>
               </>
             )}
-          </div>
-        </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
+          </DialogActions>
+        </Dialog>
       )}
     </div>
   );
