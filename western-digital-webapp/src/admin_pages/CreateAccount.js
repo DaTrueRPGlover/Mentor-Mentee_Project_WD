@@ -85,39 +85,42 @@ function CreateAccount() {
           </button>
         </div>
         
-        <div className="container">
+        {/* <div className="container">
           <h1 className="welcome-message">Create Mentor/Mentee Account</h1>
-        </div>
+        </div> */}
       </header>
       
       {/* <div className="rectangle" > */}
         <div className="whiterectangle" >
           <form className="account-form" onSubmit={handleCreateAccount}>
-            <input 
+            <h1 className="welcome-message1">
+              Create Account
+            </h1>
+            <input className='input1' 
               type="text" 
               value={first} 
               placeholder="Enter First Name"
               onChange={(e) => setFirst(e.target.value)}
             />
-            <input 
+            <input className='input1' 
               type="text" 
               value={last} 
               placeholder="Enter Last Name"
               onChange={(e) => setLast(e.target.value)}
             />
-            <input 
+            <input className='input1' 
               type="text" 
               value={email} 
               placeholder="Enter Email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input 
+            <input className='input1' 
               type="password" 
               value={password} 
               placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <h3>Department</h3>
+            {/* <h3>Department</h3> */}
             <select value={selectedValue} onChange={(e) => setSelectedValue(e.target.value)}>
               <option value="">--Select Department--</option>
               <option value="GST">GST</option>
@@ -127,7 +130,7 @@ function CreateAccount() {
               <option value="JAPAN">Japan</option>
               <option value="WDIN">WDIN</option>
             </select>
-            <h3>Role</h3>
+            {/* <h3>Role</h3> */}
             <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
               <option value="">--Select Role--</option>
               <option value="mentee">Mentee</option>

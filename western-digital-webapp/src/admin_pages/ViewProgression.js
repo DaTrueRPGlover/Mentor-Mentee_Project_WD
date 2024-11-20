@@ -198,13 +198,14 @@ function ViewProgressions() {
         </button>
       </div>
       
-      <div className="container">
-        <h1 className="welcome-message">View Progression</h1>
-      </div>
+
     </header>
 
       {/* Mentee selection */}
-
+<div className="box">
+<div className="container1">
+        <h1 className="welcome-message">View Progression</h1>
+      </div>
   <div className="main-content">
   {/* Mentor and Mentee Dropdowns Side by Side */}
   <div className="mentor-mentee-container">
@@ -286,13 +287,13 @@ function ViewProgressions() {
           {/* Display mentee notes */}
           {menteeNotes && (
             <>
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <EventBusyOutlinedIcon className="form-title-icon" />
                     <p>Profile of a Leader</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.profile_of_a_leader}
                     readOnly
@@ -300,13 +301,13 @@ function ViewProgressions() {
                 </div>
               </div>
 
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                     <p>Executive Communication Style</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.executive_communication_style}
                     readOnly
@@ -314,13 +315,13 @@ function ViewProgressions() {
                 </div>
               </div>
 
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
                     <p>Trust, Respect, Visibility</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.trust_respect_visibility}
                     readOnly
@@ -328,13 +329,13 @@ function ViewProgressions() {
                 </div>
               </div>
 
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
                     <p>Motivating Your Team</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.motivating_your_team}
                     readOnly
@@ -342,13 +343,13 @@ function ViewProgressions() {
                 </div>
               </div>
 
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
                     <p>Self Advocacy and Career Growth</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.self_advocacy_and_career_growth}
                     readOnly
@@ -356,13 +357,13 @@ function ViewProgressions() {
                 </div>
               </div>
 
-              <div className="form-box">
+              <div className="form-box1">
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
                     <p>Work Life Balance</p>
                   </div>
-                  <input
+                  <input className='input1'
                     type="number"
                     value={menteeNotes.work_life_balance}
                     readOnly
@@ -372,7 +373,7 @@ function ViewProgressions() {
 
               {/* Additional Comments */}
               {menteeNotes.additional_comments && (
-                <div className="form-box">
+                <div className="form-box1">
                   <div className="question-group">
                     <div className="form-title">
                       <p>Additional Comments</p>
@@ -392,13 +393,13 @@ function ViewProgressions() {
         {/* MENTOR FORM NOW  */}
         {mentorNotes && (
     <>
-      <div className="form-box">
+      <div className="form-box1">
         <div className="question-group">
           <div className="form-title">
             <EventBusyOutlinedIcon className="form-title-icon" />
             <p>Skipped Meeting?</p>
           </div>
-          <input
+          <input className='input1'
             type="number"
             value={mentorNotes.skipped}
             readOnly
@@ -406,13 +407,13 @@ function ViewProgressions() {
         </div>
       </div>
 
-      <div className="form-box">
+      <div className="form-box1">
         <div className="question-group">
           <div className="form-title">
             <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
             <p>Mentee Finished HW?</p>
           </div>
-          <input
+          <input className='input1'
             type="number"
             value={mentorNotes.finished_homework}
             readOnly
@@ -420,13 +421,13 @@ function ViewProgressions() {
         </div>
       </div>
 
-      <div className="form-box">
+      <div className="form-box1">
         <div className="question-group">
           <div className="form-title">
             <MoodIcon className="form-title-icon" />
             <p>Mentee's Attitude Towards Learning</p>
           </div>
-          <input
+          <input className='input1'
             type="number"
             value={mentorNotes.attitude_towards_learning}
             readOnly
@@ -436,7 +437,7 @@ function ViewProgressions() {
 
       {/* Additional Comments */}
       {mentorNotes.additional_comments && (
-        <div className="form-box">
+        <div className="form-box1">
           <div className="question-group">
             <div className="form-title">
               <p>Additional Comments</p>
@@ -452,6 +453,7 @@ function ViewProgressions() {
       )}
     </>
   )}
+      </div>
       </div>
       </div>
     </div>

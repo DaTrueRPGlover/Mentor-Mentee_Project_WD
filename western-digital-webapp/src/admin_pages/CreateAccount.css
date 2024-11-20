@@ -27,22 +27,33 @@
   padding: 0 20px;
 }
 
-.create-account .welcome-message {
+/* .create-account .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
   background-color: inherit;
   color: white;
+  font-family: Tahoma, sans-serif;
+} */
+.create-account .welcome-message1 {
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+  background-color: inherit;
+  color: #91BECD;
+  font-weight: 900;
+  font-family: Tahoma, sans-serif;
+  
 }
 
 
-
-/* formating for all things inside this container */
-.account-form {
-  padding: 20px;
-  text-align: center;
-  background-color: transparent;
-  margin-bottom: 15px;
+.submit-button {
+  background-color: #65558F;
+  border-radius: 50px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-family: Tahoma, sans-serif;
 }
 /* formats the input and select */
 .create-account input, .create-account select {
@@ -50,6 +61,13 @@
   width: 300px;
   border: 1px solid #ccc; 
   padding: 10px;
+  border-radius: 10px;
+  font-family: Tahoma, sans-serif;
+  background-color: rgb(93, 93, 108) !important;
+  color: #91BECD !important;
+}
+.create-account .input1, .create-account select {
+  color: #91BECD !important;
 }
 /* Formats the headers */
 .create-account h2, .create-account h3 {
@@ -71,11 +89,16 @@
   font-size: 1em;
   margin-bottom: 10px;
   background-color: transparent;
+  color: #91BECD !important;
+}
+.create-account .input1, .select {
+  color: #91BECD !important;
 }
 /* Changes the color of the button and its shape */
 .create-account button {
   background-color: #65558F;
   border-radius: 50px;
+
 }
 /* changes hover color */
 .create-account .button:hover {
@@ -106,6 +129,14 @@
   backdrop-filter: blur(5px);
   transition: transform 0.3s;
   margin-bottom: 40px;
+}
+.create-account input::placeholder {
+  color: #91BECD; /* Set the placeholder text color */
+  opacity: 1; /* Ensure the color is fully opaque */
+}
+
+.create-account select::placeholder {
+  color: #91BECD; /* If you need to style placeholders for select elements */
 }
 
 /* formats logout buttons and makes it clear and resizes */
@@ -148,11 +179,12 @@
   margin-top: 50px;
 }
 /* formats the rectangle inside the gray rectangle */
-.whiterectangle {
-  width: 400px;
+.create-account .whiterectangle {
+  width: 500px;
   height: 560px;
-  border: 2px solid #91BECD;
-  background-color: White !important;
+  border: 2px solid #4c4c4c;
+  border-width: 5px;
+  background-color: rgb(48, 48, 74) !important;
   margin: 20px auto;
   display: flex;
   align-items: center;
@@ -162,6 +194,17 @@
   backdrop-filter: blur(5px);
   transition: transform 0.3s;
   margin-bottom: 40px;
+}
+
+/* Space items in the form evenly */
+.account-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Space items evenly */
+  height: 90%; /* Adjust as needed for spacing */
+  width: 100%;
+  padding: 20px;
 }
 
 /* Adjusted styles for logo image and button */

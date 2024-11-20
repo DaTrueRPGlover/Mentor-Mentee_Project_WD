@@ -9,7 +9,23 @@
   align-items: center;
   justify-content: space-between;
 }
+.see-interactions .purp {
+  background-color: #a34eff;
+  color: white;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
 
+}
+.see-interactions .welcome-message {
+  color: white;
+}
 /* Header Styles */
 .header-container {
   display: flex;
@@ -114,7 +130,13 @@
   margin-top: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin-bottom: 20px;
 }
+
+.MessageList {
+  margin-bottom: 20px;
+}
+
 
 @media (max-width: 768px) {
   .chat-container {
