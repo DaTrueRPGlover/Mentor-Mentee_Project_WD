@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './MenteeMeetings.css';
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/WDC.png';
+import logo from '../assets/WDC.png'; // Replace with the path to your new home button image
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -19,7 +19,6 @@ import {
   Link,
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import HomeIcon from '@mui/icons-material/Home';
 
 const locales = {
   'en-US': require('date-fns/locale/en-US'),
@@ -88,7 +87,7 @@ function MenteeMeetings() {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={() => navigate("/mentee-home")}>
-            <HomeIcon />
+            <img src={logo} alt="Home" className="home-button-image" />
           </IconButton>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             View Meetings and Homework

@@ -1,11 +1,26 @@
-// MentorMeetings.js
 import React, { useState, useEffect } from 'react';
-import './MentorMeetings.css';
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/WDC.png";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Select,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Box,
+} from "@mui/material";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import logo from "../assets/WDC.png";
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -24,9 +39,10 @@ function MentorMeetings({ mentorkey }) {
   const [meetings, setMeetings] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
-  const [selectedMentee, setSelectedMentee] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false);
+  const [selectedMentee, setSelectedMentee] = useState('');
   const [zoomLink, setZoomLink] = useState('');
   const [zoomPassword, setZoomPassword] = useState('');
 
@@ -69,26 +85,14 @@ function MentorMeetings({ mentorkey }) {
 
   const handleSelectMeeting = (event) => {
     setSelectedMeeting(event);
+    setNewDate('');
+    setNewTime('');
   };
 
   const handleClosePopup = () => {
     setSelectedMeeting(null);
     setNewDate('');
     setNewTime('');
-  };
-
-  const handleCancelMeeting = async () => {
-    try {
-      await fetch('http://localhost:3001/api/meetings/cancel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ meetingKey: selectedMeeting.meetingKey }),
-      });
-      setMeetings(meetings.filter(meeting => meeting.meetingKey !== selectedMeeting.meetingKey));
-      handleClosePopup();
-    } catch (error) {
-      console.error('Error canceling meeting:', error);
-    }
   };
 
   const handleRescheduleMeeting = async () => {
@@ -115,6 +119,19 @@ function MentorMeetings({ mentorkey }) {
     } catch (error) {
       console.error('Error rescheduling meeting:', error);
     }
+  };
+
+  const handleOpenScheduleDialog = () => {
+    setShowScheduleDialog(true);
+    setSelectedMentee('');
+    setNewDate('');
+    setNewTime('');
+    setZoomLink('');
+    setZoomPassword('');
+  };
+
+  const handleCloseScheduleDialog = () => {
+    setShowScheduleDialog(false);
   };
 
   const handleScheduleMeeting = async () => {
@@ -149,11 +166,7 @@ function MentorMeetings({ mentorkey }) {
             end: new Date(new Date(datetime).getTime() + 60 * 60 * 1000),
             mentee_name: mentee.mentee_name,
           }]);
-          setSelectedMentee('');
-          setNewDate('');
-          setNewTime('');
-          setZoomLink('');
-          setZoomPassword('');
+          handleCloseScheduleDialog();
         } else if (response.status === 409) {
           alert("Time conflict! Please select a different time.");
         }
@@ -166,66 +179,141 @@ function MentorMeetings({ mentorkey }) {
   };
 
   return (
-    <div className="mentor-meetings">
-      <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/mentor-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
-        </div>
-        <div className="container">
-          <h1 className="welcome-message">Schedule Mentee Meetings</h1>
-        </div>
-      </header>
-
-      <div className="calendar-container">
-        <Calendar
-          localizer={localizer}
-          events={meetings}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500, margin: "20px 0" }}
-          className="calendar"
-          onSelectEvent={handleSelectMeeting}
-        />
-      </div>
-
+    <div>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Mentor Meetings
+          </Typography>
+          <Button color="inherit" onClick={() => navigate("/")}>Logout</Button>
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Schedule Mentee Meetings
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpenScheduleDialog}
+          sx={{ mb: 2 }}
+        >
+          Schedule New Meeting
+        </Button>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <Calendar
+                localizer={localizer}
+                events={meetings}
+                startAccessor="start"
+                endAccessor="end"
+                style={{ height: 500 }}
+                onSelectEvent={handleSelectMeeting}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
       {selectedMeeting && (
-        <div className="popup">
-          <div className="popup-content">
-            <h3>Meeting with {selectedMeeting.mentee_name}</h3>
-            <p>Zoom Link: {selectedMeeting.zoomLink}</p>
-            <p>Zoom Password: {selectedMeeting.zoomPassword}</p>
-            <p>Date: {selectedMeeting.start.toDateString()}</p>
-            <p>Time: {selectedMeeting.start.toLocaleTimeString()}</p>
-
-            <h4>Reschedule Meeting</h4>
-            <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
-            <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
-            <button onClick={handleRescheduleMeeting}>Reschedule</button>
-            <button onClick={handleCancelMeeting}>Cancel Meeting</button>
-            <button onClick={handleClosePopup}>Close</button>
-          </div>
-        </div>
+        <Dialog open={Boolean(selectedMeeting)} onClose={handleClosePopup} maxWidth="sm" fullWidth>
+          <DialogTitle>Meeting Details</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1" gutterBottom>
+              <strong>Mentee:</strong> {selectedMeeting.mentee_name}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Zoom Link:</strong> {selectedMeeting.zoomLink}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Password:</strong> {selectedMeeting.zoomPassword}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Date:</strong> {selectedMeeting.start.toDateString()}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Time:</strong> {selectedMeeting.start.toLocaleTimeString()}
+            </Typography>
+            <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
+            <Box display="flex" flexDirection="column" gap={2} mt={2}>
+              <TextField
+                type="date"
+                value={newDate}
+                onChange={(e) => setNewDate(e.target.value)}
+                label="New Date"
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                type="time"
+                value={newTime}
+                onChange={(e) => setNewTime(e.target.value)}
+                label="New Time"
+                InputLabelProps={{ shrink: true }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleRescheduleMeeting} variant="contained" color="primary">
+              Reschedule
+            </Button>
+            <Button onClick={handleClosePopup} variant="outlined" color="secondary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
-
-      <h2>Schedule a New Meeting</h2>
-      <div className="schedule-form">
-        <select value={selectedMentee} onChange={(e) => setSelectedMentee(e.target.value)}>
-          <option value="">Select a Mentee</option>
-          {mentees.map((mentee) => (
-            <option key={mentee.menteekey} value={mentee.menteekey}>
-              {mentee.mentee_name}
-            </option>
-          ))}
-        </select>
-        <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
-        <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
-        <input type="text" value={zoomLink} onChange={(e) => setZoomLink(e.target.value)} placeholder="Enter Zoom link" />
-        <input type="text" value={zoomPassword} onChange={(e) => setZoomPassword(e.target.value)} placeholder="Enter Zoom password" />
-        <button onClick={handleScheduleMeeting}>Schedule Meeting</button>
-      </div>
+      <Dialog open={showScheduleDialog} onClose={handleCloseScheduleDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>Schedule New Meeting</DialogTitle>
+        <DialogContent>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <Select
+              value={selectedMentee}
+              onChange={(e) => setSelectedMentee(e.target.value)}
+              displayEmpty
+            >
+              <MenuItem value="" disabled>Select a Mentee</MenuItem>
+              {mentees.map(mentee => (
+                <MenuItem key={mentee.menteekey} value={mentee.menteekey}>
+                  {mentee.mentee_name}
+                </MenuItem>
+              ))}
+            </Select>
+            <TextField
+              type="date"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+              label="Date"
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              type="time"
+              value={newTime}
+              onChange={(e) => setNewTime(e.target.value)}
+              label="Time"
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              value={zoomLink}
+              onChange={(e) => setZoomLink(e.target.value)}
+              label="Zoom Link"
+            />
+            <TextField
+              value={zoomPassword}
+              onChange={(e) => setZoomPassword(e.target.value)}
+              label="Zoom Password"
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleScheduleMeeting} variant="contained" color="primary">
+            Schedule
+          </Button>
+          <Button onClick={handleCloseScheduleDialog} variant="outlined" color="secondary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -1,28 +1,24 @@
 /* Reset body margins and paddings */
-body, html{
+body, html {
   margin: 0;
   padding: 0;
   height: 100%;
 }
-.mentor-meetings .purple {
-  background-color: #a34eff;
-  color: white;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 800px;
-  margin-top: 50px;
-}
 
+/* Home button image styling */
+.home-button-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain; /* Ensures the entire image fits without distortion */
+  border-radius: 50%; /* Optional: Keep circular shape */
+  display: block;
+}
 
 /* Calendar container styling */
 .calendar-container {
   margin: 20px auto;
   max-width: 1200px;
+  color:#ffffff;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
