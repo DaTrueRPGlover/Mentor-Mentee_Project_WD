@@ -69,7 +69,10 @@ function SeeInteractions() {
             Logout
           </button>
         </div>
-        <h1 className="welcome-message">View Interactions</h1>
+        <div className="purp">
+          <h1 className="welcome-message">View Interactions</h1>
+        </div>
+        
       </header>
 
       <div className="search">
@@ -132,12 +135,6 @@ function SeeInteractions() {
                 />
               ))}
             </MessageList>
-            <MessageInput
-              placeholder="Type a message..."
-              attachButton={false}
-              sendButton={false}
-              disabled
-            />
           </ChatContainer>
         </MainContainer>
       )}
