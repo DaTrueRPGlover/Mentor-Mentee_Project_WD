@@ -1,21 +1,9 @@
 /* WriteMenteeProgression.css */
 
-* {
-  margin: 0;
-  box-sizing: border-box;
-}
 
 
 
-.write-mentee-progression {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  justify-content: flex-start; /* Start the content from the top */
-}
+
 .write-mentee-progression .header-container {
   display: flex;
   flex-direction: column;
@@ -47,37 +35,62 @@
 }
 
 
-/* Style for the welcome message box */
-.write-mentee-progression .welcome-message-container {
-  background-color: #a34eff; /* Set box color to purple */
-  color: white; /* Set text color to white */
-  padding: 20px; /* Add padding inside the box */
-  margin: 20px 0; /* Space above and below the box */
-  border-radius: 10px; /* Optional: rounded corners */
-  text-align: center; /* Center-align the text */
-  width: fit-content; /* Adjust the box to fit the text content */
-}
-
-
 .write-mentee-progression .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
-  background-color: #a34eff; /* Set box color to purple */
-
+  background-color: inherit;
+  color: #91BECD !important;
+  font-family: Tahoma, sans-serif;
 }
+
+
+
 
 /* Main content styles */
 .write-mentee-progression .main-content {
-  flex: 1 0 auto;
-  width: 100%;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  color: white;
 }
 
+.write-mentee-progression .mentor-mentee-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between the two dropdowns */
+}
+
+.write-mentee-progression .dropdown-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+
+.write-mentee-progression .dropdown-container label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.write-mentee-progression .dropdown-container select {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  /* border: 2px solid #4c4c4c; */
+  /* border-width: 5px; */
+  border: 1px solid #ccc; 
+  font-family: Tahoma, sans-serif;
+  background-color: rgb(93, 93, 108) !important;
+  color: #91BECD !important;
+  border-radius: 10px;
+  
+}
 
 .write-mentee-progression .logout-button {
   border-radius: 50px;
@@ -148,7 +161,7 @@
     padding: 10px;
     font-size: 1em;
     margin-bottom: 10px;
-    width: 40%;
+    width: 100%;
     background-color: white;
     font-family: Arial, sans-serif;
   }
@@ -170,8 +183,11 @@
 
  /* Additional Styles for Attitude Question */
 
- .question-group {
-  background-color: transparent; /* Ensure no background color in the question group */
+ .write-mentee-progression .question-group {
+  display: flex;
+  flex-direction: column; /* Stack the title above the options */
+  align-items: center; /* Center the group horizontally */
+  text-align: center;
 }
 
 .write-mentee-progression .question-group p {
@@ -185,60 +201,46 @@
 }
 
 .write-mentee-progression .question-group input[type="radio"] {
-  width: auto;
-  margin-right: 8px;
-  margin-left: 0;
-  background-color: transparent;
-  transform: scale(1.5); /* Increase size of radio buttons */
+  margin: 0; /* Reset margin */
+  transform: scale(1.5); /* Keep size adjustments */
+  display: flex; /* Arrange radio buttons and labels in a row */
+}
+
+.write-mentee-progression .question-group .radio-options {
+  display: flex; /* Arrange radio buttons and labels in a row */
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center the options horizontally */
+  gap: 15px; /* Add spacing between the options */
+
 }
 
 .write-mentee-progression .question-group label {
-  display: inline-block;
-  font-size: 1rem;
-  margin-right: 20px;
-  cursor: pointer;
-  background-color: transparent;
-
+  margin: 0; /* Reset margin */
+  text-align: center; /* Ensure label text is centered */
+  display: flex; /* Arrange radio buttons and labels in a row */
 }
 
 
 /* Form box styling */
-.form-box {
-  width: 40%;
+.write-mentee-progression .form-box {
+  width: 80%;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #ffffff !important; /* Force background to white in case of inheritance issues */
-  background: #ffffff !important; /* Ensure no conflicting background styles */
+  background-color: rgb(93, 93, 108) !important;
 
 }
 
-
-/* Style for the "Enter Mentee Name" input */
-.write-mentee-progression .progress-form input[type="text"] {
-  width: 20%; /* Adjust the width to control how much space each input takes */
-  max-width: 600px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  margin-right: 20px;
-  font-family: Arial, sans-serif;
+.write-mentee-progression .question-group div {
+  display: flex;
+  align-items: center; /* Align radio button with label vertically */
+  gap: 8px; /* Add space between radio button and label */
 }
 
-/* Style for the date picker input */
-.write-mentee-progression .progress-form input[type="date"] {
-  width: 20%; /* Same width as the mentee name input */
-  max-width: 600px;
-  padding: 10px;
-  border-radius: 5px;
-  font-family: Arial, sans-serif;
-  background-color: white; /* Make sure the background is white */
-}
 
-/* Add box shadow to all form elements */
-.write-mentee-progression .progress-form input[type="text"],
-.write-mentee-progression .progress-form input[type="date"],
+
+
 .write-mentee-progression .form-box 
  {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow with larger blur radius and opacity */
@@ -248,6 +250,7 @@
 /* Styling for the comment box container */
 .write-mentee-progression .comment-container {
   display: flex;
+  width: 100%;
   flex-direction: column; /* Stack the elements vertically */
   align-items: center; /* Center elements horizontally */
   margin-top: 20px; /* Space above the comment box */
@@ -256,10 +259,12 @@
 /* Style the form title container */
 .write-mentee-progression .form-title {
   display: flex;
-  background-color: white; /* Make sure the background is white */
-  margin-bottom: 20px; /* Space below the form title */
+  background-color: rgb(93, 93, 108) !important;
+  color: white ;
+  margin-bottom: 10px; /* Space below the form title */
   align-items: center; /* Align items (text and icon) vertically */
   justify-content: center; /* Center the content horizontally */
+  
 }
 
 /* Style the icon */
@@ -268,29 +273,41 @@
   height: 26px; /* Adjust the size of the icon */
   margin-right: 4px; /* Space between the icon and the text */
   vertical-align: middle; /* Align the icon vertically in the middle of the text */
-  background-color: white; /* Make sure the background is white */
+  background-color: rgb(93, 93, 108) !important;
+
 
 }
 
 /* Style the form title text */
 .write-mentee-progression .form-title p {
   font-size: 1.2rem;
+  color: white;
   font-weight: bold;
   margin: 0; /* Remove any margin from the paragraph */
   line-height: 1.5; /* Set a consistent line height */
 }
 
 
-
-
-
-
-
-
-@media (max-width: 768px) {
-  .write-mentee-progression .progress-form input[type="text"],
-  .write-mentee-progression .progress-form input[type="date"] {
-    width: 100%; /* Make the inputs take full width on small screens */
-  }
+.write-mentee-progression .box {
+  width: 800px;
+  height: 630px;
+  border: 2px solid #4c4c4c;
+  border-width: 5px;
+  background-color: rgb(48, 48, 74) !important;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column; /* Ensure items are stacked vertically */
+  align-items: center;
+  justify-content: flex-start; /* Align items to the top */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  padding: 20px; /* Add padding for spacing */
 }
+
+
+
+
+
 

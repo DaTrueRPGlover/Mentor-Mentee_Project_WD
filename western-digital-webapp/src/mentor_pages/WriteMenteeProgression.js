@@ -87,7 +87,7 @@ function WriteMenteeProgression() {
   };
 
   return (
-    <div className="todo-progression">
+    <div className="write-mentee-progression">
       <header className="header-container">
         <div className="top-header">
           <button
@@ -106,17 +106,19 @@ function WriteMenteeProgression() {
             Logout
           </button>
         </div>
-        <div className="welcome-message-container">
-          <h1 className="welcome-message">Mentee Survey</h1>
-        </div>
+      
       </header>
 
-      <div className="content-split">
-        <div className="form-section">
-          <h1>Select Mentees and Meeting</h1>
+      <div className="box">
+      <div className="container1">
+        <h1 className="welcome-message">Select Mentees and Meeting</h1>
+      </div>
+ 
 
           {/* Mentee Dropdown */}
-          <div>
+        <div className="main-content">
+          <div className="mentor-mentee-container">
+          <div className="dropdown-container">
             <label>Select a Mentee:</label>
             <select
               value={selectedMentee}
@@ -129,10 +131,11 @@ function WriteMenteeProgression() {
                 </option>
               ))}
             </select>
-          </div>
+            </div>
+            
 
           {/* Meetings Dropdown */}
-          <div className="form-box">
+          <div className="dropdown-container">
             <label htmlFor="meetingSelect">Select Meeting:</label>
             <select
               id="meetingSelect"
@@ -147,7 +150,8 @@ function WriteMenteeProgression() {
                 </option>
               ))}
             </select>
-          </div>
+            </div>
+            </div>
 
           {/* Skipped Section */}
           <div className="form-box">
@@ -156,6 +160,7 @@ function WriteMenteeProgression() {
                 <EventBusyOutlinedIcon className="form-title-icon" />
                 <p>Skipped</p>
               </div>
+              <div className="radio-options">
               <input
                 type="radio"
                 id="skipped-yes"
@@ -165,7 +170,8 @@ function WriteMenteeProgression() {
                 onChange={(e) => setSkipped(e.target.value)}
               />
               <label htmlFor="skipped-yes">Yes</label>
-
+            
+       
               <input
                 type="radio"
                 id="skipped-no"
@@ -174,7 +180,8 @@ function WriteMenteeProgression() {
                 checked={skipped === "no"}
                 onChange={(e) => setSkipped(e.target.value)}
               />
-              <label htmlFor="skipped-no">No</label>
+                <label htmlFor="skipped-no">No</label>
+                </div>
             </div>
           </div>
 
@@ -182,9 +189,11 @@ function WriteMenteeProgression() {
           <div className="form-box">
             <div className="question-group">
               <div className="form-title">
+
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Finished Homework</p>
               </div>
+              <div className="radio-options">
               <input
                 type="radio"
                 id="finished_homework-yes"
@@ -203,7 +212,8 @@ function WriteMenteeProgression() {
                 checked={finished_homework === "no"}
                 onChange={(e) => setFinishedHomework(e.target.value)}
               />
-              <label htmlFor="finished_homework-no">No</label>
+                <label htmlFor="finished_homework-no">No</label>
+                </div>
             </div>
           </div>
 
@@ -214,6 +224,7 @@ function WriteMenteeProgression() {
                 <MoodIcon className="form-title-icon" />
                 <p>Attitude Towards Learning</p>
               </div>
+              <div className="radio-options">
               <input
                 type="radio"
                 id="attitude_towards_learning-very_good"
@@ -243,7 +254,8 @@ function WriteMenteeProgression() {
                 onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
               />
               <label htmlFor="attitude_towards_learning-bad">Bad</label>
-            </div>
+              </div>
+              </div>
           </div>
 
           <div className="comment-container">
@@ -257,7 +269,7 @@ function WriteMenteeProgression() {
             </button>
           </div>
         </div>
-      </div>
+        </div>
     </div>
   );
 }

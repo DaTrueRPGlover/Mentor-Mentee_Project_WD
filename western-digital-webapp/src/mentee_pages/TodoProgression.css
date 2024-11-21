@@ -155,7 +155,7 @@
 
 /* Additional Styles for Attitude Question */
 
-.question-group {
+.todo-progression .question-group {
   background-color: transparent; /* Ensure no background color in the question group */
 }
 
