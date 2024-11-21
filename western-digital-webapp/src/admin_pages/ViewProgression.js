@@ -184,6 +184,7 @@ function ViewProgressions() {
 
   return (
     <div className="view-progression">
+
     <header className="header-container">
       <div className="top-header">
         <button
@@ -197,8 +198,6 @@ function ViewProgressions() {
           Logout
         </button>
       </div>
-      
-
     </header>
 
       {/* Mentee selection */}
