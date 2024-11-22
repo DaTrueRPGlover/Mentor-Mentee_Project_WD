@@ -84,7 +84,7 @@ body {
 .assign-hw .homework-form {
   display: flex;
   flex-direction: column;
-  background: #ffffff; /* Ensure form background is white */
+  background: #ffffff !important;
 }
 
 .assign-hw .homework-input {
@@ -94,7 +94,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
-  background: #ffffff; /* Input background */
+  background: #ffffff !important; /* Input background */
 }
 
 .assign-hw .homework-input:focus {
