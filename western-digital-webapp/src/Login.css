@@ -1,114 +1,217 @@
-/* Add this to your CSS file */
-.center-container{
-  background-color: #91BECD;
-}
-body, html {
-  height: 100%; /* Ensure the body and html take full height */
-  margin: 0; /* Remove default margins */
+/* Apply gradient animation to the border */
+@keyframes borderGradientAnimation {
+  0% {
+    border-image: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4) 1;
+  }
+  50% {
+    border-image: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5) 1;
+  }
+  100% {
+    border-image: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4) 1;
+  }
 }
 
 .center-container {
+  background-color: #91BECD;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full viewport height */
-  position: relative; /* So logo positions itself relative to the viewport */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  transition: background-color 0.3s ease; /* Smooth transition for background */
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+}
 
+.center-container.logging-in {
+  background-color: #f0f4f8; /* Change background when logging in */
+}
 
 .login-logo {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 400px; /* Adjust size as needed */
+  width: 200px;
   height: auto;
-  z-index: 1000; /* Keep logo above other elements */
+  z-index: 1;
   margin: 5px;
+  animation: fadeInLogo 1s ease-out;
 }
 
-/* Center the form container */
+@keyframes fadeInLogo {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Main login container */
 .login-container {
+  position: relative; /* Ensure pseudo-element is positioned correctly */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center vertically if needed */
-  width: 100%; /* Ensure it takes full width */
-  padding: 30px; /* Optional: Adds space inside the container */
-  background: linear-gradient(
-    to right,
-    #7f7fd5,
-    #86a8e7,
-    #91eae4
-  ); /* Change this to your desired color */
-  border-radius: 10px; /* Optional: Rounds the corners */
-  margin: 20px auto; /* Center container horizontally */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for depth */
-}
-
-
-
-
-
-/* Style for the heading */
-.login-heading {
-  margin-top: 8px !important;
-  margin-bottom: 8px;
-  background: transparent; /* Ensure form background is transparent to show container background */
-}
-
-/* Style for the form */
-.login-form {
-  width: 100%; /* Ensure it takes full width */
-  display: flex; /* Use flexbox layout */
-  flex-direction: column; /* Stack children vertically */
-  align-items: stretch; /* Make children fill the width */
-  margin-top: 8px;
-  margin: 0 auto; /* Center the form */
-  padding: 10px; /* Add padding for visual spacing */
-  background: transparent; /* Ensure form background is transparent to show container background */
-}
-
-/* Style for the submit button */
-.login-button {
+  justify-content: center;
   width: 100%;
-  height: 45px; /* Adjust this value to match your input field's height */
+  height: 450px;
+  padding: 30px;
+  background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+  border-radius: 10px; /* Rounded corners for container */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 5px solid transparent; /* Transparent border to apply gradient animation */
+  animation: borderGradientAnimation 3s infinite; /* Apply the gradient animation */
+  overflow: hidden; /* Ensure no sharp corners */
+}
+
+/* Remove sharp corners, ensure rounded border */
+.login-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px; /* Same border-radius to match the container's rounded corners */
+  background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+  z-index: -1; /* Place it behind the container content */
+  animation: borderGradientAnimation 3s infinite; /* Apply the gradient animation */
+}
+
+.login-container.logging-in {
+  transform: scale(0.95); /* Slightly shrink the container when logging in */
+}
+
+.login-heading1 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  background: transparent !important;
+  font-family: Tahoma, sans-serif !important;
+  font-weight: 550 !important;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 8px;
+  margin: 0 auto;
+  padding: 10px;
+  background: transparent;
+  font-family: Tahoma, sans-serif !important;
+}
+
+.login-button {
+  width: 50%;
+  height: 45px;
   margin: 0 auto;
   margin-top: 12px;
   margin-bottom: 10px;
-  border-radius: 40px;
+  border-radius: 10px; /* Rounded corners for button */
   background-color: #1976d2;
   color: #fff;
   transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  font-family: Tahoma, sans-serif !important;
 }
 
-/* Hover effect for the submit button */
+.login-button.loading {
+  background-color: #1565c0;
+  pointer-events: none;
+  animation: pulse 1s infinite;
+  font-family: Tahoma, sans-serif !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .login-button:hover {
-  background-color: #1565c0 !important; /* Background color on hover */
-  color: #fff !important; /* Text color on hover */
+  background-color: #7f7fd5 !important;
+  color: #fff !important;
 }
 
-/* Error message style */
 .login-error-message {
-  flex-grow: 0; /* Prevent it from collapsing */
+  flex-grow: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   color: rgba(253, 0, 0, 0.836);
   font-weight: bolder;
   text-align: center;
   width: 100%;
-  background: transparent; /* Ensure form background is transparent to show container background */
+  background: transparent;
+  font-family: Tahoma, sans-serif !important;
 }
 
-input[type="text"],
-input[type="password"] {
-  text-align: left; /* Ensure text is aligned to the left */
+.login-form .input-container {
+  text-align: left;
   width: 100%;
-  color: #000 !important; /* Text color */
-  background-color: #fff !important; /* Background color */
-  border: 1px solid #ccc; /* Border styling */
+  color: #000 !important;
+  background-color: rgb(93, 93, 108) !important;
   padding: 10px;
   opacity: 1;
   z-index: 1;
   visibility: visible;
+  background: transparent !important;
+  outline: none;
+  border-radius: 10px; /* Rounded corners for input */
+  font-family: Tahoma, sans-serif !important;
 }
+/* Style for the input containers */
+.input-container {
+  width: 100%;
+  margin-bottom: 15px; /* Space between inputs */
+  position: relative;
+}
+
+/* Style for the actual input fields */
+.input-container input {
+  width: 100%;
+  padding: 12px 15px; /* Add padding for better spacing */
+  background-color: #f5f5f5; /* Light background for inputs */
+  border: 2px solid #ddd; /* Border for the input fields */
+  border-radius: 10px; /* Rounded corners for inputs */
+  font-size: 16px; /* Adjust font size for better readability */
+  color: #333; /* Dark text color */
+  font-family: Tahoma, sans-serif; /* Font for the input text */
+  outline: none; /* Remove default outline */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border and shadow */
+}
+
+/* Focused input field styling */
+.input-container input:focus {
+  border-color: #86a8e7; /* Change border color when focused */
+  box-shadow: 0 0 8px rgba(135, 168, 231, 0.6); /* Add shadow on focus */
+  border-width: 5px;
+}
+
+/* Placeholder text styling */
+.input-container input::placeholder {
+  color: #aaa; /* Lighter color for placeholder */
+  font-style: italic; /* Italicize placeholder text */
+}
+
+/* Style for input containers with error messages */
+.input-container.error input {
+  border-color: #f44336; /* Red border for error state */
+  background-color: #fce4e4; /* Light red background for error */
+}
+
+/* Add error message styling */
+.login-error-message {
+  color: #f44336; /* Red color for error message */
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
+}
+
