@@ -1,5 +1,6 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; // Import framer-motion
 import "./AdminHome.css"; // Import the CSS file
 
 import logo from "../assets/WDC.png"; // Adjust the path as needed
@@ -21,7 +22,13 @@ function AdminHome() {
   };
 
   return (
-    <div className="admin-home">
+    <motion.div
+      className="admin-home"
+      initial={{ y: "100%" }} // Start from the left
+      animate={{ y: 0 }} // Move to the right (default position)
+      exit={{ y: "100%" }} // Slide out to the right when leaving
+      transition={{ type: "spring", stiffness: 300, damping: 30 }} // Smooth animation
+    >
       <header className="header-container">
         <div className="top-header">
           <img src={logo} alt="Logo" className="logo" />
@@ -35,7 +42,6 @@ function AdminHome() {
 
       <main className="main-content">
         <div className="button-container">
-
           <button
             className="circle"
             onClick={() => navigate("/see-interactions")}
@@ -67,13 +73,10 @@ function AdminHome() {
             <img src={one} alt="One" className="circle-image" />
             <h3 className="title">Create Account</h3>
           </button>
-
         </div>
       </main>
-    </div>
+    </motion.div>
   );
 }
 
 export default AdminHome;
-
-
