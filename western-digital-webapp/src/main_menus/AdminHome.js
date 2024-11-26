@@ -2,12 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import framer-motion
 import "./AdminHome.css"; // Import the CSS file
-
-import logo from "../assets/WDC.png"; // Adjust the path as needed
-import talk from "../assets/talk.png"; // Adjust the path as needed
-import twopeople from "../assets/twopeople.png"; // Adjust the path as needed
-import one from "../assets/one.png"; // Adjust the path as needed
-import notes from "../assets/notes.png"; // Adjust the path as needed
+import logo from "../assets/WDC.png";
+import talk from "../assets/talk.png";
+import twopeople from "../assets/twopeople.png";
+import one from "../assets/one.png";
+import notes from "../assets/notes2.0.png";
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -24,17 +23,22 @@ function AdminHome() {
   return (
     <motion.div
       className="admin-home"
-      initial={{ y: "100%" }} // Start from the left
-      animate={{ y: 0 }} // Move to the right (default position)
-      exit={{ y: "100%" }} // Slide out to the right when leaving
-      transition={{ type: "spring", stiffness: 300, damping: 30 }} // Smooth animation
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "100%" }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <header className="header-container">
         <div className="top-header">
           <img src={logo} alt="Logo" className="logo" />
-          <button className="logout-button" onClick={handleLogout}>
+          <motion.button
+            className="logout-button"
+            onClick={handleLogout}
+            whileHover={{ scale: 1.1 }} // Scale effect on hover
+            transition={{ duration: 0.1 }} // Faster animation
+          >
             Logout
-          </button>
+          </motion.button>
         </div>
 
         <h1 className="welcome-message">Welcome Admin {adminName}</h1>
@@ -42,37 +46,48 @@ function AdminHome() {
 
       <main className="main-content">
         <div className="button-container">
-          <button
+          <motion.button
             className="circle"
             onClick={() => navigate("/see-interactions")}
+            whileHover={{ scale: 1.1 }} // Scale effect on hover
+            transition={{ duration: 0.1 }} // Faster animation
           >
             <img src={talk} alt="Talk" className="circle-image" />
             <h3 className="title">See Interactions</h3>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             className="circle"
             onClick={() => navigate("/assign-mentor")}
+            whileHover={{ scale: 1.1 }} // Scale effect on hover
+            transition={{ duration: 0.1 }} // Faster animation
           >
             <img src={twopeople} alt="Twopeople" className="circle-image" />
             <h3 className="title">Assign Mentor to Mentee</h3>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             className="circle"
             onClick={() => navigate("/view-progressions")}
+            whileHover={{ scale: 1.1 }} // Scale effect on hover
+            transition={{ duration: 0.1 }} // Faster animation
           >
             <img src={notes} alt="Notes" className="circle-image" />
             <h3 className="title">View Progressions</h3>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             className="circle"
             onClick={() => navigate("/create-account")}
+            whileHover={{ scale: 1.1 }} // Scale effect on hover
+            transition={{ duration: 0.1 }} // Faster animation
           >
             <img src={one} alt="One" className="circle-image" />
             <h3 className="title">Create Account</h3>
-          </button>
+          </motion.button>
+        </div>
+        <div className="footer">
+          © 2024 Western Digital Corporation or its affiliates. All rights reserved.
         </div>
       </main>
     </motion.div>
