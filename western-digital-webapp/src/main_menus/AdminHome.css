@@ -1,5 +1,4 @@
-/* AdminHome.css */
-
+/* General Reset */
 * {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -7,34 +6,32 @@
   padding: 0;
 }
 
-.admin-home .title {
-  margin-top: 15px;
-  font-size: large;
-  background-color: inherit ;
-  padding: 5px 10px;
-  color: #000000;
-}
-
-
+/* Logo */
 .admin-home .logo {
   width: 150px;
   height: auto;
 }
+
 /* Container for the whole page */
 .admin-home {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  font-family: Arial, sans-serif;
   text-align: center;
   justify-content: space-between;
 }
+
+/* Welcome message */
 .admin-home .welcome-message {
   font-size: 32px;
+  font-weight: 900;
   text-align: center;
   margin: 20px 0;
+  margin-bottom: 5%;
+  font-family: Tahoma, sans-serif;
 }
+
 /* Header styles */
 .admin-home .top-header {
   display: flex;
@@ -54,8 +51,6 @@
   justify-content: center;
 }
 
-
-
 /* Button container */
 .admin-home .button-container {
   display: flex;
@@ -64,14 +59,9 @@
   gap: 20px;
   width: 100%;
 }
-.admin-home .body {
-  margin: 0; /* Remove default body margin */
-  padding: 0;
-  overflow: hidden; /* Prevent overflow if needed */
-}
 
-
-.admin-home .circle-image  {
+/* Circle button styles */
+.admin-home .circle-image {
   width: 190px;
   height: auto;
   background-color: inherit;
@@ -79,82 +69,66 @@
 }
 
 .admin-home .circle {
-
-  border-radius: 50px;
-  border: none;
+  border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
-  background-color: #65558F;
-  color: black;
+  background-color: #7CAFB7;
+  color: rgb(68, 67, 67);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
   margin: 0;
-  transition: background-color 0.3s;
+  transition: transform 0.2s ease;
   width: 355px;
   height: 355px;
-  border-radius: 50%;
-  background-color: #91BECD;
-  flex-direction: column;      /* Stack items vertically */
-  align-items: center;         /* Center items horizontally */
-  justify-content: center;     /* Center items vertically */
+  flex-direction: column;
   text-align: center;
   margin-bottom: 10%;
+  border: none;
+  font-family: Tahoma, sans-serif;
 }
 
-
-
-
-.admin-home .circle:hover {
-  background-color: #7CAFB7; /* Semi-transparent hover color */
-}
-
-
-.admin-home .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-top: 20px;
-}
-.admin-home .circle:hover {
-  background-color: #7CAFB7; /* Button background on hover */
-}
-
-
+/* Logout button styles */
 .admin-home .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
   background-color: #91BECD;
-  font-size: 1.2rem; /* Use relative units for font size */
+  font-size: 1.2rem;
   font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
+  color: rgb(68, 67, 67);
+  padding: 10px 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: background-color 0.3s;
+  font-family: Tahoma, sans-serif;
 }
 
 .admin-home .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
+  background-color: #7CAFB7;
+}
+
+/* Footer */
+.footer {
+  margin-bottom: 2%;
+  font-family: Tahoma, sans-serif;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
   .admin-home .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
+    font-size: 1rem;
+    padding: 8px 16px;
   }
 }
 
 @media (max-width: 480px) {
   .admin-home .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    right: 10px;
+    top: 10px;
   }
 }
