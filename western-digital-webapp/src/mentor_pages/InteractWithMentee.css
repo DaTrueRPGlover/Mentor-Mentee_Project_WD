@@ -121,6 +121,7 @@
 .interact-with-mentee .message-input textarea {
   width: 100%;
   max-width: 100%;
+  background-color: #ffffff !important;
   padding: 10px;
   height: 60px;
   font-size: 1rem;
