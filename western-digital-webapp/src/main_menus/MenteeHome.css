@@ -10,9 +10,9 @@
   font-size: large;
   background-color: inherit ;
   padding: 5px 10px;
-  color: #000000;
+  color: rgb(68, 67, 67);
+  font-family: Tahoma, sans-serif;
 }
-
 
 .mentee-home .logo {
   width: 150px;
@@ -29,10 +29,13 @@
   text-align: center;
   justify-content: space-between;
 }
+
 .mentee-home .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
+  color: black;
+  font-family: Tahoma, sans-serif;
 }
 
 .mentee-home .header-container {
@@ -62,8 +65,6 @@
   justify-content: center;
 }
 
-
-
 /* Button container */
 .mentee-home .button-container {
   display: flex;
@@ -72,27 +73,13 @@
   gap: 20px;
   width: 100%;
 }
-.mentee-home .body {
-  margin: 0; /* Remove default body margin */
-  padding: 0;
-  overflow: hidden; /* Prevent overflow if needed */
-}
-
-
-.mentee-home .circle-image  {
-  width: 190px;
-  height: auto;
-  background-color: inherit;
-  margin-bottom: 5px;
-}
 
 .mentee-home .circle {
-
-  border-radius: 50px;
+  border-radius: 50%;
   border: none;
   font-size: 16px;
   cursor: pointer;
-  background-color: #65558F;
+  background-color: #7CAFB7; /* Set background color to the hover color */
   color: black;
   display: flex;
   align-items: center;
@@ -102,61 +89,58 @@
   transition: background-color 0.3s;
   width: 355px;
   height: 355px;
-  border-radius: 50%;
-  background-color: #91BECD;
-  flex-direction: column;      /* Stack items vertically */
-  align-items: center;         /* Center items horizontally */
-  justify-content: center;     /* Center items vertically */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
   text-align: center;
   margin-bottom: 10%;
+  font-family: Tahoma, sans-serif;
+}
+
+.mentee-home .circle-image {
+  width: 190px; /* Adjust image size to fit inside the button */
+  height: auto;
+  background-color: inherit;
+  margin-bottom: 5px;
+  z-index: 0; /* Place image behind the button background */
 }
 
 
 
-
-.mentee-home .circle:hover {
-  background-color: #7CAFB7; /* Semi-transparent hover color */
-}
-
-
-
-.mentee-home .circle:hover {
-  background-color: #7CAFB7; /* Button background on hover */
-}
-
-
+/* Logout button styles */
 .mentee-home .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
   background-color: #91BECD;
-  font-size: 1.2rem; /* Use relative units for font size */
+  font-size: 1.2rem;
   font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
+  color: rgb(68, 67, 67);
+  padding: 10px 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: background-color 0.3s;
+  font-family: Tahoma, sans-serif;
 }
 
 .mentee-home .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
+  background-color: #7CAFB7; /* Hover color for logout button */
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
   .mentee-home .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
+    font-size: 1rem;
+    padding: 8px 16px;
   }
 }
 
 @media (max-width: 480px) {
   .mentee-home .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    right: 10px;
+    top: 10px;
   }
 }
