@@ -51,7 +51,7 @@ router.get('/mentees', async (req, res) => {
 });
 
 router.post('/create-meeting', async (req, res) => {
-  const { mentorkey, menteekey, datetime, zoom_link, zoom_password } = req.body;
+  const { mentorkey, menteekey, datetime, meeting_link, meeting_password } = req.body;
   try {
     const existingMeetings = await checkMeetingConflict(mentorkey, menteekey, datetime, 60);
 
@@ -59,7 +59,7 @@ router.post('/create-meeting', async (req, res) => {
       return res.status(409).json({ message: 'Meeting time conflict detected' });
     }
 
-    await createMeeting(mentorkey, menteekey, datetime, zoom_link, zoom_password);
+    await createMeeting(mentorkey, menteekey, datetime, meeting_link, meeting_password);
     res.status(201).json({ message: 'Meeting scheduled successfully' });
   } catch (error) {
     console.error('Error scheduling meeting:', error);

@@ -53,7 +53,7 @@ export const checkMeetingConflict = async (mentorkey, menteekey, datetime, durat
 
 export const getMeetingsByMenteeKey = async (menteekey) => {
     const sql = `
-        SELECT meetingkey, mentorkey, menteekey, datetime, zoom_link, zoom_password
+        SELECT meetingkey, mentorkey, menteekey, datetime, meeting_link, meeting_password
         FROM meetings
         WHERE menteekey = ?
         ORDER BY datetime DESC
@@ -69,7 +69,7 @@ export const getMeetingsByMenteeKey = async (menteekey) => {
 
 export const getMeetingsByMentorKey = async (mentorkey) => {
   const sql = `
-      SELECT meetingkey, mentorkey, menteekey, datetime, zoom_link, zoom_password
+      SELECT meetingkey, mentorkey, menteekey, datetime, meeting_link, meeting_password
       FROM meetings
       WHERE mentorkey = ?
       ORDER BY datetime DESC
@@ -83,13 +83,13 @@ export const getMeetingsByMentorKey = async (mentorkey) => {
   }
 };
 
-export const createMeeting = async (mentorkey, menteekey, datetime, zoom_link, zoom_password) => {
+export const createMeeting = async (mentorkey, menteekey, datetime, meeting_link, meeting_password) => {
   await pool.query(
     `
-    INSERT INTO meetings (meetingkey, mentorkey, menteekey, datetime, zoom_link, zoom_password)
+    INSERT INTO meetings (meetingkey, mentorkey, menteekey, datetime, meeting_link, meeting_password)
     VALUES (UUID(), ?, ?, ?, ?, ?)
     `,
-    [mentorkey, menteekey, datetime, zoom_link, zoom_password]
+    [mentorkey, menteekey, datetime, meeting_link, meeting_password]
   );
 };
 
