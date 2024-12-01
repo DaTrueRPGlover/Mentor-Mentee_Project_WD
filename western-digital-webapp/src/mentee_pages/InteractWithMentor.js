@@ -15,18 +15,18 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 function InteractWithMentor() {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
   const [mentorName, setMentorName] = useState("");
   const [mentorKey, setMentorKey] = useState(null);
+  const [conversationKey, setConversationKey] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
     if (!user || user.role.toLowerCase() !== "mentee") {
       console.error("User not logged in or not a mentee");
@@ -45,14 +45,16 @@ function InteractWithMentor() {
         }
 
         setMentorKey(data[0].mentorkey);
-        setMentorName(data[0].mentor_name); // Assuming mentor_name is returned
+        setMentorName(data[0].mentor_name);
+
         // Fetch messages with the mentor
         fetch(
           `http://localhost:3001/api/messages?menteekey=${user.userId}&mentorkey=${data[0].mentorkey}`
         )
           .then((response) => response.json())
           .then((data) => {
-            const formattedMessages = data.map((msg) => ({
+            setConversationKey(data.conversationKey);
+            const formattedMessages = data.messages.map((msg) => ({
               message: msg.message_text,
               sentTime: new Date(msg.message_time).toLocaleString(),
               sender: msg.sender_role === "mentee" ? "You" : "Mentor",
@@ -65,11 +67,47 @@ function InteractWithMentor() {
       .catch((error) => console.error("Error fetching mentor:", error));
   }, []);
 
+  useEffect(() => {
+    if (!conversationKey) return;
+
+    const ws = new WebSocket("ws://localhost:3001");
+
+    ws.onopen = () => {
+      console.log("WebSocket connection opened");
+
+      ws.send(JSON.stringify({ type: "subscribe", conversation_key: conversationKey }));
+    };
+
+    ws.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      console.log("WebSocket new message:", newMessage);
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          message: newMessage.message,
+          sentTime: new Date(newMessage.timestamp).toLocaleString(),
+          sender: newMessage.senderRole === "mentee" ? "You" : "Mentor",
+          direction: newMessage.senderRole === "mentee" ? "outgoing" : "incoming",
+        },
+      ]);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [conversationKey]);
+
   const handleSendMessage = async (messageText) => {
     if (messageText.trim()) {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
       const messageData = {
+        conversationKey,
         menteekey: user.userId,
         mentorkey: mentorKey,
         senderRole: user.role.toLowerCase(),
@@ -82,16 +120,6 @@ function InteractWithMentor() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(messageData),
         });
-
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            message: messageText,
-            sentTime: new Date().toLocaleString(),
-            sender: "You",
-            direction: "outgoing",
-          },
-        ]);
       } catch (error) {
         console.error("Error sending message:", error);
       }

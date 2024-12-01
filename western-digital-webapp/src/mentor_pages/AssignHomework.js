@@ -13,7 +13,7 @@ function AssignHomework() {
   const [dueTime, setDueTime] = useState('');
   const [selectedMentees, setSelectedMentees] = useState([]);
   const [mentees, setMentees] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem('user'));
+  const userInfo = JSON.parse(sessionStorage.getItem('user'));
   const mentorKey = userInfo.mentorkey;
 
   useEffect(() => {

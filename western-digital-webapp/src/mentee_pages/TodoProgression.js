@@ -22,8 +22,8 @@ function TodoProgression() {
   const [newReport, setNewReport] = useState("");
 
   useEffect(() => {
-    // Retrieve the menteekey from localStorage
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    // Retrieve the menteekey from sessionStorage
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const menteeKey = userInfo?.menteekey;
 
     if (menteeKey) {
@@ -52,7 +52,7 @@ function TodoProgression() {
 
   const handleAddReport = async (e) => {
     e.preventDefault();
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const menteeKey = userInfo?.menteekey;
 
     if (!menteeKey) {
@@ -103,7 +103,7 @@ function TodoProgression() {
     }
   };
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

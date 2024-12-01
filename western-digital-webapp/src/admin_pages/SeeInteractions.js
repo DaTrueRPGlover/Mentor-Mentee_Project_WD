@@ -51,7 +51,7 @@ function SeeInteractions() {
   }, [selectedMentor, selectedMentee]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

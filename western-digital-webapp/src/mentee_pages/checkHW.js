@@ -8,7 +8,7 @@ const CheckHW = () => {
   const [homeworkData, setHomeworkData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const userInfo = JSON.parse(localStorage.getItem('user'));
+  const userInfo = JSON.parse(sessionStorage.getItem('user'));
   const menteeKey = userInfo?.menteekey;
 
   useEffect(() => {

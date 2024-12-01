@@ -40,7 +40,7 @@ function MenteeMeetings() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const menteeInfo = JSON.parse(localStorage.getItem('user'));
+        const menteeInfo = JSON.parse(sessionStorage.getItem('user'));
         const userId = menteeInfo.userId;
         const [meetingsResponse, homeworkResponse] = await Promise.all([
           fetch(`http://localhost:3001/api/meetings/meetings?userId=${userId}`),
@@ -78,7 +78,7 @@ function MenteeMeetings() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

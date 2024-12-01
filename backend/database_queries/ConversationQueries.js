@@ -60,3 +60,25 @@ export const insertMessage = async (conversationKey, senderRole, messageText) =>
   console.log('Message inserted with ID:', result.insertId);
   return result.insertId;
 };
+
+// Here is the implementation of getMessagesByConversationKey
+export const getMessagesByConversationKey = async (conversationKey) => {
+  console.log('getMessagesByConversationKey called with', conversationKey);
+
+  const sql = `
+    SELECT 
+      message_id,
+      sender_role,
+      message_text,
+      timestamp AS message_time
+    FROM 
+      messages
+    WHERE 
+      conversation_key = ?
+    ORDER BY 
+      timestamp;
+  `;
+  const [rows] = await pool.execute(sql, [conversationKey]);
+  console.log('Messages retrieved:', rows);
+  return rows;
+};

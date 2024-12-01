@@ -178,7 +178,7 @@ function ViewProgressions() {
   }, [selectedMentor, selectedMeeting]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 
