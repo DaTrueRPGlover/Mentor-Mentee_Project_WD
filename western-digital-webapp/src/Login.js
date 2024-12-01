@@ -40,8 +40,8 @@ function Login() {
       )
       .then(({ status, body }) => {
         if (status === 200) {
-          // Store user info in localStorage
-          localStorage.setItem(
+          // Store user info in sessionStorage
+          sessionStorage.setItem(
             "user",
             JSON.stringify({
               userId: body.userid,

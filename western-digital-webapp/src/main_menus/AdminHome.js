@@ -12,11 +12,11 @@ function AdminHome() {
   const navigate = useNavigate();
 
   // Retrieve admin's name from local storage or context
-  const adminName = localStorage.getItem("adminName") || "Admin";
+  const adminName = sessionStorage.getItem("adminName") || "Admin";
 
   const handleLogout = () => {
     // Clear user data
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

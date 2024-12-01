@@ -18,7 +18,7 @@ function WriteMenteeProgression() {
   const [mentees, setMentees] = useState([]);
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const mentorKey = userInfo?.mentorkey;
 
     if (mentorKey) {
@@ -31,7 +31,7 @@ function WriteMenteeProgression() {
 
   useEffect(() => {
     if (selectedMentee) {
-      const userInfo = JSON.parse(localStorage.getItem("user"));
+      const userInfo = JSON.parse(sessionStorage.getItem("user"));
       const mentorKey = userInfo?.mentorkey;
 
       fetch(`http://localhost:3001/api/mentornotes/meetings/${mentorKey}/${selectedMentee}`)
@@ -45,7 +45,7 @@ function WriteMenteeProgression() {
 
   const handleAddReport = async (e) => {
     e.preventDefault();
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const mentorkey = userInfo?.mentorkey;
   
     if (!mentorkey) {
@@ -99,7 +99,7 @@ function WriteMenteeProgression() {
           <button
             className="logout-button"
             onClick={() => {
-              localStorage.clear();
+              sessionStorage.clear();
               navigate("/");
             }}
           >

@@ -11,10 +11,10 @@ import hw from "../assets/hw.png";
 
 function MentorHome() {
   const navigate = useNavigate();
-  const mentorName = localStorage.getItem("mentorName") || "Mentor";
+  const mentorName = sessionStorage.getItem("mentorName") || "Mentor";
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

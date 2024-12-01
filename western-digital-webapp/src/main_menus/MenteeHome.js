@@ -11,10 +11,10 @@ import hw from '../assets/hw.png';
 
 function MenteeHome() {
   const navigate = useNavigate();
-  const menteeName = localStorage.getItem("menteeName") || "Mentee";
+  const menteeName = sessionStorage.getItem("menteeName") || "Mentee";
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

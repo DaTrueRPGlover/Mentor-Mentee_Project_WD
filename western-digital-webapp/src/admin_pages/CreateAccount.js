@@ -65,7 +65,7 @@ function CreateAccount() {
 
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 

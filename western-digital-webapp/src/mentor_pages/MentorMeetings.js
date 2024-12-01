@@ -49,7 +49,7 @@ function MentorMeetings({ mentorkey }) {
   useEffect(() => {
     const fetchMentees = async () => {
       try {
-        const mentorinfo = JSON.parse(localStorage.getItem('user'));
+        const mentorinfo = JSON.parse(sessionStorage.getItem('user'));
         const response = await fetch(`http://localhost:3001/api/meetings/mentees?mentorkey=${mentorinfo.mentorkey}`);
         const data = await response.json();
         setMentees(data);
@@ -60,7 +60,7 @@ function MentorMeetings({ mentorkey }) {
 
     const fetchMeetings = async () => {
       try {
-        const mentorinfo = JSON.parse(localStorage.getItem("user"));
+        const mentorinfo = JSON.parse(sessionStorage.getItem("user"));
         const mentorkey = mentorinfo.mentorkey;
         const response = await fetch(`http://localhost:3001/api/meetings/meetings?userId=${mentorkey}`);
         const data = await response.json();
@@ -143,7 +143,7 @@ function MentorMeetings({ mentorkey }) {
       zoomPassword.trim()
     ) {
       const datetime = `${newDate}T${newTime}`;
-      const mentorinfo = JSON.parse(localStorage.getItem('user'));
+      const mentorinfo = JSON.parse(sessionStorage.getItem('user'));
 
       try {
         const response = await fetch('http://localhost:3001/api/meetings/create-meeting', {

@@ -16,10 +16,11 @@ function InteractWithMentee() {
   const [mentees, setMentees] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState("");
   const [menteeName, setMenteeName] = useState("");
+  const [conversationKey, setConversationKey] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
     if (!user || user.role.toLowerCase() !== "mentor") {
       console.error("User not logged in or not a mentor");
@@ -38,14 +39,14 @@ function InteractWithMentee() {
   useEffect(() => {
     if (!selectedMentee) return;
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(sessionStorage.getItem("user"));
     const menteekey = selectedMentee;
 
     // Fetch all messages between the selected mentee and the mentor
     fetch(`http://localhost:3001/api/messages?menteekey=${menteekey}&mentorkey=${user.userId}`)
       .then((response) => response.json())
       .then((data) => {
-        const formattedMessages = data.map((msg) => ({
+        const formattedMessages = data.messages.map((msg) => ({
           message: msg.message_text,
           sentTime: new Date(msg.message_time).toLocaleString(),
           sender: msg.sender_role === "mentee" ? "Mentee" : "Mentor",
@@ -54,15 +55,54 @@ function InteractWithMentee() {
         setMessages(formattedMessages);
         const mentee = mentees.find((m) => m.menteekey === menteekey);
         setMenteeName(mentee?.menteeName || "");
+        setConversationKey(data.conversationKey);
       })
       .catch((error) => console.error("Error fetching messages:", error));
   }, [selectedMentee, mentees]);
 
+  useEffect(() => {
+    if (!conversationKey) return;
+
+    const ws = new WebSocket("ws://localhost:3001");
+
+    ws.onopen = () => {
+      console.log("WebSocket connection opened");
+
+      ws.send(
+        JSON.stringify({ type: "subscribe", conversation_key: conversationKey })
+      );
+    };
+
+    ws.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      console.log("WebSocket new message:", newMessage);
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          message: newMessage.message,
+          sentTime: new Date(newMessage.timestamp).toLocaleString(),
+          sender: newMessage.senderRole === "mentor" ? "You" : "Mentee",
+          direction: newMessage.senderRole === "mentor" ? "outgoing" : "incoming",
+        },
+      ]);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [conversationKey]);
+
   const handleSendMessage = async (messageText) => {
     if (messageText.trim() && selectedMentee) {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
       const messageData = {
+        conversationKey,
         menteekey: selectedMentee,
         mentorkey: user.userId,
         senderRole: user.role.toLowerCase(),
@@ -75,16 +115,6 @@ function InteractWithMentee() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(messageData),
         });
-
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            message: messageText,
-            sentTime: new Date().toLocaleString(),
-            sender: "Mentor",
-            direction: "outgoing",
-          },
-        ]);
       } catch (error) {
         console.error("Error sending message:", error);
       }
@@ -92,7 +122,7 @@ function InteractWithMentee() {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 
