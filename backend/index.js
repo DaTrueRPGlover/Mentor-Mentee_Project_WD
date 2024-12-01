@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import { WebSocketServer } from "ws";
 
-// index.js
-
+// Import route modules
 import userRoutes from './routes/userRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import createRoutes from './routes/accountRoutes.js';
@@ -14,13 +13,13 @@ import menteeNotesRoutes from './routes/menteeNotesRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import relationshipRoutes from './routes/relationshipRoutes.js';
 import mentorNotesRoutes from './routes/mentorNotesRoutes.js';
-import mentorAvailabilityRoutes from '.routes/mentorAvailabilityRoutes.js';
+import mentorAvailabilityRoutes from './routes/mentorAvailabilityRoutes.js';
 
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
-// Use the imported routes
+// Use imported routes
 app.use('/api/users', userRoutes);
 app.use('/api/meetings', meetingRoutes);
 app.use('/api/accounts', createRoutes);
@@ -33,8 +32,6 @@ app.use('/api/mentees', menteeRoutes);
 app.use('/api/mentorNotes', mentorNotesRoutes);
 app.use('/api/mentorAvailability', mentorAvailabilityRoutes);
 
-
-// Start HTTP server
 const PORT = 3001;
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
@@ -42,11 +39,8 @@ const server = app.listen(PORT, () => {
 
 // Set up WebSocket server
 const wss = new WebSocketServer({ server });
-
-// Export the clients map for use in other files
 export const clients = new Map();
 
-// Handle WebSocket connections
 wss.on("connection", (ws) => {
   console.log("WebSocket connection established");
 
@@ -54,7 +48,6 @@ wss.on("connection", (ws) => {
     const data = JSON.parse(message);
     console.log("WebSocket received:", data);
 
-    // Subscribe client to a conversation
     if (data.type === "subscribe" && data.conversation_key) {
       let clientSet = clients.get(data.conversation_key);
       if (!clientSet) {
@@ -64,14 +57,11 @@ wss.on("connection", (ws) => {
       clientSet.add(ws);
       console.log("Client subscribed to conversation:", data.conversation_key);
     }
-
-    // Handle direct messages and broadcast to the correct clients (if needed)
   });
 
   ws.on("close", () => {
     console.log("WebSocket connection closed");
 
-    // Remove disconnected clients from all conversation sets
     for (const [conversation_key, clientSet] of clients.entries()) {
       if (clientSet.has(ws)) {
         clientSet.delete(ws);

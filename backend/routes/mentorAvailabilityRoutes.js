@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-// Route to get all availability for a mentor
+// Fetch availability for a specific mentor
 router.get('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
@@ -21,7 +21,7 @@ router.get('/mentor/:mentorkey/availability', async (req, res) => {
   }
 });
 
-// Route to get availability by day for a mentor
+// Fetch availability by day
 router.get('/mentor/:mentorkey/availability/:dayOfWeek', async (req, res) => {
   try {
     const { mentorkey, dayOfWeek } = req.params;
@@ -33,7 +33,7 @@ router.get('/mentor/:mentorkey/availability/:dayOfWeek', async (req, res) => {
   }
 });
 
-// Route to insert new availability for a mentor
+// Insert new availability
 router.post('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
@@ -46,7 +46,7 @@ router.post('/mentor/:mentorkey/availability', async (req, res) => {
   }
 });
 
-// Route to delete availability for a mentor
+// Delete availability
 router.delete('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
@@ -59,7 +59,7 @@ router.delete('/mentor/:mentorkey/availability', async (req, res) => {
   }
 });
 
-// Route to update availability for a mentor
+// Update availability
 router.put('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
