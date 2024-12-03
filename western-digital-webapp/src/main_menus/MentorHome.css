@@ -1,21 +1,12 @@
-/* MentorHome.css */
-
-/* General reset for margins and box-sizing */
+/* General Reset */
 * {
+  font-family: Arial, sans-serif;
   margin: 0;
   box-sizing: border-box;
+  padding: 0;
 }
 
-/* Title styling */
-.mentor-home .title {
-  margin-top: 15px;
-  font-size: large;
-  background-color: inherit;
-  padding: 5px 10px;
-  color: rgb(68, 67, 67);
-}
-
-/* Logo size */
+/* Logo */
 .mentor-home .logo {
   width: 150px;
   height: auto;
@@ -27,16 +18,17 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  font-family: Arial, sans-serif;
   text-align: center;
   justify-content: space-between;
 }
 
-/* Welcome message styling */
+/* Welcome message */
 .mentor-home .welcome-message {
   font-size: 32px;
+  font-weight: 900;
   text-align: center;
   margin: 20px 0;
+  margin-bottom: 5%;
   font-family: Tahoma, sans-serif;
 }
 
@@ -59,7 +51,7 @@
   justify-content: center;
 }
 
-/* Button container styles */
+/* Button container */
 .mentor-home .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -69,30 +61,6 @@
 }
 
 /* Circle button styles */
-.mentor-home .circle {
-  border-radius: 50%;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #7CAFB7; /* Set background color to the hover color */
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  margin: 0;
-  transition: background-color 0.3s;
-  width: 355px;
-  height: 355px;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center;    /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  text-align: center;
-  margin-bottom: 10%;
-  font-family: Tahoma, sans-serif;
-}
-
-/* Circle image size */
 .mentor-home .circle-image {
   width: 190px;
   height: auto;
@@ -100,12 +68,33 @@
   margin-bottom: 5px;
 }
 
+.mentor-home .circle {
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #7CAFB7;
+  color: rgb(68, 67, 67);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin: 0;
+  transition: transform 0.2s ease;
+  width: 355px;
+  height: 355px;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 10%;
+  border: none;
+  font-family: Tahoma, sans-serif;
+}
+
 /* Logout button styles */
 .mentor-home .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
-  background-color: #91BECD;
+  background-color: #7CAFB7;
   font-size: 1.2rem;
   font-weight: bold;
   color: rgb(68, 67, 67);
@@ -118,10 +107,16 @@
 }
 
 .mentor-home .logout-button:hover {
-  background-color: #7CAFB7; /* Match hover color */
+  background-color: #7CAFB7;
 }
 
-/* Responsive styles for smaller screens */
+/* Footer */
+.mentor-home .footer {
+  margin-bottom: 2%;
+  font-family: Tahoma, sans-serif;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .mentor-home .logout-button {
     font-size: 1rem;
@@ -136,4 +131,105 @@
     right: 10px;
     top: 10px;
   }
+}
+
+/* Slider Section */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
+
+.slider-container {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.slider-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Optional: Dark Mode */
+.dark-mode {
+  background-color: #202225; /* Background for dark mode */
+  color: #91BECD; /* General text color for dark mode */
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode button,
+.dark-mode a {
+  color: #91BECD; /* Text color for headings, buttons, and links */
+}
+
+/* Override specific elements if needed */
+.dark-mode .logout-button {
+  color: #242526; /* Text color for logout button */
+  background-color: #91BECD; /* Button background for contrast */
+}
+
+/* Footer adjustments for dark mode */
+.dark-mode .footer {
+  color: #91BECD; /* Footer text color */
+}
+
+.slider-section {
+  margin-top: 5px; /* Increase or decrease the spacing */
+  margin-right: 120px;
+  text-align: center; /* Center-align the slider */
+}
+
+/* Dark Mode Button Colors */
+.dark-mode .mentor-home button,
+.dark-mode .mentor-home .logout-button,
+.dark-mode .mentor-home .circle {
+  background-color: rgb(48, 48, 74) !important;
+  color: #91BECD; /* Light text color */
+}
+
+/* Dark Mode Hover Effect */
+.dark-mode .mentor-home button:hover,
+.dark-mode .mentor-home .logout-button:hover,
+.dark-mode .mentor-home .circle:hover {
+  background-color: #444; /* Lighter background on hover */
 }
