@@ -138,7 +138,7 @@
 
 .view-progression .form-box1 {
   width: 100%;
-  background-color: rgb(48, 48, 74) !important;
+  background-color: #2f3136a5 !important;
   border: 1px solid #91BECD;
   border-radius: 8px;
   padding: 20px;
@@ -151,7 +151,7 @@
   height: 630px;
   border: 2px solid #4c4c4c;
   border-width: 5px;
-  background-color: rgb(48, 48, 74) !important;
+  background-color: #2f3136a5 !important;
   margin: 20px auto;
   display: flex;
   flex-direction: column; /* Ensure items are stacked vertically */
