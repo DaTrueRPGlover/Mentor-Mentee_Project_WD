@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import framer-motion
 import "./MenteeHome.css";
@@ -17,7 +17,12 @@ function MenteeHome() {
     sessionStorage.clear();
     navigate("/");
   };
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
   return (
     <motion.div
       className="mentee-home"
@@ -37,6 +42,18 @@ function MenteeHome() {
           >
             Logout
           </motion.button>
+          <div className="slider-section">
+            <span role="img" aria-label="Sun"></span>
+            <label className="slider-container">
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={toggleTheme}
+              />
+              <span className="slider"></span>
+            </label>
+            <span role="img" aria-label="Moon"></span>
+          </div>
         </div>
         <h1 className="welcome-message">Welcome Mentee {menteeName}</h1>
       </header>

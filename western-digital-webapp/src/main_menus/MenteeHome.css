@@ -1,19 +1,10 @@
-/* MenteeHome.css */
-
+/* General Reset */
 * {
   margin: 0;
   box-sizing: border-box;
 }
 
-.mentee-home .title {
-  margin-top: 15px;
-  font-size: large;
-  background-color: inherit ;
-  padding: 5px 10px;
-  color: rgb(68, 67, 67);
-  font-family: Tahoma, sans-serif;
-}
-
+/* Logo */
 .mentee-home .logo {
   width: 150px;
   height: auto;
@@ -30,14 +21,15 @@
   justify-content: space-between;
 }
 
+/* Welcome message */
 .mentee-home .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
-  color: black;
   font-family: Tahoma, sans-serif;
 }
 
+/* Header styles */
 .mentee-home .header-container {
   display: flex;
   flex-direction: column;
@@ -46,7 +38,6 @@
   padding-top: 20px;
 }
 
-/* Header styles */
 .mentee-home .top-header {
   display: flex;
   justify-content: space-between;
@@ -74,6 +65,7 @@
   width: 100%;
 }
 
+/* Circle button styles */
 .mentee-home .circle {
   border-radius: 50%;
   border: none;
@@ -85,27 +77,21 @@
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  margin: 0;
   transition: background-color 0.3s;
   width: 355px;
   height: 355px;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center;    /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
+  flex-direction: column;
   text-align: center;
   margin-bottom: 10%;
   font-family: Tahoma, sans-serif;
 }
 
 .mentee-home .circle-image {
-  width: 190px; /* Adjust image size to fit inside the button */
+  width: 190px;
   height: auto;
   background-color: inherit;
   margin-bottom: 5px;
-  z-index: 0; /* Place image behind the button background */
 }
-
-
 
 /* Logout button styles */
 .mentee-home .logout-button {
@@ -125,7 +111,13 @@
 }
 
 .mentee-home .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color for logout button */
+  background-color: #7CAFB7;
+}
+
+/* Footer */
+.mentee-home .footer {
+  margin-bottom: 2%;
+  font-family: Tahoma, sans-serif;
 }
 
 /* Responsive styles */
@@ -143,4 +135,47 @@
     right: 10px;
     top: 10px;
   }
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #202225; /* Background for dark mode */
+  color: #91BECD; /* General text color for dark mode */
+}
+
+/* Text color for headings, buttons, and links */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode button,
+.dark-mode a {
+  color: #91BECD;
+}
+
+/* Logout button styling in dark mode */
+.dark-mode .logout-button {
+  color: #242526; /* Text color for logout button */
+  background-color: #91BECD; /* Button background for contrast */
+}
+
+/* Footer adjustments for dark mode */
+.dark-mode .footer {
+  color: #91BECD; /* Footer text color */
+}
+
+/* Dark Mode Button Colors */
+.dark-mode .mentee-home button,
+.dark-mode .mentee-home .logout-button,
+.dark-mode .mentee-home .circle {
+  background-color: rgb(48, 48, 74) !important;
+  color: #91BECD; /* Light text color */
+}
+
+/* Dark Mode Hover Effect */
+.dark-mode .mentee-home button:hover,
+.dark-mode .mentee-home .logout-button:hover,
+.dark-mode .mentee-home .circle:hover {
+  background-color: #444; /* Lighter background on hover */
 }
