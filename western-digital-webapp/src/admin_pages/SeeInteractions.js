@@ -5,7 +5,6 @@ import {
   ChatContainer,
   MessageList,
   Message,
-  MessageInput,
   ConversationHeader,
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
@@ -21,6 +20,7 @@ function SeeInteractions() {
   const [selectedMentee, setSelectedMentee] = useState("");
 
   useEffect(() => {
+    // Fetch mentors and mentees
     fetch("http://localhost:3001/api/mentors")
       .then((response) => response.json())
       .then((data) => setMentors(data))
@@ -35,12 +35,13 @@ function SeeInteractions() {
   useEffect(() => {
     if (!selectedMentor || !selectedMentee) return;
 
+    // Fetch messages when mentor and mentee are selected
     fetch(
       `http://localhost:3001/api/messages?mentorkey=${selectedMentor}&menteekey=${selectedMentee}`
     )
       .then((response) => response.json())
-      .then((data) => {
-        const formattedMessages = data.map((msg) => ({
+      .then(({ messages }) => {
+        const formattedMessages = messages.map((msg) => ({
           sender: msg.sender_role === "mentee" ? "Mentee" : "Mentor",
           content: msg.message_text,
           timestamp: new Date(msg.message_time).toLocaleString(),
@@ -72,7 +73,6 @@ function SeeInteractions() {
         <div className="purp">
           <h1 className="welcome-message">View Interactions</h1>
         </div>
-        
       </header>
 
       <div className="search">
