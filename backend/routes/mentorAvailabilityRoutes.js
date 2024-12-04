@@ -1,3 +1,4 @@
+// mentorAvailabilityRoutes.js
 import express from 'express';
 import { 
   getMentorAvailabilityByMentorKey, 
@@ -5,7 +6,7 @@ import {
   insertMentorAvailability, 
   deleteMentorAvailability, 
   updateMentorAvailability 
-} from '../database_queries/MentorAvailabilityQueries.js';
+} from '../database_queries/MentorAvailabilityQueries.js'
 
 const router = express.Router();
 
