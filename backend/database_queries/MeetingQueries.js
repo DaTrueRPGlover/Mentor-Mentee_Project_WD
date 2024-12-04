@@ -1,3 +1,4 @@
+// MeetingQueries.js
 import pool from '../database.js';
 
 export const getMeetingsForUser = async (userId) => {
