@@ -10,6 +10,7 @@ import LockSharpIcon from '@mui/icons-material/LockSharp';
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion from framer-motion
 import "./Login.css"; // Import the CSS file
+import { parseJSON } from "date-fns";
 
 const logo = require("./assets/WDC.png");
 
@@ -52,7 +53,6 @@ function Login() {
               menteeList: body.menteeList || [],
             })
           );
-
           // Trigger upward movement after successful login
           setMoveUp(true);
 

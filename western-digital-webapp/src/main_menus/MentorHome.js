@@ -11,7 +11,11 @@ import hw from "../assets/hw.png";
 
 function MentorHome() {
   const navigate = useNavigate();
-  const mentorName = sessionStorage.getItem("mentorName") || "Mentor";
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const mentorName = name || "Mentor";
 
   const handleLogout = () => {
     sessionStorage.clear();
