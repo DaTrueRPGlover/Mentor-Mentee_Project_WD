@@ -97,22 +97,44 @@ function WriteMenteeProgression() {
   };
   return (
     <div className="write-mentee-progression">
-            <AppBar position="static" color="primary">
-        <Toolbar>
-        <Button
-            className="logo-button"
-            onClick={() => navigate("/mentor-home")}
-          >
-            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
-            </Button>
+        <AppBar position="static" color="primary">
+  <Toolbar sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+    <Button
+      className="logo-button"
+      onClick={() => navigate("/mentor-home")}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        position: 'absolute',
+        left: 16, 
+      }}
+    >
+      <img src={logo} alt="Logo" style={{ height: 40 }} />
+    </Button>
 
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+    <Typography 
+      variant="h6" 
+      sx={{ 
+        flexGrow: 1, 
+        textAlign: 'center', 
+      }}
+    >
+      Write Mentee Progression
+    </Typography>
 
-              Write Mentee Progression
-            </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-          </Toolbar>
-        </AppBar>
+  
+    <Button
+      color="inherit"
+      onClick={handleLogout}
+      sx={{
+        position: 'absolute',
+        right: 16,
+      }}
+    >
+      Logout
+    </Button>
+  </Toolbar>
+</AppBar>
 
       <div className="box">
      
