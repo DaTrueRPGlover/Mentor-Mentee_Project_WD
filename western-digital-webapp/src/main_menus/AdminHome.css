@@ -234,3 +234,10 @@ input:checked + .slider:before {
   background-color: #444; /* Lighter background on hover */
 }
 
+.custom-appbar {
+  background-color: rgba(103, 86, 86, 0.662) !important;
+  color: white; /* Adjust text color if needed for contrast */
+}
+
+
+

@@ -43,35 +43,26 @@ function AdminHome() {
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
 
-      <AppBar position="static" color="primary">
-        <Toolbar>
-
-           
-            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
-       
-
-            <div className="slider-section">
-            <span role="img" aria-label="Sun">
-
-            </span>
-            <label className="slider-container">
-              <input
-                type="checkbox"
-                checked={isDarkMode}
-                onChange={toggleTheme}
-              />
-              <span className="slider"></span>
-            </label>
-            <span role="img" aria-label="Moon">
-
-            </span>
-          </div>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-          </Toolbar>
-        </AppBar>
-         
-  
-
+<AppBar position="static" className="custom-appbar">
+  <Toolbar>
+    <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+    <div className="slider-section">
+      <span role="img" aria-label="Sun"></span>
+      <label className="slider-container">
+        <input
+          type="checkbox"
+          checked={isDarkMode}
+          onChange={toggleTheme}
+        />
+        <span className="slider"></span>
+      </label>
+      <span role="img" aria-label="Moon"></span>
+    </div>
+    <Button className= ".logout-button" color="inherit" onClick={handleLogout}>
+      Logout
+    </Button>
+  </Toolbar>
+</AppBar>
         <h1 className="welcome-message">Welcome Admin {adminName}</h1>
 
 

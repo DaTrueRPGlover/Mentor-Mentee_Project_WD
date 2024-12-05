@@ -76,29 +76,35 @@ function CreateAccount() {
 
   return (
     <div className="create-account">
-           <AppBar position="static" color="primary">
-        <Toolbar>
-        <Button
-            className="logo-button"
-            onClick={() => navigate("/admin-home")}
-          >
-            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
-            </Button>
+<AppBar position="static" className="custom-appbar">
+  <Toolbar>
+    {/* Logo on the left */}
+    <Button
+      className="logo-button"
+      onClick={() => navigate("/admin-home")}
+    >
+      <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+    </Button>
 
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+    {/* Centered welcome message */}
+    <Typography variant="h6" sx={{ flexGrow: 1, textAlign: 'center', fontWeight: 'bold', color: '#91BECD' }}>
+      Create Account
+    </Typography>
 
-             Create Account
-            </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-          </Toolbar>
-        </AppBar>
+    {/* Logout button on the far right */}
+    <Button color="inherit" onClick={handleLogout} className="logout-button">
+      Logout
+    </Button>
+  </Toolbar>
+</AppBar>
+
       
       {/* <div className="rectangle" > */}
         <div className="whiterectangle" >
           <form className="account-form" onSubmit={handleCreateAccount}>
-            <h1 className="welcome-message1">
+            {/* <h1 className="welcome-message1">
               Create Account
-            </h1>
+            </h1> */}
             <input className='input1' 
               type="text" 
               value={first} 
