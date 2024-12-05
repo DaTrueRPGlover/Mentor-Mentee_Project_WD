@@ -8,8 +8,15 @@ import {
   MessageList,
   Message,
   MessageInput,
+ 
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
 
 function InteractWithMentee() {
   const [messages, setMessages] = useState([]);
@@ -128,19 +135,25 @@ function InteractWithMentee() {
 
   return (
     <div className="interact-with-mentee">
-      <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/mentor-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
-        </div>
-      </header>
+           <AppBar position="static" color="primary">
+        <Toolbar>
+        <Button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
+
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+              Interact With Mentee
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
       
         <div className="box">
-        <div className="container1">
-          <h1 className="welcome-message">Interact with Mentees</h1>
-        </div>
+      
         {mentees.length === 0 && (
           <p className="no-mentees-message">You have no mentees assigned.</p>
         )}

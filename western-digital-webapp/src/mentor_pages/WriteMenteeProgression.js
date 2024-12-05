@@ -5,6 +5,12 @@ import logo from "../assets/WDC.png";
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import MoodIcon from '@mui/icons-material/Mood';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
 
 function WriteMenteeProgression() {
   const navigate = useNavigate();
@@ -85,34 +91,31 @@ function WriteMenteeProgression() {
       console.error("Error pushing new report:", error);
     }
   };
-
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/");
+  };
   return (
     <div className="write-mentee-progression">
-      <header className="header-container">
-        <div className="top-header">
-          <button
+            <AppBar position="static" color="primary">
+        <Toolbar>
+        <Button
             className="logo-button"
             onClick={() => navigate("/mentor-home")}
           >
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button
-            className="logout-button"
-            onClick={() => {
-              sessionStorage.clear();
-              navigate("/");
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      
-      </header>
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
+
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+              Write Mentee Progression
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
 
       <div className="box">
-      <div className="container1">
-        <h1 className="welcome-message">Select Mentees and Meeting</h1>
-      </div>
+     
  
 
           {/* Mentee Dropdown */}
