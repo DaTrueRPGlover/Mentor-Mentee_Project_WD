@@ -7,6 +7,12 @@ import talk from "../assets/talk.png";
 import twopeople from "../assets/twopeople.png";
 import one from "../assets/one.png";
 import notes from "../assets/notes2.0.png";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -36,18 +42,15 @@ function AdminHome() {
       exit={{ y: "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      <header className="header-container">
-        <div className="top-header">
-          <img src={logo} alt="Logo" className="logo" />
-          <motion.button
-            className="logout-button"
-            onClick={handleLogout}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
-            Logout
-          </motion.button>
-          <div className="slider-section">
+
+      <AppBar position="static" color="primary">
+        <Toolbar>
+
+           
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+       
+
+            <div className="slider-section">
             <span role="img" aria-label="Sun">
 
             </span>
@@ -63,10 +66,14 @@ function AdminHome() {
 
             </span>
           </div>
-        </div>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
+         
+  
 
         <h1 className="welcome-message">Welcome Admin {adminName}</h1>
-      </header>
+
 
       <main className="main-content">
         <div className="button-container">

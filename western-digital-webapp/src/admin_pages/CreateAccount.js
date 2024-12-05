@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import './CreateAccount.css';
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/WDC.png';
-
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
 function CreateAccount() {
   //Initialize navigate
   const navigate = useNavigate();
@@ -71,24 +76,22 @@ function CreateAccount() {
 
   return (
     <div className="create-account">
-      <header className="header-container">
-        <div className="top-header">
-          <button
+           <AppBar position="static" color="primary">
+        <Toolbar>
+        <Button
             className="logo-button"
             onClick={() => navigate("/admin-home")}
           >
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
 
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-        
-        {/* <div className="container">
-          <h1 className="welcome-message">Create Mentor/Mentee Account</h1>
-        </div> */}
-      </header>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+             Create Account
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
       
       {/* <div className="rectangle" > */}
         <div className="whiterectangle" >

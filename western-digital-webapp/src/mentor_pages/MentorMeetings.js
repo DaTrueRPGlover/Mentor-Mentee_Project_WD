@@ -245,15 +245,22 @@ function MentorMeetings() {
 
   return (
     <div>
-      <AppBar position="static" color="primary">
+        <AppBar position="static" color="primary">
         <Toolbar>
-          <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Mentor Meetings
-          </Typography>
-          <Button color="inherit" onClick={handleLogout}>Logout</Button>
-        </Toolbar>
-      </AppBar>
+        <Button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
+
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+              Mentor Meetings
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
       <Container sx={{ mt: 4 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Manage Your Availability

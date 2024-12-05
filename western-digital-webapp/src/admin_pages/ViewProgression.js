@@ -6,6 +6,12 @@ import logo from '../assets/WDC.png';
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import MoodIcon from '@mui/icons-material/Mood';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
 
 function ViewProgressions() {
   const navigate = useNavigate();
@@ -185,26 +191,26 @@ function ViewProgressions() {
   return (
     <div className="view-progression">
 
-    <header className="header-container">
-      <div className="top-header">
-        <button
-          className="logo-button"
-          onClick={() => navigate("/admin-home")}
-        >
-          <img src={logo} alt="Logo" className="logo" />
-        </button>
+<AppBar position="static" color="primary">
+        <Toolbar>
+        <Button
+            className="logo-button"
+            onClick={() => navigate("/admin-home")}
+          >
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
 
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    </header>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+              View Progression
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
 
       {/* Mentee selection */}
 <div className="box">
-<div className="container1">
-        <h1 className="welcome-message">View Progression</h1>
-      </div>
+
   <div className="main-content">
   {/* Mentor and Mentee Dropdowns Side by Side */}
   <div className="mentor-mentee-container">

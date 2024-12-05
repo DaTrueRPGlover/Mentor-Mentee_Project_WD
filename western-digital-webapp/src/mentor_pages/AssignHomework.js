@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './AssignHomework.css';
 import logo from '../assets/WDC.png';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+}  from "@mui/material";
 
 function AssignHomework() {
   const navigate = useNavigate();
@@ -86,17 +92,30 @@ function AssignHomework() {
     );
   };
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/");
+  };
+
+
   return (
     <div className="assign-hw">
-      <header className="header-container">
-        <div className="top-header">
-          <button className="logo-button" onClick={() => navigate("/mentor-home")}>
-            <img src={logo} alt="Logo" className="logo" />
-          </button>
-          <button className="logout-button" onClick={() => navigate("/")}>Logout</button>
-        </div>
-        <h1 className="welcome-message">Assign Homework to Mentees</h1>
-      </header>
+           <AppBar position="static" color="primary">
+        <Toolbar>
+        <Button
+            className="logo-button"
+            onClick={() => navigate("/mentor-home")}
+          >
+            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
+            </Button>
+
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+
+            Assign Homework
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </Toolbar>
+        </AppBar>
 
       <div className="homework-body">
         <div className="homework-form">
