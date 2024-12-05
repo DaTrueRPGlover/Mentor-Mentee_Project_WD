@@ -16,8 +16,6 @@ import {
   DialogActions,
   Box,
   TextField,
-  Select,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -91,15 +89,19 @@ function MentorMeetings() {
         try {
           const response = await fetch(`http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/blackout-dates`);
           const data = await response.json();
-          const blackoutEvents = data.map(bd => ({
-            title: 'Blackout Date',
-            start: new Date(bd.date),
-            end: new Date(bd.date),
-            allDay: true,
-            reason: bd.reason,
-            type: 'blackout',
-            date: bd.date, // Added date property for easy comparison
-          }));
+          const blackoutEvents = data.map(bd => {
+            const [year, month, day] = bd.date.split('-').map(Number);
+            const date = new Date(year, month - 1, day);
+            return {
+              title: 'Blackout Date',
+              start: date,
+              end: date,
+              allDay: true,
+              reason: bd.reason,
+              type: 'blackout',
+              date: bd.date,
+            };
+          });
           setEvents(prev => [...prev.filter(event => event.type !== 'blackout'), ...blackoutEvents]);
         } catch (error) {
           console.error('Error fetching blackout dates:', error);
@@ -126,7 +128,6 @@ function MentorMeetings() {
 
   const handleAddBlackoutDate = async () => {
     if (blackoutDate && blackoutReason) {
-      // Check if the date already has a blackout date
       const existingBlackout = events.find(event =>
         event.type === 'blackout' &&
         event.start.toDateString() === new Date(blackoutDate).toDateString()
@@ -146,12 +147,14 @@ function MentorMeetings() {
           }),
         });
         if (response.ok) {
+          const [year, month, day] = blackoutDate.split('-').map(Number);
+          const date = new Date(year, month - 1, day);
           setEvents(prev => [
             ...prev,
             {
               title: 'Blackout Date',
-              start: new Date(blackoutDate),
-              end: new Date(blackoutDate),
+              start: date,
+              end: date,
               allDay: true,
               reason: blackoutReason,
               type: 'blackout',
