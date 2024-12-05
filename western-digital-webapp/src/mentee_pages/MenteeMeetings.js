@@ -46,6 +46,8 @@ function MenteeMeetings() {
   const [selectedDate, setSelectedDate] = useState('');
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newTime, setNewTime] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -70,8 +72,8 @@ function MenteeMeetings() {
           end: new Date(new Date(meeting.datetime).getTime() + 60 * 60 * 1000),
           type: 'meeting',
           mentor_name: meeting.mentor_name,
-          zoomLink: meeting.zoom_link,
-          zoomPassword: meeting.zoom_password,
+          zoomLink: meeting.meeting_link,
+          zoomPassword: meeting.meeting_password,
           meetingKey: meeting.meetingkey,
         }));
 
@@ -242,6 +244,35 @@ function MenteeMeetings() {
     }
   };
 
+  const handleRescheduleMeeting = async () => {
+    const newDateTime = `${newDate}T${newTime}`;
+    try {
+      const response = await fetch('http://localhost:3001/api/meetings/reschedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meetingKey: selectedEvent.meetingKey, newDateTime }),
+      });
+
+      if (response.status === 409) {
+        alert('Time conflict! Please select a different time.');
+      } else if (response.ok) {
+        setEvents(events.map(event =>
+          event.meetingKey === selectedEvent.meetingKey
+            ? { ...event, start: new Date(newDateTime), end: new Date(new Date(newDateTime).getTime() + 60 * 60 * 1000) }
+            : event
+        ));
+        setSelectedEvent(null);
+        setNewDate('');
+        setNewTime('');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error rescheduling meeting.');
+      }
+    } catch (error) {
+      console.error('Error rescheduling meeting:', error);
+    }
+  };
+
   return (
     <div>
       <AppBar position="static">
@@ -268,12 +299,16 @@ function MenteeMeetings() {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500, marginTop: '20px' }}
-          onSelectEvent={(event) => setSelectedEvent(event)}
+          onSelectEvent={(event) => {
+            setSelectedEvent(event);
+            setNewDate('');
+            setNewTime('');
+          }}
         />
       </div>
 
       {selectedEvent && (
-        <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)}>
+        <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
           <DialogTitle>
             {selectedEvent.type === 'meeting'
               ? `Meeting with ${selectedEvent.mentor_name}`
@@ -286,6 +321,23 @@ function MenteeMeetings() {
                 <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
                 <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
                 <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
+                <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
+                <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                  <TextField
+                    type="date"
+                    value={newDate}
+                    onChange={(e) => setNewDate(e.target.value)}
+                    label="New Date"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <TextField
+                    type="time"
+                    value={newTime}
+                    onChange={(e) => setNewTime(e.target.value)}
+                    label="New Time"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Box>
               </>
             ) : (
               <>
@@ -295,7 +347,14 @@ function MenteeMeetings() {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
+            {selectedEvent.type === 'meeting' ? (
+              <>
+                <Button onClick={handleRescheduleMeeting} color="primary">Reschedule</Button>
+                <Button onClick={() => setSelectedEvent(null)} color="secondary">Close</Button>
+              </>
+            ) : (
+              <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
+            )}
           </DialogActions>
         </Dialog>
       )}
