@@ -135,15 +135,19 @@ function InteractWithMentee() {
           </button>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
-        <div className="container">
+      </header>
+      
+        <div className="box">
+        <div className="container1">
           <h1 className="welcome-message">Interact with Mentees</h1>
         </div>
         {mentees.length === 0 && (
           <p className="no-mentees-message">You have no mentees assigned.</p>
         )}
         {mentees.length > 0 && (
-          <div className="mentee-selection">
-            <label>Select a Mentee:</label>
+          
+          <div className="dropdown-container">
+            <label htmlFor="meeting-select-mentee">Select a Mentee:</label>
             <select
               value={selectedMentee}
               onChange={(e) => setSelectedMentee(e.target.value)}
@@ -157,7 +161,7 @@ function InteractWithMentee() {
             </select>
           </div>
         )}
-      </header>
+    
 
       {selectedMentee && (
         <div className="chat-container">
@@ -185,6 +189,8 @@ function InteractWithMentee() {
         </div>
       )}
     </div>
+      </div>
+
   );
 }
 

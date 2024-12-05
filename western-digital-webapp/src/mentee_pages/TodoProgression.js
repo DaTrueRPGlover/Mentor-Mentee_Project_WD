@@ -122,15 +122,16 @@ function TodoProgression() {
         </button>
       </div>
 
-      <div className="container">
-        <h1 className="welcome-message">To-Do/Progression</h1>
-      </div>
+
     </header>
 
+      <div className="box">
+      <div className="container1">
+        <h1 className="welcome-message">To-Do/Progression</h1>
+      </div>
    
-    <div className="content-container">
-        <div className="form-section">
-          <div className="form-box">
+      <div className="main-content">
+          <div className="dropdown-container">
             <label htmlFor="meetingSelect">Select Meeting:</label>
             <select
               id="meetingSelect"
@@ -153,6 +154,8 @@ function TodoProgression() {
                 <EventBusyOutlinedIcon className="form-title-icon" />
                 <p>Communication</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="communication-very-helpful"
@@ -184,7 +187,8 @@ function TodoProgression() {
                 onChange={(e) => setCommunication(e.target.value)}
               />
               <label htmlFor="communication-not-good">Not Helpful</label>
-            </div>
+              </div>
+              </div>
           </div>
 
           {/* Influence Section */}
@@ -194,6 +198,8 @@ function TodoProgression() {
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Influence</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="influence-very-helpful"
@@ -226,7 +232,8 @@ function TodoProgression() {
               />
               <label htmlFor="influence-not-good">Not Helpful</label>
             </div>
-          </div>
+            </div>
+            </div>
 
           {/* Managing Projects Section */}
           <div className="form-box">
@@ -235,6 +242,8 @@ function TodoProgression() {
                 <MoodIcon className="form-title-icon" />
                 <p>Managing Projects</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="managingProjects-very-helpful"
@@ -268,7 +277,8 @@ function TodoProgression() {
                 onChange={(e) => setManagingProjects(e.target.value)}
               />
               <label htmlFor="managingProjects-not-good">Not Helpful</label>
-            </div>
+              </div>
+              </div>
           </div>
 
           {/* Innovation Section */}
@@ -278,6 +288,8 @@ function TodoProgression() {
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Innovation</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="innovation-very-helpful"
@@ -309,7 +321,8 @@ function TodoProgression() {
                 onChange={(e) => setInnovation(e.target.value)}
               />
               <label htmlFor="innovation-not-good">Not Helpful</label>
-            </div>
+              </div>
+              </div>
           </div>
 
           {/* Emotional Intelligence Section */}
@@ -319,6 +332,8 @@ function TodoProgression() {
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Emotional Intelligence</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="emotionalIntelligence-very-helpful"
@@ -354,7 +369,8 @@ function TodoProgression() {
               <label htmlFor="emotionalIntelligence-not-good">
                 Not Helpful
               </label>
-            </div>
+              </div>
+              </div>
           </div>
 
           {/* Decision Making Section */}
@@ -364,6 +380,8 @@ function TodoProgression() {
                 <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
                 <p>Decision Making</p>
               </div>
+              <div className="radio-options">
+
               <input
                 type="radio"
                 id="decisionMaking-very-helpful"
@@ -395,7 +413,8 @@ function TodoProgression() {
                 onChange={(e) => setDecisionMaking(e.target.value)}
               />
               <label htmlFor="decisionMaking-not-good">Not Helpful</label>
-            </div>
+              </div>
+              </div>
           </div>
 
           <div className="comment-container">
@@ -411,6 +430,7 @@ function TodoProgression() {
       </div>
       </div>
       </div>
+ 
   );
 }
 
