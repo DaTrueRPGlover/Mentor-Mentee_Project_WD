@@ -140,13 +140,17 @@ function InteractWithMentor() {
             Logout
           </button>
         </div>
-        <div className="container">
+
+      </header>
+
+      <div className="box">
+      <div className="container1">
           <h1 className="welcome-message">Interact With Mentor</h1>
           {mentorName && (
             <p className="mentor-name">Chatting with: {mentorName}</p>
           )}
         </div>
-      </header>
+
       {mentorKey && (
         <div className="chat-container">
           <MainContainer>
@@ -175,10 +179,13 @@ function InteractWithMentor() {
             </ChatContainer>
           </MainContainer>
         </div>
+        
       )}
       {!mentorKey && (
         <p className="no-mentor-message">You have no mentor assigned.</p>
       )}
+          </div>
+
     </div>
   );
 }

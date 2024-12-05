@@ -57,6 +57,33 @@
   resize: none; /* Disable resizing */
 }
 
+.assign-mentor .box {
+  width: 800px;
+  height: 630px;
+  border: 2px solid #4c4c4c;
+  border-width: 5px;
+  background-color: #2f3136a5 !important;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column; /* Ensure items are stacked vertically */
+  align-items: center;
+  justify-content: flex-start; /* Align items to the top */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  padding: 20px; /* Add padding for spacing */
+}
+
+.assign-mentor .welcome-message {
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+  background-color: inherit;
+  color: #91BECD !important;
+  font-family: Tahoma, sans-serif;
+}
+
 .message-input textarea {
   width: 80%;
   height: 60px;
