@@ -7,6 +7,7 @@
   font-family: Arial, sans-serif;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
 }
 
 /* Styling for the custom AppBar */
@@ -57,18 +58,14 @@
 .create-account .whiterectangle {
   width: 500px;
   height: 560px;
-  border: 2px solid #4c4c4c;
-  border-width: 5px;
-  background-color: #2f3136a5 !important;
   margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   backdrop-filter: blur(5px);
   transition: transform 0.3s;
-  margin-bottom: 40px;
+  margin-top: 50px;
 }
 
 /* Styling for the account creation form */
@@ -90,7 +87,7 @@
   padding: 10px;
   border-radius: 10px;
   font-family: Tahoma, sans-serif;
-  background-color: rgb(93, 93, 108) !important;
+  background-color: white !important;
   color: #91BECD !important;
 }
 
@@ -211,4 +208,164 @@
   align-items: center;
   width: 100%;
   padding: 0 20px;
+}
+
+
+.create-account .sidebarC {
+  width: 100px; /* Sidebar width */
+  height: 80vh; /* Sidebar height */
+  background-color: #b9bec0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed; /* Sticks sidebar to the left */
+  left: 20px; /* Margin space from the very left */
+  top: 54%; /* Center sidebar vertically */
+  transform: translateY(-50%);
+}
+
+.create-account .nav-buttonsC {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between navigation buttons */
+}
+.create-account .icon img {
+  width: 40px;
+  height: auto;
+}
+.create-account .icon {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-account .icon1 {
+  width: 70px;
+  height: 70px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.create-account .icon1 img {
+  width: 40px;
+  height: auto;
+}
+
+.create-account .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 900;;
+  color: #333;
+}
+.create-account .logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}
+.create-account  .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.create-account .welcome-box-containerA {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+}
+
+/* Welcome Box Styling */
+.create-account .welcome-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 140px; /* Custom height for welcome box */
+}
+
+/* New Box Styling */
+.create-account .new-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 540px; /* Custom height for new box */
+
+}
+
+.create-account h2,
+.create-account .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.create-account .welcome-boxA p,
+.create-account .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.create-account .content-wrapperVA {
+  position: fixed;
+  right: 700px;
+  top: 620px;
+
+  transform: translateY(-50%);
+  width: 400px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+
+  /* Editable height and width */
+  height: 1000px; /* Change this value */
+  width: 600px;  /* Change this value */
+  margin-right: 50px;
+}
+
+
+/* Styling for Individual Items in Content Wrapper */
+.create-account .content-wrapperVA > * {
+  /* flex: 1; */
+  max-width: 100%; /* Prevent items from stretching too much */
+}
+
+.create-account .chat-boxA {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start; /* Align content at the top */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width inside its container */
+  height: 688px;
+  background-color: #b9bec0;
 }

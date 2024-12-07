@@ -12,7 +12,8 @@
 }
 
 .center-container {
-  background-color: #91BECD;
+  background-color: #E0E0E0;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;

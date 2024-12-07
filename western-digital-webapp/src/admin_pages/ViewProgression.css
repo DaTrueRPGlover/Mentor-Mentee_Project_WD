@@ -1,7 +1,15 @@
 /* Header Styles */
 .view-progression{
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center; /* Center all content horizontally */
+  position: fixed;
+  justify-content: space-between;
+
 }
 
 .view-progression .header-container {
@@ -49,20 +57,6 @@
   width: 150px;
   height: auto;
 }
-
-/* .container1 {
-  background-color: #4c4c4c;
-  color: white;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 800px;
-  margin-top: 50px;
-} */
 
 .view-progression .welcome-message {
   font-size: 32px;
@@ -112,7 +106,7 @@
   /* border-width: 5px; */
   border: 1px solid #ccc; 
   font-family: Tahoma, sans-serif;
-  background-color: rgb(93, 93, 108) !important;
+  background-color: white !important;
   color: #91BECD !important;
   border-radius: 10px;
   
@@ -132,6 +126,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 600px; /* Adjust height based on your preference */
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 400px;
 }
 
 .view-progression .form-section {
@@ -143,20 +140,21 @@
 
 .view-progression .form-box1 {
   width: 100%;
-  background-color: #2f3136a5 !important;
+  background-color: gray !important;
   border: 1px solid #91BECD;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 /* Target the box to format its children */
 .view-progression .box {
   width: 800px;
 
-  border: 2px solid #4c4c4c;
+  border: 2px solid white;
   border-width: 5px;
-  background-color: #2f3136a5 !important;
+  background-color: white !important;
   margin: 20px auto;
   display: flex;
   flex-direction: column; /* Ensure items are stacked vertically */
@@ -179,6 +177,7 @@
 /* Dropdown alignment */
 .view-progression .box .dropdown-container {
   text-align: left; /* Align labels and selects */
+  background-color: white !important;
 }
 
 /* Form-box alignment */
@@ -210,10 +209,170 @@
   font-size: 16px;
   border-radius: 4px;
   border: 1px solid #91BECD;
-  background-color: rgb(93, 93, 108) !important;
+  background-color: white !important;
   color: #91BECD;
 }
 
 .view-progression textarea {
   resize: vertical;
+}
+.view-progression .sidebarC {
+  width: 100px; /* Sidebar width */
+  height: 80vh; /* Sidebar height */
+  background-color: #b9bec0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed; /* Sticks sidebar to the left */
+  left: 20px; /* Margin space from the very left */
+  top: 54%; /* Center sidebar vertically */
+  transform: translateY(-50%);
+}
+
+.view-progression .nav-buttonsC {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between navigation buttons */
+}
+.view-progression .icon img {
+  width: 40px;
+  height: auto;
+}
+.view-progression .icon {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-progression .icon1 {
+  width: 70px;
+  height: 70px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.view-progression .icon1 img {
+  width: 40px;
+  height: auto;
+}
+
+.view-progression .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 900;;
+  color: #333;
+}
+.view-progression .logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}
+
+/* Welcome Box Container Styling */
+.view-progression .welcome-box-containerA {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+}
+
+/* Welcome Box Styling */
+.view-progression .welcome-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 140px; /* Custom height for welcome box */
+}
+
+/* New Box Styling */
+.view-progression .new-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 540px; /* Custom height for new box */
+
+}
+
+.view-progression h2,
+.view-progression .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.view-progression .welcome-boxA p,
+.view-progression .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.view-progression .content-wrapperVA {
+  position: fixed;
+  right: 700px;
+  top: 620px;
+
+  transform: translateY(-50%);
+  width: 400px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+
+  /* Editable height and width */
+  height: 1000px; /* Change this value */
+  width: 600px;  /* Change this value */
+  margin-right: 50px;
+}
+
+
+/* Styling for Individual Items in Content Wrapper */
+.view-progression .content-wrapperVA > * {
+  /* flex: 1; */
+  max-width: 100%; /* Prevent items from stretching too much */
+}
+
+.view-progression .chat-boxA {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start; /* Align content at the top */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width inside its container */
+  height: 688px;
+  background-color: #b9bec0;
+}
+
+.view-progression  .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
 }

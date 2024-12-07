@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion from framer-motion
 import "./Login.css"; // Import the CSS file
 import { parseJSON } from "date-fns";
-
-const logo = require("./assets/WDC.png");
+// import logo from "../assets/WDC2.png";
+const logo = require("./assets/WDC2.png");
 
 function Login() {
   const [email, setEmail] = useState("");
