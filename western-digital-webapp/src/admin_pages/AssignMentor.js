@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./AssignMentor.css";
+import logout from "../assets/logout.png";
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import one from "../assets/one.png";
+import twopeople from "../assets/twopeople.png";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/WDC.png";
+import logo from "../assets/WDC2.png";
+import { motion } from "framer-motion"; // Importing motion
 import {
   AppBar,
   Toolbar,
@@ -18,7 +24,14 @@ function AssignMentor() {
   const [relationships, setRelationships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  const adminName = name || "Admin";
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -137,25 +150,77 @@ function AssignMentor() {
 
   return (
     <div className="assign-mentor">
-       <AppBar position="static" color="primary">
-        <Toolbar>
-        <Button
-            className="logo-button"
-            onClick={() => navigate("/admin-home")}
+      <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Assign Mentor to Mentee</h1>
+      </div>
+      <div className="sidebarB">
+        {/* Navigation Buttons */}
+        <div className="nav-buttonsB">
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/see-interactions")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
           >
-            <img src={logo} alt="Logo" style={{ height: 40, marginRight: 16 }} />
-            </Button>
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/view-progressions")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/create-account")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={one} alt="create" />
+          </motion.button>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/assign-mentor")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={twopeople} alt="twopeople" />
+          </motion.button>
+        </div>
 
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        {/* Logout Button */}
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
+        >
+          <img src={logout} alt="logout" />
+        </motion.button>
+      </div>
 
-              Assign Mentor To Mentees
-            </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-          </Toolbar>
-        </AppBar>
+
       
-
-      <div className="content-container">
+      <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+          <div className="chat-containerA">
+          <div className="content-container">
         <div className="add-assignment">
        
           <select
@@ -189,11 +254,12 @@ function AssignMentor() {
             ))}
           </select>
           <button onClick={handleAssignMentor}>Assign Mentor</button>
+          <h3 className="Existing" >Existing Assignments:</h3>
         </div>
 
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <h3>Existing Assignments:</h3>
+        
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -247,6 +313,24 @@ function AssignMentor() {
           </table>
         )}
       </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <div className="welcome-box-containerA">
+      {/* Welcome Message Box */}
+      <div className="welcome-boxA">
+        <h2>Welcome, {adminName}!</h2>
+        <p>Today Is 12/06/2024</p>
+      </div>
+
+      {/* New Box under the Welcome Box */}
+      <div className="new-boxA">
+        <h2>To-Do</h2>
+        <p>placeholder For To-Do</p>
+      </div>
+    </div>
     </div>
   );
 }

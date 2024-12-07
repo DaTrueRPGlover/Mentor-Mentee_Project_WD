@@ -6,8 +6,10 @@
   font-family: Arial, sans-serif;
   text-align: center;
   align-items: center; /* Center all content horizontally */
-
+  position: fixed;
   justify-content: space-between;
+  /* background-color: #E0E0E0; */
+  
 }
 
 /* Header Styles */
@@ -81,63 +83,237 @@
 
 /* Header Styles End */
 
-.add-assignment{
+.assign-mentor .add-assignment {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content vertically */
+  align-items: center; /* Centers content horizontally */
+  height: 100%; /* Ensures it uses full height available */
+  overflow-y: auto; /* Makes the content scrollable if it exceeds the height */
+  margin-left: 290px;
 }
 
 /* Table Styling */
-.assignments-table {
-  width: 100%;
+.assign-mentor .assignments-table {
+  width: 526px;
   border-collapse: collapse;
-  margin-top: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 520px; /* Set a max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: block; /* Make the table a block element to enable scrolling */
+  margin-left: 280px;
+  border-radius: 10px;
 }
 
-.assignments-table th, .assignments-table td {
+.assign-mentor .assignments-table th, .assignments-table td {
   padding: 12px;
   text-align: center;
   border: 1px solid #ddd;
 }
 
-.assignments-table th {
-  background-color: #65558F;
-  color: white;
-}
-
-.assignments-table tr:nth-child(even) {
+.assign-mentor .assignments-table tr {
   background-color: #f2f2f2;
 }
 
-.assignments-table tr:nth-child(odd) {
-  background-color: #fff;
-}
+
 
 /* Style for select dropdown in Change Mentor column */
-.assignments-table select {
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  background-color: #91BECD;
-  cursor: pointer;
+.assign-mentor .assignments-table select {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc; 
+  font-family: Tahoma, sans-serif;
+  background-color: white !important;
+  color: #91BECD !important;
+  border-radius: 10px;
 }
 
 /* Delete Button Styling */
-.delete-button {
+.assign-mentor .delete-button {
   padding: 8px 16px;
   color: #fff;
-  background-color: #FF6347;
+  background-color: gray;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.delete-button:hover {
-  background-color: #FF4500;
+.assign-mentor .delete-button:hover {
+  background-color: rgb(84, 82, 82);
 }
-.assignments-table .header-container {
+.assign-mentor .assignments-table .header-container {
   position: relative;
   width: 100%;
   padding-top: 20px; /* Add padding to move content down */
 }
 
+.assign-mentor .sidebarB {
+  width: 100px; /* Sidebar width */
+  height: 80vh; /* Sidebar height */
+  background-color: #b9bec0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed; /* Sticks sidebar to the left */
+  left: 20px; /* Margin space from the very left */
+  top: 54%; /* Center sidebar vertically */
+  transform: translateY(-50%);
+}
+
+.assign-mentor .nav-buttonsB {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between navigation buttons */
+}
+
+.assign-mentor .icon img {
+  width: 40px;
+  height: auto;
+}
+.assign-mentor .icon {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.assign-mentor .icon1 {
+  width: 70px;
+  height: 70px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.assign-mentor .icon1 img {
+  width: 40px;
+  height: auto;
+}
+
+.assign-mentor .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+.assign-mentor .logout-buttonV2:hover {
+  background-color: #f0f0f0; /* Change the background color on hover */
+}
+
+/* Content Wrapper Styling */
+.assign-mentor .content-wrapperVA {
+  position: fixed;
+  right: 700px;
+  top: 620px;
+
+  transform: translateY(-50%);
+  width: 400px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+
+  /* Editable height and width */
+  height: 1000px; /* Change this value */
+  width: 600px;  /* Change this value */
+  margin-right: 50px;
+}
+
+
+/* Styling for Individual Items in Content Wrapper */
+.assign-mentor .content-wrapperVA > * {
+  /* flex: 1; */
+  max-width: 100%; /* Prevent items from stretching too much */
+}
+
+/* Chat Box Styling */
+.assign-mentor .chat-boxA {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start; /* Align content at the top */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width inside its container */
+  height: 688px;
+  background-color: #b9bec0;
+}
+
+/* Welcome Box Container Styling */
+.assign-mentor .welcome-box-containerA {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+}
+
+/* Welcome Box Styling */
+.assign-mentor .welcome-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 140px; /* Custom height for welcome box */
+}
+
+/* New Box Styling */
+.assign-mentor .new-boxA {
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 540px; /* Custom height for new box */
+
+}
+
+.welcome-boxA h2,
+.assign-mentor .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.welcome-boxA p,
+.assign-mentor .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.assign-mentor .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 900;;
+  color: #333;
+}
+.assign-mentor .logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}

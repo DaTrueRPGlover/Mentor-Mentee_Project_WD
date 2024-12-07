@@ -18,8 +18,6 @@ function AdminHome() {
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
-  console.log(user);
-  console.log(name)
   const adminName = name || "Admin";
 
   const handleLogout = () => {
