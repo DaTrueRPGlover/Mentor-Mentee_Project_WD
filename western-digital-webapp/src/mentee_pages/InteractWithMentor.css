@@ -4,12 +4,37 @@
   justify-content: flex-start; /* Aligns sidebar to the left */
   align-items: center; /* Vertically centers the sidebar and chat box */
   height: 100vh; /* Full viewport height */
+  position: relative; /* Needed for absolute positioning of the logo */
+
+}
+
+/* Logo and Title Container */
+.logo-title-container {
+  position: absolute;
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left */
+  display: flex; /* Align logo and title horizontally */
+  align-items: center; /* Vertically center the logo and title */
+  z-index: 10; /* Ensures the logo is above other content */
+}
+
+.logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}
+
+.title-header {
+  font-size: 2rem;
+  padding-left: 20px;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Sidebar container */
 .sidebar {
   width: 100px; /* Set the sidebar width */
-  height: 80vh; /* Sidebar takes 80% of the viewport height */
+  height: 70vh; /* Sidebar takes 80% of the viewport height */
   background-color: #b9bec0;
   display: flex;
   flex-direction: column;
@@ -82,23 +107,27 @@
 .content-wrapperV2 {
   display: flex;
   justify-content: flex-start; /* Align content to the left */
-  align-items: stretch; /* Stretch both elements to be the same height */
-  height: 100vh; /* Ensure the height is the full viewport height */
-  margin-left: 120px; /* Space for the sidebar */
-  padding: 20px;
-  width: 100%;
+  align-items: flex-start; /* Align content to the top */
+  margin-left: 140px; /* Space for the sidebar */
+  padding: 0 20px; /* Adjusted padding to avoid shrinkage */
+  width: 70%;
+  box-sizing: border-box; /* Include padding in the total width and height calculation */
+
+  min-height: 70vh; /* Minimum height to match the sidebar height */
+
 }
 
 /* Chat Box Container */
 .chat-box {
-  flex-grow: 1; /* Allow chat box to take remaining space */
-  width: 100%; /* Ensure the width is 100% of the available space */
-  max-width: none; /* Remove max-width constraint */
-  height: 100%; /* Ensure the chat box takes the full height of the parent */
-  margin-right: 20px; /* Space between chat box and welcome box */
   display: flex;
   flex-direction: column; /* Stack content vertically */
-  overflow: hidden; /* Hide overflow on the chat box */
+  justify-content: center; /* Vertically center content inside the chat box */
+  flex-grow: 1; /* Take up the remaining space */
+  width: 100%; /* Ensure the chat box takes the full width */
+  height: 100%; /* Full height of its container */
+  max-width: none; /* Remove max-width constraint */
+  background-color: #b9bec0;
+  margin-right: 20px; /* Space between chat box and welcome box */
 }
 
 /* Ensure the chat content is scrollable */
@@ -106,21 +135,22 @@
   flex-grow: 1;
   overflow-y: auto;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #b9bec0;
+ 
   border-radius: 10px;
 }
 
 /* Invisible Scrollbar (for Webkit browsers) */
 .chat-content::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 0px!important; /* Width of the scrollbar */
 }
 
 .chat-content::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Make the scrollbar thumb invisible */
+  background-color: transparent !important; /* Make the scrollbar thumb invisible */
 }
 
 .chat-content::-webkit-scrollbar-track {
-  background-color: transparent; /* Make the scrollbar track invisible */
+  background-color: transparent!important; /* Make the scrollbar track invisible */
 }
 
 /* Chat Options Container (fixed at the bottom) */
@@ -133,13 +163,32 @@
   bottom: 0;
   z-index: 1; /* Ensures chat options stay on top of chat content */
 }
-
 /* Welcome Box Container */
+.welcome-box-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 70%; /* Match the height of the chat box */
+  width: 30%;
+  margin-right: 100px;
+}
 .welcome-box {
-  flex: 1; /* Welcome box takes less space */
-  max-width: 300px; /* Max width for the welcome box */
+  width: 100%; 
+  flex: 1; /* Take up equal height with the other box */
   padding: 20px;
   background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #b9bec0;
+}
+
+.new-box {
+  width: 100%;
+  flex: 1; /* Take up equal height with the welcome box */
+  padding: 20px;
+  margin-top: 20px; /* Add space between the two boxes */
+  background-color: #b9bec0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -154,9 +203,15 @@
 .welcome-box p {
   margin-top: 5px;
   font-size: 1rem;
-  color: #777;
+  color: #252525;
 }
 
+
+.chat-container{
+  background-color: #b9bec0;
+  box-shadow: none !important;
+  border: none;
+}
 /* Chat Box Styling */
 .box {
   display: flex;
@@ -165,9 +220,9 @@
   align-items: center;
   border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #b9bec0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .container1 {

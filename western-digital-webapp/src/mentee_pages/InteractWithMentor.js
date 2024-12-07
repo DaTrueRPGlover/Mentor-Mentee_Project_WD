@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./InteractWithMentor.css";
-import logo from "../assets/WDC.png";
+import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
@@ -27,6 +27,12 @@ function InteractWithMentor() {
     sessionStorage.clear();
     navigate("/");
   };
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const menteeName = name|| "Mentee";
 
   const [messages, setMessages] = useState([]);
   const [mentorName, setMentorName] = useState("");
@@ -142,6 +148,10 @@ function InteractWithMentor() {
 
   return (
     <div className="page-container">
+       <div className="logo-title-container">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Chat With Mentor</h1>
+      </div>
       {/* Sidebar */}
       <div className="sidebar">
         {/* Navigation Buttons */}
@@ -171,22 +181,22 @@ function InteractWithMentor() {
         {/* Chat Box */}
         <div className="chat-box">
           <div className="box">
-            <div className="container1">
-              <h1 className="welcome-message">Interact With Mentor</h1>
+        
+
               {mentorName && <p className="mentor-name">Chatting with: {mentorName}</p>}
-            </div>
+    
 
             {mentorKey && (
               <div className="chat-container">
-                <MainContainer style = {{width: '100%'}}>
-                  <ChatContainer>
-                    <MessageList
+                <MainContainer style = {{width: '100%',backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
+                  <ChatContainer style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
+                    <MessageList style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
                       typingIndicator={
                         isTyping ? <TypingIndicator content="Mentor is typing..." /> : null
                       }
                     >
                       {messages.map((msg, index) => (
-                        <Message
+                        <Message style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
                           key={index}
                           model={{
                             message: msg.message,
@@ -197,7 +207,7 @@ function InteractWithMentor() {
                         />
                       ))}
                     </MessageList>
-                    <MessageInput
+                    <MessageInput style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
                       placeholder="Type your message here..."
                       onSend={handleSendMessage}
                     />
@@ -209,13 +219,24 @@ function InteractWithMentor() {
           </div>
         </div>
 
-        {/* Welcome Message Box */}
-        <div className="welcome-box">
-          <h2>Welcome, User!</h2>
-          <p>Click on the icons to navigate.</p>
+       
         </div>
+            {/* Welcome and New Boxes Container */}
+    <div className="welcome-box-container">
+      {/* Welcome Message Box */}
+      <div className="welcome-box">
+        <h2>Welcome, {menteeName}!</h2>
+        <p>Today Is 12/06/2024</p>
+      </div>
+
+      {/* New Box under the Welcome Box */}
+      <div className="new-box">
+        <h2>To-Do</h2>
+        <p>placeholder For To-Do</p>
       </div>
     </div>
+  </div>
+
   );
 }
 
