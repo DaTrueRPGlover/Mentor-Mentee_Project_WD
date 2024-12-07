@@ -1,149 +1,252 @@
-.interact-with-mentor {
+/* Full Page Container */
+.page-container {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  align-items: center; /* Center all content horizontally */
+  justify-content: flex-start; /* Aligns sidebar to the left */
+  align-items: center; /* Vertically centers the sidebar and chat box */
+  height: 100vh; /* Full viewport height */
+  position: relative; /* Needed for absolute positioning of the logo */
 
-  justify-content: space-between;
 }
 
-.rectangle-container {
-  background-color: #91BECD;
-  padding: 20px;
-  margin: 20px auto;
+/* Logo and Title Container */
+.logo-title-container {
+  position: absolute;
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left */
+  display: flex; /* Align logo and title horizontally */
+  align-items: center; /* Vertically center the logo and title */
+  z-index: 10; /* Ensures the logo is above other content */
+}
+
+.logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}
+
+.title-header {
+  font-size: 2rem;
+  padding-left: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Sidebar container */
+.sidebar {
+  width: 100px; /* Set the sidebar width */
+  height: 70vh; /* Sidebar takes 80% of the viewport height */
+  background-color: #b9bec0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures spacing between top and bottom buttons */
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Subtle shadow */
+  position: fixed; /* Fixed positioning */
+  top: 50%; /* Center the sidebar vertically */
+  transform: translateY(-50%); /* Align the sidebar vertically at the center */
+  margin-left: 30px; /* Adjust this value to add space between the sidebar and the page edge */
+}
+
+
+/* Top buttons */
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adds space between the buttons */
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon img {
+  width: 50%;
+  height: 50%;
+}
+
+.icon:hover {
+  background-color: #e0e0e0; /* Hover effect */
+}
+
+/* Logout Button */
+.logout-buttonV2 {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Optional: Space from bottom of sidebar */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-buttonV2 img {
+  width: 50%;
+  height: 50%;
+}
+
+.logout-buttonV2:hover {
+  background-color: #e53935; /* Optional: Red hover effect */
+}
+
+/* Content Wrapper for Welcome Message and Chat Box */
+.content-wrapperV2 {
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: flex-start; /* Align content to the top */
+  margin-left: 140px; /* Space for the sidebar */
+  padding: 0 20px; /* Adjusted padding to avoid shrinkage */
   width: 70%;
-  max-width: 600px;
+  box-sizing: border-box; /* Include padding in the total width and height calculation */
+
+  min-height: 70vh; /* Minimum height to match the sidebar height */
+
+}
+
+/* Chat Box Container */
+.chat-box {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: center; /* Vertically center content inside the chat box */
+  flex-grow: 1; /* Take up the remaining space */
+  width: 100%; /* Ensure the chat box takes the full width */
+  height: 100%; /* Full height of its container */
+  max-width: none; /* Remove max-width constraint */
+  background-color: #b9bec0;
+  margin-right: 20px; /* Space between chat box and welcome box */
+}
+
+/* Ensure the chat content is scrollable */
+.chat-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #b9bec0;
+ 
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Invisible Scrollbar (for Webkit browsers) */
+.chat-content::-webkit-scrollbar {
+  width: 0px!important; /* Width of the scrollbar */
+}
+
+.chat-content::-webkit-scrollbar-thumb {
+  background-color: transparent !important; /* Make the scrollbar thumb invisible */
+}
+
+.chat-content::-webkit-scrollbar-track {
+  background-color: transparent!important; /* Make the scrollbar track invisible */
+}
+
+/* Chat Options Container (fixed at the bottom) */
+.chat-options {
+  flex-shrink: 0; /* Prevents chat options from shrinking */
+  padding: 10px;
+  background-color: #ffffff; /* Background for the chat options */
+  border-top: 2px solid #ddd; /* Optional: Adds a top border to distinguish options */
+  position: sticky;
+  bottom: 0;
+  z-index: 1; /* Ensures chat options stay on top of chat content */
+}
+/* Welcome Box Container */
+.welcome-box-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  height: 70%; /* Match the height of the chat box */
+  width: 30%;
+  margin-right: 100px;
 }
+.welcome-box {
+  width: 100%; 
+  flex: 1; /* Take up equal height with the other box */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #b9bec0;
+}
+
+.new-box {
+  width: 100%;
+  flex: 1; /* Take up equal height with the welcome box */
+  padding: 20px;
+  margin-top: 20px; /* Add space between the two boxes */
+  background-color: #b9bec0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.welcome-box h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.welcome-box p {
+  margin-top: 5px;
+  font-size: 1rem;
+  color: #252525;
+}
+
+
+.chat-container{
+  background-color: #b9bec0;
+  box-shadow: none !important;
+  border: none;
+}
+/* Chat Box Styling */
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #b9bec0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.container1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-message {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.mentor-name {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.main-container{
+  width: 02;
+}
+
 
 .no-mentor-message {
-  background-color: #ff6b6b; /* Light red background for visibility */
-  color: white;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
-  max-width: 600px;
+  font-size: 1.2rem;
+  color: #777;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-
-.message-list {
-  flex: 1; /* Allow the message list to grow and fill the space */
-  overflow-y: auto; /* Enable scrolling if there are many messages */
-  max-height: 300px; /* Limit the height to allow scrolling */
-}
-
-.message-input {
-  display: flex; /* Use flex layout for input and button */
-  flex-direction: column; /* Stack input vertically */
-  align-items: center; /* Center items horizontally */
-}
-
-.message-textarea {
-  width: 80%; /* Set width for textarea relative to its container */
-  height: 60px; /* Set height for textarea */
-  margin-bottom: 10px; /* Space between textarea and button */
-  padding: 10px; /* Add padding inside textarea */
-  resize: none; /* Disable resizing */
-}
-
-.assign-mentor .box {
-  width: 800px;
-  height: 630px;
-  border: 2px solid #4c4c4c;
-  border-width: 5px;
-  background-color: #2f3136a5 !important;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column; /* Ensure items are stacked vertically */
-  align-items: center;
-  justify-content: flex-start; /* Align items to the top */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  backdrop-filter: blur(5px);
-  overflow-y: auto; /* Allow scrolling if content exceeds height */
-  padding: 20px; /* Add padding for spacing */
-}
-
-.assign-mentor .welcome-message {
-  font-size: 32px;
-  text-align: center;
-  margin: 20px 0;
-  background-color: inherit;
-  color: #91BECD !important;
-  font-family: Tahoma, sans-serif;
-}
-
-.message-input textarea {
-  width: 80%;
-  height: 60px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  resize: none;
-}
-
-.message-input button {
-  padding: 10px 20px;
-  background-color: #65558f;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 40%;
-  border-radius: 8px; /* Rounded button corners */
-}
-
-.message-input button:hover {
-  background-color: #514173;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin: 10px 0;
-  font-size: 1.1em;
-}
-
-.mentor {
-  text-align: left;
-  color: blue;
-}
-
-.mentee {
-  text-align: right;
-  color: green;
-}
-
-.timestamp {
-  font-size: 0.8em;
-  color: gray;
-}
-.mentor-name {
-  text-align: right;
-  font-size: 1.2em;
-  color: #555;
-  margin: 10px 20px;
-}
-.chat-container {
-  width: 70%;
-  margin: auto;
-  height: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
-

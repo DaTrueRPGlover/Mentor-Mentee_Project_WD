@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./InteractWithMentor.css";
-import logo from "../assets/WDC.png";
+import logo from "../assets/WDC2.png";
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import assign from "../assets/assign.png";
+import calendar from "../assets/calendar.png";
+import logout from "../assets/logout.png";
+
 import { useNavigate } from "react-router-dom";
 import {
   MainContainer,
@@ -11,6 +17,9 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import { Widgets, WidthFull } from "@mui/icons-material";
+
+
 
 function InteractWithMentor() {
   const navigate = useNavigate();
@@ -18,6 +27,12 @@ function InteractWithMentor() {
     sessionStorage.clear();
     navigate("/");
   };
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const menteeName = name|| "Mentee";
 
   const [messages, setMessages] = useState([]);
   const [mentorName, setMentorName] = useState("");
@@ -75,7 +90,9 @@ function InteractWithMentor() {
     ws.onopen = () => {
       console.log("WebSocket connection opened");
 
-      ws.send(JSON.stringify({ type: "subscribe", conversation_key: conversationKey }));
+      ws.send(
+        JSON.stringify({ type: "subscribe", conversation_key: conversationKey })
+      );
     };
 
     ws.onmessage = (event) => {
@@ -88,7 +105,8 @@ function InteractWithMentor() {
           message: newMessage.message,
           sentTime: new Date(newMessage.timestamp).toLocaleString(),
           sender: newMessage.senderRole === "mentee" ? "You" : "Mentor",
-          direction: newMessage.senderRole === "mentee" ? "outgoing" : "incoming",
+          direction:
+            newMessage.senderRole === "mentee" ? "outgoing" : "incoming",
         },
       ]);
     };
@@ -126,67 +144,99 @@ function InteractWithMentor() {
     }
   };
 
+
+
   return (
-    <div className="assign-mentor">
-      <header className="header-container">
-        <div className="top-header">
-          <button
-            className="logo-button"
-            onClick={() => navigate("/mentee-home")}
-          >
-            <img src={logo} alt="Logo" className="logo" />
+    <div className="page-container">
+       <div className="logo-title-container">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Chat With Mentor</h1>
+      </div>
+      {/* Sidebar */}
+      <div className="sidebar">
+        {/* Navigation Buttons */}
+        <div className="nav-buttons">
+          <button className="icon" onClick={() => navigate("/interact-mentor")}>
+            <img src={chat} alt="chat" />
           </button>
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
+          <button className="icon" onClick={() => navigate("/todo-progression")}>
+            <img src={write} alt="write" />
+          </button>
+          <button className="icon" onClick={() => navigate("/check-hw")}>
+            <img src={assign} alt="assign" />
+          </button>
+          <button className="icon" onClick={() => navigate("/mentee-meetings")}>
+            <img src={calendar} alt="calendar" />
           </button>
         </div>
 
-      </header>
+        {/* Logout Button */}
+        <button className="logout-buttonV2" onClick={handleLogout}>
+          <img src={logout} alt="logout" />
+        </button>
+      </div>
 
-      <div className="box">
-      <div className="container1">
-          <h1 className="welcome-message">Interact With Mentor</h1>
-          {mentorName && (
-            <p className="mentor-name">Chatting with: {mentorName}</p>
-          )}
-        </div>
-
-      {mentorKey && (
-        <div className="chat-container">
-          <MainContainer>
-            <ChatContainer>
-              <MessageList
-                typingIndicator={
-                  isTyping ? <TypingIndicator content="Mentor is typing..." /> : null
-                }
-              >
-                {messages.map((msg, index) => (
-                  <Message
-                    key={index}
-                    model={{
-                      message: msg.message,
-                      sentTime: msg.sentTime,
-                      sender: msg.sender,
-                      direction: msg.direction,
-                    }}
-                  />
-                ))}
-              </MessageList>
-              <MessageInput
-                placeholder="Type your message here..."
-                onSend={handleSendMessage}
-              />
-            </ChatContainer>
-          </MainContainer>
-        </div>
+      {/* Content Wrapper for Welcome Message and Chat Box */}
+      <div className="content-wrapperV2">
+        {/* Chat Box */}
+        <div className="chat-box">
+          <div className="box">
         
-      )}
-      {!mentorKey && (
-        <p className="no-mentor-message">You have no mentor assigned.</p>
-      )}
-          </div>
 
+              {mentorName && <p className="mentor-name">Chatting with: {mentorName}</p>}
+    
+
+            {mentorKey && (
+              <div className="chat-container">
+                <MainContainer style = {{width: '100%',backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
+                  <ChatContainer style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
+                    <MessageList style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
+                      typingIndicator={
+                        isTyping ? <TypingIndicator content="Mentor is typing..." /> : null
+                      }
+                    >
+                      {messages.map((msg, index) => (
+                        <Message style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
+                          key={index}
+                          model={{
+                            message: msg.message,
+                            sentTime: msg.sentTime,
+                            sender: msg.sender,
+                            direction: msg.direction,
+                          }}
+                        />
+                      ))}
+                    </MessageList>
+                    <MessageInput style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
+                      placeholder="Type your message here..."
+                      onSend={handleSendMessage}
+                    />
+                  </ChatContainer>
+                </MainContainer>
+              </div>
+            )}
+            {!mentorKey && <p className="no-mentor-message">You have no mentor assigned.</p>}
+          </div>
+        </div>
+
+       
+        </div>
+            {/* Welcome and New Boxes Container */}
+    <div className="welcome-box-container">
+      {/* Welcome Message Box */}
+      <div className="welcome-box">
+        <h2>Welcome, {menteeName}!</h2>
+        <p>Today Is 12/06/2024</p>
+      </div>
+
+      {/* New Box under the Welcome Box */}
+      <div className="new-box">
+        <h2>To-Do</h2>
+        <p>placeholder For To-Do</p>
+      </div>
     </div>
+  </div>
+
   );
 }
 
