@@ -210,7 +210,7 @@
 .chat-container{
   background-color: #b9bec0;
   box-shadow: none !important;
-  border: none;
+  border: none!important;
 }
 /* Chat Box Styling */
 .box {
