@@ -99,7 +99,7 @@
   width: 526px;
   border-collapse: collapse;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-height: 460px; /* Set a max height */
+  max-height: 48vh; /* Set a max height */
   overflow-y: auto; /* Enable vertical scrolling */
   display: block; /* Make the table a block element to enable scrolling */
   margin-left: 280px;

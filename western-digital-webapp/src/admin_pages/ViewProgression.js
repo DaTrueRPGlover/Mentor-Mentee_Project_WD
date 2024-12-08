@@ -311,6 +311,7 @@ function ViewProgressions() {
   </div>
 
   {/* Other Dropdowns Stacked Below */}
+  <div className="smallrect">
   {selectedMentee && (
     <div className="dropdown-container">
       <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
@@ -346,10 +347,13 @@ function ViewProgressions() {
       </select>
     </div>
   )}
+  </div>
 
-  {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+
      
-      
+  {errorMessage && <p className="error-message">{errorMessage}</p>}
+
       <div className="content-split">
         <div className="form-section">
           {/* Display mentee notes */}

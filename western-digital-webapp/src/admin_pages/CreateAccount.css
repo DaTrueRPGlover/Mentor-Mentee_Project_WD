@@ -57,7 +57,7 @@
 /* Styling for the white rectangle container */
 .create-account .whiterectangle {
   width: 500px;
-  height: 560px;
+  height: 56vh;
   margin: 20px auto;
   display: flex;
   align-items: center;

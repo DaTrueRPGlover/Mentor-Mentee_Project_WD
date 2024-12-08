@@ -307,3 +307,8 @@ input:checked + .slider:before {
 .dark-mode .title-header {
   color: #91BECD; /* Change color to the desired shade */
 }
+
+.see-interactions .chat-container {
+  height: 55vh;
+  width: 90%;
+}
