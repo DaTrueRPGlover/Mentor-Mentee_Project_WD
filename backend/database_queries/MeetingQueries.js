@@ -104,3 +104,28 @@ export const rescheduleMeeting = async (meetingKey, newDateTime) => {
     [newDateTime, meetingKey]
   );
 };
+
+export const getMeetingsForUserByDateRange = async (userId, startDate, endDate) => {
+  const sql = `
+      SELECT 
+          m.meetingkey,
+          m.datetime,
+          m.meeting_link,
+          m.meeting_password,
+          u1.name AS mentor_name,
+          u2.name AS mentee_name
+      FROM 
+          meetings m
+      LEFT JOIN 
+          userInfo u1 ON m.mentorkey = u1.userid
+      LEFT JOIN 
+          userInfo u2 ON m.menteekey = u2.userid
+      WHERE 
+          (m.mentorkey = ? OR m.menteekey = ?)
+          AND m.datetime BETWEEN ? AND ?
+      ORDER BY 
+          m.datetime ASC
+  `;
+  const [rows] = await pool.query(sql, [userId, userId, startDate, endDate]);
+  return rows;
+};
