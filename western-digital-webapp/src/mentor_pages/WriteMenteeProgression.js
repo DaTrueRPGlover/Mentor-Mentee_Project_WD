@@ -32,7 +32,7 @@ function WriteMenteeProgression() {
   const [mentees, setMentees] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
-  const adminName = name || "Admin";
+  const mentorName = name || "Mentor";
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -115,7 +115,7 @@ function WriteMenteeProgression() {
     <div className="write-mentee-progression">
       <div className="logo-title-container">
           <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Chat With Mentee</h1>
+          <h1 className="title-header">Write Mentee Progression</h1>
       </div>
       <div className="sidebarA">
         {/* Navigation Buttons */}
@@ -341,7 +341,7 @@ function WriteMenteeProgression() {
       <div className="welcome-box-containerA">
       {/* Welcome Message Box */}
       <div className="welcome-boxA">
-        <h2>Welcome, {adminName}!</h2>
+        <h2>Welcome, {mentorName}!</h2>
         <p>Today Is 12/06/2024</p>
       </div>
 

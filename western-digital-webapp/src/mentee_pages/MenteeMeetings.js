@@ -1,7 +1,15 @@
 // MenteeMeetings.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/WDC.png';
+import './MenteeMeetings.css';
+
+import { motion } from "framer-motion"; // Importing motion
+import logo from "../assets/WDC2.png";
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import assign from "../assets/assign.png";
+import calendar from "../assets/calendar.png";
+import logout from "../assets/logout.png";
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -48,6 +56,19 @@ function MenteeMeetings() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
+  const userInfo = JSON.parse(sessionStorage.getItem('user'));
+  const menteeKey = userInfo?.menteekey;
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const menteeName = name|| "Mentee";
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -274,21 +295,78 @@ function MenteeMeetings() {
   };
 
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => navigate("/mentee-home")}>
-            <img src={logo} alt="Home" style={{ height: 40 }} />
-          </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            View Meetings and Homework
-          </Typography>
-          <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
+    <div className='mentee-meetings'>
 
+      <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Assigned Homework</h1>
+    </div>
+    <div className="sidebarA">
+        {/* Navigation Buttons */}
+        <div className="nav-buttonsA">
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/interact-mentor")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/todo-progression")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/check-hw")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={assign} alt="assign" />
+          </motion.button>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/mentee-meetings")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={calendar} alt="calendar" />
+          </motion.button>
+        </div>
+
+        {/* Logout Button */}
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
+        >
+          <img src={logout} alt="logout" />
+        </motion.button>
+      </div>
+
+      <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+          <div className="box">
+        
+          <div className="main-content">
       <div style={{ padding: '20px' }}>
         <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
           Schedule New Meeting
@@ -389,6 +467,12 @@ function MenteeMeetings() {
           <Button onClick={handleCloseScheduleDialog} color="secondary">Cancel</Button>
         </DialogActions>
       </Dialog>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
     </div>
   );
 }
