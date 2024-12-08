@@ -1,26 +1,15 @@
-/* WriteMenteeProgression.css */
-
-
-
 .write-mentee-progression{
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-}
-
-.write-mentee-progression .header-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-height: 100vh;
   width: 100%;
-  padding-top: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center; /* Center all content horizontally */
+  justify-content: space-between;
+  position: fixed;
+
 }
-
-
-.write-mentee-progression .logo {
-  width: 150px;
-  height: auto;
-}
-
 .write-mentee-progression .logo-button {
   background: none; /* Remove default button background */
   border: none; /* Remove default border */
@@ -59,6 +48,7 @@
   gap: 20px;
   margin-bottom: 20px;
   color: white;
+  overflow-y: scroll;
 }
 
 .write-mentee-progression .mentor-mentee-container {
@@ -85,12 +75,10 @@
   padding: 8px;
   font-size: 16px;
   border-radius: 4px;
-  /* border: 2px solid #4c4c4c; */
-  /* border-width: 5px; */
   border: 1px solid #ccc; 
   font-family: Tahoma, sans-serif;
-  background-color: rgb(93, 93, 108) !important;
   color: #91BECD !important;
+  background-color: white !important;
   border-radius: 10px;
   
 }
@@ -214,6 +202,7 @@
   align-items: center; /* Align items vertically */
   justify-content: center; /* Center the options horizontally */
   gap: 15px; /* Add spacing between the options */
+  color: #91BECD;
 
 }
 
@@ -231,7 +220,7 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: rgb(93, 93, 108) !important;
+  background-color: white !important;
 
 }
 
@@ -262,8 +251,7 @@
 /* Style the form title container */
 .write-mentee-progression .form-title {
   display: flex;
-  background-color: rgb(93, 93, 108) !important;
-  color: white ;
+  color: black;
   margin-bottom: 10px; /* Space below the form title */
   align-items: center; /* Align items (text and icon) vertically */
   justify-content: center; /* Center the content horizontally */
@@ -276,7 +264,7 @@
   height: 26px; /* Adjust the size of the icon */
   margin-right: 4px; /* Space between the icon and the text */
   vertical-align: middle; /* Align the icon vertically in the middle of the text */
-  background-color: rgb(93, 93, 108) !important;
+  background-color: white !important;
 
 
 }
@@ -284,7 +272,7 @@
 /* Style the form title text */
 .write-mentee-progression .form-title p {
   font-size: 1.2rem;
-  color: white;
+  color: #91BECD;
   font-weight: bold;
   margin: 0; /* Remove any margin from the paragraph */
   line-height: 1.5; /* Set a consistent line height */
@@ -292,24 +280,180 @@
 
 
 .write-mentee-progression .box {
-  width: 800px;
-
-  border: 2px solid #4c4c4c;
+  width: 60vh;
+  height: 70vh;
   border-width: 5px;
-  background-color: #2f3136a5 !important;
   margin: 20px auto;
   display: flex;
   flex-direction: column; /* Ensure items are stacked vertically */
   align-items: center;
   justify-content: flex-start; /* Align items to the top */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   backdrop-filter: blur(5px);
   padding: 20px; /* Add padding for spacing */
+  overflow-y: scroll;
+}
+
+.write-mentee-progression .sidebarA {
+  width: 6.6%; /* Sidebar width */
+  height: 80vh; /* Sidebar height */
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed; /* Sticks sidebar to the left */
+  left: 1.3%; /* Margin space from the very left */
+  top: 54%; /* Center sidebar vertically */
+  transform: translateY(-50%);
+}
+
+.write-mentee-progression .nav-buttonsA {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between navigation buttons */
+}
+
+.write-mentee-progression .icon img {
+  width: 40px;
+  height: auto;
+}
+.write-mentee-progression .icon {
+  width: 70px;
+  height: 70px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.write-mentee-progression .icon1 {
+  width: 70px;
+  height: 70px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.write-mentee-progression .icon1 img {
+  width: 40px;
+  height: auto;
+}
+
+/* Welcome Box Container Styling */
+.write-mentee-progression  .welcome-box-containerA {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+}
+
+/* Welcome Box Styling */
+.write-mentee-progression  .welcome-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 16.4vh; /* Custom height for welcome box */
+}
+
+/* New Box Styling */
+.write-mentee-progression .new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 63vh; /* Custom height for new box */
+}
+
+.write-mentee-progression .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.write-mentee-progression .logo {
+  width: 100px; /* Set a width for your logo */
+  height: auto;
+  margin-right: 10px; /* Space between logo and title */
+}
+
+.write-mentee-progression .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 900;;
+  color: #333;
+}
+
+/* Content Wrapper Styling */
+.write-mentee-progression .content-wrapperVA {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
+
+  transform: translateY(-50%);
+  width: 400px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+
+  /* Editable height and width */
+  height: 116.6%; /* Change this value */
+  width: 39.7%;  /* Change this value */
+  margin-right: 50px;
 }
 
 
+/* Styling for Individual Items in Content Wrapper */
+.write-mentee-progression .content-wrapperVA > * {
+  /* flex: 1; */
+  max-width: 100%; /* Prevent items from stretching too much */
+}
 
+/* Chat Box Styling */
+.write-mentee-progression .chat-boxA {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start; /* Align content at the top */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width inside its container */
+  height: 68.8%;
+  background-color: #b9bec07c;
+}
 
-
-
+/* Welcome Box Container Styling */
+.write-mentee-progression .welcome-box-containerA {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+}

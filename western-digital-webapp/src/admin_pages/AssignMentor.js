@@ -232,7 +232,7 @@ function AssignMentor() {
               setNewMentee(mentee);
             }}
           >
-            <option value="">Select Mentee</option>
+            <option value="">-- Select Mentee --</option>
             {menteesList.map((mentee) => (
               <option key={mentee.userid} value={mentee.userid}>
                 {mentee.name} {mentee.lastname}
@@ -246,7 +246,7 @@ function AssignMentor() {
               setNewMentor(mentor);
             }}
           >
-            <option value="">Select Mentor</option>
+            <option value="">-- Select Mentor --</option>
             {mentors.map((mentor) => (
               <option key={mentor.userid} value={mentor.userid}>
                 {mentor.name} {mentor.lastname}

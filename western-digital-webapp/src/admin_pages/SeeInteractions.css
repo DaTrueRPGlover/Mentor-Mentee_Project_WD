@@ -311,4 +311,6 @@ input:checked + .slider:before {
 .see-interactions .chat-container {
   height: 55vh;
   width: 90%;
+  margin-left: 5%;
+  border-radius: 10px;
 }

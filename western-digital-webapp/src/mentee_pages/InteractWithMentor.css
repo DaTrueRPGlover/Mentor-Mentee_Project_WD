@@ -236,12 +236,14 @@
 }
 
 
-.chat-container{
+.interact-with-mentor .chat-container{
   background-color: #b9bec0;
   box-shadow: none !important;
   border: none!important;
-  height: 75vh;
+  height: 70vh;
   width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
 }
 
 
