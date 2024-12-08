@@ -232,8 +232,8 @@ function InteractWithMentor() {
 
 
             {mentorKey && (
-              <div className="chat-container">
-                <MainContainer style = {{width: '100%',backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
+            
+                <MainContainer className = "chat-container" style = {{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
                   <ChatContainer style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}>
                     <MessageList style={{backgroundColor: '#b9bec0', border: 'none', outline: 'none'}}
                       typingIndicator={
@@ -258,7 +258,7 @@ function InteractWithMentor() {
                     />
                   </ChatContainer>
                 </MainContainer>
-              </div>
+           
             )}
             {!mentorKey && <p className="no-mentor-message">You have no mentor assigned.</p>}
           </div>
