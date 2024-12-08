@@ -223,7 +223,7 @@ function AssignMentor() {
           <div className="content-container">
         <div className="add-assignment">
        
-          <select
+          <select className="option"
             value={newMentee ? newMentee.userid : ""}
             onChange={(e) => {
               const mentee = menteesList.find(
@@ -239,7 +239,7 @@ function AssignMentor() {
               </option>
             ))}
           </select>
-          <select
+          <select className="option"
             value={newMentor ? newMentor.userid : ""}
             onChange={(e) => {
               const mentor = mentors.find((m) => m.userid === e.target.value);
@@ -253,7 +253,7 @@ function AssignMentor() {
               </option>
             ))}
           </select>
-          <button onClick={handleAssignMentor}>Assign Mentor</button>
+          <button  className="Assign" onClick={handleAssignMentor}>Assign Mentor</button>
           <h3 className="Existing" >Existing Assignments:</h3>
         </div>
 

@@ -99,7 +99,7 @@
   width: 526px;
   border-collapse: collapse;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-height: 520px; /* Set a max height */
+  max-height: 460px; /* Set a max height */
   overflow-y: auto; /* Enable vertical scrolling */
   display: block; /* Make the table a block element to enable scrolling */
   margin-left: 280px;
@@ -142,6 +142,28 @@
   transition: background-color 0.3s;
 }
 
+.assign-mentor .Assign {
+  padding: 8px 16px;
+  color: #fff;
+  background-color: gray;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 5px;
+}
+.assign-mentor .option {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc; 
+  font-family: Tahoma, sans-serif;
+  background-color: white !important;
+  color: #91BECD !important;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
 .assign-mentor .delete-button:hover {
   background-color: rgb(84, 82, 82);
 }
@@ -154,7 +176,7 @@
 .assign-mentor .sidebarB {
   width: 100px; /* Sidebar width */
   height: 80vh; /* Sidebar height */
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -254,7 +276,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%; /* Full width inside its container */
   height: 688px;
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
 }
 
 /* Welcome Box Container Styling */
@@ -271,7 +293,7 @@
 
 /* Welcome Box Styling */
 .assign-mentor .welcome-boxA {
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -283,7 +305,7 @@
 
 /* New Box Styling */
 .assign-mentor .new-boxA {
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -316,4 +338,7 @@
   width: 100px; /* Set a width for your logo */
   height: auto;
   margin-right: 10px; /* Space between logo and title */
+}
+.dark-mode .title-header {
+  color: #91BECD; /* Change color to the desired shade */
 }
