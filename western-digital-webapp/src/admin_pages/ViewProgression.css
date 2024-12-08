@@ -152,7 +152,7 @@
 }
 
 .view-progression textarea {
-  width: 90%; /* Adjust width to 90% of its parent container */
+  width: 100%; /* Adjust width to 90% of its parent container */
   height: 10%; /* Adjust height to 10% of the parent container */
   max-width: 600px; /* Optional: Set a maximum width */
   max-height: 150px; /* Optional: Set a maximum height */
