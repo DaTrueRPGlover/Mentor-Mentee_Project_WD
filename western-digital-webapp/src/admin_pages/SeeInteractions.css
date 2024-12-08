@@ -25,7 +25,7 @@
 .see-interactions .sidebarA {
   width: 100px; /* Sidebar width */
   height: 80vh; /* Sidebar height */
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -125,7 +125,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%; /* Full width inside its container */
   height: 688px;
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
 }
 
 /* Welcome Box Container Styling */
@@ -142,7 +142,7 @@
 
 /* Welcome Box Styling */
 .see-interactions .welcome-boxA {
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -154,7 +154,7 @@
 
 /* New Box Styling */
 .see-interactions .new-boxA {
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -162,7 +162,6 @@
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
   height: 540px; /* Custom height for new box */
-
 }
 
 .see-interactions .welcome-boxA h2,
@@ -304,3 +303,7 @@ input:checked + .slider:before {
 }
 
 
+/* Dark Mode - Update this rule */
+.dark-mode .title-header {
+  color: #91BECD; /* Change color to the desired shade */
+}
