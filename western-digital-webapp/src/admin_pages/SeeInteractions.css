@@ -34,7 +34,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   position: fixed; /* Sticks sidebar to the left */
-  left: 20px; /* Margin space from the very left */
+  left: 1.3%; /* Margin space from the very left */
   top: 54%; /* Center sidebar vertically */
   transform: translateY(-50%);
 }
@@ -92,8 +92,8 @@
 /* Content Wrapper Styling */
 .see-interactions .content-wrapperVA {
   position: fixed;
-  right: 700px;
-  top: 620px;
+  right: 46.3%;
+  top: 72.3%;
 
   transform: translateY(-50%);
   width: 400px; /* Fixed width for the container */
