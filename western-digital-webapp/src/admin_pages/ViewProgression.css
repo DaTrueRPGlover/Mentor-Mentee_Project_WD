@@ -150,6 +150,18 @@
   max-height: 30vh;
   
 }
+
+.view-progression textarea {
+  width: 90%; /* Adjust width to 90% of its parent container */
+  height: 10%; /* Adjust height to 10% of the parent container */
+  max-width: 600px; /* Optional: Set a maximum width */
+  max-height: 150px; /* Optional: Set a maximum height */
+  padding: 10px; /* Add some padding for better aesthetics */
+  font-size: 1rem; /* Adjust font size */
+  resize: none; /* Disable manual resizing if desired */
+  box-sizing: border-box; /* Include padding and border in the element's total size */
+}
+
 /* Target the box to format its children */
 .view-progression .box {
   width: 800px;

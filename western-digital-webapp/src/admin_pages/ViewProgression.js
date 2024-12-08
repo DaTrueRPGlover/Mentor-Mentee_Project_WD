@@ -352,7 +352,7 @@ function ViewProgressions() {
 
 
      
-  {errorMessage && <p className="error-message">{errorMessage}</p>}
+  {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
 
       <div className="content-split">
         <div className="form-section">
@@ -515,6 +515,7 @@ function ViewProgressions() {
               <p>Additional Comments</p>
             </div>
             <textarea
+              className='textarea'
               value={mentorNotes.additional_comments}
               readOnly
               rows="4"
