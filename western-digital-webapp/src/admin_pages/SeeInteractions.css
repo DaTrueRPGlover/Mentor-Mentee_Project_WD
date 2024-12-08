@@ -23,7 +23,7 @@
 
 /* Sidebar Styling */
 .see-interactions .sidebarA {
-  width: 100px; /* Sidebar width */
+  width: 6.6%; /* Sidebar width */
   height: 80vh; /* Sidebar height */
   background-color: #b9bec07c;
   display: flex;
@@ -102,8 +102,8 @@
   gap: 10px; /* Space between the stacked items */
 
   /* Editable height and width */
-  height: 1000px; /* Change this value */
-  width: 600px;  /* Change this value */
+  height: 116.6%; /* Change this value */
+  width: 39.7%;  /* Change this value */
   margin-right: 50px;
 }
 
