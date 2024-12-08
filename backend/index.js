@@ -16,6 +16,7 @@ import relationshipRoutes from './routes/relationshipRoutes.js';
 import mentorNotesRoutes from './routes/mentorNotesRoutes.js';
 import mentorAvailabilityRoutes from './routes/mentorAvailabilityRoutes.js';
 import mentorBlackoutDatesRoutes from './routes/mentorBlackoutRoutes.js';
+import calendarRoutes from './routes/calendarRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -33,7 +34,8 @@ app.use('/api/mentors', mentorRoutes);
 app.use('/api/mentees', menteeRoutes);
 app.use('/api/mentorNotes', mentorNotesRoutes);
 app.use('/api', mentorAvailabilityRoutes);
-app.use('/api', mentorBlackoutDatesRoutes); // Added this line
+app.use('/api', mentorBlackoutDatesRoutes);
+app.use('/api/calendar', calendarRoutes);
 
 const PORT = 3001;
 const server = app.listen(PORT, () => {

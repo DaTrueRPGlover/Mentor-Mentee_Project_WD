@@ -10,7 +10,7 @@ import {
   getMeetingsByMenteeKey,
   cancelMeeting, 
   rescheduleMeeting
-} from '../database_queries/meetingQueries.js';
+} from '../database_queries/MeetingQueries.js';
 import { fetchHomeworkByMenteeKey } from '../database_queries/HomeworkQueries.js';
 import { isTimeWithinMentorAvailability, isDateBlackout } from '../database_queries/MentorAvailabilityQueries.js'
 
