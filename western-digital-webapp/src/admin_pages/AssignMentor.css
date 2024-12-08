@@ -91,7 +91,7 @@
   align-items: center; /* Centers content horizontally */
   height: 100%; /* Ensures it uses full height available */
   overflow-y: auto; /* Makes the content scrollable if it exceeds the height */
-  margin-left: 290px;
+  margin-left: 2%;
 }
 
 /* Table Styling */
@@ -102,7 +102,7 @@
   max-height: 48vh; /* Set a max height */
   overflow-y: auto; /* Enable vertical scrolling */
   display: block; /* Make the table a block element to enable scrolling */
-  margin-left: 280px;
+  margin-left: 2vh;
   border-radius: 10px;
 }
 
@@ -282,7 +282,7 @@
 /* Welcome Box Container Styling */
 .assign-mentor .welcome-box-containerA {
   position: fixed;
-  right: 8%;
+  right: 2%;
   top: 50%;
   transform: translateY(-45%);
   width: 700px; /* Fixed width for the container */

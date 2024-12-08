@@ -413,18 +413,6 @@ input:checked + .slider:before {
   color: #333;
 }
 
-/* Welcome Box Container Styling */
-.interact-with-mentee  .welcome-box-containerA {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-45%);
-  width: 700px; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-}
-
 /* Welcome Box Styling */
 .interact-with-mentee  .welcome-boxA {
   background-color: #b9bec07c;
@@ -491,7 +479,7 @@ input:checked + .slider:before {
 /* Welcome Box Container Styling */
 .interact-with-mentee .welcome-box-containerA {
   position: fixed;
-  right: 8%;
+  right: 2%;
   top: 50%;
   transform: translateY(-45%);
   width: 700px; /* Fixed width for the container */
