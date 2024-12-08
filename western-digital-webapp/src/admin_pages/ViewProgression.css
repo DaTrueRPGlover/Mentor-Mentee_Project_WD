@@ -231,7 +231,7 @@
   resize: vertical;
 }
 .view-progression .sidebarC {
-  width: 100px; /* Sidebar width */
+  width: 6.6%; /* Sidebar width */
   height: 80vh; /* Sidebar height */
   background-color: #b9bec07c;
   display: flex;
@@ -301,7 +301,7 @@
 /* Welcome Box Container Styling */
 .view-progression .welcome-box-containerA {
   position: fixed;
-  right: 20px;
+  right: 8%;
   top: 50%;
   transform: translateY(-45%);
   width: 700px; /* Fixed width for the container */

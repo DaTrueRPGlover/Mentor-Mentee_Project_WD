@@ -2,15 +2,27 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TodoProgression.css";
-import logo from "../assets/WDC.png";
+
 import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import MoodIcon from "@mui/icons-material/Mood";
+import { motion } from "framer-motion"; // Importing motion
+import logo from "../assets/WDC2.png";
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import assign from "../assets/assign.png";
+import calendar from "../assets/calendar.png";
+import logout from "../assets/logout.png";
 
 function TodoProgression() {
   const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState("");
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const menteeName = name|| "Mentee";
 
   const [communication, setCommunication] = useState(null);
   const [influence, setInfluence] = useState(null);
@@ -20,6 +32,12 @@ function TodoProgression() {
   const [decisionMaking, setDecisionMaking] = useState(null);
   const [error, setError] = useState(null);
   const [newReport, setNewReport] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
 
   useEffect(() => {
     // Retrieve the menteekey from sessionStorage
@@ -109,28 +127,78 @@ function TodoProgression() {
 
   return (
     <div className="todo-progression">
-    <header className="header-container">
-      <div className="top-header">
-        <button
-          className="logo-button"
-          onClick={() => navigate("/mentee-home")}
+
+    <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Write Progression</h1>
+    </div>
+    <div className="sidebarA">
+        {/* Navigation Buttons */}
+        <div className="nav-buttonsA">
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/interact-mentor")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/todo-progression")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/check-hw")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={assign} alt="assign" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/mentee-meetings")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={calendar} alt="calendar" />
+          </motion.button>
+        </div>
+
+        {/* Logout Button */}
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
         >
-          <img src={logo} alt="Logo" className="logo" />
-        </button>
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
-
-    </header>
-
-      <div className="box">
-      <div className="container1">
-        <h1 className="welcome-message">To-Do/Progression</h1>
+          <img src={logout} alt="logout" />
+        </motion.button>
       </div>
    
-      <div className="main-content">
+      <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+          <div className="box">
+        
+          <div className="main-content">
+       
           <div className="dropdown-container">
             <label htmlFor="meetingSelect">Select Meeting:</label>
             <select
@@ -147,6 +215,8 @@ function TodoProgression() {
             </select>
           </div>
 
+
+ 
           {/* Communication Section */}
           <div className="form-box">
             <div className="question-group">
@@ -427,9 +497,29 @@ function TodoProgression() {
               Submit
             </button>
           </div>
+          </div>
+          </div>
+          </div>
+
       </div>
       </div>
+      <div className="welcome-box-containerA">
+      {/* Welcome Message Box */}
+      <div className="welcome-boxA">
+        <h2>Welcome, {menteeName}!</h2>
+        <p>Today Is 12/06/2024</p>
       </div>
+
+      {/* New Box under the Welcome Box */}
+      <div className="new-boxA">
+        <h2>To-Do</h2>
+        <p>placeholder For To-Do</p>
+      </div>
+    </div>
+      </div>
+
+    
+
  
   );
 }

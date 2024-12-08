@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './AssignHomework.css';
-import logo from '../assets/WDC.png';
+import logo from "../assets/WDC2.png";
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import MoodIcon from '@mui/icons-material/Mood';
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import twopeople from "../assets/twopeople.png";
+import logout from "../assets/logout.png";
+import hw from "../assets/hw.png";
+import calendar from "../assets/calendar.png";
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
 }  from "@mui/material";
+import { motion } from "framer-motion"; // Importing motion
 
 function AssignHomework() {
   const navigate = useNavigate();
@@ -21,7 +31,19 @@ function AssignHomework() {
   const [mentees, setMentees] = useState([]);
   const userInfo = JSON.parse(sessionStorage.getItem('user'));
   const mentorKey = userInfo.mentorkey;
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  console.log(user);
+  console.log(name)
+  const mentorName = name || "Mentor";
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
+  
   useEffect(() => {
     const fetchMentees = async () => {
       try {
@@ -100,44 +122,75 @@ function AssignHomework() {
 
   return (
     <div className="assign-hw">
-       <AppBar position="static" color="primary">
-  <Toolbar sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-    <Button
-      className="logo-button"
-      onClick={() => navigate("/mentor-home")}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        position: 'absolute',
-        left: 16, 
-      }}
-    >
-      <img src={logo} alt="Logo" style={{ height: 40 }} />
-    </Button>
+     <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Assign Homework</h1>
+      </div>
+      <div className="sidebarA">
+        {/* Navigation Buttons */}
+        <div className="nav-buttonsA">
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/interact-with-mentee")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/write-mentee-progression")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/assign-homework")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={hw} alt="create" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/mentor-meetings")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={calendar} alt="twopeople" />
+          </motion.button>
+                  {/* Logout Button */}
+      </div>
+      <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
+        >
+          <img src={logout} alt="logout" />
+        </motion.button>
+        </div>
 
-    <Typography 
-      variant="h6" 
-      sx={{ 
-        flexGrow: 1, 
-        textAlign: 'center', 
-      }}
-    >
-      Assign Homework
-    </Typography>
-
-  
-    <Button
-      color="inherit"
-      onClick={handleLogout}
-      sx={{
-        position: 'absolute',
-        right: 16,
-      }}
-    >
-      Logout
-    </Button>
-  </Toolbar>
-</AppBar>
+        <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+          <div className="box">
+        
+          <div className="main-content">
 
       <div className="homework-body">
         <div className="homework-form">
@@ -173,6 +226,24 @@ function AssignHomework() {
           <button onClick={handleAssignHomework} disabled={!title || !description || !assignedDate || !assignedTime || !dueDate || !dueTime || selectedMentees.length === 0} className="homework-button">Assign Homework</button>
         </div>
       </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <div className="welcome-box-containerA">
+      {/* Welcome Message Box */}
+      <div className="welcome-boxA">
+        <h2>Welcome, {mentorName}!</h2>
+        <p>Today Is 12/06/2024</p>
+      </div>
+
+      {/* New Box under the Welcome Box */}
+      <div className="new-boxA">
+        <h2>To-Do</h2>
+        <p>placeholder For To-Do</p>
+      </div>
+    </div>
     </div>
   );
 }
