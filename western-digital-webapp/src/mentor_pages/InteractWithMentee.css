@@ -214,6 +214,7 @@ li {
 
 .interact-with-mentee .chat-container {
   height: 55vh;
+  background-color: #b9bec0;
   width: 90%;
   margin-left: 5%;
   border-radius: 10px;

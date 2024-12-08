@@ -241,12 +241,12 @@ function InteractWithMentee() {
   
 
     {selectedMentee && (
-      <div className="chat-container">
-        <MainContainer>
-          <ChatContainer>
-            <MessageList>
+   
+        <MainContainer className="chat-container" style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
+          <ChatContainer style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
+            <MessageList style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
               {messages.map((msg, index) => (
-                <Message
+                <Message 
                   key={index}
                   model={{
                     message: msg.message,
@@ -257,13 +257,13 @@ function InteractWithMentee() {
                 />
               ))}
             </MessageList>
-            <MessageInput
+            <MessageInput style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}
               placeholder={`Send a message to ${menteeName}...`}
               onSend={handleSendMessage}
             />
           </ChatContainer>
         </MainContainer>
-      </div>
+
     )}
           </div>
         </div>
