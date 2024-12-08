@@ -136,6 +136,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 38.5vh;
 }
 
 .view-progression .form-box1 {
@@ -146,6 +147,7 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 30vh;
   
 }
 /* Target the box to format its children */
@@ -378,4 +380,10 @@
 }
 .dark-mode .title-header {
   color: #91BECD; /* Change color to the desired shade */
+}
+
+.view-progression .smallrect {
+  display: flex;
+  gap: 10px; /* Adds space between the dropdowns */
+  align-items: center; /* Aligns the dropdowns vertically */
 }
