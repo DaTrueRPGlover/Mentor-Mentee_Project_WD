@@ -269,15 +269,6 @@ function InteractWithMentee() {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
     <div className="welcome-box-containerA">
       {/* Welcome Message Box */}
       <div className="welcome-boxA">

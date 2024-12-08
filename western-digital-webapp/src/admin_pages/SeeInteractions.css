@@ -131,7 +131,7 @@
 /* Welcome Box Container Styling */
 .see-interactions .welcome-box-containerA {
   position: fixed;
-  right: 8%;
+  right: 2%;
   top: 50%;
   transform: translateY(-45%);
   width: 700px; /* Fixed width for the container */

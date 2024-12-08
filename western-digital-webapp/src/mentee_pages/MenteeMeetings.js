@@ -299,7 +299,7 @@ function MenteeMeetings() {
 
       <div className="logo-title-container">
           <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Assigned Homework</h1>
+          <h1 className="title-header">Meetings</h1>
     </div>
     <div className="sidebarA">
         {/* Navigation Buttons */}
