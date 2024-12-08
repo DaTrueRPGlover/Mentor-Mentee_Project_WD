@@ -18,6 +18,7 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { Widgets, WidthFull } from "@mui/icons-material";
+import { motion } from "framer-motion"; // Importing motion
 
 
 
@@ -39,6 +40,12 @@ function InteractWithMentor() {
   const [mentorKey, setMentorKey] = useState(null);
   const [conversationKey, setConversationKey] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -147,7 +154,8 @@ function InteractWithMentor() {
 
 
   return (
-    <div className="page-container">
+    <div className="interact-with-mentor">
+
        <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Chat With Mentor</h1>
@@ -155,25 +163,63 @@ function InteractWithMentor() {
       {/* Sidebar */}
       <div className="sidebar">
         {/* Navigation Buttons */}
-        <div className="nav-buttons">
-          <button className="icon" onClick={() => navigate("/interact-mentor")}>
+          <div className="nav-buttons">
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/interact-mentor")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
             <img src={chat} alt="chat" />
-          </button>
-          <button className="icon" onClick={() => navigate("/todo-progression")}>
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/todo-progression")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
             <img src={write} alt="write" />
-          </button>
-          <button className="icon" onClick={() => navigate("/check-hw")}>
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/check-hw")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
             <img src={assign} alt="assign" />
-          </button>
-          <button className="icon" onClick={() => navigate("/mentee-meetings")}>
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/mentee-meetings")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
             <img src={calendar} alt="calendar" />
-          </button>
+          </motion.button>
+       
         </div>
 
         {/* Logout Button */}
-        <button className="logout-buttonV2" onClick={handleLogout}>
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
+        >
           <img src={logout} alt="logout" />
-        </button>
+        </motion.button>
       </div>
 
       {/* Content Wrapper for Welcome Message and Chat Box */}
@@ -183,8 +229,7 @@ function InteractWithMentor() {
           <div className="box">
         
 
-              {mentorName && <p className="mentor-name">Chatting with: {mentorName}</p>}
-    
+
 
             {mentorKey && (
               <div className="chat-container">

@@ -1,12 +1,18 @@
 /* Full Page Container */
-.page-container {
+.interact-with-mentor{
   display: flex;
-  justify-content: flex-start; /* Aligns sidebar to the left */
-  align-items: center; /* Vertically centers the sidebar and chat box */
-  height: 100vh; /* Full viewport height */
-  position: relative; /* Needed for absolute positioning of the logo */
-
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #E0E0E0; */
+  position: fixed;
+  /* margin-top: 20px; */
 }
+
 
 /* Logo and Title Container */
 .logo-title-container {
@@ -18,46 +24,46 @@
   z-index: 10; /* Ensures the logo is above other content */
 }
 
-.logo {
+.interact-with-mentor .logo {
   width: 100px; /* Set a width for your logo */
   height: auto;
   margin-right: 10px; /* Space between logo and title */
 }
 
 .title-header {
-  font-size: 2rem;
+  font-size: 4rem;
   padding-left: 20px;
-  font-weight: bold;
+  font-weight: 900;;
   color: #333;
 }
 
 /* Sidebar container */
-.sidebar {
-  width: 100px; /* Set the sidebar width */
-  height: 70vh; /* Sidebar takes 80% of the viewport height */
-  background-color: #b9bec0;
+.interact-with-mentor .sidebar {
+  width: 6.6%; /* Sidebar width */
+  height: 80vh; /* Sidebar height */
+  background-color: #b9bec07c;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensures spacing between top and bottom buttons */
+  justify-content: space-between;
   align-items: center;
   padding: 20px 0;
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Subtle shadow */
-  position: fixed; /* Fixed positioning */
-  top: 50%; /* Center the sidebar vertically */
-  transform: translateY(-50%); /* Align the sidebar vertically at the center */
-  margin-left: 30px; /* Adjust this value to add space between the sidebar and the page edge */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed; /* Sticks sidebar to the left */
+  left: 1.3%; /* Margin space from the very left */
+  top: 54%; /* Center sidebar vertically */
+  transform: translateY(-50%);
 }
 
 
 /* Top buttons */
-.nav-buttons {
+.interact-with-mentor .nav-buttons {
   display: flex;
   flex-direction: column;
   gap: 15px; /* Adds space between the buttons */
 }
 
-.icon {
+.interact-with-mentor .icon {
   width: 70px;
   height: 70px;
   background-color: #ffffff;
@@ -70,14 +76,32 @@
   transition: all 0.3s ease;
 }
 
-.icon img {
-  width: 50%;
-  height: 50%;
+.interact-with-mentor .icon img {
+  width: 40px;
+  height: auto;
 }
 
 .icon:hover {
   background-color: #e0e0e0; /* Hover effect */
 }
+
+.interact-with-mentor .icon1 {
+  width: 70px;
+  height: 70px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none; /* No border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.interact-with-mentor .icon1 img {
+  width: 40px;
+  height: auto;
+}
+
 
 /* Logout Button */
 .logout-buttonV2 {
@@ -92,6 +116,7 @@
   margin-bottom: 20px; /* Optional: Space from bottom of sidebar */
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 20px;
 }
 
 .logout-buttonV2 img {
@@ -100,20 +125,25 @@
 }
 
 .logout-buttonV2:hover {
-  background-color: #e53935; /* Optional: Red hover effect */
+  background-color: #f0f0f0; /* Change the background color on hover */
 }
 
 /* Content Wrapper for Welcome Message and Chat Box */
-.content-wrapperV2 {
-  display: flex;
-  justify-content: flex-start; /* Align content to the left */
-  align-items: flex-start; /* Align content to the top */
-  margin-left: 140px; /* Space for the sidebar */
-  padding: 0 20px; /* Adjusted padding to avoid shrinkage */
-  width: 70%;
-  box-sizing: border-box; /* Include padding in the total width and height calculation */
+.interact-with-mentor .content-wrapperV2 {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
 
-  min-height: 70vh; /* Minimum height to match the sidebar height */
+  transform: translateY(-50%);
+  width: 400px; /* Fixed width for the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the stacked items */
+
+  /* Editable height and width */
+  height: 116.6%; /* Change this value */
+  width: 39.7%;  /* Change this value */
+  margin-right: 50px;
 
 }
 
@@ -121,24 +151,20 @@
 .chat-box {
   display: flex;
   flex-direction: column; /* Stack content vertically */
-  justify-content: center; /* Vertically center content inside the chat box */
-  flex-grow: 1; /* Take up the remaining space */
-  width: 100%; /* Ensure the chat box takes the full width */
-  height: 100%; /* Full height of its container */
-  max-width: none; /* Remove max-width constraint */
-  background-color: #b9bec0;
-  border-radius: 20px;
-  margin-right: 20px; /* Space between chat box and welcome box */
+  justify-content: flex-start; /* Align content at the top */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width inside its container */
+  height: 68.8%;
+  background-color: #b9bec07c;
 }
 
 /* Ensure the chat content is scrollable */
-.chat-content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: #b9bec0;
- 
-  border-radius: 10px;
+.interact-with-mentor .chat-content {
+  height: 55vh;
+  width: 90%;
 }
 
 /* Invisible Scrollbar (for Webkit browsers) */
@@ -166,45 +192,47 @@
 }
 /* Welcome Box Container */
 .welcome-box-container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px; /* Fixed width for the container */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 70%; /* Match the height of the chat box */
-  width: 30%;
-  margin-right: 100px;
+  gap: 10px; /* Space between the stacked items */
 }
 .welcome-box {
-  width: 100%; 
-  flex: 1; /* Take up equal height with the other box */
-  padding: 20px;
-  background-color: #ffffff;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: center;
-  background-color: #b9bec0;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 16.4vh; /* Custom height for welcome box */
 }
 
 .new-box {
-  width: 100%;
-  flex: 1; /* Take up equal height with the welcome box */
-  padding: 20px;
-  margin-top: 20px; /* Add space between the two boxes */
-  background-color: #b9bec0;
+  background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 63vh; /* Custom height for new box */ 
 }
 
-.welcome-box h2 {
+ .welcome-box h2,
+ .new-box h2 {
   margin: 0;
   font-size: 1.5rem;
-  color: #333;
 }
 
-.welcome-box p {
-  margin-top: 5px;
+ .welcome-box p,
+ .new-box p {
+  margin-top: 10px;
   font-size: 1rem;
-  color: #252525;
 }
 
 
@@ -213,18 +241,7 @@
   box-shadow: none !important;
   border: none!important;
 }
-/* Chat Box Styling */
-.box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-  background-color: #b9bec0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
+
 
 .container1 {
   text-align: center;
