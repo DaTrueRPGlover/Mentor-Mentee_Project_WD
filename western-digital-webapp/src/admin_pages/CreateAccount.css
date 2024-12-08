@@ -305,7 +305,7 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 140px; /* Custom height for welcome box */
+  height: 16.4vh; /* Custom height for welcome box */
 }
 
 /* New Box Styling */
@@ -317,7 +317,7 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 540px; /* Custom height for new box */
+  height: 63vh; /* Custom height for new box */
 
 }
 
@@ -345,8 +345,8 @@
   gap: 10px; /* Space between the stacked items */
 
   /* Editable height and width */
-  height: 1000px; /* Change this value */
-  width: 600px;  /* Change this value */
+  height: 116.6%; /* Change this value */
+  width: 39.7%;  /* Change this value */
   margin-right: 50px;
 }
 
@@ -366,7 +366,7 @@
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%; /* Full width inside its container */
-  height: 688px;
+  height: 68.8%;
   background-color: #b9bec07c;
 }
 .dark-mode .title-header {

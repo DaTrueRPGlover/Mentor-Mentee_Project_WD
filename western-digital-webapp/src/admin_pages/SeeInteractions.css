@@ -149,7 +149,7 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 140px; /* Custom height for welcome box */
+  height: 16.4vh; /* Custom height for welcome box */
 }
 
 /* New Box Styling */
@@ -161,7 +161,7 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 540px; /* Custom height for new box */
+  height: 63vh; /* Custom height for new box */
 }
 
 .see-interactions .welcome-boxA h2,
