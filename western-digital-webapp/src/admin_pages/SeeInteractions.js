@@ -191,10 +191,10 @@ function SeeInteractions() {
           </div>
           </div>
           {selectedMentor && selectedMentee && (
-        <MainContainer className="chat-container">
-          <ChatContainer>
+              <MainContainer className="chat-container" style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
+                <ChatContainer style={{ backgroundColor: '#b9bec0' }}>
 
-            <MessageList>
+            <MessageList style={{ backgroundColor: '#b9bec0' }}>
               {messages.map((message, index) => (
                 <Message
                   key={index}
