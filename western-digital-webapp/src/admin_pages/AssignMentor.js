@@ -28,10 +28,18 @@ function AssignMentor() {
   const name = user['name']
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
   };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -73,7 +81,18 @@ function AssignMentor() {
       setRelationships(data);
     }
   };
-
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
   const handleAssignMentor = async () => {
     if (newMentee && newMentor) {
       const newAssignment = {
@@ -322,7 +341,7 @@ function AssignMentor() {
       {/* Welcome Message Box */}
       <div className="welcome-boxA">
         <h2>Welcome, {adminName}!</h2>
-        <p>Today Is 12/06/2024</p>
+        <p>Today is {formatDateTime(currentDateTime)}</p>
       </div>
 
       {/* New Box under the Welcome Box */}

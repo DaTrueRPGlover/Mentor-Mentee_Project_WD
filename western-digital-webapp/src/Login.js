@@ -58,11 +58,11 @@ function Login() {
 
           // Redirect based on role
           if (body.role.toLowerCase() === "mentor") {
-            setTimeout(() => navigate("/mentor-home"), 1000); // Add delay to let animation complete
+            setTimeout(() => navigate("/interact-with-mentee"), 1000); // Add delay to let animation complete
           } else if (body.role.toLowerCase() === "mentee") {
-            setTimeout(() => navigate("/mentee-home"), 1000);
+            setTimeout(() => navigate("/interact-mentor"), 1000);
           } else if (body.role.toLowerCase() === "admin") {
-            setTimeout(() => navigate("/admin-home"), 1000);
+            setTimeout(() => navigate("/assign-mentor"), 1000);
           } else {
             console.error("Unknown user role:", body.role);
             setErrorMessage("Unknown user role");

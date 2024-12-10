@@ -37,6 +37,7 @@ function InteractWithMentee() {
   const name = user['name']
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -82,7 +83,18 @@ function InteractWithMentee() {
       })
       .catch((error) => console.error("Error fetching messages:", error));
   }, [selectedMentee, mentees]);
-
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
   useEffect(() => {
     if (!conversationKey) return;
 
@@ -273,7 +285,7 @@ function InteractWithMentee() {
       {/* Welcome Message Box */}
       <div className="welcome-boxA">
         <h2>Welcome, {adminName}!</h2>
-        <p>Today Is 12/06/2024</p>
+        <p>Today is {formatDateTime(currentDateTime)}</p>
       </div>
 
       {/* New Box under the Welcome Box */}

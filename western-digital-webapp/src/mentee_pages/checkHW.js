@@ -1,4 +1,4 @@
-// CheckHW.js
+// src/components/CheckHW.js
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import write from "../assets/write.png";
 import assign from "../assets/assign.png";
 import calendar from "../assets/calendar.png";
 import logout from "../assets/logout.png";
+import ChatBox from "./ChatBox"; // Import the ChatBox component
 
 const CheckHW = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const CheckHW = () => {
   console.log(user);
   console.log(name)
   const menteeName = name|| "Mentee";
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -33,7 +35,18 @@ const CheckHW = () => {
     sessionStorage.clear();
     navigate("/");
   };
-
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   useEffect(() => {
     const fetchHomework = async () => {
@@ -54,6 +67,7 @@ const CheckHW = () => {
       fetchHomework();
     } else {
       setError('Mentee key not found.');
+      setLoading(false);
     }
   }, [menteeKey]);
 
@@ -63,17 +77,17 @@ const CheckHW = () => {
   return (
     <div className="check-hw">
 
-<div className="logo-title-container">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Assigned Homework</h1>
-    </div>
-    <div className="sidebarA">
+      <div className="logo-title-container">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Assigned Homework</h1>
+      </div>
+      <div className="sidebarA">
         {/* Navigation Buttons */}
         <div className="nav-buttonsA">
           <motion.button
             className="icon"
             onClick={() => navigate("/interact-mentor")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={chat} alt="chat" />
@@ -81,7 +95,7 @@ const CheckHW = () => {
           <motion.button
             className="icon"
             onClick={() => navigate("/todo-progression")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={write} alt="write" />
@@ -89,7 +103,7 @@ const CheckHW = () => {
           <motion.button
             className="icon1"
             onClick={() => navigate("/check-hw")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={assign} alt="assign" />
@@ -97,14 +111,14 @@ const CheckHW = () => {
           <motion.button
             className="icon"
             onClick={() => navigate("/mentee-meetings")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={calendar} alt="calendar" />
           </motion.button>
         </div>
 
-        {/* Logout Button */}
+        {/* Dark Mode Toggle */}
         <div className="slider-section">
           <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
@@ -117,10 +131,11 @@ const CheckHW = () => {
           </label>
           <span role="img" aria-label="Moon"></span>
         </div>
+        {/* Logout Button */}
         <motion.button
           className="logout-buttonV2"
           onClick={handleLogout}
-          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         >
           <img src={logout} alt="logout" />
@@ -130,50 +145,48 @@ const CheckHW = () => {
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-          <div className="box">
-        
-          <div className="main-content">
-
-      <div className="whiteR">
-
-          {homeworkData.length === 0 ? (
-            <p className="no-homework">No homework assignments found.</p>
-          ) : (
-            <div className="homework-list">
-              {homeworkData.map((hw) => (
-                <Link to={`/homework/${hw.homework_id}`} key={hw.homework_id} className="homework-card">
-                  <h2 className="homework-title">{hw.title}</h2>
-                  <p className="homework-description">{hw.description}</p>
-                  <p className="homework-date">
-                    Assigned: {format(new Date(hw.assigned_date), 'MMMM dd, yyyy')}
-                  </p>
-                  <p className="homework-date">
-                    Due: {format(new Date(hw.due_date), 'MMMM dd, yyyy')}
-                  </p>
-                </Link>
-              ))}
+            <div className="box">
+              <div className="main-content">
+                {/* Homework List */}
+                <div className="whiteR">
+                  {homeworkData.length === 0 ? (
+                    <p className="no-homework">No homework assignments found.</p>
+                  ) : (
+                    <div className="homework-list">
+                      {homeworkData.map((hw) => (
+                        <Link to={`/homework/${hw.homework_id}`} key={hw.homework_id} className="homework-card">
+                          <h2 className="homework-title">{hw.title}</h2>
+                          <p className="homework-description">{hw.description}</p>
+                          <p className="homework-date">
+                            Assigned: {format(new Date(hw.assigned_date), 'MMMM dd, yyyy')}
+                          </p>
+                          <p className="homework-date">
+                            Due: {format(new Date(hw.due_date), 'MMMM dd, yyyy')}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          )}
+          </div>
+        </div>
       </div>
-      
-      </div>
-      </div>
-      </div>
-      </div>
-      </div>
+      {/* Welcome and To-Do Boxes Container */}
       <div className="welcome-box-containerA">
-      {/* Welcome Message Box */}
-      <div className="welcome-boxA">
-        <h2>Welcome, {menteeName}!</h2>
-        <p>Today Is 12/06/2024</p>
-      </div>
+        {/* Welcome Message Box */}
+        <div className="welcome-boxA">
+          <h2>Welcome, {menteeName}!</h2>
+          <p>Today is {formatDateTime(currentDateTime)}</p>
+        </div>
 
-      {/* New Box under the Welcome Box */}
-      <div className="new-boxA">
-        <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        {/* New Box under the Welcome Box */}
+        <div className="new-boxA">
+          <h2>Chat</h2>
+          <ChatBox /> {/* Insert ChatBox here */}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -33,6 +33,7 @@ function WriteMenteeProgression() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const mentorName = name || "Mentor";
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -64,7 +65,18 @@ function WriteMenteeProgression() {
       setMeetings([]); // Clear meetings if no mentee is selected
     }
   }, [selectedMentee]);
-
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
   const handleAddReport = async (e) => {
     e.preventDefault();
     const userInfo = JSON.parse(sessionStorage.getItem("user"));
@@ -342,7 +354,7 @@ function WriteMenteeProgression() {
       {/* Welcome Message Box */}
       <div className="welcome-boxA">
         <h2>Welcome, {mentorName}!</h2>
-        <p>Today Is 12/06/2024</p>
+        <p>Today is {formatDateTime(currentDateTime)}</p>
       </div>
 
       {/* New Box under the Welcome Box */}

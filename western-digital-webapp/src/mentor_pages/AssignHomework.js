@@ -37,6 +37,7 @@ function AssignHomework() {
   console.log(name)
   const mentorName = name || "Mentor";
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
 
   const toggleTheme = () => {
@@ -106,6 +107,18 @@ function AssignHomework() {
     } catch (error) {
       console.error('Error assigning homework:', error);
     }
+  };
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
   };
 
   const handleMenteeSelection = (menteeId) => {
@@ -235,7 +248,7 @@ function AssignHomework() {
       {/* Welcome Message Box */}
       <div className="welcome-boxA">
         <h2>Welcome, {mentorName}!</h2>
-        <p>Today Is 12/06/2024</p>
+        <p>Today is {formatDateTime(currentDateTime)}</p>
       </div>
 
       {/* New Box under the Welcome Box */}
