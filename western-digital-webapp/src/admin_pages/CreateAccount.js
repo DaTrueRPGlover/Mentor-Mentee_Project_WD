@@ -249,9 +249,11 @@ function CreateAccount() {
 
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
-        <h2>Assign Mentor</h2>
-        <AssignMentorTable/>
-      </div>
+    <h2>To-Do</h2>
+    <div className="assign-mentor-container">
+    <AssignMentorTable/>
+    </div>
+  </div>
     </div>
     </div>
   );
