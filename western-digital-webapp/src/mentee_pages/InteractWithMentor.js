@@ -135,9 +135,11 @@ function InteractWithMentor() {
 
         {/* New Box under the Welcome Box */}
         <div className="new-box">
-          <h2>To-Do</h2>
-          <CheckHWTable /> {/* Insert CheckHWTable here */}
+        <h2>To-Do</h2>
+        <div className="check-hw-table-container">
+          <CheckHWTable />
         </div>
+      </div>
       </div>
     </div>
   );
