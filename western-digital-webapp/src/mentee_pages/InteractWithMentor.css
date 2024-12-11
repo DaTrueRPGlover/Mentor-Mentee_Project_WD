@@ -11,6 +11,7 @@
   /* background-color: #E0E0E0; */
   position: fixed;
   /* margin-top: 20px; */
+  
 }
 
 
@@ -133,6 +134,7 @@
   position: fixed;
   right: 46.3%;
   top: 72.3%;
+  left: 10%;
   transform: translateY(-50%);
   width: 400px; /* Fixed width for the container */
   display: flex;
@@ -158,6 +160,7 @@
   width: 100%; /* Full width inside its container */
   height: 68.8%;
   background-color: #b9bec07c;
+  left: 53%;
 }
 
 /* Ensure the chat content is scrollable */
@@ -192,10 +195,11 @@
 /* Welcome Box Container */
 .welcome-box-container {
   position: fixed;
-  right: 2%;
+  right: 1%;
   top: 50%;
+  left: 53%;
   transform: translateY(-45%);
-  width: 700px; /* Fixed width for the container */
+  width: 45%; /* Fixed width for the container */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between the stacked items */
