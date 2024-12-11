@@ -25,7 +25,13 @@ import {
   Paper,
 } from "@mui/material";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import logo from "../assets/WDC.png";
+import { motion } from "framer-motion"; // Importing motion
+import logo from "../assets/WDC2.png";
+import chat from "../assets/chat.png";
+import write from "../assets/write.png";
+import assign from "../assets/assign.png";
+import calendar from "../assets/calendar.png";
+import logout from "../assets/logout.png";
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -50,6 +56,11 @@ function MentorMeetings() {
   const [newDate, setNewDate] = useState("");
   const [newTime, setNewTime] = useState("");
   const mentorinfo = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  const adminName = name || "Admin";
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   const daysOfWeek = [
     "Monday",
@@ -60,6 +71,11 @@ function MentorMeetings() {
     "Saturday",
     "Sunday",
   ];
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
+  };
 
   useEffect(() => {
     const fetchData = async () => {
