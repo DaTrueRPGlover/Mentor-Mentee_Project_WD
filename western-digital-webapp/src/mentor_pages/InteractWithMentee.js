@@ -23,7 +23,7 @@ import {
   Button,
 } from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
-import AssignHWTable from "./AssignHW"; // Import the AssignHWTable component
+import AssignHWTable from "./AssignHW.js"; // Import the AssignHWTable component
 
 
 function InteractWithMentee() {
