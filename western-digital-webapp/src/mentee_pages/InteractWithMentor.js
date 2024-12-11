@@ -49,7 +49,6 @@ function InteractWithMentor() {
 
   return (
     <div className="interact-with-mentor">
-
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Chat With Mentor</h1>
