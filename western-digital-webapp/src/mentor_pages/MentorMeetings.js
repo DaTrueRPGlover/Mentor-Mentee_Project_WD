@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Button,
   Container,
@@ -23,14 +21,23 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download"; // Import DownloadIcon
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { motion } from "framer-motion"; // Importing motion
+import { motion } from "framer-motion";
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
-import calendar from "../assets/calendar.png";
+import calendarImg from "../assets/calendar.png"; // Renamed to avoid conflict with Calendar component
 import logout from "../assets/logout.png";
 
 const locales = {
@@ -57,10 +64,26 @@ function MentorMeetings() {
   const [newTime, setNewTime] = useState("");
   const mentorinfo = JSON.parse(sessionStorage.getItem("user"));
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const name = user['name']
+  const name = user['name'];
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+  // State variables for Availability Management
+  const [showAddAvailabilityDialog, setShowAddAvailabilityDialog] = useState(false);
+  const [showEditAvailabilityDialog, setShowEditAvailabilityDialog] = useState(false);
+  const [selectedDay, setSelectedDay] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [availabilityToEdit, setAvailabilityToEdit] = useState(null);
+  const [editDay, setEditDay] = useState("");
+  const [editStartTime, setEditStartTime] = useState("");
+  const [editEndTime, setEditEndTime] = useState("");
+
+  // State variables for Export Calendar
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportStartDate, setExportStartDate] = useState("");
+  const [exportEndDate, setExportEndDate] = useState("");
 
   const daysOfWeek = [
     "Monday",
@@ -75,6 +98,12 @@ function MentorMeetings() {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
+  };
+
+  // Define handleLogout inside the component
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/");
   };
 
   useEffect(() => {
@@ -148,6 +177,7 @@ function MentorMeetings() {
     fetchData();
   }, [mentorinfo.mentorkey]);
 
+  // Blackout Date Handlers
   const handleOpenAddBlackoutDialog = () => {
     setShowAddBlackoutDialog(true);
     setBlackoutDate("");
@@ -198,7 +228,8 @@ function MentorMeetings() {
           ]);
           handleCloseAddBlackoutDialog();
         } else {
-          alert("Failed to add blackout date");
+          const data = await response.json();
+          alert(data.message || "Failed to add blackout date");
         }
       } catch (error) {
         console.error("Error adding blackout date:", error);
@@ -208,6 +239,229 @@ function MentorMeetings() {
     }
   };
 
+  const handleDeleteBlackoutDate = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/blackout-dates`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: selectedEvent.date,
+          }),
+        }
+      );
+      if (response.ok) {
+        setEvents(
+          events.filter(
+            (event) =>
+              !(event.type === "blackout" && event.date === selectedEvent.date)
+          )
+        );
+        handleCloseEventDialog();
+      } else {
+        const data = await response.json();
+        alert(data.message || "Failed to delete blackout date");
+      }
+    } catch (error) {
+      console.error("Error deleting blackout date:", error);
+    }
+  };
+
+  // Availability Handlers
+  const handleOpenAddAvailabilityDialog = () => {
+    setShowAddAvailabilityDialog(true);
+    setSelectedDay("");
+    setStartTime("");
+    setEndTime("");
+  };
+
+  const handleCloseAddAvailabilityDialog = () => {
+    setShowAddAvailabilityDialog(false);
+  };
+
+  const handleAddAvailability = async () => {
+    if (selectedDay && startTime && endTime) {
+      if (endTime <= startTime) {
+        alert("End time must be after start time.");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/availability`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              dayOfWeek: selectedDay,
+              startTime,
+              endTime,
+            }),
+          }
+        );
+        if (response.ok) {
+          // Refresh availability
+          await fetchAvailability();
+          handleCloseAddAvailabilityDialog();
+        } else {
+          const data = await response.json();
+          alert(data.message || "Failed to add availability");
+        }
+      } catch (error) {
+        console.error("Error adding availability:", error);
+      }
+    } else {
+      alert("Please fill in all fields");
+    }
+  };
+
+  const handleOpenEditAvailabilityDialog = (availabilitySlot) => {
+    setAvailabilityToEdit(availabilitySlot);
+    setEditDay(availabilitySlot.day_of_week);
+    setEditStartTime(availabilitySlot.start_time);
+    setEditEndTime(availabilitySlot.end_time);
+    setShowEditAvailabilityDialog(true);
+  };
+
+  const handleCloseEditAvailabilityDialog = () => {
+    setShowEditAvailabilityDialog(false);
+    setAvailabilityToEdit(null);
+  };
+
+  const handleEditAvailability = async () => {
+    if (editDay && editStartTime && editEndTime) {
+      if (editEndTime <= editStartTime) {
+        alert("End time must be after start time.");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/availability`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              dayOfWeek: editDay,
+              oldStartTime: availabilityToEdit.start_time,
+              oldEndTime: availabilityToEdit.end_time,
+              newStartTime: editStartTime,
+              newEndTime: editEndTime,
+            }),
+          }
+        );
+        if (response.ok) {
+          // Refresh availability
+          await fetchAvailability();
+          handleCloseEditAvailabilityDialog();
+        } else {
+          const data = await response.json();
+          alert(data.message || "Failed to update availability");
+        }
+      } catch (error) {
+        console.error("Error updating availability:", error);
+      }
+    } else {
+      alert("Please fill in all fields");
+    }
+  };
+
+  const handleDeleteAvailability = async (availabilitySlot) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete the availability on ${availabilitySlot.day_of_week} from ${availabilitySlot.start_time} to ${availabilitySlot.end_time}?`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/availability`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            dayOfWeek: availabilitySlot.day_of_week,
+            startTime: availabilitySlot.start_time,
+            endTime: availabilitySlot.end_time,
+          }),
+        }
+      );
+      if (response.ok) {
+        // Refresh availability
+        await fetchAvailability();
+      } else {
+        const data = await response.json();
+        alert(data.message || "Failed to delete availability");
+      }
+    } catch (error) {
+      console.error("Error deleting availability:", error);
+    }
+  };
+
+  // Export Calendar Handlers
+  const handleOpenExportDialog = () => {
+    setShowExportDialog(true);
+    setExportStartDate("");
+    setExportEndDate("");
+  };
+
+  const handleCloseExportDialog = () => {
+    setShowExportDialog(false);
+  };
+
+  const handleExportCalendar = async () => {
+    if (!exportStartDate || !exportEndDate) {
+      alert("Please select both start and end dates.");
+      return;
+    }
+
+    if (exportEndDate < exportStartDate) {
+      alert("End date must be after start date.");
+      return;
+    }
+
+    try {
+      const mentorkey = mentorinfo.mentorkey;
+      const response = await fetch(
+        `http://localhost:3001/api/generate-ics/${mentorkey}?startDate=${exportStartDate}&endDate=${exportEndDate}`
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.message || "Failed to export calendar.");
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(new Blob([blob], { type: 'text/calendar' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'meetings.ics');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      handleCloseExportDialog();
+    } catch (error) {
+      console.error("Error exporting calendar:", error);
+      alert("An error occurred while exporting the calendar.");
+    }
+  };
+
+  // Fetch Availability Function
+  const fetchAvailability = async () => {
+    try {
+      const mentorkey = mentorinfo.mentorkey;
+      const response = await fetch(
+        `http://localhost:3001/api/mentor/${mentorkey}/availability`
+      );
+      const data = await response.json();
+      setAvailability(data);
+    } catch (error) {
+      console.error("Error fetching availability:", error);
+    }
+  };
+
+  // Handle Event Selection (Meeting or Blackout)
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setNewDate("");
@@ -221,6 +475,11 @@ function MentorMeetings() {
   };
 
   const handleRescheduleMeeting = async () => {
+    if (!newDate || !newTime) {
+      alert("Please select both new date and time.");
+      return;
+    }
+
     const newDateTime = `${newDate}T${newTime}`;
     try {
       const response = await fetch(
@@ -261,60 +520,49 @@ function MentorMeetings() {
     }
   };
 
-  const handleDeleteBlackoutDate = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/blackout-dates`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            date: selectedEvent.date,
-          }),
-        }
-      );
-      if (response.ok) {
-        setEvents(
-          events.filter(
-            (event) =>
-              !(event.type === "blackout" && event.date === selectedEvent.date)
-          )
-        );
-        handleCloseEventDialog();
-      } else {
-        alert("Failed to delete blackout date");
-      }
-    } catch (error) {
-      console.error("Error deleting blackout date:", error);
-    }
-  };
-
-  const handleLogout = () => {
-    sessionStorage.clear();
-    navigate("/");
-  };
-
+  // Function to Display Availability with Edit/Delete
   const getAvailabilityByDay = (day) => {
-    return availability
-      .filter((avail) => avail.day_of_week === day)
-      .map((avail) => `${avail.start_time} - ${avail.end_time}`)
-      .join(", ");
+    const avail = availability.filter((avail) => avail.day_of_week === day);
+    if (avail.length === 0) return "No Availability";
+    return avail.map((a, index) => (
+      <Box key={index} display="flex" alignItems="center" mb={1}>
+        <Typography variant="body2">
+          {a.start_time} - {a.end_time}
+        </Typography>
+        <IconButton
+          size="small"
+          color="primary"
+          onClick={() => handleOpenEditAvailabilityDialog(a)}
+          sx={{ ml: 1 }}
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+        <IconButton
+          size="small"
+          color="secondary"
+          onClick={() => handleDeleteAvailability(a)}
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </Box>
+    ));
   };
 
   return (
     <div className='mentor-meetings'>
 
       <div className="logo-title-container">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Meetings</h1>
-    </div>
-    <div className="sidebarA">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Meetings</h1>
+      </div>
+
+      <div className="sidebarA">
         {/* Navigation Buttons */}
         <div className="nav-buttonsA">
           <motion.button
             className="icon"
             onClick={() => navigate("/interact-with-mentee")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={chat} alt="chat" />
@@ -322,7 +570,7 @@ function MentorMeetings() {
           <motion.button
             className="icon"
             onClick={() => navigate("/write-mentee-progression")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={write} alt="write" />
@@ -330,7 +578,7 @@ function MentorMeetings() {
           <motion.button
             className="icon"
             onClick={() => navigate("/assign-homework")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={assign} alt="assign" />
@@ -338,14 +586,14 @@ function MentorMeetings() {
           <motion.button
             className="icon1"
             onClick={() => navigate("/mentor-meetings")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
-            <img src={calendar} alt="calendar" />
+            <img src={calendarImg} alt="calendar" />
           </motion.button>
         </div>
 
-        {/* Logout Button */}
+        {/* Theme Toggle */}
         <div className="slider-section">
           <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
@@ -358,10 +606,12 @@ function MentorMeetings() {
           </label>
           <span role="img" aria-label="Moon"></span>
         </div>
+
+        {/* Logout Button */}
         <motion.button
           className="logout-buttonV2"
           onClick={handleLogout}
-          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         >
           <img src={logout} alt="logout" />
@@ -371,211 +621,406 @@ function MentorMeetings() {
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-          <div className="box">
-        
-          <div className="main-content">
+            <div className="box">
 
+              <div className="main-content">
 
+                <Container sx={{ mt: 4 }}>
+                  <Typography variant="h4" align="center" gutterBottom>
+                    Manage Your Availability
+                  </Typography>
 
-      <Container sx={{ mt: 4 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Manage Your Availability
-        </Typography>
-        <TableContainer component={Paper} sx={{ mb: 4 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {daysOfWeek.map((day, index) => (
-                  <TableCell key={index} align="center">
-                    {day}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                {daysOfWeek.map((day, index) => (
-                  <TableCell key={index}>
-                    {getAvailabilityByDay(day) || "No Availability"}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  {/* Add Availability and Export Calendar Buttons */}
+                  <Box display="flex" justifyContent="center" mb={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<AddIcon />}
+                      onClick={handleOpenAddAvailabilityDialog}
+                    >
+                      Add Availability
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      startIcon={<DownloadIcon />}
+                      onClick={handleOpenExportDialog}
+                      sx={{ ml: 2 }}
+                    >
+                      Export Calendar
+                    </Button>
+                  </Box>
 
-        <Typography variant="h4" align="center" gutterBottom>
-          Your Scheduled Meetings
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleOpenAddBlackoutDialog}
-          sx={{ mb: 2 }}
-        >
-          Add Blackout Date
-        </Button>
+                  {/* Availability Table */}
+                  <TableContainer component={Paper} sx={{ mb: 4 }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          {daysOfWeek.map((day, index) => (
+                            <TableCell key={index} align="center">
+                              {day}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          {daysOfWeek.map((day, index) => (
+                            <TableCell key={index}>
+                              {getAvailabilityByDay(day)}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
 
+                  <Typography variant="h4" align="center" gutterBottom>
+                    Your Scheduled Meetings
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleOpenAddBlackoutDialog}
+                    sx={{ mb: 2 }}
+                  >
+                    Add Blackout Date
+                  </Button>
 
-        
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          onSelectEvent={handleSelectEvent}
-        />
-
-      </Container>
-
-      {/* Event Details Dialog */}
-      {selectedEvent && (
-        <Dialog
-          open={Boolean(selectedEvent)}
-          onClose={handleCloseEventDialog}
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogTitle>
-            {selectedEvent.type === "meeting"
-              ? "Meeting Details"
-              : "Blackout Date"}
-          </DialogTitle>
-          <DialogContent>
-            {selectedEvent.type === "meeting" ? (
-              <>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Mentee:</strong> {selectedEvent.mentee_name}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Date:</strong> {selectedEvent.start.toDateString()}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Time:</strong>{" "}
-                  {selectedEvent.start.toLocaleTimeString()} -{" "}
-                  {selectedEvent.end.toLocaleTimeString()}
-                </Typography>
-                <Typography variant="h6" gutterBottom>
-                  Reschedule Meeting
-                </Typography>
-                <Box display="flex" flexDirection="column" gap={2} mt={2}>
-                  <TextField
-                    type="date"
-                    value={newDate}
-                    onChange={(e) => setNewDate(e.target.value)}
-                    label="New Date"
-                    InputLabelProps={{ shrink: true }}
+                  <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                    onSelectEvent={handleSelectEvent}
                   />
-                  <TextField
-                    type="time"
-                    value={newTime}
-                    onChange={(e) => setNewTime(e.target.value)}
-                    label="New Time"
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Box>
-              </>
-            ) : (
-              <>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Date:</strong> {selectedEvent.start.toDateString()}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Reason:</strong> {selectedEvent.reason}
-                </Typography>
-              </>
-            )}
-          </DialogContent>
-          <DialogActions>
-            {selectedEvent.type === "meeting" ? (
-              <>
-                <Button
-                  onClick={handleRescheduleMeeting}
-                  variant="contained"
-                  color="primary"
-                >
-                  Reschedule
-                </Button>
-                <Button
-                  onClick={handleCloseEventDialog}
-                  variant="outlined"
-                  color="secondary"
-                >
-                  Close
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  onClick={handleDeleteBlackoutDate}
-                  variant="contained"
-                  color="secondary"
-                >
-                  Remove Blackout Date
-                </Button>
-                <Button
-                  onClick={handleCloseEventDialog}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Close
-                </Button>
-              </>
-            )}
-          </DialogActions>
-        </Dialog>
-      )}
+                </Container>
 
-      {/* Add Blackout Date Dialog */}
-      <Dialog
-        open={showAddBlackoutDialog}
-        onClose={handleCloseAddBlackoutDialog}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>Add Blackout Date</DialogTitle>
-        <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2} mt={2}>
-            <TextField
-              type="date"
-              value={blackoutDate}
-              onChange={(e) => setBlackoutDate(e.target.value)}
-              label="Date"
-              InputLabelProps={{ shrink: true }}
-            />
-            <TextField
-              value={blackoutReason}
-              onChange={(e) => setBlackoutReason(e.target.value)}
-              label="Reason"
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleAddBlackoutDate}
-            variant="contained"
-            color="primary"
-          >
-            Add
-          </Button>
-          <Button
-            onClick={handleCloseAddBlackoutDialog}
-            variant="outlined"
-            color="secondary"
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      </div>
-      </div>
-      </div>
-      </div>
+                {/* Event Details Dialog */}
+                {selectedEvent && (
+                  <Dialog
+                    open={Boolean(selectedEvent)}
+                    onClose={handleCloseEventDialog}
+                    maxWidth="sm"
+                    fullWidth
+                  >
+                    <DialogTitle>
+                      {selectedEvent.type === "meeting"
+                        ? "Meeting Details"
+                        : "Blackout Date"}
+                    </DialogTitle>
+                    <DialogContent>
+                      {selectedEvent.type === "meeting" ? (
+                        <>
+                          <Typography variant="body1" gutterBottom>
+                            <strong>Mentee:</strong> {selectedEvent.mentee_name}
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            <strong>Date:</strong> {selectedEvent.start.toDateString()}
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            <strong>Time:</strong>{" "}
+                            {selectedEvent.start.toLocaleTimeString()} -{" "}
+                            {selectedEvent.end.toLocaleTimeString()}
+                          </Typography>
+                          <Typography variant="h6" gutterBottom>
+                            Reschedule Meeting
+                          </Typography>
+                          <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                            <TextField
+                              type="date"
+                              value={newDate}
+                              onChange={(e) => setNewDate(e.target.value)}
+                              label="New Date"
+                              InputLabelProps={{ shrink: true }}
+                              fullWidth
+                            />
+                            <TextField
+                              type="time"
+                              value={newTime}
+                              onChange={(e) => setNewTime(e.target.value)}
+                              label="New Time"
+                              InputLabelProps={{ shrink: true }}
+                              fullWidth
+                            />
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body1" gutterBottom>
+                            <strong>Date:</strong> {selectedEvent.start.toDateString()}
+                          </Typography>
+                          <Typography variant="body1" gutterBottom>
+                            <strong>Reason:</strong> {selectedEvent.reason}
+                          </Typography>
+                        </>
+                      )}
+                    </DialogContent>
+                    <DialogActions>
+                      {selectedEvent.type === "meeting" ? (
+                        <>
+                          <Button
+                            onClick={handleRescheduleMeeting}
+                            variant="contained"
+                            color="primary"
+                          >
+                            Reschedule
+                          </Button>
+                          <Button
+                            onClick={handleCloseEventDialog}
+                            variant="outlined"
+                            color="secondary"
+                          >
+                            Close
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            onClick={handleDeleteBlackoutDate}
+                            variant="contained"
+                            color="secondary"
+                          >
+                            Remove Blackout Date
+                          </Button>
+                          <Button
+                            onClick={handleCloseEventDialog}
+                            variant="outlined"
+                            color="primary"
+                          >
+                            Close
+                          </Button>
+                        </>
+                      )}
+                    </DialogActions>
+                  </Dialog>
+                )}
+
+                {/* Add Blackout Date Dialog */}
+                <Dialog
+                  open={showAddBlackoutDialog}
+                  onClose={handleCloseAddBlackoutDialog}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <DialogTitle>Add Blackout Date</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                      <TextField
+                        type="date"
+                        value={blackoutDate}
+                        onChange={(e) => setBlackoutDate(e.target.value)}
+                        label="Date"
+                        InputLabelProps={{ shrink: true }}
+                        fullWidth
+                      />
+                      <TextField
+                        value={blackoutReason}
+                        onChange={(e) => setBlackoutReason(e.target.value)}
+                        label="Reason"
+                        fullWidth
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleAddBlackoutDate}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      onClick={handleCloseAddBlackoutDialog}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                {/* Add Availability Dialog */}
+                <Dialog
+                  open={showAddAvailabilityDialog}
+                  onClose={handleCloseAddAvailabilityDialog}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <DialogTitle>Add Availability</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                      <FormControl fullWidth>
+                        <InputLabel id="select-day-label">Day of the Week</InputLabel>
+                        <Select
+                          labelId="select-day-label"
+                          value={selectedDay}
+                          label="Day of the Week"
+                          onChange={(e) => setSelectedDay(e.target.value)}
+                        >
+                          {daysOfWeek.map((day) => (
+                            <MenuItem key={day} value={day}>
+                              {day}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        type="time"
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
+                        label="Start Time"
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{ step: 300 }} // 5 min
+                        fullWidth
+                      />
+                      <TextField
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
+                        label="End Time"
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{ step: 300 }} // 5 min
+                        fullWidth
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleAddAvailability}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      onClick={handleCloseAddAvailabilityDialog}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                {/* Edit Availability Dialog */}
+                <Dialog
+                  open={showEditAvailabilityDialog}
+                  onClose={handleCloseEditAvailabilityDialog}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <DialogTitle>Edit Availability</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                      <FormControl fullWidth>
+                        <InputLabel id="edit-select-day-label">Day of the Week</InputLabel>
+                        <Select
+                          labelId="edit-select-day-label"
+                          value={editDay}
+                          label="Day of the Week"
+                          onChange={(e) => setEditDay(e.target.value)}
+                        >
+                          {daysOfWeek.map((day) => (
+                            <MenuItem key={day} value={day}>
+                              {day}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        type="time"
+                        value={editStartTime}
+                        onChange={(e) => setEditStartTime(e.target.value)}
+                        label="Start Time"
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{ step: 300 }} // 5 min
+                        fullWidth
+                      />
+                      <TextField
+                        type="time"
+                        value={editEndTime}
+                        onChange={(e) => setEditEndTime(e.target.value)}
+                        label="End Time"
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{ step: 300 }} // 5 min
+                        fullWidth
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleEditAvailability}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      onClick={handleCloseEditAvailabilityDialog}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                {/* Export Calendar Dialog */}
+                <Dialog
+                  open={showExportDialog}
+                  onClose={handleCloseExportDialog}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <DialogTitle>Export Calendar</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                      <TextField
+                        type="date"
+                        value={exportStartDate}
+                        onChange={(e) => setExportStartDate(e.target.value)}
+                        label="Start Date"
+                        InputLabelProps={{ shrink: true }}
+                        fullWidth
+                      />
+                      <TextField
+                        type="date"
+                        value={exportEndDate}
+                        onChange={(e) => setExportEndDate(e.target.value)}
+                        label="End Date"
+                        InputLabelProps={{ shrink: true }}
+                        fullWidth
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleExportCalendar}
+                      variant="contained"
+                      color="primary"
+                      startIcon={<DownloadIcon />}
+                    >
+                      Export
+                    </Button>
+                    <Button
+                      onClick={handleCloseExportDialog}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default MentorMeetings;
-

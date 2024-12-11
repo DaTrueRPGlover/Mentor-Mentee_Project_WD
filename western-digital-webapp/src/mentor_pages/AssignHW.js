@@ -1,209 +1,112 @@
-// src/components/AssignHW.js
+// src/components/CheckHWTable.js
+import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+import './AssignHW.css'; // Ensure this CSS file exists and is correctly styled
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import './AssignHW.css'; // Create this CSS file for styling
-import {
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Typography,
-} from "@mui/material";
+const CheckHWTable = () => {
+  const [combinedData, setCombinedData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-function AssignHW() {
-  const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [assignedDate, setAssignedDate] = useState('');
-  const [assignedTime, setAssignedTime] = useState('');
-  const [dueDate, setDueDate] = useState('');
-  const [dueTime, setDueTime] = useState('');
-  const [selectedMentees, setSelectedMentees] = useState([]);
-  const [mentees, setMentees] = useState([]);
   const userInfo = JSON.parse(sessionStorage.getItem('user'));
-  const mentorKey = userInfo?.mentorkey || '';
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const mentorKey = userInfo?.mentorkey;
 
   useEffect(() => {
-    const fetchMentees = async () => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const response = await fetch(`http://localhost:3001/api/relationships/mentees?mentorkey=${mentorKey}`);
-        if (response.ok) {
-          const menteesData = await response.json();
-          setMentees(menteesData);
-        } else {
-          throw new Error('Failed to fetch mentees');
+        if (!mentorKey) {
+          throw new Error('Mentee key not found.');
         }
-      } catch (error) {
-        console.error('Error fetching mentees:', error);
+
+        // Fetch Homework Data
+        const homeworkResponse = await fetch(`http://localhost:3001/api/homework/mentee/${mentorKey}`);
+        if (!homeworkResponse.ok) {
+          throw new Error('Failed to fetch homework data.');
+        }
+        const homeworkData = await homeworkResponse.json() || [];
+
+        // Fetch Meetings Data
+        const meetingsResponse = await fetch(`http://localhost:3001/api/meetings/meetings?userId=${mentorKey}`);
+        if (!meetingsResponse.ok) {
+          throw new Error('Failed to fetch meetings data.');
+        }
+        const meetingsData = await meetingsResponse.json() || [];
+
+        // Transform Homework Data
+        const transformedHomework = homeworkData.map(hw => ({
+          id: hw.homework_id,
+          type: 'Homework',
+          title: hw.title,
+          description: hw.description,
+          date: new Date(hw.due_date),
+          link: `/homework/${hw.homework_id}`,
+        }));
+
+        // Transform Meetings Data
+        const transformedMeetings = meetingsData.map(meeting => ({
+          id: meeting.meetingkey,
+          type: 'Meeting',
+          title: `Meeting with ${meeting.mentor_name}`,
+          description: `Zoom Password: ${meeting.meeting_password}`,
+          date: new Date(meeting.datetime),
+          link: meeting.zoomLink || '#', // Assuming zoomLink is provided
+        }));
+
+        // Combine and Sort Data
+        const combined = [...transformedHomework, ...transformedMeetings].sort((a, b) => a.date - b.date);
+
+        setCombinedData(combined);
+      } catch (err) {
+        setError(err.message || 'An unexpected error occurred.');
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
       }
     };
-    if (mentorKey) {
-      fetchMentees();
-    }
 
-    // Set default assigned date and time
-    const now = new Date();
-    const currentDate = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-    const currentTime = now.toTimeString().split(':').slice(0, 2).join(':'); // Format: HH:MM
-    setAssignedDate(currentDate);
-    setAssignedTime(currentTime);
+    fetchData();
   }, [mentorKey]);
 
-  const handleAssignHomework = async () => {
-    if (!title || !description || !assignedDate || !assignedTime || !dueDate || !dueTime || selectedMentees.length === 0) {
-      alert("Please fill out all fields and select at least one mentee.");
-      return;
-    }
-
-    const homeworkData = {
-      title,
-      description,
-      assignedDateTime: `${assignedDate} ${assignedTime}`,
-      dueDateTime: `${dueDate} ${dueTime}`,
-      mentees: selectedMentees,
-      mentorKey,
-    };
-
-    console.log("Homework Data to Send:", homeworkData); // Debugging log
-
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('http://localhost:3001/api/homework/assign-homework', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(homeworkData),
-      });
-      if (response.ok) {
-        alert('Homework assigned successfully!');
-        // Reset form
-        setTitle('');
-        setDescription('');
-        setAssignedDate('');
-        setAssignedTime('');
-        setDueDate('');
-        setDueTime('');
-        setSelectedMentees([]);
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to assign homework');
-      }
-    } catch (error) {
-      console.error('Error assigning homework:', error);
-      alert(`Error: ${error.message}`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleMenteeSelection = (menteeId) => {
-    setSelectedMentees((prevSelected) =>
-      prevSelected.includes(menteeId) ? prevSelected.filter((id) => id !== menteeId) : [...prevSelected, menteeId]
-    );
-  };
+  if (loading) return <div className="check-hw-table loading">Loading...</div>;
+  if (error) return <div className="check-hw-table error">{error}</div>;
 
   return (
-    <div className="assign-hw-container">
-      <Typography variant="h5" gutterBottom>
-        Assign Homework
-      </Typography>
-      <form className="assign-hw-form" noValidate autoComplete="off">
-        <TextField
-          label="Homework Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Homework Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          fullWidth
-          margin="normal"
-          multiline
-          rows={4}
-          required
-        />
-        <div className="date-time-section">
-          <Typography variant="subtitle1">Assigned Date and Time</Typography>
-          <TextField
-            type="date"
-            label="Assigned Date"
-            value={assignedDate}
-            onChange={(e) => setAssignedDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            required
-          />
-          <TextField
-            type="time"
-            label="Assigned Time"
-            value={assignedTime}
-            onChange={(e) => setAssignedTime(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            required
-          />
+    <div className="check-hw-table">
+      {combinedData.length === 0 ? (
+        <p className="no-homework">No upcoming meetings or assignments found.</p>
+      ) : (
+        <div className="homework-list">
+          {combinedData.map(item => (
+            <Link
+              to={item.type === 'Homework' ? item.link : '#'} // Only Homework has a valid internal link
+              key={`${item.type}-${item.id}`}
+              className={`homework-card ${item.type.toLowerCase()}`}
+              onClick={item.type === 'Meeting' ? (e) => {
+                e.preventDefault();
+                window.open(item.link, '_blank', 'noopener,noreferrer');
+              } : null}
+            >
+              <h2 className="homework-title">{item.title}</h2>
+              <p className="homework-description">{item.description}</p>
+              <p className="homework-date">
+                {item.type === 'Homework' ? 'Due: ' : 'Scheduled: '}
+                {format(item.date, 'MMMM dd, yyyy h:mm a')}
+              </p>
+              {item.type === 'Meeting' && (
+                <p className="homework-date">
+                  <strong>Type:</strong> {item.type}
+                </p>
+              )}
+            </Link>
+          ))}
         </div>
-        <div className="date-time-section">
-          <Typography variant="subtitle1">Due Date and Time</Typography>
-          <TextField
-            type="date"
-            label="Due Date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            required
-          />
-          <TextField
-            type="time"
-            label="Due Time"
-            value={dueTime}
-            onChange={(e) => setDueTime(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            required
-          />
-        </div>
-        <div className="mentees-section">
-          <Typography variant="subtitle1">Select Mentees</Typography>
-          <FormGroup>
-            {mentees.map((mentee) => (
-              <FormControlLabel
-                key={mentee.menteekey}
-                control={
-                  <Checkbox
-                    checked={selectedMentees.includes(mentee.menteekey)}
-                    onChange={() => handleMenteeSelection(mentee.menteekey)}
-                    name={mentee.menteeName}
-                  />
-                }
-                label={mentee.menteeName}
-              />
-            ))}
-          </FormGroup>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleAssignHomework}
-          disabled={
-            !title ||
-            !description ||
-            !assignedDate ||
-            !assignedTime ||
-            !dueDate ||
-            !dueTime ||
-            selectedMentees.length === 0 ||
-            isSubmitting
-          }
-        >
-          {isSubmitting ? 'Assigning...' : 'Assign Homework'}
-        </Button>
-      </form>
+      )}
     </div>
   );
-}
+};
 
-export default AssignHW;
+export default CheckHWTable;
