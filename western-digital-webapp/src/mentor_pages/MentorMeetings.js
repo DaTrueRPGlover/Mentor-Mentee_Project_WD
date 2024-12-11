@@ -1,5 +1,5 @@
 // MentorMeetings.js
-
+import './MentorMeetings.css';
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -302,45 +302,79 @@ function MentorMeetings() {
   };
 
   return (
-    <div>
-<AppBar position="static" color="primary">
-  <Toolbar sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-    <Button
-      className="logo-button"
-      onClick={() => navigate("/mentor-home")}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        position: 'absolute',
-        left: 16, 
-      }}
-    >
-      <img src={logo} alt="Logo" style={{ height: 40 }} />
-    </Button>
+    <div className='mentor-meetings'>
 
-    <Typography 
-      variant="h6" 
-      sx={{ 
-        flexGrow: 1, 
-        textAlign: 'center', 
-      }}
-    >
-      Mentor Meetings
-    </Typography>
+      <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Meetings</h1>
+    </div>
+    <div className="sidebarA">
+        {/* Navigation Buttons */}
+        <div className="nav-buttonsA">
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/interact-with-mentee")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/write-mentee-progression")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/assign-homework")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={assign} alt="assign" />
+          </motion.button>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/mentor-meetings")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={calendar} alt="calendar" />
+          </motion.button>
+        </div>
 
-  
-    <Button
-      color="inherit"
-      onClick={handleLogout}
-      sx={{
-        position: 'absolute',
-        right: 16,
-      }}
-    >
-      Logout
-    </Button>
-  </Toolbar>
-</AppBar>
+        {/* Logout Button */}
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
+        </div>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.3 }}
+        >
+          <img src={logout} alt="logout" />
+        </motion.button>
+      </div>
+
+      <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+          <div className="box">
+        
+          <div className="main-content">
+
 
 
       <Container sx={{ mt: 4 }}>
@@ -381,6 +415,9 @@ function MentorMeetings() {
         >
           Add Blackout Date
         </Button>
+
+
+        
         <Calendar
           localizer={localizer}
           events={events}
@@ -389,6 +426,7 @@ function MentorMeetings() {
           style={{ height: 500 }}
           onSelectEvent={handleSelectEvent}
         />
+
       </Container>
 
       {/* Event Details Dialog */}
@@ -530,6 +568,11 @@ function MentorMeetings() {
           </Button>
         </DialogActions>
       </Dialog>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
     </div>
   );
 }

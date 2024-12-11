@@ -22,8 +22,6 @@ function InteractWithMentor() {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
-  console.log(user);
-  console.log(name)
   const menteeName = name|| "Mentee";
 
   const [isDarkMode, setIsDarkMode] = useState(false);
