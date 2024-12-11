@@ -1,5 +1,8 @@
+
+/* shadow  */
+
 body{
-  background-color:  #E0E0E0;
+  background-color:  #ffffff;
 }
 
 .assign-hw {
@@ -439,7 +442,7 @@ body{
 .assign-hw .sidebarA {
   width: 6.6%; /* Sidebar width */
   height: 80vh; /* Sidebar height */
-  background-color: #b9bec07c;
+  background-color: #979da07c;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
