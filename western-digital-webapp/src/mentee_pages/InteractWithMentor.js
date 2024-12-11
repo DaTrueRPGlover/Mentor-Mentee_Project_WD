@@ -49,7 +49,6 @@ function InteractWithMentor() {
 
   return (
     <div className="interact-with-mentor">
-
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Chat With Mentor</h1>
@@ -135,9 +134,11 @@ function InteractWithMentor() {
 
         {/* New Box under the Welcome Box */}
         <div className="new-box">
-          <h2>To-Do</h2>
-          <CheckHWTable /> {/* Insert CheckHWTable here */}
+        <h2>To-Do</h2>
+        <div className="check-hw-table-container">
+          <CheckHWTable />
         </div>
+      </div>
       </div>
     </div>
   );

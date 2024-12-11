@@ -1,5 +1,5 @@
 /* Full Page Container */
-.interact-with-mentor{
+.interact-with-mentor {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -7,10 +7,11 @@
   font-family: Arial, sans-serif;
   text-align: center;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   /* background-color: #E0E0E0; */
   position: fixed;
   /* margin-top: 20px; */
+  
 }
 
 
@@ -133,7 +134,7 @@
   position: fixed;
   right: 46.3%;
   top: 72.3%;
-
+  left: 10%;
   transform: translateY(-50%);
   width: 400px; /* Fixed width for the container */
   display: flex;
@@ -159,6 +160,7 @@
   width: 100%; /* Full width inside its container */
   height: 68.8%;
   background-color: #b9bec07c;
+  left: 53%;
 }
 
 /* Ensure the chat content is scrollable */
@@ -193,10 +195,11 @@
 /* Welcome Box Container */
 .welcome-box-container {
   position: fixed;
-  right: 2%;
+  right: 1%;
   top: 50%;
+  left: 53%;
   transform: translateY(-45%);
-  width: 700px; /* Fixed width for the container */
+  width: 45%; /* Fixed width for the container */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between the stacked items */
@@ -212,7 +215,8 @@
   height: 16.4vh; /* Custom height for welcome box */
 }
 
-.new-box {
+/* Ensure the new box has proper scroll handling */
+.interact-with-mentor .new-box {
   background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -220,8 +224,34 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 63vh; /* Custom height for new box */ 
+  height: 63vh; /* Custom height for the new box */
+  overflow: hidden; /* Prevent overflow of content outside the box */
+  display: flex;
+  flex-direction: column;
 }
+
+/* Make CheckHWTable scrollable */
+.interact-with-mentor .new-box .check-hw-table-container {
+  flex: 1; /* Take up remaining space within the new-box */
+  overflow-y: auto; /* Vertical scrolling if content overflows */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding-right: 10px; /* Add space for scrollbar */
+}
+
+/* Optional: Customize scrollbar for better appearance */
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Customize scrollbar color */
+  border-radius: 10px;
+}
+
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 
  .welcome-box h2,
  .new-box h2 {
