@@ -471,12 +471,17 @@
 }
 
 .new-boxA {
-  position: relative;
-  padding: 10px;
-  background-color: #f9f9f9; /* Optional: Change background color */
+  background-color: #b9bec07c;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 538px; /* You can adjust the container's height as needed */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 63vh; /* Custom height for the new box */
+  overflow: hidden; /* Prevent overflow of content outside the box */
+  display: flex;
+  flex-direction: column;
 }
 
 .new-boxA h2 {
@@ -486,13 +491,14 @@
 }
 
 .new-boxA .chat-box-container {
-  max-height: 80%; /* Make the ChatBox smaller (80% of container height) */
+  max-height: 100%; /* Make the ChatBox smaller (80% of container height) */
   width: 100%;
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Prevent horizontal scrolling */
   background-color: #ffffff; /* Optional: Set background color */
   border-radius: 8px;
   padding: 10px;
+  margin-top: 10px;
 }
 
 

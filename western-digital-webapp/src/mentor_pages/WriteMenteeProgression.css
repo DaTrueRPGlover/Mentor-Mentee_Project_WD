@@ -292,6 +292,8 @@
   backdrop-filter: blur(5px);
   padding: 20px; /* Add padding for spacing */
   overflow-y: scroll;
+  overflow-x: hidden;
+
 }
 
 .write-mentee-progression .sidebarA {
@@ -458,3 +460,4 @@
   height: 63vh; /* Adjust height to fit inside the container */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
 }
+
