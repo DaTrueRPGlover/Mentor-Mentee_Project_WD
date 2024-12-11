@@ -1,0 +1,26 @@
+/* src/components/AssignHW.css */
+
+.assign-hw-container {
+  padding: 20px;
+  background-color: white;
+}
+
+.assign-hw-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-time-section {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.date-time-section .MuiTextField-root {
+  flex: 1;
+}
+
+.mentees-section {
+  margin-bottom: 20px;
+}

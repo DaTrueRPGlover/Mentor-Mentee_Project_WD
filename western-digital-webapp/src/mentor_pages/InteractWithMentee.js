@@ -14,7 +14,6 @@ import {
   MessageList,
   Message,
   MessageInput,
- 
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -24,6 +23,7 @@ import {
   Button,
 } from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
+import AssignHWTable from "./AssignHW"; // Import the AssignHWTable component
 
 
 function InteractWithMentee() {
@@ -291,7 +291,7 @@ function InteractWithMentee() {
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
         <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        <AssignHWTable />
       </div>
     </div>
       </div>

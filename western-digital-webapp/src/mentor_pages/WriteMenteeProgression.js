@@ -18,6 +18,7 @@ import {
   Button,
 } from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
+import AssignHWTable from "./AssignHW"; // Import the AssignHWTable component
 
 
 function WriteMenteeProgression() {
@@ -360,7 +361,7 @@ function WriteMenteeProgression() {
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
         <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        <AssignHWTable />
       </div>
     </div>
     </div>

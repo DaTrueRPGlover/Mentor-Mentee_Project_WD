@@ -18,6 +18,8 @@ import {
   Button,
 }  from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
+// import AssignHWTable from "./AssignHWTable"; // Import the AssignHWTable component
+import ChatComponent from "./ChatComponent"; // Import the ChatComponent
 
 function AssignHomework() {
   const navigate = useNavigate();
@@ -38,6 +40,9 @@ function AssignHomework() {
   const mentorName = name || "Mentor";
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [selectedMentee, setSelectedMentee] = useState(null);
+  const [menteeName, setMenteeName] = useState("");
+  const [conversationKey, setConversationKey] = useState("");
 
 
   const toggleTheme = () => {
@@ -254,7 +259,15 @@ function AssignHomework() {
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
         <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        {selectedMentee ? (
+            <ChatComponent
+              selectedMentee={selectedMentee}
+              menteeName={menteeName}
+              conversationKey={conversationKey}
+            />
+          ) : (
+            <p>Select a mentee to start chatting.</p>
+          )}
       </div>
     </div>
     </div>
