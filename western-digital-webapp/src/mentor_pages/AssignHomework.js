@@ -19,7 +19,7 @@ import {
 }  from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
 // import AssignHWTable from "./AssignHWTable"; // Import the AssignHWTable component
-import ChatComponent from "./ChatComponent"; // Import the ChatComponent
+import ChatComponent from "./ChatComponent.js"; // Import the ChatComponent
 
 function AssignHomework() {
   const navigate = useNavigate();
