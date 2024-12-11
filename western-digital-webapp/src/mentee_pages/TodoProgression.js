@@ -209,7 +209,6 @@ function TodoProgression() {
    
       <div className="content-wrapperVA">
         <div className="chat-boxA">
-          <div className="box1">
             <div className="box">
               <div className="main-content">
 
@@ -511,7 +510,6 @@ function TodoProgression() {
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
       {/* Welcome and To-Do Boxes Container */}

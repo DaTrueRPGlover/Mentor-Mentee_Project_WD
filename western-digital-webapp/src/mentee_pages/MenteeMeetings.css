@@ -378,18 +378,18 @@
 /* Content Wrapper Styling */
 .mentee-meetings .content-wrapperVA {
   position: fixed;
-  left: 10.7%;
+  right: 46.3%;
   top: 72.3%;
-
+  left: 10%;
   transform: translateY(-50%);
-
+  width: 400px; /* Fixed width for the container */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between the stacked items */
 
   /* Editable height and width */
   height: 116.6%; /* Change this value */
-  width: 80%;  /* Change this value */
+  width: 80.7%;  /* Change this value */
   margin-right: 50px;
 }
 
