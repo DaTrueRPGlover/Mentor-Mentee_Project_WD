@@ -2,9 +2,12 @@
 
 /* Container Styling */
 .check-hw-table {
-    padding: 20px;
-    background-color: #ffffff;
+    padding: 40px; /* Increased padding for more space */
+    background-color: inherit;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   /* Loading and Error Messages */
@@ -14,7 +17,7 @@
     align-items: center;
     justify-content: center;
     height: 80vh;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increased font size for better visibility */
     color: #555;
   }
   
@@ -25,7 +28,7 @@
   /* No Data Message */
   .no-homework {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increased font size */
     color: #777;
   }
   
@@ -33,63 +36,95 @@
   .homework-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-left: 20%;
-    margin-right: 20%;
+    gap: 25px; /* Increased gap between cards */
+    width: 80%; /* Increased width to occupy more horizontal space */
+    max-width: 1200px; /* Optional: limit the maximum width */
   }
   
   /* Homework Card Styling */
   .homework-card {
-    background-color: #ffffff; /* White background */
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: inherit; /* White background */
+    padding: 25px; /* Increased padding for larger cards */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
     text-decoration: none;
     color: inherit; /* Inherit text color */
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px; /* Ensure minimum height */
+    min-width: 150px;
   }
   
+  /* Hover Effects */
   .homework-card:hover {
-    background-color: #f1f1f1; /* Light grey on hover */
+    background-color: #f9f9f9; /* Light grey on hover */
+    transform: translateY(-5px); /* Slight lift on hover */
   }
   
   /* Additional Styling for Meetings */
   .homework-card.meeting {
-    border-left: 5px solid #007bff; /* Blue border for meetings */
+    border-left: 7px solid #007bff; /* Blue border for meetings */
   }
   
   .homework-card.homework {
-    border-left: 5px solid #28a745; /* Green border for homework */
+    border-left: 7px solid #28a745; /* Green border for homework */
   }
   
   /* Homework Title Styling */
   .homework-title {
-    font-size: 1.5rem;
+    font-size: 2rem; /* Increased font size */
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   
   /* Homework Description Styling */
   .homework-description {
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increased font size */
     color: #555;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Allow description to take up available space */
   }
   
   /* Homework Date Styling */
   .homework-date {
-    font-size: 0.9rem;
+    font-size: 1rem; /* Increased font size */
     color: #777;
     margin-bottom: 5px;
   }
   
   /* Responsive Styling */
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     .homework-list {
-      margin-left: 10%;
-      margin-right: 10%;
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .check-hw-table {
+      padding: 20px;
     }
   
+    .homework-list {
+      width: 100%;
+      gap: 20px;
+    }
+  
+    .homework-title {
+      font-size: 1.5rem;
+    }
+  
+    .homework-description {
+      font-size: 1rem;
+    }
+  
+    .homework-date {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
     .homework-title {
       font-size: 1.3rem;
     }
@@ -100,25 +135,6 @@
   
     .homework-date {
       font-size: 0.8rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .homework-list {
-      margin-left: 5%;
-      margin-right: 5%;
-    }
-  
-    .homework-title {
-      font-size: 1.1rem;
-    }
-  
-    .homework-description {
-      font-size: 0.8rem;
-    }
-  
-    .homework-date {
-      font-size: 0.7rem;
     }
   }
   
