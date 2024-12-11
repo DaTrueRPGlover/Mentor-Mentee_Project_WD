@@ -236,6 +236,7 @@
   overflow-y: auto; /* Vertical scrolling if content overflows */
   overflow-x: hidden; /* Prevent horizontal scrolling */
   padding-right: 10px; /* Add space for scrollbar */
+  margin-left: 2%;
 }
 
 /* Optional: Customize scrollbar for better appearance */
