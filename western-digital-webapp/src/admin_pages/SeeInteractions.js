@@ -1,3 +1,5 @@
+// src/pages/seeInteractions.js
+
 import React, { useState, useEffect } from "react";
 import logout from "../assets/logout.png";
 import chat from "../assets/chat.png";
@@ -22,6 +24,7 @@ import {
   Button,
 } from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
+import AssignMentorTable from "./AssignMentorTable.js"; // Import the new component
 
 function SeeInteractions() {
   const navigate = useNavigate();
@@ -36,11 +39,11 @@ function SeeInteractions() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
-
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
   };
+
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
@@ -53,6 +56,7 @@ function SeeInteractions() {
     };
     return date.toLocaleDateString("en-US", options);
   };
+
   useEffect(() => {
     // Fetch mentors and mentees
     fetch("http://localhost:3001/api/mentors")
@@ -93,8 +97,8 @@ function SeeInteractions() {
   return (
     <div className="see-interactions">
       <div className="logo-title-container">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">View Interactions</h1>
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">View Interactions</h1>
       </div>
       <div className="sidebarA">
         {/* Navigation Buttons */}
@@ -133,7 +137,7 @@ function SeeInteractions() {
           </motion.button>
         </div>
 
-        {/* Logout Button */}
+        {/* Theme Toggle */}
         <div className="slider-section">
           <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
@@ -146,6 +150,8 @@ function SeeInteractions() {
           </label>
           <span role="img" aria-label="Moon"></span>
         </div>
+
+        {/* Logout Button */}
         <motion.button
           className="logout-buttonV2"
           onClick={handleLogout}
@@ -158,93 +164,47 @@ function SeeInteractions() {
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-          <div className="chat-containerA">
-              <div className="search">
-
-
-
-            <div className="filter-section">
-              <label>Select Mentor: </label>
-              <select className="drop"
-                value={selectedMentor}
-                onChange={(e) => setSelectedMentor(e.target.value)}
-              >
-                <option value="" disabled>
-                -- Select Mentor -- 
-                </option>
-                {mentors.map((mentor) => (
-                  <option key={mentor.userid} value={mentor.userid}>
-                    {mentor.name}
-                  </option>
-                ))}
-              </select>
-              <div>
-
-              </div>
-
-              <label>Select Mentee: </label>
-              <select className="drop"
-                value={selectedMentee}
-                onChange={(e) => setSelectedMentee(e.target.value)}
-              >
-                <option value="" disabled>
-                  -- Select a mentee --
-                </option>
-                {mentees.map((mentee) => (
-                  <option key={mentee.userid} value={mentee.userid}>
-                    {mentee.name}
-                  </option>
-                ))}
-              </select>
+            <div className="chat-containerA">
+              {/* Chat or Main Content */}
+              {selectedMentor && selectedMentee && (
+                <MainContainer className="chat-container" style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
+                  <ChatContainer style={{ backgroundColor: '#b9bec0' }}>
+                    <MessageList style={{ backgroundColor: '#b9bec0' }}>
+                      {messages.map((message, index) => (
+                        <Message
+                          key={index}
+                          model={{
+                            message: message.content,
+                            sentTime: message.timestamp,
+                            sender: message.sender,
+                            direction:
+                              message.sender === "Mentor" ? "outgoing" : "incoming",
+                            position: "normal",
+                          }}
+                        />
+                      ))}
+                    </MessageList>
+                  </ChatContainer>
+                </MainContainer>
+              )}
             </div>
-
-
-
-
-
-          </div>
-          </div>
-          {selectedMentor && selectedMentee && (
-              <MainContainer className="chat-container" style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
-                <ChatContainer style={{ backgroundColor: '#b9bec0' }}>
-
-            <MessageList style={{ backgroundColor: '#b9bec0' }}>
-              {messages.map((message, index) => (
-                <Message
-                  key={index}
-                  model={{
-                    message: message.content,
-                    sentTime: message.timestamp,
-                    sender: message.sender,
-                    direction:
-                      message.sender === "Mentor" ? "outgoing" : "incoming",
-                    position: "normal",
-                  }}
-                />
-              ))}
-            </MessageList>
-          </ChatContainer>
-        </MainContainer>
-      )}
           </div>
         </div>
       </div>
 
-
       <div className="welcome-box-containerA">
-      {/* Welcome Message Box */}
-      <div className="welcome-boxA">
-        <h2>Welcome, {adminName}!</h2>
-        <p>Today is {formatDateTime(currentDateTime)}</p>
-      </div>
+        {/* Welcome Message Box */}
+        <div className="welcome-boxA">
+          <h2>Welcome, {adminName}!</h2>
+          <p>Today is {formatDateTime(currentDateTime)}</p>
+        </div>
 
-      {/* New Box under the Welcome Box */}
-      <div className="new-boxA">
-        <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        {/* To-Do Placeholder with AssignMentorTable */}
+        <div className="new-boxA">
+          <h2>To-Do</h2>
+          <AssignMentorTable />
+        </div>
       </div>
-    </div>
-
     </div>
   );
 }
