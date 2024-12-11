@@ -182,13 +182,12 @@ const CheckHW = () => {
         </div>
 
         {/* New Box under the Welcome Box */}
-        <div className="new-boxA">
+<div className="new-boxA">
   <h2>Chat</h2>
   <div className="chat-box-container">
     <ChatBox />
   </div>
 </div>
-
       </div>
     </div>
   );

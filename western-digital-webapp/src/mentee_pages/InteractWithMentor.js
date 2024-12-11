@@ -22,8 +22,6 @@ function InteractWithMentor() {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
-  console.log(user);
-  console.log(name)
   const menteeName = name|| "Mentee";
 
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -51,7 +49,7 @@ function InteractWithMentor() {
     <div className="interact-with-mentor">
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
-        <h1 className="title-header">Chat With Mentor</h1>
+        <h1 className="title-header">Viewing Assignment</h1>
       </div>
       {/* Sidebar */}
       <div className="sidebar">
