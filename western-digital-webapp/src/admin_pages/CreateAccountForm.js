@@ -1,7 +1,7 @@
 // src/components/CreateAccountForm.js
 
 import React, { useState } from 'react';
-// import './CreateAccountForm.css'; // Create a corresponding CSS file or adjust as needed
+import styles from "./CreateAccountForm.module.css"; // Import as CSS Module
 import { useNavigate } from "react-router-dom";
 
 function CreateAccountForm() {
@@ -74,10 +74,10 @@ function CreateAccountForm() {
   };
 
   return (
-    <div className="create-account-form">
-      <h2>Create Account</h2>
-      <form className="account-form" onSubmit={handleCreateAccount}>
+    <div className={styles.createAccountForm}>
+      <form className={styles.accountForm} onSubmit={handleCreateAccount}>
         <input
+          className={styles.inputField}
           type="text"
           value={first}
           placeholder="Enter First Name"
@@ -85,6 +85,7 @@ function CreateAccountForm() {
           required
         />
         <input
+          className={styles.inputField}
           type="text"
           value={last}
           placeholder="Enter Last Name"
@@ -92,6 +93,7 @@ function CreateAccountForm() {
           required
         />
         <input
+          className={styles.inputField}
           type="email"
           value={email}
           placeholder="Enter Email"
@@ -99,6 +101,7 @@ function CreateAccountForm() {
           required
         />
         <input
+          className={styles.inputField}
           type="password"
           value={password}
           placeholder="Enter Password"
@@ -106,6 +109,7 @@ function CreateAccountForm() {
           required
         />
         <select
+          className={styles.option}
           value={selectedValue}
           onChange={(e) => setSelectedValue(e.target.value)}
           required
@@ -119,6 +123,7 @@ function CreateAccountForm() {
           <option value="WDIN">WDIN</option>
         </select>
         <select
+          className={styles.option}
           value={accountType}
           onChange={(e) => setAccountType(e.target.value)}
           required
@@ -127,10 +132,10 @@ function CreateAccountForm() {
           <option value="mentee">Mentee</option>
           <option value="mentor">Mentor</option>
         </select>
-        <button type="submit" className="submit-button">Create Account</button>
+        <button type="submit" className={styles.submitButton}>Create Account</button>
       </form>
-      {error && <p className="error">{error}</p>}
-      <ul>
+      {error && <p className={styles.errorText}>{error}</p>}
+      <ul className={styles.successList}>
         {accounts.map((account, index) => (
           <li key={index}>
             {"Account created successfully:"} {account.name} {account.lastname} ({account.email}) - 

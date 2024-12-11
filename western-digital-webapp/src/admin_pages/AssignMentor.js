@@ -14,6 +14,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import CreateAccountForm from "./CreateAccountForm.js";
 function AssignMentor() {
   const navigate = useNavigate();
 
@@ -346,8 +347,8 @@ function AssignMentor() {
 
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
-        <h2>To-Do</h2>
-        <p>placeholder For To-Do</p>
+        <h2>Create Account</h2>
+        <CreateAccountForm/>
       </div>
     </div>
     </div>

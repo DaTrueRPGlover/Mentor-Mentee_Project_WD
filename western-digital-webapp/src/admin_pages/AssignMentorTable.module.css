@@ -1,0 +1,100 @@
+/* src/components/AssignMentorTable.module.css */
+
+.assignMentorTable {
+    /* Container Styling */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .addAssignment {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    height: 100%; /* Ensures it uses full height available */
+    overflow-y: auto; /* Makes the content scrollable if it exceeds the height */
+    margin-left: 2%;
+  }
+  
+  .option {
+    width: 200px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: Tahoma, sans-serif;
+    background-color: white !important;
+    color: #91BECD !important;
+    margin-bottom: 5px;
+  }
+  
+  .Assign {
+    padding: 8px 16px;
+    color: #fff;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 5px;
+  }
+  
+  .Assign:hover {
+    background-color: #7A99A5;
+  }
+  
+  .assignmentsTable {
+    width: 526px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 48vh; /* Set a max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    display: block; /* Make the table a block element to enable scrolling */
+    margin-left: 2vh;
+    border-radius: 10px;
+  }
+  
+  .assignmentsTable th,
+  .assignmentsTable td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .assignmentsTable tr {
+    background-color: #f2f2f2;
+  }
+  
+  .assignmentsTable select {
+    width: 200px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: Tahoma, sans-serif;
+    background-color: white !important;
+    color: #91BECD !important;
+  }
+  
+  .deleteButton {
+    padding: 8px 16px;
+    color: #fff;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .deleteButton:hover {
+    background-color: rgb(84, 82, 82);
+  }
+  
+  .errorMessage {
+    color: red;
+    margin-top: 10px;
+  }
+  

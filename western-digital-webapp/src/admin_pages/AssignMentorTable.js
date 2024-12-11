@@ -1,7 +1,7 @@
 // src/components/AssignMentorTable.js
 
 import React, { useState, useEffect } from "react";
-// import "./AssignMentorTable.css"; // Create a corresponding CSS file or adjust as needed
+import styles from "./AssignMentorTable.module.css"; // Import as a module
 import { useNavigate } from "react-router-dom";
 
 function AssignMentorTable() {
@@ -15,7 +15,11 @@ function AssignMentorTable() {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user['name']
+  const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
@@ -139,11 +143,11 @@ function AssignMentorTable() {
   };
 
   return (
-    <div className="assign-mentor-table">
-      <h2>Assign Mentor</h2>
-      <div className="assign-section">
+    <div className={styles.assignMentor}>
+      {/* Add Assignment Section */}
+      <div className={styles.addAssignment}>
         <select
-          className="option"
+          className={styles.option}
           value={newMentee ? newMentee.userid : ""}
           onChange={(e) => {
             const mentee = menteesList.find(
@@ -160,7 +164,7 @@ function AssignMentorTable() {
           ))}
         </select>
         <select
-          className="option"
+          className={styles.option}
           value={newMentor ? newMentor.userid : ""}
           onChange={(e) => {
             const mentor = mentors.find((m) => m.userid === e.target.value);
@@ -174,16 +178,19 @@ function AssignMentorTable() {
             </option>
           ))}
         </select>
-        <button className="Assign" onClick={handleAssignMentor}>
+        <button className={styles.Assign} onClick={handleAssignMentor}>
           Assign Mentor
         </button>
       </div>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
+      {/* Error Message */}
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+
+      {/* Assignments Table */}
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table className="assignments-table">
+        <table className={styles.assignmentsTable}>
           <thead>
             <tr>
               <th>Mentor</th>
@@ -208,6 +215,7 @@ function AssignMentorTable() {
                       if (newMentorkey)
                         handleUpdateMentor(rel.menteekey, newMentorkey);
                     }}
+                    className={styles.option}
                   >
                     <option value="">Select Mentor</option>
                     {mentors.map((mentor) => (
@@ -222,7 +230,7 @@ function AssignMentorTable() {
                     onClick={() =>
                       handleDeleteAssignment(rel.relationship_id)
                     }
-                    className="delete-button"
+                    className={styles.deleteButton}
                   >
                     Delete
                   </button>
