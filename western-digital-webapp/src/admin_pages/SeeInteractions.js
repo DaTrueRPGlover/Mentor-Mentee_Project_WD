@@ -233,18 +233,21 @@ function SeeInteractions() {
 
 
       <div className="welcome-box-containerA">
-      {/* Welcome Message Box */}
-      <div className="welcome-boxA">
-        <h2>Welcome, {adminName}!</h2>
-        <p>Today is {formatDateTime(currentDateTime)}</p>
-      </div>
+  {/* Welcome Message Box */}
+  <div className="welcome-boxA">
+    <h2>Welcome, {adminName}!</h2>
+    <p>Today is {formatDateTime(currentDateTime)}</p>
+  </div>
 
-      {/* New Box under the Welcome Box */}
-      <div className="new-boxA">
-        <h2>To-Do</h2>
-        <AssignMentorTable />
-      </div>
+  {/* New Box under the Welcome Box */}
+  <div className="new-boxA">
+    <h2>To-Do</h2>
+    <div className="assign-mentor-container">
+      <AssignMentorTable />
     </div>
+  </div>
+</div>
+
 
     </div>
   );

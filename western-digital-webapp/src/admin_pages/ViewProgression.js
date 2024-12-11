@@ -553,11 +553,13 @@ function ViewProgressions() {
         <p>Today is {formatDateTime(currentDateTime)}</p>
       </div>
 
-      {/* New Box under the Welcome Box */}
       <div className="new-boxA">
-        <h2>Assign Mentor</h2>
-        <AssignMentor/>
-      </div>
+    <h2>To-Do</h2>
+    <div className="assign-mentor-container">
+      <AssignMentor/>
+    </div>
+  </div>
+      
     </div>
     </div>
     
