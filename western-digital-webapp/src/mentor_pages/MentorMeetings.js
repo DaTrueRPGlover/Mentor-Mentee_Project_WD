@@ -313,7 +313,7 @@ function MentorMeetings() {
         <div className="nav-buttonsA">
           <motion.button
             className="icon"
-            onClick={() => navigate("/interact-mentor")}
+            onClick={() => navigate("/interact-with-mentee")}
             whileHover={{ scale: 1.1 }} // Growing effect on hover
             transition={{ duration: 0.1 }}
           >
@@ -321,7 +321,7 @@ function MentorMeetings() {
           </motion.button>
           <motion.button
             className="icon"
-            onClick={() => navigate("/todo-progression")}
+            onClick={() => navigate("/write-mentee-progression")}
             whileHover={{ scale: 1.1 }} // Growing effect on hover
             transition={{ duration: 0.1 }}
           >
@@ -329,7 +329,7 @@ function MentorMeetings() {
           </motion.button>
           <motion.button
             className="icon"
-            onClick={() => navigate("/check-hw")}
+            onClick={() => navigate("/assign-homework")}
             whileHover={{ scale: 1.1 }} // Growing effect on hover
             transition={{ duration: 0.1 }}
           >
@@ -337,7 +337,7 @@ function MentorMeetings() {
           </motion.button>
           <motion.button
             className="icon1"
-            onClick={() => navigate("/mentee-meetings")}
+            onClick={() => navigate("/mentor-meetings")}
             whileHover={{ scale: 1.1 }} // Growing effect on hover
             transition={{ duration: 0.1 }}
           >
