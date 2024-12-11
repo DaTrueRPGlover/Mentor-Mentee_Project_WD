@@ -31,10 +31,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  margin-left: 30%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  max-width: auto !important;
+
 }
 
 .interact-with-mentee .dropdown-container label {
@@ -442,7 +440,7 @@ input:checked + .slider:before {
   position: fixed;
   right: 46.3%;
   top: 72.3%;
-
+  left: 10%;
   transform: translateY(-50%);
   width: 400px; /* Fixed width for the container */
   display: flex;
@@ -479,10 +477,11 @@ input:checked + .slider:before {
 /* Welcome Box Container Styling */
 .interact-with-mentee .welcome-box-containerA {
   position: fixed;
-  right: 2%;
+  right: 1%;
   top: 50%;
+  left: 53%;
   transform: translateY(-45%);
-  width: 700px; /* Fixed width for the container */
+  width: 45%; /* Fixed width for the container */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between the stacked items */
@@ -512,9 +511,8 @@ input:checked + .slider:before {
   height: 63vh; /* Custom height for new box */
 }
 
-.interact-with-mentee.welcome-boxA h2,
+.interact-with-mentee .welcome-boxA h2,
 .interact-with-mentee .new-boxA h2 {
-  margin: 0;
   font-size: 1.5rem;
 }
 
@@ -523,3 +521,18 @@ input:checked + .slider:before {
   margin-top: 10px;
   font-size: 1rem;
 }
+
+.interact-with-mentee .new-boxA {
+  background-color: #b9bec07c; /* Same background color as the other boxes */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 63vh; /* Adjust height to fit inside the container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+  border-radius: 10px;
+}
+
+

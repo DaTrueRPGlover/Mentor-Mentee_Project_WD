@@ -307,7 +307,7 @@ function MentorMeetings() {
   <Toolbar sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
     <Button
       className="logo-button"
-      onClick={() => navigate("/mentor-home")}
+      onClick={() => navigate("/interact-with-mentee")}
       sx={{
         display: 'flex',
         alignItems: 'center',
