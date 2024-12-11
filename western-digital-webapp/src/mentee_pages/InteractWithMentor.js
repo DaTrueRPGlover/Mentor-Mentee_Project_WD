@@ -49,7 +49,7 @@ function InteractWithMentor() {
     <div className="interact-with-mentor">
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
-        <h1 className="title-header">Viewing Assignment</h1>
+        <h1 className="title-header">Chat With Mentor</h1>
       </div>
       {/* Sidebar */}
       <div className="sidebar">
