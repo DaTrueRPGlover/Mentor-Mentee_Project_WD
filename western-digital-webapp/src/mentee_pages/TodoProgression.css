@@ -376,7 +376,8 @@
 }
 
 /* New Box Styling */
-.todo-progression .new-boxA {
+/* Ensure the new box has proper scroll handling */
+.todo-progression  .new-box {
   background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -384,8 +385,34 @@
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 63vh; /* Custom height for new box */
+  height: 63vh; /* Custom height for the new box */
+  overflow: hidden; /* Prevent overflow of content outside the box */
+  display: flex;
+  flex-direction: column;
 }
+
+/* Make CheckHWTable scrollable */
+.todo-progression  .new-box .check-hw-table-container {
+  flex: 1; /* Take up remaining space within the new-box */
+  overflow-y: auto; /* Vertical scrolling if content overflows */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding-right: 10px; /* Add space for scrollbar */
+}
+
+/* Optional: Customize scrollbar for better appearance */
+.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Customize scrollbar color */
+  border-radius: 10px;
+}
+
+.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 
 .todo-progression .logout-buttonV2 {
   margin-top: 20px;

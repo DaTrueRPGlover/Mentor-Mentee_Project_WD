@@ -523,10 +523,12 @@ function TodoProgression() {
         </div>
 
         {/* New Box under the Welcome Box */}
-        <div className="new-boxA">
-          <h2>To-Do</h2>
-          <CheckHWTable /> {/* Insert CheckHWTable here */}
+        <div className="new-box">
+        <h2>To-Do</h2>
+        <div className="check-hw-table-container">
+          <CheckHWTable />
         </div>
+      </div>
       </div>
     </div>
   );
