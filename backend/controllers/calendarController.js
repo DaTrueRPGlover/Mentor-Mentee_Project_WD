@@ -5,7 +5,8 @@ import { getMeetingsForUserByDateRange } from '../database_queries/MeetingQuerie
 export const generateICS = async (req, res) => {
     const { userId } = req.params;
     const { startDate, endDate } = req.query;
-
+    console.log(startDate+'00:00:00');
+    console.log(endDate+'23:59:59');
     if (!startDate || !endDate) {
         return res.status(400).json({
             message: 'Missing required query parameters: startDate and endDate',

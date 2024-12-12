@@ -432,7 +432,10 @@ input:checked + .slider:before {
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 63vh; /* Custom height for new box */
+  height: 63vh; /* Custom height for the new box */
+  overflow: hidden; /* Prevent overflow of content outside the box */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Content Wrapper Styling */

@@ -19,7 +19,7 @@ import {
 }  from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
 // import AssignHWTable from "./AssignHWTable"; // Import the AssignHWTable component
-import ChatComponent from "./ChatComponent.js"; // Import the ChatComponent
+import AssignHWTable from "./AssignHW.js"; // Import the ChatComponent
 
 function AssignHomework() {
   const navigate = useNavigate();
@@ -258,16 +258,8 @@ function AssignHomework() {
 
       {/* New Box under the Welcome Box */}
       <div className="new-boxA">
-        <h2>To-Do</h2>
-        {selectedMentee ? (
-            <ChatComponent
-              selectedMentee={selectedMentee}
-              menteeName={menteeName}
-              conversationKey={conversationKey}
-            />
-          ) : (
-            <p>Select a mentee to start chatting.</p>
-          )}
+        <h2>Upcoming Meetings</h2>
+        <AssignHWTable/>
       </div>
     </div>
     </div>
