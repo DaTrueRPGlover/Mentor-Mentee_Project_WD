@@ -6,6 +6,7 @@ import chat from "../assets/chat.png";
 import write from "../assets/write.png";
 import twopeople from "../assets/twopeople.png";
 import logout from "../assets/logout.png";
+import assign from "../assets/assign.png";
 import hw from "../assets/hw.png";
 import calendar from "../assets/calendar.png";
 import {

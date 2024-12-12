@@ -106,6 +106,8 @@ export const rescheduleMeeting = async (meetingKey, newDateTime) => {
 };
 
 export const getMeetingsForUserByDateRange = async (userId, startDate, endDate) => {
+  console.log(startDate);
+  console.log(endDate);
   const sql = `
       SELECT 
           m.meetingkey,

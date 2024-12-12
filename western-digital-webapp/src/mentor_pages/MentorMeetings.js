@@ -35,6 +35,8 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { motion } from "framer-motion";
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
+import hw from "../assets/hw.png";
+
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
 import calendarImg from "../assets/calendar.png"; // Renamed to avoid conflict with Calendar component
@@ -422,13 +424,18 @@ function MentorMeetings() {
 
     try {
       const mentorkey = mentorinfo.mentorkey;
+      // exportStartDate = exportStartDate + '00:00:00';
+      // exportEndDate = exportEndDate + '23:59:59';
+      console.log(exportStartDate);
+      console.log(exportEndDate);
       const response = await fetch(
-        `http://localhost:3001/api/generate-ics/${mentorkey}?startDate=${exportStartDate}&endDate=${exportEndDate}`
+        `http://localhost:3001/api/calendar/generate-ics/${mentorkey}?startDate=${exportStartDate}&endDate=${exportEndDate}`
       );
 
       if (!response.ok) {
         const data = await response.json();
         alert(data.message || "Failed to export calendar.");
+
         return;
       }
 
@@ -581,7 +588,7 @@ function MentorMeetings() {
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
-            <img src={assign} alt="assign" />
+            <img src={hw} alt="create" />
           </motion.button>
           <motion.button
             className="icon1"
