@@ -242,8 +242,13 @@ function SeeInteractions() {
   {/* New Box under the Welcome Box */}
   <div className="new-boxA">
     <h2>To-Do</h2>
-    <div className="assign-mentor-container">
-      <AssignMentorTable />
+    <div className="assign-mentor-container" >
+      <AssignMentorTable     style={{
+    margin: "0 auto", // Centers the table horizontally (removes any left margin)
+    textAlign: "center",
+    width: "80%", // Optional: Adjust the table's width
+    borderCollapse: "collapse",
+  }}/>
     </div>
   </div>
 </div>

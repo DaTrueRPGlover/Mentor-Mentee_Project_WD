@@ -376,7 +376,7 @@
 .todo-progression  .welcome-boxA {
   background-color: #b9bec07c;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   padding: 20px;
   text-align: center;
   width: 100%; /* Full width of the container */
@@ -389,7 +389,7 @@
 .todo-progression  .new-box {
   background-color: #b9bec07c;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   padding: 20px;
   text-align: center;
   width: 100%; /* Full width of the container */
@@ -476,7 +476,7 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   width: 100%; /* Full width inside its container */
   height: 68.8%;
   background-color: #b9bec07c;
