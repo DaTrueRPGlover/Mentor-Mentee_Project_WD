@@ -1,8 +1,6 @@
 // MenteeMeetings.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
-
 import { motion } from "framer-motion"; // Importing motion
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
@@ -30,7 +28,7 @@ import {
   MenuItem
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import DownloadIcon from "@mui/icons-material/Download";
 import enUS from 'date-fns/locale/en-US';
 import './MenteeMeetings.css';
 
@@ -57,13 +55,17 @@ function MenteeMeetings() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
+  
+  // Export Calendar States
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportStartDate, setExportStartDate] = useState("");
+  const [exportEndDate, setExportEndDate] = useState("");
+
   const userInfo = JSON.parse(sessionStorage.getItem('user'));
   const menteeKey = userInfo?.menteekey;
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const name = user['name']
-  console.log(user);
-  console.log(name)
-  const menteeName = name|| "Mentee";
+  const name = user['name'];
+  const menteeName = name || "Mentee";
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -253,7 +255,9 @@ function MenteeMeetings() {
             zoomPassword: meeting.zoom_password,
             meetingKey: meeting.meetingkey,
           }));
-          setEvents([...mappedMeetings]);
+          // Preserve homework events
+          const homeworkEvents = events.filter(e => e.type === 'homework');
+          setEvents([...mappedMeetings, ...homeworkEvents]);
         } else {
           const data = await response.json();
           alert(data.message);
@@ -295,20 +299,69 @@ function MenteeMeetings() {
     }
   };
 
+  // Export Calendar Handlers
+  const handleOpenExportDialog = () => {
+    setShowExportDialog(true);
+    setExportStartDate("");
+    setExportEndDate("");
+  };
+
+  const handleCloseExportDialog = () => {
+    setShowExportDialog(false);
+  };
+
+  const handleExportCalendar = async () => {
+    if (!exportStartDate || !exportEndDate) {
+      alert("Please select both start and end dates.");
+      return;
+    }
+
+    if (exportEndDate < exportStartDate) {
+      alert("End date must be after start date.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/calendar/generate-ics/${menteeKey}?startDate=${exportStartDate}&endDate=${exportEndDate}`
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.message || "Failed to export calendar.");
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(new Blob([blob], { type: 'text/calendar' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'meetings.ics');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      handleCloseExportDialog();
+    } catch (error) {
+      console.error("Error exporting calendar:", error);
+      alert("An error occurred while exporting the calendar.");
+    }
+  };
+
   return (
     <div className='mentee-meetings'>
 
       <div className="logo-title-container">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Meetings</h1>
-    </div>
-    <div className="sidebarA">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Meetings</h1>
+      </div>
+
+      <div className="sidebarA">
         {/* Navigation Buttons */}
         <div className="nav-buttonsA">
           <motion.button
             className="icon"
             onClick={() => navigate("/interact-mentor")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={chat} alt="chat" />
@@ -316,7 +369,7 @@ function MenteeMeetings() {
           <motion.button
             className="icon"
             onClick={() => navigate("/todo-progression")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={write} alt="write" />
@@ -324,7 +377,7 @@ function MenteeMeetings() {
           <motion.button
             className="icon"
             onClick={() => navigate("/check-hw")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={assign} alt="assign" />
@@ -332,16 +385,14 @@ function MenteeMeetings() {
           <motion.button
             className="icon1"
             onClick={() => navigate("/mentee-meetings")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.1 }}
           >
             <img src={calendar} alt="calendar" />
           </motion.button>
         </div>
 
-        {/* Logout Button */}
         <div className="slider-section">
-          <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
             <input
               type="checkbox"
@@ -350,12 +401,11 @@ function MenteeMeetings() {
             />
             <span className="slider"></span>
           </label>
-          <span role="img" aria-label="Moon"></span>
         </div>
         <motion.button
           className="logout-buttonV2"
           onClick={handleLogout}
-          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         >
           <img src={logout} alt="logout" />
@@ -417,61 +467,154 @@ function MenteeMeetings() {
                     InputLabelProps={{ shrink: true }}
                   />
                 </Box>
-              </>
-            ) : (
-              <>
-                <Typography>Description: {selectedEvent.description}</Typography>
-                <Typography>Due Date: {new Date(selectedEvent.start).toLocaleDateString()}</Typography>
-              </>
-            )}
-          </DialogContent>
-          <DialogActions>
-            {selectedEvent.type === 'meeting' ? (
-              <>
-                <Button onClick={handleRescheduleMeeting} color="primary">Reschedule</Button>
-                <Button onClick={() => setSelectedEvent(null)} color="secondary">Close</Button>
-              </>
-            ) : (
-              <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
-            )}
-          </DialogActions>
-        </Dialog>
-      )}
 
-      <Dialog open={showScheduleDialog} onClose={handleCloseScheduleDialog}>
-        <DialogTitle>Schedule New Meeting</DialogTitle>
-        <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2}>
-            <TextField
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              label="Select Date"
-              InputLabelProps={{ shrink: true }}
-            />
-            <Select
-              value={selectedTimeSlot}
-              onChange={(e) => setSelectedTimeSlot(e.target.value)}
-              displayEmpty
-            >
-              <MenuItem value="" disabled>Select a Time Slot</MenuItem>
-              {availableTimeSlots.map((slot, index) => (
-                <MenuItem key={index} value={slot.startTime}>
-                  {slot.startTime} - {slot.endTime}
-                </MenuItem>
-              ))}
-            </Select>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleScheduleMeeting} color="primary">Schedule</Button>
-          <Button onClick={handleCloseScheduleDialog} color="secondary">Cancel</Button>
-        </DialogActions>
-      </Dialog>
-      </div>
-      </div>
-      </div>
-      </div>
+                <Calendar
+                  localizer={localizer}
+                  events={events}
+                  startAccessor="start"
+                  endAccessor="end"
+                  style={{ height: 500, marginTop: '20px' }}
+                  onSelectEvent={(event) => {
+                    setSelectedEvent(event);
+                    setNewDate('');
+                    setNewTime('');
+                  }}
+                />
+
+                {selectedEvent && (
+                  <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
+                    <DialogTitle>
+                      {selectedEvent.type === 'meeting'
+                        ? `Meeting with ${selectedEvent.mentor_name}`
+                        : selectedEvent.title}
+                    </DialogTitle>
+                    <DialogContent>
+                      {selectedEvent.type === 'meeting' ? (
+                        <>
+                          <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
+                          <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
+                          <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
+                          <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
+                          <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
+                          <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                            <TextField
+                              type="date"
+                              value={newDate}
+                              onChange={(e) => setNewDate(e.target.value)}
+                              label="New Date"
+                              InputLabelProps={{ shrink: true }}
+                            />
+                            <TextField
+                              type="time"
+                              value={newTime}
+                              onChange={(e) => setNewTime(e.target.value)}
+                              label="New Time"
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <Typography>Description: {selectedEvent.description}</Typography>
+                          <Typography>Due Date: {new Date(selectedEvent.start).toLocaleDateString()}</Typography>
+                        </>
+                      )}
+                    </DialogContent>
+                    <DialogActions>
+                      {selectedEvent.type === 'meeting' ? (
+                        <>
+                          <Button onClick={handleRescheduleMeeting} color="primary">Reschedule</Button>
+                          <Button onClick={() => setSelectedEvent(null)} color="secondary">Close</Button>
+                        </>
+                      ) : (
+                        <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
+                      )}
+                    </DialogActions>
+                  </Dialog>
+                )}
+
+                <Dialog open={showScheduleDialog} onClose={handleCloseScheduleDialog}>
+                  <DialogTitle>Schedule New Meeting</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2}>
+                      <TextField
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        label="Select Date"
+                        InputLabelProps={{ shrink: true }}
+                      />
+                      <Select
+                        value={selectedTimeSlot}
+                        onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                        displayEmpty
+                      >
+                        <MenuItem value="" disabled>Select a Time Slot</MenuItem>
+                        {availableTimeSlots.map((slot, index) => (
+                          <MenuItem key={index} value={slot.startTime}>
+                            {slot.startTime} - {slot.endTime}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleScheduleMeeting} color="primary">Schedule</Button>
+                    <Button onClick={handleCloseScheduleDialog} color="secondary">Cancel</Button>
+                  </DialogActions>
+                </Dialog>
+
+                {/* Export Calendar Dialog */}
+                <Dialog
+                  open={showExportDialog}
+                  onClose={handleCloseExportDialog}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <DialogTitle>Export Calendar</DialogTitle>
+                  <DialogContent>
+                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                      <TextField
+                        type="date"
+                        value={exportStartDate}
+                        onChange={(e) => setExportStartDate(e.target.value)}
+                        label="Start Date"
+                        InputLabelProps={{ shrink: true }}
+                        fullWidth
+                      />
+                      <TextField
+                        type="date"
+                        value={exportEndDate}
+                        onChange={(e) => setExportEndDate(e.target.value)}
+                        label="End Date"
+                        InputLabelProps={{ shrink: true }}
+                        fullWidth
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleExportCalendar}
+                      variant="contained"
+                      color="primary"
+                      startIcon={<DownloadIcon />}
+                    >
+                      Export
+                    </Button>
+                    <Button
+                      onClick={handleCloseExportDialog}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
