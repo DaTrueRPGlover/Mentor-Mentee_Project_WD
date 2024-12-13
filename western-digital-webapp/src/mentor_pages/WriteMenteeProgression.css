@@ -177,8 +177,8 @@
  .write-mentee-progression .question-group {
   display: flex;
   flex-direction: column; /* Stack the title above the options */
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
+  align-items: left; /* Center the group horizontally */
+  text-align: left;
 }
 
 .write-mentee-progression .question-group p {
@@ -188,6 +188,9 @@
   color: #333;
   background-color: transparent;
 
+  align-items: center; /* Center the group horizontally */
+  text-align: center;
+
 
 }
 
@@ -195,27 +198,31 @@
   margin: 0; /* Reset margin */
   transform: scale(1.5); /* Keep size adjustments */
   display: flex; /* Arrange radio buttons and labels in a row */
+  align-items: center; /* Center the group horizontally */
+  text-align: center;
 }
 
 .write-mentee-progression .question-group .radio-options {
   display: flex; /* Arrange radio buttons and labels in a row */
-  align-items: center; /* Align items vertically */
-  justify-content: center; /* Center the options horizontally */
+  align-items: center; /* Center the group horizontally */
+  text-align: center;
   gap: 15px; /* Add spacing between the options */
+  margin-left: 6px;
   color: black;
 
 }
 
 .write-mentee-progression .question-group label {
   margin: 0; /* Reset margin */
-  text-align: center; /* Ensure label text is centered */
+  align-items: center; /* Center the group horizontally */
+  text-align: center;
   display: flex; /* Arrange radio buttons and labels in a row */
 }
 
 
 /* Form box styling */
 .write-mentee-progression .form-box {
-  width: 80%;
+  width: 90%;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -253,8 +260,8 @@
   display: flex;
   color: black;
   margin-bottom: 10px; /* Space below the form title */
-  align-items: center; /* Align items (text and icon) vertically */
-  justify-content: center; /* Center the content horizontally */
+  align-items: left; /* Align items (text and icon) vertically */
+  justify-content: left; /* Center the content horizontally */
   
 }
 
@@ -262,8 +269,8 @@
 .write-mentee-progression .form-title-icon {
   width: 26px; /* Adjust the size of the icon */
   height: 26px; /* Adjust the size of the icon */
-  margin-right: 4px; /* Space between the icon and the text */
-  vertical-align: middle; /* Align the icon vertically in the middle of the text */
+
+
   background-color: white !important;
 
 
