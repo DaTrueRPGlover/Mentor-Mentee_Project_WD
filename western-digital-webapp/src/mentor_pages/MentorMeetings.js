@@ -30,16 +30,15 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DownloadIcon from "@mui/icons-material/Download"; // Import DownloadIcon
+import DownloadIcon from "@mui/icons-material/Download"; 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { motion } from "framer-motion";
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
 import hw from "../assets/hw.png";
-
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
-import calendarImg from "../assets/calendar.png"; // Renamed to avoid conflict with Calendar component
+import calendarImg from "../assets/calendar.png"; 
 import logout from "../assets/logout.png";
 
 const locales = {
@@ -69,7 +68,6 @@ function MentorMeetings() {
   const name = user['name'];
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   // State variables for Availability Management
   const [showAddAvailabilityDialog, setShowAddAvailabilityDialog] = useState(false);
@@ -102,7 +100,6 @@ function MentorMeetings() {
     document.body.className = isDarkMode ? "" : "dark-mode";
   };
 
-  // Define handleLogout inside the component
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
@@ -318,6 +315,19 @@ function MentorMeetings() {
     }
   };
 
+  const fetchAvailability = async () => {
+    try {
+      const mentorkey = mentorinfo.mentorkey;
+      const response = await fetch(
+        `http://localhost:3001/api/mentor/${mentorkey}/availability`
+      );
+      const data = await response.json();
+      setAvailability(data);
+    } catch (error) {
+      console.error("Error fetching availability:", error);
+    }
+  };
+
   const handleOpenEditAvailabilityDialog = (availabilitySlot) => {
     setAvailabilityToEdit(availabilitySlot);
     setEditDay(availabilitySlot.day_of_week);
@@ -424,10 +434,6 @@ function MentorMeetings() {
 
     try {
       const mentorkey = mentorinfo.mentorkey;
-      // exportStartDate = exportStartDate + '00:00:00';
-      // exportEndDate = exportEndDate + '23:59:59';
-      console.log(exportStartDate);
-      console.log(exportEndDate);
       const response = await fetch(
         `http://localhost:3001/api/calendar/generate-ics/${mentorkey}?startDate=${exportStartDate}&endDate=${exportEndDate}`
       );
@@ -435,7 +441,6 @@ function MentorMeetings() {
       if (!response.ok) {
         const data = await response.json();
         alert(data.message || "Failed to export calendar.");
-
         return;
       }
 
@@ -451,20 +456,6 @@ function MentorMeetings() {
     } catch (error) {
       console.error("Error exporting calendar:", error);
       alert("An error occurred while exporting the calendar.");
-    }
-  };
-
-  // Fetch Availability Function
-  const fetchAvailability = async () => {
-    try {
-      const mentorkey = mentorinfo.mentorkey;
-      const response = await fetch(
-        `http://localhost:3001/api/mentor/${mentorkey}/availability`
-      );
-      const data = await response.json();
-      setAvailability(data);
-    } catch (error) {
-      console.error("Error fetching availability:", error);
     }
   };
 
@@ -503,6 +494,9 @@ function MentorMeetings() {
 
       if (response.status === 409) {
         alert("Time conflict! Please select a different time.");
+      } else if (response.status === 400) {
+        const data = await response.json();
+        alert(data.message);
       } else if (response.ok) {
         setEvents(
           events.map((event) =>
@@ -527,7 +521,6 @@ function MentorMeetings() {
     }
   };
 
-  // Function to Display Availability with Edit/Delete
   const getAvailabilityByDay = (day) => {
     const avail = availability.filter((avail) => avail.day_of_week === day);
     if (avail.length === 0) return "No Availability";
@@ -602,7 +595,6 @@ function MentorMeetings() {
 
         {/* Theme Toggle */}
         <div className="slider-section">
-          <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
             <input
               type="checkbox"
@@ -611,7 +603,6 @@ function MentorMeetings() {
             />
             <span className="slider"></span>
           </label>
-          <span role="img" aria-label="Moon"></span>
         </div>
 
         {/* Logout Button */}
@@ -629,7 +620,6 @@ function MentorMeetings() {
         <div className="chat-boxA">
           <div className="box1">
             <div className="box">
-
               <div className="main-content">
 
                 <Container sx={{ mt: 4 }}>
@@ -637,7 +627,7 @@ function MentorMeetings() {
                     Manage Your Availability
                   </Typography>
 
-                  {/* Add Availability and Export Calendar Buttons */}
+                  {/* Add Availability and now Add Blackout Date Button */}
                   <Box display="flex" justifyContent="center" mb={2}>
                     <Button
                       variant="contained"
@@ -647,14 +637,14 @@ function MentorMeetings() {
                     >
                       Add Availability
                     </Button>
+                    {/* Switched: Now 'Add Blackout Date' button here */}
                     <Button
-                      variant="outlined"
-                      color="secondary"
-                      startIcon={<DownloadIcon />}
-                      onClick={handleOpenExportDialog}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleOpenAddBlackoutDialog}
                       sx={{ ml: 2 }}
                     >
-                      Export Calendar
+                      Add Blackout Date
                     </Button>
                   </Box>
 
@@ -685,13 +675,16 @@ function MentorMeetings() {
                   <Typography style = {{color: 'black'}} variant="h4" align="center" gutterBottom>
                     Your Scheduled Meetings
                   </Typography>
+                  
+                  {/* Switched: Now Export Calendar button here instead of Add Blackout Date */}
                   <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleOpenAddBlackoutDialog}
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<DownloadIcon />}
+                    onClick={handleOpenExportDialog}
                     sx={{ mb: 2 }}
                   >
-                    Add Blackout Date
+                    Export Calendar
                   </Button>
 
                   <Calendar
@@ -879,7 +872,7 @@ function MentorMeetings() {
                         onChange={(e) => setStartTime(e.target.value)}
                         label="Start Time"
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ step: 300 }} // 5 min
+                        inputProps={{ step: 300 }}
                         fullWidth
                       />
                       <TextField
@@ -888,7 +881,7 @@ function MentorMeetings() {
                         onChange={(e) => setEndTime(e.target.value)}
                         label="End Time"
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ step: 300 }} // 5 min
+                        inputProps={{ step: 300 }}
                         fullWidth
                       />
                     </Box>
@@ -942,7 +935,7 @@ function MentorMeetings() {
                         onChange={(e) => setEditStartTime(e.target.value)}
                         label="Start Time"
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ step: 300 }} // 5 min
+                        inputProps={{ step: 300 }}
                         fullWidth
                       />
                       <TextField
@@ -951,7 +944,7 @@ function MentorMeetings() {
                         onChange={(e) => setEditEndTime(e.target.value)}
                         label="End Time"
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ step: 300 }} // 5 min
+                        inputProps={{ step: 300 }}
                         fullWidth
                       />
                     </Box>

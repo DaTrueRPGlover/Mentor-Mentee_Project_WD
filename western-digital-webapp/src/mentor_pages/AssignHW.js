@@ -23,7 +23,7 @@ const CheckHWTable = () => {
         }
 
         // Fetch Homework Data
-        const homeworkResponse = await fetch(`http://localhost:3001/api/homework/mentee/${mentorKey}`);
+        const homeworkResponse = await fetch(`http://localhost:3001/api/homework/mentor/${mentorKey}`);
         if (!homeworkResponse.ok) {
           throw new Error('Failed to fetch homework data.');
         }
@@ -50,7 +50,7 @@ const CheckHWTable = () => {
         const transformedMeetings = meetingsData.map(meeting => ({
           id: meeting.meetingkey,
           type: 'Meeting',
-          title: `Meeting with ${meeting.mentor_name}`,
+          title: `Meeting with ${meeting.mentee_name}`,
           description: `Zoom Password: ${meeting.meeting_password}`,
           date: new Date(meeting.datetime),
           link: meeting.zoomLink || '#', // Assuming zoomLink is provided
