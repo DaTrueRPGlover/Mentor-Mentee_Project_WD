@@ -56,7 +56,7 @@ const HomeworkEach = () => {
     <div className="homework-detail">
             <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
-        <h1 className="title-header">Chat With Mentor</h1>
+        <h1 className="title-header">View Homework</h1>
       </div>
       {/* Sidebar */}
       <div className="sidebar">
