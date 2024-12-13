@@ -3,7 +3,7 @@
 /* Container Styling */
 .check-hw-table {
   padding: 40px; /* Increased padding for more space */
-  background-color: inherit;
+  background-color: #b9bec07c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
