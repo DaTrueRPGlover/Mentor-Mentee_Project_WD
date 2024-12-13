@@ -1,4 +1,4 @@
-// MeetingRoutes.js
+// meetingRoutes.js
 import express from 'express';
 import pool from '../database.js';
 import {
@@ -8,7 +8,7 @@ import {
   checkMeetingConflict,
   createMeeting,
   getMeetingsByMenteeKey,
-  cancelMeeting, 
+  cancelMeeting,
   rescheduleMeeting
 } from '../database_queries/MeetingQueries.js';
 import { fetchHomeworkByMenteeKey } from '../database_queries/HomeworkQueries.js';
@@ -55,7 +55,7 @@ router.post('/create-meeting', async (req, res) => {
   try {
     const datetimeObj = new Date(datetime);
 
-    // Check if date is a blackout date
+    // Check if date is blackout
     const isBlackout = await isDateBlackout(mentorkey, datetimeObj.toISOString().split('T')[0]);
     if (isBlackout) {
       return res.status(400).json({ message: 'Selected date is a blackout date for the mentor' });
@@ -67,7 +67,7 @@ router.post('/create-meeting', async (req, res) => {
       return res.status(400).json({ message: 'Selected time is not within mentor availability' });
     }
 
-    // Existing code to check for conflicts
+    // Check for meeting conflicts
     const existingMeetings = await checkMeetingConflict(mentorkey, menteekey, datetime, 60);
 
     if (existingMeetings.length > 0) {
@@ -85,30 +85,30 @@ router.post('/create-meeting', async (req, res) => {
 router.get('/mentees/:menteekey', async (req, res) => {
   const { menteekey } = req.params;
   try {
-      const meetings = await getMeetingsByMenteeKey(menteekey);
-      if (meetings.length > 0) {
-          res.json(meetings);
-      } else {
-          res.status(404).json({ message: 'No meetings found for this mentee.' });
-      }
+    const meetings = await getMeetingsByMenteeKey(menteekey);
+    if (meetings.length > 0) {
+      res.json(meetings);
+    } else {
+      res.status(404).json({ message: 'No meetings found for this mentee.' });
+    }
   } catch (error) {
-      console.error('Error fetching meetings:', error);
-      res.status(500).json({ message: 'Internal server error.' });
+    console.error('Error fetching meetings:', error);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
 router.get('/mentors/:mentorkey', async (req, res) => {
   const { mentorkey } = req.params;
   try {
-      const meetings = await getMeetingsByMentorKey(mentorkey);
-      if (meetings.length > 0) {
-          res.json(meetings);
-      } else {
-          res.status(404).json({ message: 'No meetings found for this mentor.' });
-      }
+    const meetings = await getMeetingsByMentorKey(mentorkey);
+    if (meetings.length > 0) {
+      res.json(meetings);
+    } else {
+      res.status(404).json({ message: 'No meetings found for this mentor.' });
+    }
   } catch (error) {
-      console.error('Error fetching meetings:', error);
-      res.status(500).json({ message: 'Internal server error.' });
+    console.error('Error fetching meetings:', error);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 });
 
@@ -135,9 +135,9 @@ router.post('/reschedule', async (req, res) => {
     }
 
     const { mentorkey, menteekey } = originalMeeting;
-    const duration = 60; // Duration in minutes
+    const duration = 60; 
 
-    // Check if date is a blackout date
+    // Check if date is blackout
     const newDateTimeObj = new Date(newDateTime);
     const isBlackout = await isDateBlackout(mentorkey, newDateTimeObj.toISOString().split('T')[0]);
     if (isBlackout) {

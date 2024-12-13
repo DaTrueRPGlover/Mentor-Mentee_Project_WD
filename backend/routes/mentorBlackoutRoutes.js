@@ -1,4 +1,4 @@
-// mentorBlackoutDatesRoutes.js
+// mentorBlackoutRoutes.js
 import express from 'express';
 import {
   getBlackoutDatesByMentorKey,
