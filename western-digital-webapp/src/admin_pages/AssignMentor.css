@@ -96,9 +96,9 @@
 
 /* Table Styling */
 .assign-mentor .assignments-table {
-  width: 526px;
+  width: 100%;
   border-collapse: collapse;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
   max-height: 48vh; /* Set a max height */
   overflow-y: auto; /* Enable vertical scrolling */
   display: block; /* Make the table a block element to enable scrolling */

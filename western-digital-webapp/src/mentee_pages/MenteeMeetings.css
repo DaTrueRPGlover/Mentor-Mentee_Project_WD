@@ -36,14 +36,10 @@
   gap: 20px;
   margin-bottom: 20px;
   color: white;
+  width: '100%' !important;
 
 }
 
-.mentee-meetings .mentor-mentee-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between the two dropdowns */
-}
 
 
 
@@ -183,7 +179,7 @@
 
 /* Form box styling */
 .mentee-meetings .form-box {
-  width: 80%;
+  width: 100%;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -258,6 +254,7 @@
   justify-content: flex-start; /* Align items to the top */
   border-radius: 15px;
   backdrop-filter: blur(5px);
+  width: 100%;
   padding: 20px; /* Add padding for spacing */
 
 }
@@ -378,18 +375,18 @@
 /* Content Wrapper Styling */
 .mentee-meetings .content-wrapperVA {
   position: fixed;
-  right: 46.3%;
+  left: 10.7%;
   top: 72.3%;
-  left: 10%;
+  overflow-y: auto;  /* Enable vertical scrolling */
   transform: translateY(-50%);
-  width: 400px; /* Fixed width for the container */
+  
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between the stacked items */
 
   /* Editable height and width */
   height: 116.6%; /* Change this value */
-  width: 80.7%;  /* Change this value */
+  width: 80%;  /* Change this value */
   margin-right: 50px;
 }
 
@@ -409,7 +406,29 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
+  overflow-y: scroll;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background-color: #b9bec07c;
+  height: 100%;
 }
 
+
+
+.rbc-month-row  {
+  border: 1px solid black;
+}
+
+
+
+
+/* Change column border color */
+.rbc-day-bg {
+  border-right: 1px solid black; 
+}
+
+
+
+
+.rbc-toolbar button{
+  border: 1px solid black;
+}

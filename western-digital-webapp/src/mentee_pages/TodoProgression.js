@@ -226,8 +226,9 @@ function TodoProgression() {
                       </option>
                     ))}
                   </select>
-                </div>
-
+              </div>
+              
+                  <div className="form-container">
                 {/* Communication Section */}
                 <div className="form-box">
                   <div className="question-group">
@@ -496,7 +497,8 @@ function TodoProgression() {
                       <label htmlFor="decisionMaking-not-good">Not Helpful</label>
                     </div>
                   </div>
-                </div>
+              </div>
+              </div>
 
                 <div className="comment-container">
                   <textarea

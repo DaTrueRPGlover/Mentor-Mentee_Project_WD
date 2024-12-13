@@ -9,7 +9,9 @@
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   width: 100%;
-
+  display: flex; /* Enable flexbox */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
   color: #333; /* Text color */
   margin-left: 20%;
   margin-right: 20%;
@@ -57,7 +59,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 200px; /* Ensure minimum height */
+  width: 100%;
+  max-height: 300px; /* Prevent cards from getting too tall */
+  overflow: visible; /* Allow content to overflow if needed */
+  position: relative; /* To make sure it handles children well */
+  word-wrap: break-word; /* Allow long words to wrap into the next line */
 }
 
 .homework-card:hover {
@@ -69,6 +75,8 @@
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
+  word-wrap: break-word; /* Ensure title wraps when necessary */
+  white-space: normal; /* Allow the title to break and wrap */
 }
 
 /* Homework description styling */
@@ -76,6 +84,8 @@
   font-size: 1rem;
   color: #555;
   margin-bottom: 10px;
+  word-wrap: break-word; /* Make sure long words wrap to the next line */
+  white-space: normal; /* Allow multiple lines if necessary */
 }
 
 /* Homework date styling */

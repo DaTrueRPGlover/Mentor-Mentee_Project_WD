@@ -1,7 +1,6 @@
 // MenteeMeetings.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import './MenteeMeetings.css';
 import { motion } from "framer-motion"; // Importing motion
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
@@ -31,6 +30,7 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import DownloadIcon from "@mui/icons-material/Download";
 import enUS from 'date-fns/locale/en-US';
+import './MenteeMeetings.css';
 
 const locales = {
   'en-US': enUS,
@@ -415,20 +415,57 @@ function MenteeMeetings() {
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-            <div className="box">
-              <div className="main-content" style={{ padding: '20px' }}>
-                <Box display="flex" justifyContent="flex-start" gap={2} mb={2}>
-                  <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
-                    Schedule New Meeting
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    startIcon={<DownloadIcon />}
-                    onClick={handleOpenExportDialog}
-                  >
-                    Export Calendar
-                  </Button>
+          <div className="box">
+        
+          <div className="main-content">
+      <div style={{ padding: '20px', width: '100%', }}>
+        <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
+          Schedule New Meeting
+        </Button>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500, marginTop: '20px', color: 'black', width: '100%', }}
+          onSelectEvent={(event) => {
+            setSelectedEvent(event);
+            setNewDate('');
+            setNewTime('');
+          }}
+        />
+      </div>
+
+      {selectedEvent && (
+        <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
+          <DialogTitle>
+            {selectedEvent.type === 'meeting'
+              ? `Meeting with ${selectedEvent.mentor_name}`
+              : selectedEvent.title}
+          </DialogTitle>
+          <DialogContent>
+            {selectedEvent.type === 'meeting' ? (
+              <>
+                <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
+                <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
+                <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
+                <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
+                <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
+                <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                  <TextField
+                    type="date"
+                    value={newDate}
+                    onChange={(e) => setNewDate(e.target.value)}
+                    label="New Date"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <TextField
+                    type="time"
+                    value={newTime}
+                    onChange={(e) => setNewTime(e.target.value)}
+                    label="New Time"
+                    InputLabelProps={{ shrink: true }}
+                  />
                 </Box>
 
                 <Calendar
