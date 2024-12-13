@@ -348,277 +348,156 @@ function MenteeMeetings() {
   };
 
   return (
-    <div className='mentee-meetings'>
-
-      <div className="logo-title-container">
-        <img src={logo} alt="logo" className="logo" />
-        <h1 className="title-header">Meetings</h1>
-      </div>
-
-      <div className="sidebarA">
-        {/* Navigation Buttons */}
-        <div className="nav-buttonsA">
+   
+      <div className='mentee-meetings'>
+    
+        <div className="logo-title-container">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title-header">Meetings</h1>
+        </div>
+    
+        <div className="sidebarA">
+          {/* Navigation Buttons */}
+          <div className="nav-buttonsA">
+            <motion.button
+              className="icon"
+              onClick={() => navigate("/interact-mentor")}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.1 }}
+            >
+              <img src={chat} alt="chat" />
+            </motion.button>
+            <motion.button
+              className="icon"
+              onClick={() => navigate("/todo-progression")}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.1 }}
+            >
+              <img src={write} alt="write" />
+            </motion.button>
+            <motion.button
+              className="icon"
+              onClick={() => navigate("/check-hw")}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.1 }}
+            >
+              <img src={assign} alt="assign" />
+            </motion.button>
+            <motion.button
+              className="icon1"
+              onClick={() => navigate("/mentee-meetings")}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.1 }}
+            >
+              <img src={calendar} alt="calendar" />
+            </motion.button>
+          </div>
+    
+          <div className="slider-section">
+            <label className="slider-container">
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={toggleTheme}
+              />
+              <span className="slider"></span>
+            </label>
+          </div>
           <motion.button
-            className="icon"
-            onClick={() => navigate("/interact-mentor")}
+            className="logout-buttonV2"
+            onClick={handleLogout}
             whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 0.3 }}
           >
-            <img src={chat} alt="chat" />
-          </motion.button>
-          <motion.button
-            className="icon"
-            onClick={() => navigate("/todo-progression")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
-            <img src={write} alt="write" />
-          </motion.button>
-          <motion.button
-            className="icon"
-            onClick={() => navigate("/check-hw")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
-            <img src={assign} alt="assign" />
-          </motion.button>
-          <motion.button
-            className="icon1"
-            onClick={() => navigate("/mentee-meetings")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
-            <img src={calendar} alt="calendar" />
+            <img src={logout} alt="logout" />
           </motion.button>
         </div>
-
-        <div className="slider-section">
-          <label className="slider-container">
-            <input
-              type="checkbox"
-              checked={isDarkMode}
-              onChange={toggleTheme}
-            />
-            <span className="slider"></span>
-          </label>
-        </div>
-        <motion.button
-          className="logout-buttonV2"
-          onClick={handleLogout}
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <img src={logout} alt="logout" />
-        </motion.button>
-      </div>
-
-      <div className="content-wrapperVA">
-        <div className="chat-boxA">
-          <div className="box1">
-          <div className="box">
-        
-          <div className="main-content">
-      <div style={{ padding: '20px', width: '100%', }}>
-        <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
-          Schedule New Meeting
-        </Button>
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500, marginTop: '20px', color: 'black', width: '100%', }}
-          onSelectEvent={(event) => {
-            setSelectedEvent(event);
-            setNewDate('');
-            setNewTime('');
-          }}
-        />
-      </div>
-
-      {selectedEvent && (
-        <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
-          <DialogTitle>
-            {selectedEvent.type === 'meeting'
-              ? `Meeting with ${selectedEvent.mentor_name}`
-              : selectedEvent.title}
-          </DialogTitle>
-          <DialogContent>
-            {selectedEvent.type === 'meeting' ? (
-              <>
-                <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
-                <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
-                <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
-                <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
-                <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
-                <Box display="flex" flexDirection="column" gap={2} mt={2}>
-                  <TextField
-                    type="date"
-                    value={newDate}
-                    onChange={(e) => setNewDate(e.target.value)}
-                    label="New Date"
-                    InputLabelProps={{ shrink: true }}
-                  />
-                  <TextField
-                    type="time"
-                    value={newTime}
-                    onChange={(e) => setNewTime(e.target.value)}
-                    label="New Time"
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Box>
-
-                <Calendar
-                  localizer={localizer}
-                  events={events}
-                  startAccessor="start"
-                  endAccessor="end"
-                  style={{ height: 500, marginTop: '20px' }}
-                  onSelectEvent={(event) => {
-                    setSelectedEvent(event);
-                    setNewDate('');
-                    setNewTime('');
-                  }}
-                />
-
-                {selectedEvent && (
-                  <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
-                    <DialogTitle>
-                      {selectedEvent.type === 'meeting'
-                        ? `Meeting with ${selectedEvent.mentor_name}`
-                        : selectedEvent.title}
-                    </DialogTitle>
-                    <DialogContent>
-                      {selectedEvent.type === 'meeting' ? (
-                        <>
-                          <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
-                          <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
-                          <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
-                          <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
-                          <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
-                          <Box display="flex" flexDirection="column" gap={2} mt={2}>
-                            <TextField
-                              type="date"
-                              value={newDate}
-                              onChange={(e) => setNewDate(e.target.value)}
-                              label="New Date"
-                              InputLabelProps={{ shrink: true }}
-                            />
-                            <TextField
-                              type="time"
-                              value={newTime}
-                              onChange={(e) => setNewTime(e.target.value)}
-                              label="New Time"
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </Box>
-                        </>
-                      ) : (
-                        <>
-                          <Typography>Description: {selectedEvent.description}</Typography>
-                          <Typography>Due Date: {new Date(selectedEvent.start).toLocaleDateString()}</Typography>
-                        </>
-                      )}
-                    </DialogContent>
-                    <DialogActions>
-                      {selectedEvent.type === 'meeting' ? (
-                        <>
-                          <Button onClick={handleRescheduleMeeting} color="primary">Reschedule</Button>
-                          <Button onClick={() => setSelectedEvent(null)} color="secondary">Close</Button>
-                        </>
-                      ) : (
-                        <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
-                      )}
-                    </DialogActions>
-                  </Dialog>
-                )}
-
-                <Dialog open={showScheduleDialog} onClose={handleCloseScheduleDialog}>
-                  <DialogTitle>Schedule New Meeting</DialogTitle>
-                  <DialogContent>
-                    <Box display="flex" flexDirection="column" gap={2}>
-                      <TextField
-                        type="date"
-                        value={selectedDate}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                        label="Select Date"
-                        InputLabelProps={{ shrink: true }}
-                      />
-                      <Select
-                        value={selectedTimeSlot}
-                        onChange={(e) => setSelectedTimeSlot(e.target.value)}
-                        displayEmpty
-                      >
-                        <MenuItem value="" disabled>Select a Time Slot</MenuItem>
-                        {availableTimeSlots.map((slot, index) => (
-                          <MenuItem key={index} value={slot.startTime}>
-                            {slot.startTime} - {slot.endTime}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleScheduleMeeting} color="primary">Schedule</Button>
-                    <Button onClick={handleCloseScheduleDialog} color="secondary">Cancel</Button>
-                  </DialogActions>
-                </Dialog>
-
-                {/* Export Calendar Dialog */}
-                <Dialog
-                  open={showExportDialog}
-                  onClose={handleCloseExportDialog}
-                  maxWidth="sm"
-                  fullWidth
-                >
-                  <DialogTitle>Export Calendar</DialogTitle>
-                  <DialogContent>
-                    <Box display="flex" flexDirection="column" gap={2} mt={2}>
-                      <TextField
-                        type="date"
-                        value={exportStartDate}
-                        onChange={(e) => setExportStartDate(e.target.value)}
-                        label="Start Date"
-                        InputLabelProps={{ shrink: true }}
-                        fullWidth
-                      />
-                      <TextField
-                        type="date"
-                        value={exportEndDate}
-                        onChange={(e) => setExportEndDate(e.target.value)}
-                        label="End Date"
-                        InputLabelProps={{ shrink: true }}
-                        fullWidth
-                      />
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={handleExportCalendar}
-                      variant="contained"
-                      color="primary"
-                      startIcon={<DownloadIcon />}
-                    >
-                      Export
+    
+        <div className="content-wrapperVA">
+          <div className="chat-boxA">
+            <div className="box1">
+              <div className="box">
+    
+                <div className="main-content">
+                  <div style={{ padding: '20px', width: '100%', }}>
+                    <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
+                      Schedule New Meeting
                     </Button>
-                    <Button
-                      onClick={handleCloseExportDialog}
-                      variant="outlined"
-                      color="secondary"
-                    >
-                      Cancel
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-
+                    <Calendar
+                      localizer={localizer}
+                      events={events}
+                      startAccessor="start"
+                      endAccessor="end"
+                      style={{ height: 500, marginTop: '20px', color: 'black', width: '100%', }}
+                      onSelectEvent={(event) => {
+                        setSelectedEvent(event);
+                        setNewDate('');
+                        setNewTime('');
+                      }}
+                    />
+                  </div>
+    
+                  {selectedEvent && (
+                    <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
+                      <DialogTitle>
+                        {selectedEvent.type === 'meeting'
+                          ? `Meeting with ${selectedEvent.mentor_name}`
+                          : selectedEvent.title}
+                      </DialogTitle>
+                      <DialogContent>
+                        {selectedEvent.type === 'meeting' ? (
+                          <>
+                            <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
+                            <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
+                            <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
+                            <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
+                            <Typography variant="h6" gutterBottom>Reschedule Meeting</Typography>
+                            <Box display="flex" flexDirection="column" gap={2} mt={2}>
+                              <TextField
+                                type="date"
+                                value={newDate}
+                                onChange={(e) => setNewDate(e.target.value)}
+                                label="New Date"
+                                InputLabelProps={{ shrink: true }}
+                              />
+                              <TextField
+                                type="time"
+                                value={newTime}
+                                onChange={(e) => setNewTime(e.target.value)}
+                                label="New Time"
+                                InputLabelProps={{ shrink: true }}
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <Typography>Description: {selectedEvent.description}</Typography>
+                            <Typography>Due Date: {new Date(selectedEvent.start).toLocaleDateString()}</Typography>
+                          </>
+                        )}
+                      </DialogContent>
+                      <DialogActions>
+                        {selectedEvent.type === 'meeting' ? (
+                          <>
+                            <Button onClick={handleRescheduleMeeting} color="primary">Reschedule</Button>
+                            <Button onClick={() => setSelectedEvent(null)} color="secondary">Close</Button>
+                          </>
+                        ) : (
+                          <Button onClick={() => setSelectedEvent(null)} color="primary">Close</Button>
+                        )}
+                      </DialogActions>
+                    </Dialog>
+                  )}
+                </div>
+    
               </div>
             </div>
           </div>
         </div>
+    
       </div>
-
-    </div>
-  );
+    );
+    
 }
 
 export default MenteeMeetings;
