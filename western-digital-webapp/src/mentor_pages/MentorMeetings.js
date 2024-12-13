@@ -633,7 +633,7 @@ function MentorMeetings() {
               <div className="main-content">
 
                 <Container sx={{ mt: 4 }}>
-                  <Typography variant="h4" align="center" gutterBottom>
+                  <Typography style = {{color: 'black'}} variant="h4" align="center" gutterBottom>
                     Manage Your Availability
                   </Typography>
 
@@ -682,7 +682,7 @@ function MentorMeetings() {
                     </Table>
                   </TableContainer>
 
-                  <Typography variant="h4" align="center" gutterBottom>
+                  <Typography style = {{color: 'black'}} variant="h4" align="center" gutterBottom>
                     Your Scheduled Meetings
                   </Typography>
                   <Button
@@ -699,7 +699,7 @@ function MentorMeetings() {
                     events={events}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 500 }}
+                    style={{ height: 500, color: 'black' }}
                     onSelectEvent={handleSelectEvent}
                   />
                 </Container>

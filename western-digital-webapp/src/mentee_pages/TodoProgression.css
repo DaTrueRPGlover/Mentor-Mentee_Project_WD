@@ -32,7 +32,7 @@
   text-align: center;
   margin: 20px 0;
   background-color: inherit;
-  color: #91BECD !important;
+  color: black !important;
   font-family: Tahoma, sans-serif;
 }
 
@@ -78,7 +78,7 @@
   border-radius: 4px;
   border: 1px solid #ccc; 
   font-family: Tahoma, sans-serif;
-  color: #91BECD !important;
+  color: black !important;
   background-color: white !important;
   border-radius: 10px;
   
@@ -88,7 +88,7 @@
   border-radius: 50px;
   border: none;
   cursor: pointer;
-  background-color: #91BECD;
+  background-color: black;
   font-size: 1.2rem; /* Use relative units for font size */
   font-weight: bold;
   color: black;
@@ -207,7 +207,7 @@
   align-items: center; /* Center the group horizontally */
   text-align: center;
   gap: 15px; /* Add spacing between the options */
-  color: #91BECD;
+  color: black;
 
 }
 
@@ -279,7 +279,7 @@
 /* Style the form title text */
 .todo-progression .form-title p {
   font-size: 1.2rem;
-  color: #91BECD;
+  color: black;
   font-weight: bold;
   margin: 0; /* Remove any margin from the paragraph */
   line-height: 1.5; /* Set a consistent line height */

@@ -368,7 +368,7 @@ function MenteeMeetings() {
           <div className="box">
         
           <div className="main-content">
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '20px', width: '100%', }}>
         <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
           Schedule New Meeting
         </Button>
@@ -377,7 +377,7 @@ function MenteeMeetings() {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500, marginTop: '20px' }}
+          style={{ height: 500, marginTop: '20px', color: 'black', width: '100%', }}
           onSelectEvent={(event) => {
             setSelectedEvent(event);
             setNewDate('');

@@ -255,9 +255,9 @@ function InteractWithMentee() {
 
     {selectedMentee && (
    
-        <MainContainer className="chat-container" style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
-          <ChatContainer style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
-            <MessageList style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}>
+        <MainContainer className="chat-container" style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
+          <ChatContainer style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
+            <MessageList style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
               {messages.map((msg, index) => (
                 <Message 
                   key={index}
@@ -270,7 +270,7 @@ function InteractWithMentee() {
                 />
               ))}
             </MessageList>
-            <MessageInput style={{ backgroundColor: '#b9bec0', border: 'none', outline: 'none' }}
+            <MessageInput style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}
               placeholder={`Send a message to ${menteeName}...`}
               onSend={handleSendMessage}
             />
