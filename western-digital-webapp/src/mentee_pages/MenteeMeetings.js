@@ -1,7 +1,7 @@
 // MenteeMeetings.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import './MenteeMeetings.css';
+
 
 import { motion } from "framer-motion"; // Importing motion
 import logo from "../assets/WDC2.png";
@@ -32,6 +32,7 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import enUS from 'date-fns/locale/en-US';
+import './MenteeMeetings.css';
 
 const locales = {
   'en-US': enUS,

@@ -413,3 +413,23 @@
   background-color: #b9bec07c;
 }
 
+
+
+.rbc-month-row  {
+  border: 1px solid black;
+}
+
+
+
+
+/* Change column border color */
+.rbc-day-bg {
+  border-right: 1px solid black; 
+}
+
+
+
+
+.rbc-toolbar button{
+  border: 1px solid black;
+}
