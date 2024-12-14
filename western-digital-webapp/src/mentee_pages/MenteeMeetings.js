@@ -1,7 +1,6 @@
 // MenteeMeetings.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import './MenteeMeetings.css';
 import { motion } from "framer-motion"; // Importing motion
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
@@ -13,9 +12,6 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
   Button,
   Dialog,
@@ -28,9 +24,9 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
 import DownloadIcon from "@mui/icons-material/Download";
 import enUS from 'date-fns/locale/en-US';
+import './MenteeMeetings.css';
 
 const locales = {
   'en-US': enUS,
@@ -55,7 +51,7 @@ function MenteeMeetings() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
-  
+
   // Export Calendar States
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [exportStartDate, setExportStartDate] = useState("");
@@ -349,7 +345,6 @@ function MenteeMeetings() {
 
   return (
     <div className='mentee-meetings'>
-
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Meetings</h1>
@@ -416,8 +411,19 @@ function MenteeMeetings() {
         <div className="chat-boxA">
           <div className="box1">
             <div className="box">
-              <div className="main-content" style={{ padding: '20px' }}>
-                <Box display="flex" justifyContent="flex-start" gap={2} mb={2}>
+              <div 
+                className="main-content" 
+                style={{ 
+                  padding: '20px', 
+                  width: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  maxWidth: '800px',
+                  margin: '0 auto' 
+                }}
+              >
+                <Box display="flex" justifyContent="center" gap={2} mb={2} width="100%">
                   <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>
                     Schedule New Meeting
                   </Button>
@@ -430,19 +436,21 @@ function MenteeMeetings() {
                     Export Calendar
                   </Button>
                 </Box>
-
-                <Calendar
-                  localizer={localizer}
-                  events={events}
-                  startAccessor="start"
-                  endAccessor="end"
-                  style={{ height: 500, marginTop: '20px' }}
-                  onSelectEvent={(event) => {
-                    setSelectedEvent(event);
-                    setNewDate('');
-                    setNewTime('');
-                  }}
-                />
+                
+                <div style={{ width: '100%' }}>
+                  <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500, marginTop: '20px', color: 'black' }}
+                    onSelectEvent={(event) => {
+                      setSelectedEvent(event);
+                      setNewDate('');
+                      setNewTime('');
+                    }}
+                  />
+                </div>
 
                 {selectedEvent && (
                   <Dialog open={Boolean(selectedEvent)} onClose={() => setSelectedEvent(null)} maxWidth="sm" fullWidth>
@@ -454,7 +462,7 @@ function MenteeMeetings() {
                     <DialogContent>
                       {selectedEvent.type === 'meeting' ? (
                         <>
-                          <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank">{selectedEvent.zoomLink}</Link></Typography>
+                          <Typography>Zoom Link: <Link href={selectedEvent.zoomLink} target="_blank" rel="noopener noreferrer">{selectedEvent.zoomLink}</Link></Typography>
                           <Typography>Zoom Password: {selectedEvent.zoomPassword}</Typography>
                           <Typography>Date: {selectedEvent.start.toLocaleDateString()}</Typography>
                           <Typography>Time: {selectedEvent.start.toLocaleTimeString()}</Typography>
@@ -578,10 +586,9 @@ function MenteeMeetings() {
             </div>
           </div>
         </div>
-    
       </div>
-    );
-    
+    </div>
+  );
 }
 
 export default MenteeMeetings;
