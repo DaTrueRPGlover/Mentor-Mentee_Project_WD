@@ -237,6 +237,7 @@
   overflow-x: hidden; /* Prevent horizontal scrolling */
   padding-right: 10px; /* Add space for scrollbar */
   margin-left: 2%;
+  /* background-color: inherit !important; */
 }
 
 /* Optional: Customize scrollbar for better appearance */
