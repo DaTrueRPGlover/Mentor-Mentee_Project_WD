@@ -1,3 +1,4 @@
+/* toDoProgression.css */
 .todo-progression{
   display: flex;
   flex-direction: column;
@@ -8,7 +9,6 @@
   align-items: center; /* Center all content horizontally */
   justify-content: space-between;
   position: fixed;
-
 }
 .todo-progression .logo-button {
   background: none; /* Remove default button background */
@@ -37,8 +37,6 @@
 }
 
 
-
-
 /* Main content styles */
 .todo-progression .main-content {
   margin-top: 10px;
@@ -48,7 +46,7 @@
   gap: 20px;
   margin-bottom: 20px;
   color: white;
-  
+
 
 }
 
@@ -159,17 +157,22 @@
   }
   
   .todo-progression .submit-button {
-
-
     background-color: #53a5ff;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
   }
   .todo-progression .submit-button:hover {
     background-color: #0056b3;
+  }
+
+  .todo-progression .submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
 
 
@@ -199,7 +202,6 @@
   display: flex; /* Arrange radio buttons and labels in a row */
   align-items: center; /* Center the group horizontally */
   text-align: center;
-  
 }
 
 .todo-progression .question-group .radio-options {
@@ -228,7 +230,6 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: white !important;
-
 
 }
 
@@ -384,6 +385,7 @@
   height: 16.4vh; /* Custom height for welcome box */
 }
 
+
 /* New Box Styling */
 /* Ensure the new box has proper scroll handling */
 .todo-progression  .new-box {
@@ -506,4 +508,12 @@
   .check-hw .add-task input {
     width: 100%; /* Full width on smaller screens */
   }
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 4px;
+  display: block;
 }

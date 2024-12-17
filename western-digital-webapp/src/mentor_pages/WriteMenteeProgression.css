@@ -1,3 +1,4 @@
+/* writeMenteeProgression.css */
 .write-mentee-progression{
   display: flex;
   flex-direction: column;
@@ -8,7 +9,6 @@
   align-items: center; /* Center all content horizontally */
   justify-content: space-between;
   position: fixed;
-
 }
 .write-mentee-progression .logo-button {
   background: none; /* Remove default button background */
@@ -35,8 +35,6 @@
   color: black !important;
   font-family: Tahoma, sans-serif;
 }
-
-
 
 
 /* Main content styles */
@@ -158,17 +156,22 @@
   }
   
   .write-mentee-progression .submit-button {
-
-
     background-color: #53a5ff;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
   }
   .write-mentee-progression .submit-button:hover {
     background-color: #0056b3;
+  }
+
+  .write-mentee-progression .submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
 
 
@@ -386,6 +389,33 @@
 }
 
 
+/* New Box Styling */
+/* Ensure the new box has proper scroll handling */
+.write-mentee-progression  .new-boxA {
+  background-color: #b9bec07c; /* Same background color as the other boxes */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%; /* Full width of the container */
+  box-sizing: border-box;
+  height: 63vh; /* Adjust height to fit inside the container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+}
+
+/* Optional: Customize scrollbar for better appearance */
+.write-mentee-progression  .new-boxA .check-hw-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.write-mentee-progression  .new-boxA .check-hw-table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Customize scrollbar color */
+  border-radius: 10px;
+}
+
+.write-mentee-progression  .new-boxA .check-hw-table-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 
 .write-mentee-progression .logout-buttonV2 {
   margin-top: 20px;
@@ -446,15 +476,35 @@
   background-color: #b9bec07c;
 }
 
-.write-mentee-progression .new-boxA {
-  background-color: #b9bec07c; /* Same background color as the other boxes */
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 63vh; /* Adjust height to fit inside the container */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+/* Responsive styles */
+@media (max-width: 768px) {
+  .check-hw .logout-button {
+    font-size: 1rem; /* Smaller font size for smaller screens */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+  }
 }
 
+@media (max-width: 480px) {
+  .check-hw .logout-button {
+    font-size: 0.9rem; /* Even smaller font size for very small screens */
+    padding: 6px 12px; /* Adjust padding further for small screens */
+    right: 10px; /* Adjust right positioning for small screens */
+    top: 10px; /* Adjust top positioning for small screens */
+  }
+}
+
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .check-hw .add-task input {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 4px;
+  display: block;
+}

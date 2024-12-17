@@ -1,3 +1,4 @@
+// src/components/WriteMenteeProgression.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./WriteMenteeProgression.css";
@@ -16,10 +17,10 @@ import {
   Toolbar,
   Typography,
   Button,
+  Alert,
 } from "@mui/material";
 import { motion } from "framer-motion"; // Importing motion
 import AssignHWTable from "./AssignHW.js"; // Import the AssignHWTable component
-
 
 function WriteMenteeProgression() {
   const navigate = useNavigate();
@@ -36,11 +37,14 @@ function WriteMenteeProgression() {
   const mentorName = name || "Mentor";
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [errors, setErrors] = useState({}); // State for error messages
+  
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
   };
+
   useEffect(() => {
     const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const mentorKey = userInfo?.mentorkey;
@@ -66,6 +70,7 @@ function WriteMenteeProgression() {
       setMeetings([]); // Clear meetings if no mentee is selected
     }
   }, [selectedMentee]);
+
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
@@ -78,16 +83,36 @@ function WriteMenteeProgression() {
     };
     return date.toLocaleDateString("en-US", options);
   };
+
   const handleAddReport = async (e) => {
     e.preventDefault();
+
+    // Validate form before submission
+    const validationErrors = {};
+    if (!selectedMentee) validationErrors.selectedMentee = "Mentee is required.";
+    if (!selectedMeeting) validationErrors.selectedMeeting = "Meeting is required.";
+    if (skipped === null) validationErrors.skipped = "Please indicate if the meeting was skipped.";
+    if (finished_homework === null) validationErrors.finished_homework = "Please indicate if homework was finished.";
+    if (attitude_towards_learning === null) validationErrors.attitude_towards_learning = "Please select attitude towards learning.";
+    if (!newReport.trim()) validationErrors.newReport = "Additional comments are required.";
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      // There are validation errors
+      // Generate a summary message
+      const missingFields = Object.values(validationErrors).join(" ");
+      return;
+    }
+
     const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const mentorkey = userInfo?.mentorkey;
-  
+
     if (!mentorkey) {
       console.error("mentorkey is missing. Please log in again.");
       return;
     }
-  
+
     const newReportData = {
       meetingkey: selectedMeeting,
       mentorkey: mentorkey,
@@ -97,38 +122,51 @@ function WriteMenteeProgression() {
         attitude_towards_learning === "very_good" ? 3 : attitude_towards_learning === "good" ? 2 : 1,
       additional_comments: newReport, 
     };
-  
+
     try {
       const response = await fetch("http://localhost:3001/api/mentornotes/mentornotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newReportData),
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         console.log("Report added:", result);
+        // Reset form
         setNewReport("");
         setSelectedMeeting("");
         setSkipped(null);
         setFinishedHomework(null);
         setAttitudeTowardsLearning(null);
+        setErrors({});
+       
       } else {
         console.error("Error pushing new report");
+        const errorData = await response.json();
+
       }
     } catch (error) {
       console.error("Error pushing new report:", error);
+
     }
   };
+
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
+
+
+
+  // Determine if the form is valid
+  const isFormValid = selectedMentee && selectedMeeting && skipped !== null && finished_homework !== null && attitude_towards_learning !== null && newReport.trim();
+
   return (
     <div className="write-mentee-progression">
       <div className="logo-title-container">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title-header">Write Mentee Progression</h1>
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">Write Mentee Progression</h1>
       </div>
       <div className="sidebarA">
         {/* Navigation Buttons */}
@@ -165,9 +203,9 @@ function WriteMenteeProgression() {
           >
             <img src={calendar} alt="twopeople" />
           </motion.button>
-                  {/* Logout Button */}
-      </div>
-      <div className="slider-section">
+        </div>
+        {/* Dark Mode Toggle */}
+        <div className="slider-section">
           <span role="img" aria-label="Sun"></span>
           <label className="slider-container">
             <input
@@ -187,183 +225,189 @@ function WriteMenteeProgression() {
         >
           <img src={logout} alt="logout" />
         </motion.button>
-        </div>
+      </div>
 
-        <div className="content-wrapperVA">
+      <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-          <div className="box">
-          {/* Mentee Dropdown */}
-        <div className="main-content">
-          <div className="mentor-mentee-container">
-          <div className="dropdown-container">
-            <label>Select a Mentee:</label>
-            <select
-              value={selectedMentee}
-              onChange={(e) => setSelectedMentee(e.target.value)}
-            >
-              <option value="" disabled>Select a mentee</option>
-              {mentees.map((mentee) => (
-                <option key={mentee.menteekey} value={mentee.menteekey}>
-                  {mentee.menteeName}
-                </option>
-              ))}
-            </select>
-            </div>
-            
+            <div className="box">
+              {/* Mentee Dropdown */}
+              <div className="main-content">
+                <div className="mentor-mentee-container">
+                  <div className="dropdown-container">
+                    <label>Select a Mentee:</label>
+                    <select
+                      value={selectedMentee}
+                      onChange={(e) => setSelectedMentee(e.target.value)}
+                    >
+                      <option value="" disabled>Select a mentee</option>
+                      {mentees.map((mentee) => (
+                        <option key={mentee.menteekey} value={mentee.menteekey}>
+                          {mentee.menteeName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.selectedMentee && <span className="error">{errors.selectedMentee}</span>}
+                  </div>
 
-          {/* Meetings Dropdown */}
-          <div className="dropdown-container">
-            <label htmlFor="meetingSelect">Select Meeting:</label>
-            <select
-              id="meetingSelect"
-              value={selectedMeeting}
-              onChange={(e) => setSelectedMeeting(e.target.value)}
-              disabled={!selectedMentee}
-            >
-              <option value="">Choose a meeting</option>
-              {meetings.map((meeting) => (
-                <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                  {new Date(meeting.datetime).toLocaleString()}
-                </option>
-              ))}
-            </select>
-            </div>
-            </div>
-
-          {/* Skipped Section */}
-          <div className="form-box">
-            <div className="question-group">
-              <div className="form-title">
-                <EventBusyOutlinedIcon className="form-title-icon" />
-                <p>Skipped</p>
-              </div>
-              <div className="radio-options">
-              <input
-                type="radio"
-                id="skipped-yes"
-                name="skipped"
-                value="yes"
-                checked={skipped === "yes"}
-                onChange={(e) => setSkipped(e.target.value)}
-              />
-              <label htmlFor="skipped-yes">Yes</label>
-            
-       
-              <input
-                type="radio"
-                id="skipped-no"
-                name="skipped"
-                value="no"
-                checked={skipped === "no"}
-                onChange={(e) => setSkipped(e.target.value)}
-              />
-                <label htmlFor="skipped-no">No</label>
+                  {/* Meetings Dropdown */}
+                  <div className="dropdown-container">
+                    <label htmlFor="meetingSelect">Select Meeting:</label>
+                    <select
+                      id="meetingSelect"
+                      value={selectedMeeting}
+                      onChange={(e) => setSelectedMeeting(e.target.value)}
+                      disabled={!selectedMentee}
+                    >
+                      <option value="">Choose a meeting</option>
+                      {meetings.map((meeting) => (
+                        <option key={meeting.meetingkey} value={meeting.meetingkey}>
+                          {new Date(meeting.datetime).toLocaleString()}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.selectedMeeting && <span className="error">{errors.selectedMeeting}</span>}
+                  </div>
                 </div>
-            </div>
-          </div>
 
-          {/* Finished Homework Section */}
-          <div className="form-box">
-            <div className="question-group">
-              <div className="form-title">
+                {/* Skipped Section */}
+                <div className="form-box">
+                  <div className="question-group">
+                    <div className="form-title">
+                      <EventBusyOutlinedIcon className="form-title-icon" />
+                      <p>Skipped</p>
+                    </div>
+                    <div className="radio-options">
+                      <input
+                        type="radio"
+                        id="skipped-yes"
+                        name="skipped"
+                        value="yes"
+                        checked={skipped === "yes"}
+                        onChange={(e) => setSkipped(e.target.value)}
+                      />
+                      <label htmlFor="skipped-yes">Yes</label>
 
-                <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                <p>Finished Homework</p>
-              </div>
-              <div className="radio-options">
-              <input
-                type="radio"
-                id="finished_homework-yes"
-                name="finished_homework"
-                value="yes"
-                checked={finished_homework === "yes"}
-                onChange={(e) => setFinishedHomework(e.target.value)}
-              />
-              <label htmlFor="finished_homework-yes">Yes</label>
-
-              <input
-                type="radio"
-                id="finished_homework-no"
-                name="finished_homework"
-                value="no"
-                checked={finished_homework === "no"}
-                onChange={(e) => setFinishedHomework(e.target.value)}
-              />
-                <label htmlFor="finished_homework-no">No</label>
+                      <input
+                        type="radio"
+                        id="skipped-no"
+                        name="skipped"
+                        value="no"
+                        checked={skipped === "no"}
+                        onChange={(e) => setSkipped(e.target.value)}
+                      />
+                      <label htmlFor="skipped-no">No</label>
+                    </div>
+                    {errors.skipped && <span className="error">{errors.skipped}</span>}
+                  </div>
                 </div>
+
+                {/* Finished Homework Section */}
+                <div className="form-box">
+                  <div className="question-group">
+                    <div className="form-title">
+                      <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
+                      <p>Finished Homework</p>
+                    </div>
+                    <div className="radio-options">
+                      <input
+                        type="radio"
+                        id="finished_homework-yes"
+                        name="finished_homework"
+                        value="yes"
+                        checked={finished_homework === "yes"}
+                        onChange={(e) => setFinishedHomework(e.target.value)}
+                      />
+                      <label htmlFor="finished_homework-yes">Yes</label>
+
+                      <input
+                        type="radio"
+                        id="finished_homework-no"
+                        name="finished_homework"
+                        value="no"
+                        checked={finished_homework === "no"}
+                        onChange={(e) => setFinishedHomework(e.target.value)}
+                      />
+                      <label htmlFor="finished_homework-no">No</label>
+                    </div>
+                    {errors.finished_homework && <span className="error">{errors.finished_homework}</span>}
+                  </div>
+                </div>
+
+                {/* Attitude Towards Learning Section */}
+                <div className="form-box">
+                  <div className="question-group">
+                    <div className="form-title">
+                      <MoodIcon className="form-title-icon" />
+                      <p>Attitude Towards Learning</p>
+                    </div>
+                    <div className="radio-options">
+                      <input
+                        type="radio"
+                        id="attitude_towards_learning-very_good"
+                        name="attitude_towards_learning"
+                        value="very_good"
+                        checked={attitude_towards_learning === "very_good"}
+                        onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
+                      />
+                      <label htmlFor="attitude_towards_learning-very_good">Very Good</label>
+
+                      <input
+                        type="radio"
+                        id="attitude_towards_learning-good"
+                        name="attitude_towards_learning"
+                        value="good"
+                        checked={attitude_towards_learning === "good"}
+                        onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
+                      />
+                      <label htmlFor="attitude_towards_learning-good">Good</label>
+
+                      <input
+                        type="radio"
+                        id="attitude_towards_learning-bad"
+                        name="attitude_towards_learning"
+                        value="bad"
+                        checked={attitude_towards_learning === "bad"}
+                        onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
+                      />
+                      <label htmlFor="attitude_towards_learning-bad">Bad</label>
+                    </div>
+                    {errors.attitude_towards_learning && <span className="error">{errors.attitude_towards_learning}</span>}
+                  </div>
+                </div>
+
+                {/* Comments Section */}
+                <div className="comment-container">
+                  <textarea
+                    value={newReport}
+                    onChange={(e) => setNewReport(e.target.value)}
+                    placeholder="Extra comments here"
+                  />
+                  {errors.newReport && <span className="error">{errors.newReport}</span>}
+                  <button className="submit-button" onClick={handleAddReport} disabled={!isFormValid}>
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Attitude Towards Learning Section */}
-          <div className="form-box">
-            <div className="question-group">
-              <div className="form-title">
-                <MoodIcon className="form-title-icon" />
-                <p>Attitude Towards Learning</p>
-              </div>
-              <div className="radio-options">
-              <input
-                type="radio"
-                id="attitude_towards_learning-very_good"
-                name="attitude_towards_learning"
-                value="very_good"
-                checked={attitude_towards_learning === "very_good"}
-                onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
-              />
-              <label htmlFor="attitude_towards_learning-very_good">Very Good</label>
-
-              <input
-                type="radio"
-                id="attitude_towards_learning-good"
-                name="attitude_towards_learning"
-                value="good"
-                checked={attitude_towards_learning === "good"}
-                onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
-              />
-              <label htmlFor="attitude_towards_learning-good">Good</label>
-
-              <input
-                type="radio"
-                id="attitude_towards_learning-bad"
-                name="attitude_towards_learning"
-                value="bad"
-                checked={attitude_towards_learning === "bad"}
-                onChange={(e) => setAttitudeTowardsLearning(e.target.value)}
-              />
-              <label htmlFor="attitude_towards_learning-bad">Bad</label>
-              </div>
-              </div>
-          </div>
-
-          <div className="comment-container">
-            <textarea
-              value={newReport}
-              onChange={(e) => setNewReport(e.target.value)}
-              placeholder="Extra comments here"
-            />
-            <button className="submit-button" onClick={handleAddReport}>
-              Submit
-            </button>
-          </div>
-        </div>
-        </div>
           </div>
         </div>
       </div>
+
       <div className="welcome-box-containerA">
-      {/* Welcome Message Box */}
-      <div className="welcome-boxA">
-        <h2>Welcome, {mentorName}!</h2>
-        <p>Today is {formatDateTime(currentDateTime)}</p>
+        {/* Welcome Message Box */}
+        <div className="welcome-boxA">
+          <h2>Welcome, {mentorName}!</h2>
+          <p>Today is {formatDateTime(currentDateTime)}</p>
+        </div>
+
+        {/* New Box under the Welcome Box */}
+        <div className="new-boxA">
+          <h2>Upcoming Meetings</h2>
+          <AssignHWTable className="hw-table" />
+        </div>
       </div>
 
-      {/* New Box under the Welcome Box */}
-      <div className="new-boxA">
-        <h2>Upcoming Meetings</h2>
-        <AssignHWTable className ="hw-table"/>
-      </div>
-    </div>
     </div>
   );
 }

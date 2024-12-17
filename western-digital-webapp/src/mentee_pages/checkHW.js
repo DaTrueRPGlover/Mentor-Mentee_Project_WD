@@ -10,7 +10,7 @@ import write from "../assets/write.png";
 import assign from "../assets/assign.png";
 import calendar from "../assets/calendar.png";
 import logout from "../assets/logout.png";
-import ChatBox from "./ChatBox"; // Import the ChatBox component
+import CheckHWTable from "./CheckHWTable.js"; // Import the ChatBox component
 
 const CheckHW = () => {
   const navigate = useNavigate();
@@ -183,9 +183,9 @@ const CheckHW = () => {
 
         {/* New Box under the Welcome Box */}
 <div className="new-boxA">
-  <h2>Chat</h2>
+  <h2>Upcoming Meetings and Homework</h2>
   <div className="chat-box-container">
-    <ChatBox />
+    <CheckHWTable />
   </div>
 </div>
       </div>

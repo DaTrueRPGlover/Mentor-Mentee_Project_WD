@@ -75,9 +75,45 @@ export const updateMentorAvailability = async (mentorkey, dayOfWeek, oldStartTim
     `;
   
     await pool.execute(sql, [newStartTime, newEndTime, mentorkey, dayOfWeek, oldStartTime, oldEndTime]);
-  };
+};
 
-// Check if a time is within mentor's availability
+// New Function: Check if the new availability overlaps with existing availability
+export const hasOverlappingAvailability = async (mentorkey, dayOfWeek, newStartTime, newEndTime, excludeSlot = null) => {
+  let sql = `
+    SELECT start_time, end_time
+    FROM mentor_availability
+    WHERE mentorkey = ?
+      AND day_of_week = ?
+  `;
+  let params = [mentorkey, dayOfWeek];
+
+  const [rows] = await pool.execute(sql, params);
+
+  for (const row of rows) {
+    // If updating, exclude the current availability being edited
+    if (excludeSlot && row.start_time === excludeSlot.oldStartTime && row.end_time === excludeSlot.oldEndTime) {
+      continue;
+    }
+    // Check for overlap
+    if (
+      (newStartTime < row.end_time) &&
+      (newEndTime > row.start_time)
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isDateBlackout = async (mentorkey, date) => {
+  const sql = `
+    SELECT * FROM mentor_blackout_dates
+    WHERE mentorkey = ? AND date = ?
+  `;
+  const [rows] = await pool.execute(sql, [mentorkey, date]);
+  return rows.length > 0;
+};
+
 export const isTimeWithinMentorAvailability = async (mentorkey, datetime, duration) => {
   // Check if date is a blackout date
   const isBlackout = await isDateBlackout(mentorkey, datetime.toISOString().split('T')[0]);
@@ -110,14 +146,4 @@ export const isTimeWithinMentorAvailability = async (mentorkey, datetime, durati
   }
 
   return false;
-};
-
-// Check if a date is a blackout date
-export const isDateBlackout = async (mentorkey, date) => {
-  const sql = `
-    SELECT * FROM mentor_blackout_dates
-    WHERE mentorkey = ? AND date = ?
-  `;
-  const [rows] = await pool.execute(sql, [mentorkey, date]);
-  return rows.length > 0;
 };

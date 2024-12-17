@@ -1,37 +1,35 @@
 import React, { useState } from "react";
 import {
-  TextField,
   Container,
   Typography,
   Avatar,
   CssBaseline,
 } from "@mui/material";
-import LockSharpIcon from '@mui/icons-material/LockSharp';
+import LockSharpIcon from "@mui/icons-material/LockSharp";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"; // Import motion from framer-motion
-import "./Login.css"; // Import the CSS file
-import { parseJSON } from "date-fns";
-// import logo from "../assets/WDC2.png";
+import { motion } from "framer-motion";
+import "./Login.css";
+
 const logo = require("./assets/WDC2.png");
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoggingIn, setIsLoggingIn] = useState(false); // Track logging in state
-  const [moveUp, setMoveUp] = useState(false); // State to trigger the movement
-  const navigate = useNavigate(); // For navigation after login
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [moveUp, setMoveUp] = useState(false);
+  const navigate = useNavigate();
 
   // Handle form submission (login)
   const handleSubmit = (e) => {
     console.log("Login form submitted");
     e.preventDefault();
-    setIsLoggingIn(true); // Set logging in state to true
+    setIsLoggingIn(true);
 
     fetch("http://localhost:3001/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }), // Send email and password
+      body: JSON.stringify({ email, password }),
     })
       .then((response) =>
         response.json().then((data) => ({
@@ -41,7 +39,6 @@ function Login() {
       )
       .then(({ status, body }) => {
         if (status === 200) {
-          // Store user info in sessionStorage
           sessionStorage.setItem(
             "user",
             JSON.stringify({
@@ -53,12 +50,10 @@ function Login() {
               menteeList: body.menteeList || [],
             })
           );
-          // Trigger upward movement after successful login
           setMoveUp(true);
 
-          // Redirect based on role
           if (body.role.toLowerCase() === "mentor") {
-            setTimeout(() => navigate("/interact-with-mentee"), 1000); // Add delay to let animation complete
+            setTimeout(() => navigate("/interact-with-mentee"), 1000);
           } else if (body.role.toLowerCase() === "mentee") {
             setTimeout(() => navigate("/interact-mentor"), 1000);
           } else if (body.role.toLowerCase() === "admin") {
@@ -66,18 +61,18 @@ function Login() {
           } else {
             console.error("Unknown user role:", body.role);
             setErrorMessage("Unknown user role");
-            setIsLoggingIn(false); // Reset the button to 'Log In'
+            setIsLoggingIn(false);
           }
         } else {
           console.log("Invalid credentials");
           setErrorMessage(body.message || "Invalid email or password");
-          setIsLoggingIn(false); // Reset the button to 'Log In'
+          setIsLoggingIn(false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
         setErrorMessage("An error occurred. Please try again later.");
-        setIsLoggingIn(false); // Reset the button to 'Log In'
+        setIsLoggingIn(false);
       });
   };
 
@@ -85,18 +80,19 @@ function Login() {
     <>
       <CssBaseline />
       <img src={logo} alt="Logo" className="login-logo" />
+
       <div className="center-container">
         <Container component="main" maxWidth="xs">
           <motion.div className="login-container">
             <Avatar
               sx={{
-                backgroundColor: "inherit", // Match the container's background
+                backgroundColor: "inherit",
               }}
               className="login-avatar"
             >
               <LockSharpIcon
                 sx={{
-                  backgroundColor: "inherit", // Match the container's background
+                  backgroundColor: "inherit",
                   fontSize: 35,
                 }}
               />
@@ -106,13 +102,13 @@ function Login() {
               Log In
             </Typography>
 
-            <form className="login-form" onSubmit={handleSubmit}>
-              {errorMessage && (
-                <Typography variant="body2" className="login-error-message">
-                  {errorMessage}
-                </Typography>
-              )}
+            {errorMessage && (
+              <Typography variant="body2" className="login-error-message">
+                {errorMessage}
+              </Typography>
+            )}
 
+            <form className="login-form" onSubmit={handleSubmit}>
               <div className="input-container">
                 <input
                   margin="normal"
@@ -125,8 +121,8 @@ function Login() {
                   autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="invisible-input" // Apply invisible input class
-                  onFocus={(e) => e.target.style.opacity = 1} // Reveal input on focus
+                  className="invisible-input"
+                  onFocus={(e) => (e.target.style.opacity = 1)}
                 />
               </div>
 
@@ -142,22 +138,21 @@ function Login() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="invisible-input" // Apply invisible input class
-                  onFocus={(e) => e.target.style.opacity = 1} // Reveal input on focus
+                  className="invisible-input"
+                  onFocus={(e) => (e.target.style.opacity = 1)}
                 />
               </div>
 
-              {/* Animate the button */}
               <motion.button
                 type="submit"
                 fullWidth
                 variant="contained"
                 className="login-button"
-                disabled={isLoggingIn} // Disable button during login
+                disabled={isLoggingIn}
                 initial={{ scale: 1 }}
                 animate={{
-                  scale: isLoggingIn ? 1.05 : 1, // Slightly scale up the button when logging in
-                  backgroundColor: isLoggingIn ? "#1565c0" : "#86a8e7", // Change color
+                  scale: isLoggingIn ? 1.05 : 1,
+                  backgroundColor: isLoggingIn ? "#1565c0" : "#86a8e7",
                 }}
                 transition={{
                   type: "spring",
@@ -165,7 +160,7 @@ function Login() {
                   damping: 20,
                 }}
               >
-                {isLoggingIn ? "Logging in..." : "Log In"} {/* Change text */}
+                {isLoggingIn ? "Logging in..." : "Log In"}
               </motion.button>
             </form>
           </motion.div>
