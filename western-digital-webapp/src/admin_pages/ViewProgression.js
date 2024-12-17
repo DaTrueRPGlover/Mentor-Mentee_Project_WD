@@ -376,7 +376,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <EventBusyOutlinedIcon className="form-title-icon" />
-                    <p>Profile of a Leader</p>
+                    <p>Communication</p>
                   </div>
                   <input className='input1'
                     type="number"
@@ -390,7 +390,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                    <p>Executive Communication Style</p>
+                    <p>Infulence</p>
                   </div>
                   <input className='input1'
                     type="number"
@@ -404,7 +404,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
-                    <p>Trust, Respect, Visibility</p>
+                    <p>Managing Projects</p>
                   </div>
                   <input className='input1'
                     type="number"
@@ -418,7 +418,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
-                    <p>Motivating Your Team</p>
+                    <p>Innovation</p>
                   </div>
                   <input className='input1'
                     type="number"
@@ -432,7 +432,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
-                    <p>Self Advocacy and Career Growth</p>
+                    <p>Emotional Intelligence</p>
                   </div>
                   <input className='input1'
                     type="number"
@@ -446,7 +446,7 @@ function ViewProgressions() {
                 <div className="question-group">
                   <div className="form-title">
                     <MoodIcon className="form-title-icon" />
-                    <p>Work Life Balance</p>
+                    <p>Decision Making</p>
                   </div>
                   <input className='input1'
                     type="number"

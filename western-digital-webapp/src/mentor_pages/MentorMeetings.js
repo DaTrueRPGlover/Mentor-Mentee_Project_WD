@@ -26,6 +26,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  DialogContentText,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -79,11 +80,14 @@ function MentorMeetings() {
   const [editDay, setEditDay] = useState("");
   const [editStartTime, setEditStartTime] = useState("");
   const [editEndTime, setEditEndTime] = useState("");
-
+  
   // State variables for Export Calendar
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [exportStartDate, setExportStartDate] = useState("");
   const [exportEndDate, setExportEndDate] = useState("");
+
+  // State variables for Cancel Meeting Confirmation
+  const [showCancelConfirmation, setShowCancelConfirmation] = useState(false);
 
   const daysOfWeek = [
     "Monday",
@@ -175,6 +179,24 @@ function MentorMeetings() {
 
     fetchData();
   }, [mentorinfo.mentorkey]);
+
+  // Function to check if the new availability overlaps with existing availability
+  const hasOverlappingAvailability = (day, newStart, newEnd, excludeSlot = null) => {
+    const dayAvailabilities = availability.filter(avail => avail.day_of_week === day);
+    for (const avail of dayAvailabilities) {
+      if (excludeSlot && avail.start_time === excludeSlot.start_time && avail.end_time === excludeSlot.end_time) {
+        continue; // Skip the slot being edited
+      }
+      // Check for overlap
+      if (
+        (newStart < avail.end_time) &&
+        (newEnd > avail.start_time)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   // Blackout Date Handlers
   const handleOpenAddBlackoutDialog = () => {
@@ -286,6 +308,11 @@ function MentorMeetings() {
         return;
       }
 
+      if (hasOverlappingAvailability(selectedDay, startTime, endTime)) {
+        alert("The new availability time overlaps with existing availability.");
+        return;
+      }
+
       try {
         const response = await fetch(
           `http://localhost:3001/api/mentor/${mentorinfo.mentorkey}/availability`,
@@ -345,6 +372,11 @@ function MentorMeetings() {
     if (editDay && editStartTime && editEndTime) {
       if (editEndTime <= editStartTime) {
         alert("End time must be after start time.");
+        return;
+      }
+
+      if (hasOverlappingAvailability(editDay, editStartTime, editEndTime, availabilityToEdit)) {
+        alert("The edited availability time overlaps with existing availability.");
         return;
       }
 
@@ -521,10 +553,50 @@ function MentorMeetings() {
     }
   };
 
+  const handleCancelMeeting = () => {
+    // Open confirmation dialog
+    setShowCancelConfirmation(true);
+  };
+
+  const confirmCancelMeeting = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/meetings/cancel",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            meetingKey: selectedEvent.meetingKey,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        // Remove the meeting from events
+        setEvents(
+          events.filter(event => event.meetingKey !== selectedEvent.meetingKey)
+        );
+        handleCloseEventDialog();
+        setShowCancelConfirmation(false);
+        alert("Meeting canceled successfully.");
+      } else {
+        const data = await response.json();
+        alert(data.message || "Failed to cancel meeting.");
+      }
+    } catch (error) {
+      console.error("Error canceling meeting:", error);
+      alert("An error occurred while canceling the meeting.");
+    }
+  };
+
+  const cancelCancelMeeting = () => {
+    setShowCancelConfirmation(false);
+  };
+
   const getAvailabilityByDay = (day) => {
-    const avail = availability.filter((avail) => avail.day_of_week === day);
-    if (avail.length === 0) return "No Availability";
-    return avail.map((a, index) => (
+    const dayAvailabilities = availability.filter(avail => avail.day_of_week === day);
+    if (dayAvailabilities.length === 0) return "No Availability";
+    return dayAvailabilities.map((a, index) => (
       <Box key={index} display="flex" alignItems="center" mb={1}>
         <Typography variant="body2">
           {a.start_time} - {a.end_time}
@@ -623,11 +695,11 @@ function MentorMeetings() {
               <div className="main-content">
 
                 <Container sx={{ mt: 4 }}>
-                  <Typography style = {{color: 'black'}} variant="h4" align="center" gutterBottom>
+                  <Typography style={{ color: 'black' }} variant="h4" align="center" gutterBottom>
                     Manage Your Availability
                   </Typography>
 
-                  {/* Add Availability and now Add Blackout Date Button */}
+                  {/* Add Availability and Add Blackout Date Buttons */}
                   <Box display="flex" justifyContent="center" mb={2}>
                     <Button
                       variant="contained"
@@ -637,7 +709,6 @@ function MentorMeetings() {
                     >
                       Add Availability
                     </Button>
-                    {/* Switched: Now 'Add Blackout Date' button here */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -672,20 +743,22 @@ function MentorMeetings() {
                     </Table>
                   </TableContainer>
 
-                  <Typography style = {{color: 'black'}} variant="h4" align="center" gutterBottom>
+                  <Typography style={{ color: 'black' }} variant="h4" align="center" gutterBottom>
                     Your Scheduled Meetings
                   </Typography>
                   
-                  {/* Switched: Now Export Calendar button here instead of Add Blackout Date */}
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    startIcon={<DownloadIcon />}
-                    onClick={handleOpenExportDialog}
-                    sx={{ mb: 2 }}
-                  >
-                    Export Calendar
-                  </Button>
+                  {/* Export Calendar Button */}
+                  <Box display="flex" justifyContent="center" mb={2}>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      startIcon={<DownloadIcon />}
+                      onClick={handleOpenExportDialog}
+                      sx={{ mb: 2 }}
+                    >
+                      Export Calendar
+                    </Button>
+                  </Box>
 
                   <Calendar
                     localizer={localizer}
@@ -768,9 +841,16 @@ function MentorMeetings() {
                             Reschedule
                           </Button>
                           <Button
+                            onClick={handleCancelMeeting}
+                            variant="contained"
+                            color="secondary"
+                          >
+                            Cancel Meeting
+                          </Button>
+                          <Button
                             onClick={handleCloseEventDialog}
                             variant="outlined"
-                            color="secondary"
+                            color="primary"
                           >
                             Close
                           </Button>
@@ -796,6 +876,37 @@ function MentorMeetings() {
                     </DialogActions>
                   </Dialog>
                 )}
+
+                {/* Cancel Meeting Confirmation Dialog */}
+                <Dialog
+                  open={showCancelConfirmation}
+                  onClose={cancelCancelMeeting}
+                  maxWidth="xs"
+                  fullWidth
+                >
+                  <DialogTitle>Confirm Cancellation</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Are you sure you want to cancel this meeting?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={confirmCancelMeeting}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Yes, Cancel
+                    </Button>
+                    <Button
+                      onClick={cancelCancelMeeting}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      No
+                    </Button>
+                  </DialogActions>
+                </Dialog>
 
                 {/* Add Blackout Date Dialog */}
                 <Dialog

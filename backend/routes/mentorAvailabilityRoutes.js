@@ -5,7 +5,8 @@ import {
   getMentorAvailabilityByDay, 
   insertMentorAvailability, 
   deleteMentorAvailability, 
-  updateMentorAvailability 
+  updateMentorAvailability,
+  hasOverlappingAvailability // Import the new validation function
 } from '../database_queries/MentorAvailabilityQueries.js'
 
 const router = express.Router();
@@ -34,11 +35,18 @@ router.get('/mentor/:mentorkey/availability/:dayOfWeek', async (req, res) => {
   }
 });
 
-// Insert new availability
+// Insert new availability with overlap validation
 router.post('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
     const { dayOfWeek, startTime, endTime } = req.body;
+
+    // Validate overlapping availability
+    const overlap = await hasOverlappingAvailability(mentorkey, dayOfWeek, startTime, endTime);
+    if (overlap) {
+      return res.status(400).json({ message: 'New availability time overlaps with existing availability.' });
+    }
+
     await insertMentorAvailability(mentorkey, dayOfWeek, startTime, endTime);
     res.status(201).json({ message: 'Availability inserted successfully' });
   } catch (error) {
@@ -60,11 +68,18 @@ router.delete('/mentor/:mentorkey/availability', async (req, res) => {
   }
 });
 
-// Update availability
+// Update availability with overlap validation
 router.put('/mentor/:mentorkey/availability', async (req, res) => {
   try {
     const { mentorkey } = req.params;
     const { dayOfWeek, oldStartTime, oldEndTime, newStartTime, newEndTime } = req.body;
+
+    // Validate overlapping availability excluding the current slot being edited
+    const overlap = await hasOverlappingAvailability(mentorkey, dayOfWeek, newStartTime, newEndTime, { oldStartTime, oldEndTime });
+    if (overlap) {
+      return res.status(400).json({ message: 'Edited availability time overlaps with existing availability.' });
+    }
+
     await updateMentorAvailability(mentorkey, dayOfWeek, oldStartTime, oldEndTime, newStartTime, newEndTime);
     res.status(200).json({ message: 'Availability updated successfully' });
   } catch (error) {

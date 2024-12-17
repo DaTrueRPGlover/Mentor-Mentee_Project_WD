@@ -23,7 +23,7 @@ function TodoProgression() {
   const name = user['name']
   console.log(user);
   console.log(name)
-  const menteeName = name|| "Mentee";
+  const menteeName = name || "Mentee";
 
   const [communication, setCommunication] = useState(null);
   const [influence, setInfluence] = useState(null);
@@ -35,6 +35,7 @@ function TodoProgression() {
   const [newReport, setNewReport] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [errors, setErrors] = useState({}); // State for error messages
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -69,6 +70,7 @@ function TodoProgression() {
         return null;
     }
   };
+
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
@@ -84,6 +86,25 @@ function TodoProgression() {
 
   const handleAddReport = async (e) => {
     e.preventDefault();
+
+    // Validate form before submission
+    const validationErrors = {};
+    if (!selectedMeeting) validationErrors.selectedMeeting = "Meeting is required.";
+    if (!communication) validationErrors.communication = "Communication rating is required.";
+    if (!influence) validationErrors.influence = "Influence rating is required.";
+    if (!managingProjects) validationErrors.managingProjects = "Managing Projects rating is required.";
+    if (!innovation) validationErrors.innovation = "Innovation rating is required.";
+    if (!emotionalIntelligence) validationErrors.emotionalIntelligence = "Emotional Intelligence rating is required.";
+    if (!decisionMaking) validationErrors.decisionMaking = "Decision Making rating is required.";
+    if (!newReport.trim()) validationErrors.newReport = "Additional comments are required.";
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      // There are validation errors
+      return;
+    }
+
     const userInfo = JSON.parse(sessionStorage.getItem("user"));
     const menteeKey = userInfo?.menteekey;
 
@@ -117,6 +138,7 @@ function TodoProgression() {
       if (response.ok) {
         const result = await response.json();
         console.log("Report added:", result);
+        // Reset form
         setNewReport("");
         setSelectedMeeting("");
         setCommunication(null);
@@ -125,23 +147,27 @@ function TodoProgression() {
         setInnovation(null);
         setEmotionalIntelligence(null);
         setDecisionMaking(null);
+        setErrors({});
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Error pushing new report");
+        setErrors({ submit: errorData.message || "Error pushing new report" });
       }
     } catch (error) {
       console.error("Error pushing new report:", error);
-      setError("Error pushing new report");
+      setErrors({ submit: "Error pushing new report" });
     }
   };
+
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
 
+  // Determine if the form is valid
+  const isFormValid = selectedMeeting && communication && influence && managingProjects && innovation && emotionalIntelligence && decisionMaking && newReport.trim();
+
   return (
     <div className="todo-progression">
-
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Write Progression</h1>
@@ -206,29 +232,29 @@ function TodoProgression() {
           <img src={logout} alt="logout" />
         </motion.button>
       </div>
-   
+
       <div className="content-wrapperVA">
         <div className="chat-boxA">
-            <div className="box">
-              <div className="main-content">
-
-                <div className="dropdown-container">
-                  <label htmlFor="meetingSelect">Select Meeting:</label>
-                  <select
-                    id="meetingSelect"
-                    value={selectedMeeting}
-                    onChange={(e) => setSelectedMeeting(e.target.value)}
-                  >
-                    <option value="">Choose a meeting</option>
-                    {meetings.map((meeting) => (
-                      <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                        {new Date(meeting.datetime).toLocaleString()}
-                      </option>
-                    ))}
-                  </select>
+          <div className="box">
+            <div className="main-content">
+              <div className="dropdown-container">
+                <label htmlFor="meetingSelect">Select Meeting:</label>
+                <select
+                  id="meetingSelect"
+                  value={selectedMeeting}
+                  onChange={(e) => setSelectedMeeting(e.target.value)}
+                >
+                  <option value="">Choose a meeting</option>
+                  {meetings.map((meeting) => (
+                    <option key={meeting.meetingkey} value={meeting.meetingkey}>
+                      {new Date(meeting.datetime).toLocaleString()}
+                    </option>
+                  ))}
+                </select>
+                {errors.selectedMeeting && <span className="error">{errors.selectedMeeting}</span>}
               </div>
-              
-                  <div className="form-container">
+
+              <div className="form-container">
                 {/* Communication Section */}
                 <div className="form-box">
                   <div className="question-group">
@@ -237,7 +263,6 @@ function TodoProgression() {
                       <p>Communication</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="communication-very-helpful"
@@ -270,6 +295,7 @@ function TodoProgression() {
                       />
                       <label htmlFor="communication-not-good">Not Helpful</label>
                     </div>
+                    {errors.communication && <span className="error">{errors.communication}</span>}
                   </div>
                 </div>
 
@@ -281,7 +307,6 @@ function TodoProgression() {
                       <p>Influence</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="influence-very-helpful"
@@ -314,6 +339,7 @@ function TodoProgression() {
                       />
                       <label htmlFor="influence-not-good">Not Helpful</label>
                     </div>
+                    {errors.influence && <span className="error">{errors.influence}</span>}
                   </div>
                 </div>
 
@@ -325,7 +351,6 @@ function TodoProgression() {
                       <p>Managing Projects</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="managingProjects-very-helpful"
@@ -360,6 +385,7 @@ function TodoProgression() {
                       />
                       <label htmlFor="managingProjects-not-good">Not Helpful</label>
                     </div>
+                    {errors.managingProjects && <span className="error">{errors.managingProjects}</span>}
                   </div>
                 </div>
 
@@ -371,7 +397,6 @@ function TodoProgression() {
                       <p>Innovation</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="innovation-very-helpful"
@@ -404,6 +429,7 @@ function TodoProgression() {
                       />
                       <label htmlFor="innovation-not-good">Not Helpful</label>
                     </div>
+                    {errors.innovation && <span className="error">{errors.innovation}</span>}
                   </div>
                 </div>
 
@@ -415,7 +441,6 @@ function TodoProgression() {
                       <p>Emotional Intelligence</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="emotionalIntelligence-very-helpful"
@@ -448,10 +473,9 @@ function TodoProgression() {
                         checked={emotionalIntelligence === "Not Helpful"}
                         onChange={(e) => setEmotionalIntelligence(e.target.value)}
                       />
-                      <label htmlFor="emotionalIntelligence-not-good">
-                        Not Helpful
-                      </label>
+                      <label htmlFor="emotionalIntelligence-not-good">Not Helpful</label>
                     </div>
+                    {errors.emotionalIntelligence && <span className="error">{errors.emotionalIntelligence}</span>}
                   </div>
                 </div>
 
@@ -463,7 +487,6 @@ function TodoProgression() {
                       <p>Decision Making</p>
                     </div>
                     <div className="radio-options">
-
                       <input
                         type="radio"
                         id="decisionMaking-very-helpful"
@@ -496,24 +519,29 @@ function TodoProgression() {
                       />
                       <label htmlFor="decisionMaking-not-good">Not Helpful</label>
                     </div>
+                    {errors.decisionMaking && <span className="error">{errors.decisionMaking}</span>}
                   </div>
-              </div>
-              </div>
+                </div>
 
+                {/* Comments Section */}
                 <div className="comment-container">
                   <textarea
                     value={newReport}
                     onChange={(e) => setNewReport(e.target.value)}
                     placeholder="Extra comments here"
                   />
-                  <button className="submit-button" onClick={handleAddReport}>
+                  {errors.newReport && <span className="error">{errors.newReport}</span>}
+                  {errors.submit && <span className="error">{errors.submit}</span>}
+                  <button className="submit-button" onClick={handleAddReport} disabled={!isFormValid}>
                     Submit
                   </button>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
+
       {/* Welcome and To-Do Boxes Container */}
       <div className="welcome-box-containerA">
         {/* Welcome Message Box */}
@@ -524,11 +552,11 @@ function TodoProgression() {
 
         {/* New Box under the Welcome Box */}
         <div className="new-box">
-        <h2>Upcoming Meetings/Homework</h2>
-        <div className="check-hw-table-container">
-          <CheckHWTable />
+          <h2>Upcoming Meetings/Homework</h2>
+          <div className="check-hw-table-container">
+            <CheckHWTable />
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
