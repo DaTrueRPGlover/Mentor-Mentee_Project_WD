@@ -1,9 +1,8 @@
 /* src/components/CheckHWTable.css */
 
 /* Container Styling */
-.check-hw-table {
+.check-hw-table1 {
   padding: 40px; /* Increased padding for more space */
-  background-color: #dee1e27c !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
