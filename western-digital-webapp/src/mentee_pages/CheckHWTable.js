@@ -53,7 +53,7 @@ const CheckHWTable = () => {
           title: `Meeting with ${meeting.mentor_name}`,
           description: `Zoom Password: ${meeting.meeting_password}`,
           date: new Date(meeting.datetime),
-          link: meeting.zoomLink || '#', // Assuming zoomLink is provided
+          link: '/mentor-meetings' // Directing all meetings to the mentor-meetings page
         }));
 
         // Combine and Sort Data
@@ -82,13 +82,9 @@ const CheckHWTable = () => {
         <div className="homework-list">
           {combinedData.map(item => (
             <Link
-              to={item.type === 'Homework' ? item.link : '#'} // Only Homework has a valid internal link
+              to={item.type === 'Homework' ? item.link : '/mentee-meetings'} 
               key={`${item.type}-${item.id}`}
               className={`homework-card ${item.type.toLowerCase()}`}
-              onClick={item.type === 'Meeting' ? (e) => {
-                e.preventDefault();
-                window.open(item.link, '_blank', 'noopener,noreferrer');
-              } : null}
             >
               <h2 className="homework-title">{item.title}</h2>
               <p className="homework-description">{item.description}</p>
