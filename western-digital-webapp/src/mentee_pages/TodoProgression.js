@@ -33,14 +33,22 @@ function TodoProgression() {
   const [decisionMaking, setDecisionMaking] = useState(null);
   const [error, setError] = useState(null);
   const [newReport, setNewReport] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [errors, setErrors] = useState({}); // State for error messages
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
 
   useEffect(() => {
     // Retrieve the menteekey from sessionStorage
