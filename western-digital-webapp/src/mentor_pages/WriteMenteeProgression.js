@@ -36,14 +36,22 @@ function WriteMenteeProgression() {
   const name = user['name']
   const mentorName = name || "Mentor";
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [errors, setErrors] = useState({}); // State for error messages
-  
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
+  
 
   useEffect(() => {
     const userInfo = JSON.parse(sessionStorage.getItem("user"));

@@ -1,9 +1,8 @@
 /* src/components/CheckHWTable.css */
 
 /* Container Styling */
-.check-hw-table {
+.check-hw-table1 {
   padding: 40px; /* Increased padding for more space */
-  background-color: #dee1e27c !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -11,8 +10,8 @@
 }
 
 /* Loading and Error Messages */
-.check-hw-table.loading,
-.check-hw-table.error {
+.check-hw-table1.loading,
+.check-hw-table1.error {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +20,7 @@
   color: #555;
 }
 
-.check-hw-table.error {
+.check-hw-table1.error {
   color: #ff6b6b; /* Red color for errors */
 }
 
@@ -102,7 +101,7 @@
 }
 
 @media (max-width: 768px) {
-  .check-hw-table {
+  .check-hw-table1 {
     padding: 20px;
   }
 

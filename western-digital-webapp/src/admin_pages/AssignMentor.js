@@ -28,12 +28,21 @@ function AssignMentor() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const adminName = name || "Admin";
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());

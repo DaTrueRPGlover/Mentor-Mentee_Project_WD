@@ -39,10 +39,19 @@ function ViewProgressions() {
   const name = user['name']
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
   // Fetch mentee notes by meeting key and mentee key
   const fetchMenteeNotes = async (meetingkey, menteekey) => {
     try {
