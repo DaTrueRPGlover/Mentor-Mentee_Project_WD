@@ -38,17 +38,24 @@ function AssignHomework() {
   console.log(user);
   console.log(name)
   const mentorName = name || "Mentor";
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [selectedMentee, setSelectedMentee] = useState(null);
   const [menteeName, setMenteeName] = useState("");
   const [conversationKey, setConversationKey] = useState("");
-
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
   
   useEffect(() => {
     const fetchMentees = async () => {
@@ -257,7 +264,7 @@ function AssignHomework() {
       </div>
 
       {/* New Box under the Welcome Box */}
-      <div className="new-boxA">
+      <div className="new-boxA1">
         <h2>Upcoming Meetings</h2>
         <AssignHWTable/>
       </div>

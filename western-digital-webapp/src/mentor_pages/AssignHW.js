@@ -75,7 +75,7 @@ const CheckHWTable = () => {
   if (error) return <div className="check-hw-table error">{error}</div>;
 
   return (
-    <div className="check-hw-table">
+    <div className="check-hw-table1">
       {combinedData.length === 0 ? (
         <p className="no-homework">No upcoming meetings or assignments found.</p>
       ) : (

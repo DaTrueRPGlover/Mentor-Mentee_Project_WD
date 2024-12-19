@@ -522,15 +522,16 @@ body{
 }
 
 /* New Box Styling */
-.assign-hw .new-boxA {
-  background-color: #b9bec07c;
+.assign-hw .new-boxA1 {
+  background-color: #b9bec07c; /* Same background color as the other boxes */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   padding: 20px;
   text-align: center;
   width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 63vh; /* Custom height for new box */
+  height: 63vh; /* Adjust height to fit inside the container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
 }
 
 .assign-hw .logout-buttonV2 {
@@ -550,7 +551,6 @@ body{
   font-size: 4rem;
   padding-left: 20px;
   font-weight: 900;;
-  color: #333;
 }
 
 /* Content Wrapper Styling */
@@ -591,4 +591,5 @@ body{
   height: 68.8%;
   background-color: #b9bec07c;
 }
+
 

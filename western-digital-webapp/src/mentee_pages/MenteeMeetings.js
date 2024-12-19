@@ -62,12 +62,21 @@ function MenteeMeetings() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name'];
   const menteeName = name || "Mentee";
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.className = isDarkMode ? "" : "dark-mode";
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
+  
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -413,15 +422,6 @@ function MenteeMeetings() {
             <div className="box">
               <div 
                 className="main-content" 
-                style={{ 
-                  padding: '20px', 
-                  width: '100%', 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  alignItems: 'center',
-                  maxWidth: '800px',
-                  margin: '0 auto' 
-                }}
               >
                 <Box display="flex" justifyContent="center" gap={2} mb={2} width="100%">
                   <Button variant="contained" color="primary" onClick={handleOpenScheduleDialog}>

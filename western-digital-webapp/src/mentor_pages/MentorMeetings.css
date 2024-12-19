@@ -220,6 +220,7 @@
 }
 
 .mentor-meetings .logo {
+  margin-top: -2.3%;
   width: 100px; /* Set a width for your logo */
   height: auto;
   margin-right: 10px; /* Space between logo and title */
