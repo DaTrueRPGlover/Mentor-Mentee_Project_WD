@@ -26,16 +26,21 @@ import AssignMentorTable from "./AssignMentorTable.js";
 
 function SeeInteractions() {
   const navigate = useNavigate();
+    // States for tracking data related to mentees, mentors, assignments, and UI state
+
   const [messages, setMessages] = useState([]);
   const [mentors, setMentors] = useState([]);
   const [mentees, setMentees] = useState([]);
   const [selectedMentor, setSelectedMentor] = useState("");
   const [selectedMentee, setSelectedMentee] = useState("");
+    // User data and theme state
+
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const adminName = name || "Admin";
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
+  // Function to toggle dark mode theme
 
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
@@ -49,6 +54,7 @@ function SeeInteractions() {
     setIsDarkMode(savedTheme);
     document.body.className = savedTheme ? "dark-mode" : "";
   }, []);
+  // for date and time
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
