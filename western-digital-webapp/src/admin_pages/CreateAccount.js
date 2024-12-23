@@ -18,6 +18,7 @@ import AssignMentorTable from './AssignMentorTable';
 function CreateAccount() {
   //Initialize navigate
   const navigate = useNavigate();
+  // States for tracking data related to mentees, mentors, assignments, and UI state
 
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
@@ -27,6 +28,7 @@ function CreateAccount() {
   const [accountType, setAccountType] = useState("");
   const [error, setError] = useState(null);
   const [accounts, setAccounts] = useState([]);
+  // User data and theme state
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const adminName = name || "Admin";
@@ -39,12 +41,13 @@ function CreateAccount() {
     document.body.className = newTheme ? "dark-mode" : "";
     sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
-  
+  // Function to toggle dark mode theme
   useEffect(() => {
     const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
     setIsDarkMode(savedTheme);
     document.body.className = savedTheme ? "dark-mode" : "";
   }, []);
+  // date function 
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
@@ -71,6 +74,7 @@ function CreateAccount() {
     };
 
     console.log('Account Data:', JSON.stringify(accountData));
+  // Function to create bew account
 
     try {
       const response = await fetch('http://localhost:3001/api/accounts/createAccount', {

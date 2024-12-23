@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function AssignMentorTable() {
   const navigate = useNavigate();
+  // States for tracking data related to mentees, mentors, assignments, and UI state
 
   const [newMentee, setNewMentee] = useState(null);
   const [newMentor, setNewMentor] = useState(null);
@@ -14,17 +15,19 @@ function AssignMentorTable() {
   const [relationships, setRelationships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  // User data and theme state
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+  // Function to toggle dark mode theme
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.className = isDarkMode ? "" : "dark-mode";
   };
-
+  // Function to fetch all names and relationships via Functions written here
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -42,6 +45,7 @@ function AssignMentorTable() {
     };
     fetchData();
   }, []);
+  // Function to fetch all names and relationships via API and database
 
   const fetchMentorNames = async () => {
     const response = await fetch("http://localhost:3001/api/mentors");
@@ -52,6 +56,7 @@ function AssignMentorTable() {
       setErrorMessage("Failed to fetch mentors");
     }
   };
+  // Fetch all mentee names from the API
 
   const fetchMenteeNames = async () => {
     const response = await fetch("http://localhost:3001/api/mentees");
@@ -62,6 +67,7 @@ function AssignMentorTable() {
       setErrorMessage("Failed to fetch mentees");
     }
   };
+  // Fetch all relationship data from the API
 
   const fetchRelationships = async () => {
     const response = await fetch("http://localhost:3001/api/relationships");
@@ -72,6 +78,7 @@ function AssignMentorTable() {
       setErrorMessage("Failed to fetch relationships");
     }
   };
+  // Assign mentor to mentee
 
   const handleAssignMentor = async () => {
     if (newMentee && newMentor) {
@@ -103,6 +110,7 @@ function AssignMentorTable() {
       setErrorMessage("Please select both a mentor and a mentee.");
     }
   };
+  // changes relationships for mentor to mentee
 
   const handleUpdateMentor = async (menteekey, newMentorkey) => {
     try {
@@ -123,6 +131,7 @@ function AssignMentorTable() {
       setErrorMessage("An unexpected error occurred");
     }
   };
+  // deletes mentor to mentee
 
   const handleDeleteAssignment = async (relationship_id) => {
     try {

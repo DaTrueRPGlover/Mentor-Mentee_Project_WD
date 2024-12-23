@@ -22,6 +22,7 @@ import AssignMentor from './AssignMentorTable.js';
 
 function ViewProgressions() {
   const navigate = useNavigate();
+  // States for tracking data related to mentees, mentors, assignments, and UI state
 
   const [menteesList, setMenteesList] = useState([]);
   const [meetingsList, setMeetingsList] = useState([]);
@@ -34,11 +35,14 @@ function ViewProgressions() {
   const [mentorsList, setMentorsList] = useState([]);
   const [selectedMentor, setSelectedMentor] = useState('');
   const [mentorNotes, setMentorNotes] = useState(null);
+    // User data and theme state
+
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const name = user['name']
   const adminName = name || "Admin";
   const [isDarkMode, setIsDarkMode] = useState(false);
+  // Function to toggle dark mode theme
 
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
@@ -78,6 +82,7 @@ function ViewProgressions() {
       setMenteeNotes(null);
     }
   };
+  // gets mentor notes from database
   const fetchMentorNotes = async (meetingkey, mentorkey) => {
     try {
       console.log("Mentor Key:", mentorkey);
@@ -103,6 +108,7 @@ function ViewProgressions() {
       setMentorNotes(null);
     }
   };
+  // Fetch list of date and time
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",

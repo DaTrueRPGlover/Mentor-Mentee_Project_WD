@@ -17,7 +17,7 @@ import {
 import CreateAccountForm from "./CreateAccountForm.js";
 function AssignMentor() {
   const navigate = useNavigate();
-
+  // States for tracking data related to mentees, mentors, assignments, and UI state
   const [newMentee, setNewMentee] = useState(null);
   const [newMentor, setNewMentor] = useState(null);
   const [mentors, setMentors] = useState([]);
@@ -25,24 +25,26 @@ function AssignMentor() {
   const [relationships, setRelationships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  // User data and theme state
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name']
   const adminName = name || "Admin";
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  // Function to toggle dark mode theme
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
     setIsDarkMode(newTheme);
     document.body.className = newTheme ? "dark-mode" : "";
     sessionStorage.setItem("isDarkMode", newTheme); // Save state
   };
-  
+  // Effect to load saved dark mode theme on initial load
   useEffect(() => {
     const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
     setIsDarkMode(savedTheme);
     document.body.className = savedTheme ? "dark-mode" : "";
   }, []);
+  // Effect to update current date and time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -50,6 +52,7 @@ function AssignMentor() {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
+  // Function to fetch all names and relationships via Functions written here
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -68,6 +71,7 @@ function AssignMentor() {
     fetchData();
   }, []);
 
+  // Function to fetch all names and relationships via API and database
   const fetchMentorNames = async () => {
     const response = await fetch("http://localhost:3001/api/mentors");
     if (response.ok) {
@@ -75,7 +79,7 @@ function AssignMentor() {
       setMentors(data);
     }
   };
-
+  // Fetch all mentee names from the API
   const fetchMenteeNames = async () => {
     const response = await fetch("http://localhost:3001/api/mentees");
     if (response.ok) {
@@ -83,7 +87,7 @@ function AssignMentor() {
       setMenteesList(data);
     }
   };
-
+  // Fetch all relationship data from the API
   const fetchRelationships = async () => {
     const response = await fetch("http://localhost:3001/api/relationships");
     if (response.ok) {
@@ -91,6 +95,7 @@ function AssignMentor() {
       setRelationships(data);
     }
   };
+  // Format date and time for display
   const formatDateTime = (date) => {
     const options = {
       weekday: "long",
@@ -103,6 +108,7 @@ function AssignMentor() {
     };
     return date.toLocaleDateString("en-US", options);
   };
+  // Assign mentor to mentee
   const handleAssignMentor = async () => {
     if (newMentee && newMentor) {
       const newAssignment = {
@@ -133,7 +139,7 @@ function AssignMentor() {
       setErrorMessage("Please select both a mentor and a mentee.");
     }
   };
-
+  // changes relationships for mentor to mentee
   const handleUpdateMentor = async (menteekey, newMentorkey) => {
     try {
       const response = await fetch(
@@ -153,7 +159,7 @@ function AssignMentor() {
       setErrorMessage("An unexpected error occurred");
     }
   };
-
+  // deletes mentor to mentee
   const handleDeleteAssignment = async (relationship_id) => {
     try {
       const response = await fetch(
@@ -251,7 +257,7 @@ function AssignMentor() {
           <div className="chat-containerA">
           <div className="content-container">
         <div className="add-assignment">
-       
+       {/* Drop down menu for both mentee and mentor */}
           <select className="option"
             value={newMentee ? newMentee.userid : ""}
             onChange={(e) => {
@@ -301,6 +307,7 @@ function AssignMentor() {
                 <th>Delete</th>
               </tr>
             </thead>
+            {/* Displays and assigns the relationship */}
             <tbody>
               {relationships.map((rel) => (
                 <tr key={rel.relationship_id}>
@@ -326,6 +333,7 @@ function AssignMentor() {
                       ))}
                     </select>
                   </td>
+                  {/* deletes connection between mentor and mentee*/}
                   <td>
                     <button
                       onClick={() =>
