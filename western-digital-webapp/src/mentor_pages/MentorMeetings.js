@@ -68,6 +68,7 @@ function MentorMeetings() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const name = user['name'];
   const adminName = name || "Admin";
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // State variables for Availability Management
   const [showAddAvailabilityDialog, setShowAddAvailabilityDialog] = useState(false);
@@ -98,21 +99,10 @@ function MentorMeetings() {
     "Sunday",
   ];
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
   const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    document.body.className = newTheme ? "dark-mode" : "";
-    sessionStorage.setItem("isDarkMode", newTheme); // Save state
+    setIsDarkMode(!isDarkMode);
+    document.body.className = isDarkMode ? "" : "dark-mode";
   };
-  
-  useEffect(() => {
-    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
-    setIsDarkMode(savedTheme);
-    document.body.className = savedTheme ? "dark-mode" : "";
-  }, []);
-  
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -169,7 +159,7 @@ function MentorMeetings() {
             return {
               title: 'Blackout Date',
               start: date,
-              end: date,
+              end: new Date(year, month - 1, day + 1), // Ensuring the event spans at least one full day
               allDay: true,
               reason: bd.reason,
               type: 'blackout',
@@ -250,7 +240,7 @@ function MentorMeetings() {
             {
               title: 'Blackout Date',
               start: date,
-              end: date,
+              end: new Date(year, month - 1, day + 1),
               allDay: true,
               reason: blackoutReason,
               type: "blackout",
