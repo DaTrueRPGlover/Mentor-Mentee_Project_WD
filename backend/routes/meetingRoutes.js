@@ -56,8 +56,8 @@ router.post('/create-meeting', async (req, res) => {
     const datetimeObj = new Date(datetime);
 
     // Check if date is blackout
-    const isBlackout = await isDateBlackout(mentorkey, datetimeObj.toISOString().split('T')[0]);
-    if (isBlackout) {
+    const isBlackoutDate = await isDateBlackout(mentorkey, datetimeObj.toISOString().split('T')[0]);
+    if (isBlackoutDate) {
       return res.status(400).json({ message: 'Selected date is a blackout date for the mentor' });
     }
 
@@ -139,8 +139,8 @@ router.post('/reschedule', async (req, res) => {
 
     // Check if date is blackout
     const newDateTimeObj = new Date(newDateTime);
-    const isBlackout = await isDateBlackout(mentorkey, newDateTimeObj.toISOString().split('T')[0]);
-    if (isBlackout) {
+    const isBlackoutDate = await isDateBlackout(mentorkey, newDateTimeObj.toISOString().split('T')[0]);
+    if (isBlackoutDate) {
       return res.status(400).json({ message: 'Selected date is a blackout date for the mentor' });
     }
 
@@ -165,7 +165,6 @@ router.post('/reschedule', async (req, res) => {
   }
 });
 
-// Route to get mentor assigned to mentee
 router.get('/mentee/:menteekey/mentor', async (req, res) => {
   const { menteekey } = req.params;
   try {
