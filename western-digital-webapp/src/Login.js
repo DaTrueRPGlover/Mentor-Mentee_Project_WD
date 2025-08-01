@@ -164,6 +164,15 @@ function Login() {
               </motion.button>
             </form>
           </motion.div>
+          <button onClick={() => navigate('/see-interactions')}>
+            Go to Admin Home
+          </button>
+          <button onClick={() => navigate('/interact-mentor')}>
+            Go to Mentee Home
+          </button>
+          <button onClick={() => navigate('/interact-with-mentee')}>
+            Go to Mentor Home
+          </button>
         </Container>
       </div>
     </>
