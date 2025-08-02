@@ -165,7 +165,7 @@ function Login() {
             </form>
           </motion.div>
           <button onClick={() => navigate('/see-interactions')}>
-            Go to Admin Home
+            Go to Admin
           </button>
           <button onClick={() => navigate('/interact-mentor')}>
             Go to Mentee Home
