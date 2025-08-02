@@ -1,3 +1,4 @@
+//Finished
 import React, { useState, useEffect } from "react";
 import logo from "../assets/WDC2.png";
 import logout from "../assets/logout.png";
@@ -10,6 +11,10 @@ import {
   Message
 } from "@chatscope/chat-ui-kit-react";
 import "./SeeInteractions.css";
+import { motion } from 'framer-motion';
+import write from "../assets/write.png";
+import one from "../assets/one.png";
+import twopeople from "../assets/twopeople.png";
 
 function SeeInteractions() {
   const navigate = useNavigate();
@@ -38,16 +43,10 @@ function SeeInteractions() {
   }, []);
 
   const formatDateTime = (date) => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return date.toLocaleDateString("en-US", options);
+    return new Date(date).toLocaleString("en-US", {
+      weekday: "long", year: "numeric", month: "long",
+      day: "numeric", hour: "2-digit", minute: "2-digit"
+    });
   };
 
   useEffect(() => {
@@ -90,12 +89,37 @@ function SeeInteractions() {
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">View Interactions</h1>
       </div>
-
       <div className="sidebarA">
         <div className="nav-buttonsA">
-          <button className="icon1" onClick={() => navigate("#")}>  
+          <motion.button className="icon1" onClick={() => navigate("#")} 
+          whileHover={{ scale: 1.1 }} // Growing effect on hover
+          transition={{ duration: 0.1 }}
+          >  
             <img src={chat} alt="chat" />
-          </button>
+          </motion.button>
+          
+          <motion.button className="icon" onClick={() => navigate("/view-progressions")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={write} alt="write" />
+          </motion.button>
+            <motion.button
+            className="icon"
+            onClick={() => navigate("/create-account")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={one} alt="create" />
+          </motion.button>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/assign-mentor")}
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+          >
+            <img src={twopeople} alt="twopeople" />
+          </motion.button>
         </div>
 
         <div className="slider-section">
@@ -109,7 +133,6 @@ function SeeInteractions() {
           <img src={logout} alt="logout" />
         </button>
       </div>
-
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
@@ -123,7 +146,6 @@ function SeeInteractions() {
                       <option key={mentor.userid} value={mentor.userid}>{mentor.name}</option>
                     ))}
                   </select>
-
                   <label>Select Mentee: </label>
                   <select className="drop" value={selectedMentee} onChange={(e) => setSelectedMentee(e.target.value)}>
                     <option value="" disabled>-- Select a mentee --</option>
@@ -134,12 +156,11 @@ function SeeInteractions() {
                 </div>
               </div>
             </div>
-
             {selectedMentor && selectedMentee && (
               <MainContainer className="chat-container" style={{ backgroundColor: "#b9bec0" }}>
                 <ChatContainer>
-                  <MessageList>
-                    {messages.map((message, index) => (
+                {messages.map((message, index) => {
+                    return (
                       <Message
                         key={index}
                         model={{
@@ -151,15 +172,14 @@ function SeeInteractions() {
                           position: "normal",
                         }}
                       />
-                    ))}
-                  </MessageList>
+                    );
+                  })}
                 </ChatContainer>
               </MainContainer>
             )}
           </div>
         </div>
       </div>
-
       <div className="welcome-box-containerA">
         <div className="welcome-boxA">
           <h2>Welcome, {adminName}!</h2>

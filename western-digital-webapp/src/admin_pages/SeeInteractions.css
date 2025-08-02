@@ -1,139 +1,196 @@
-/* Styling for the main layout of the interactions page */
+/* ============================================= */
+/* Layout & Page Structure                       */
+/* ============================================= */
 .see-interactions {
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack content vertically */
-  min-height: 100vh; /* Ensure the container takes full viewport height */
-  width: 100%; /* Full width */
-  font-family: Arial, sans-serif; /* Set font family */
-  text-align: center; /* Center text horizontally */
-  align-items: center; /* Align content to the center */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center;
   justify-content: flex-start;
   gap: 20px;
 }
 
-/* Styling for the filter section in the interactions page */
 .see-interactions .filter-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* aligns items left, optional */
-  gap: 15px; /* space between each item */
+  align-items: flex-start;
+  gap: 15px;
   margin-top: 5px;
   margin-bottom: 40px;
   margin-left: 25%;
 }
 
-/* Styling for the logo on the interactions page */
-.see-interactions .logo {
-  width: 20%;        /* Use percentage so it shrinks with container */
-  max-width: 100px;  /* Don't grow beyond this */
-  min-width: 40px;   /* Don't shrink smaller than this */
-  height: auto;      /* Keep aspect ratio */
-  transition: width 0.3s ease; /* smooth resizing */
+.see-interactions .logo-title-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+
 }
 
-@media (max-width: 1050px) {
-  .see-interactions .logo {
-    width: 30%;      /* Adjust width on smaller screens */
-    max-width: 80px;
-  }
-}
-
-@media (max-width: 480px) {
-  .see-interactions .logo {
-    width: 40%;
-    max-width: 60px;
-  }
-}
-
-/* Sidebar styling */
+/* ============================================= */
+/* Sidebar + Navigation                          */
+/* ============================================= */
 .see-interactions .sidebarA {
-  width: 6.6%; /* Set the sidebar width */
-  height: 80vh; /* Set the sidebar height */
-  background-color: #b9bec07c; /* Set a semi-transparent background color */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack sidebar content vertically */
-  justify-content: center; /* Distribute items with space in between */
-  align-items: center; /* Center items horizontally */
-  padding: 20px 0; /* Padding inside the sidebar */
-  border-radius: 10px; /* Rounded corners for the sidebar */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Shadow around the sidebar */
-  position: fixed; /* Fixed position for the sidebar */
-  left: 1.3%; /* Left margin for the sidebar */
-  top: 54%; /* Position sidebar vertically centered */
-  transform: translateY(-50%); /* Adjust sidebar's vertical position */
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
 }
 
-/* Styling for the navigation buttons container in the interactions page */
 .see-interactions .nav-buttonsA {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-height: 80vh;
-  justify-content: center; /* centers vertically */
+  justify-content: center;
 }
 
-/* On smaller screens (max-width 1050px) */
-@media (max-width: 1050px) {
-  .see-interactions .sidebarA {
-    position: static !important;
-    width: 90%;
-    height: 90px !important;
-    overflow: hidden;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    order: 99;
-    box-shadow: none;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Nav buttons adjustments on smaller screens */
-  .see-interactions .nav-buttonsA {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100px; /* example width */
-  }
-
-  /* Adjust icon sizes */
-  .see-interactions .icon1,
-  .see-interactions .icon {
-    width: 50px;
-    height: 50px;
-  }
-
-  /* Adjust icon images */
-  .see-interactions .icon1 img,
-  .see-interactions .icon img {
-    width: 50px;
-    height: 50px;
-  }
+/* ============================================= */
+/* Logo & Title                                  */
+/* ============================================= */
+.see-interactions .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
 }
 
-/* Styling for the logout button */
-.see-interactions .logout-buttonV2 {
-  margin-top: 20px; /* Add space above the logout button */
-  background-color: white; /* Set the background color */
-  border: none; /* Remove border */
-  cursor: pointer; /* Change cursor to pointer when hovered */
+.see-interactions .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050;
+  color: #333;
 }
 
-/* Hover effect for the logout button */
-.see-interactions .logout-buttonV2:hover {
-  background-color: #f0f0f0; /* Change the background color when hovered */
+/* ============================================= */
+/* Content Containers                            */
+/* ============================================= */
+.see-interactions .content-wrapperVA {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 39.7%;
+  height: 116.6%;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* Styling for icon buttons */
+.see-interactions .content-wrapperVA > * {
+  max-width: 100%;
+}
+
+.see-interactions .chat-boxA {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 68.8%;
+  background-color: #b9bec07c;
+}
+
+.see-interactions .welcome-box-containerA {
+  position: fixed;
+  right: 1%;
+  top: 50%;
+  left: 53%;
+  transform: translateY(-45%);
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.see-interactions .welcome-boxA,
+.see-interactions .new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.see-interactions .welcome-boxA {
+  height: 16.4vh;
+}
+
+.see-interactions .new-boxA {
+  height: 63vh;
+}
+
+.see-interactions .welcome-boxA h2,
+.see-interactions .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.see-interactions .welcome-boxA p,
+.see-interactions .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.see-interactions .chat-container {
+  height: 52vh;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 10px;
+}
+
+.see-interactions .assign-mentor-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: auto;
+  width: 100%;
+  height: 90%;
+  box-sizing: border-box;
+}
+
+.see-interactions .assign-mentor-container > * {
+  width: 85%;
+  height: 40%;
+  box-sizing: border-box;
+}
+
+/* ============================================= */
+/* Icons & Buttons                               */
+/* ============================================= */
 .see-interactions .icon,
 .see-interactions .icon1 {
-  width: 70px;         /* Original size */
+  width: 70px;
   height: 70px;
-  min-width: 40px;     /* Minimum shrink size */
+  min-width: 40px;
   min-height: 40px;
-  flex-shrink: 1;      /* Allow shrinking */
-  flex-grow: 0;        /* Prevent growing */
+  flex-shrink: 1;
+  flex-grow: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -142,182 +199,33 @@
   transition: all 0.3s ease;
 }
 
-/* Styling for the icon images */
 .see-interactions .icon img,
 .see-interactions .icon1 img {
-  width: 40px;         /* Original icon size */
+  width: 40px;
   height: auto;
   max-width: 40px;
-  min-width: 20px;     /* Minimum icon size */
+  min-width: 20px;
 }
 
-/* Styling for the icon button with gray background */
 .see-interactions .icon1 {
-  background-color: gray; /* Set background color to gray */
-  border: none; /* Remove border */
-}
-
-/* Styling for the content wrapper container */
-.see-interactions .content-wrapperVA {
-  position: fixed; /* Fix the container position relative to the viewport */
-  right: 46.3%; /* Position from the right side */
-  top: 72.3%; /* Position from the top side */
-  left: 10%; /* Position from the left side */
-  transform: translateY(-50%); /* Center the container vertically */
-  width: 39.7%;  /* Width of the content wrapper */
-  height: 116.6%; /* Height of the content wrapper */
-  margin-right: 50px; /* Add margin to the right side */
-  display: flex; /* Use flexbox to align items vertically */
-  flex-direction: column; /* Stack items vertically */
-  gap: 10px; /* Space between the stacked items */
-}
-
-/* Styling for Individual Items in Content Wrapper */
-.see-interactions .content-wrapperVA > * {
-  max-width: 100%; /* Prevent items from stretching too much */
-}
-
-/* Chat Box Styling */
-.see-interactions .chat-boxA {
-  display: flex; /* Use flexbox to layout the content */
-  flex-direction: column; /* Stack content vertically */
-  justify-content: flex-start; /* Align content at the top */
-  border-radius: 10px; /* Round the corners of the box */
-  padding: 20px; /* Add padding inside the box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Add a shadow effect for depth */
-  width: 100%; /* Ensure the chat box takes up full width of its container */
-  height: 68.8%; /* Set a specific height for the chat box */
-  background-color: #b9bec07c; /* Set the background color with some opacity */
-}
-
-/* Welcome Box Container Styling */
-.see-interactions .welcome-box-containerA {
-  position: fixed; /* Fix the container position relative to the viewport */
-  right: 1%; /* Position the container near the right edge */
-  top: 50%; /* Position the container at the vertical center */
-  left: 53%; /* Position the container starting from the left */
-  transform: translateY(-45%); /* Center the container vertically */
-  width: 45%; /* Set a fixed width for the welcome box container */
-  display: flex; /* Use flexbox to align items vertically */
-  flex-direction: column; /* Stack items vertically */
-  gap: 10px; /* Space between stacked items */
-}
-
-/* Welcome Box Styling */
-.see-interactions .welcome-boxA {
-  background-color: #b9bec07c; /* Set the background color with some opacity */
-  border-radius: 10px; /* Round the corners of the box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Add a shadow effect for depth */
-  padding: 20px; /* Add padding inside the box */
-  text-align: center; /* Center-align the text inside the box */
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box; /* Include padding and border in width/height calculations */
-  height: 16.4vh; /* Set a specific height for the welcome box */
-}
-
-/* New Box Styling */
-.see-interactions .new-boxA {
-  background-color: #b9bec07c; /* Set the background color with some opacity */
-  border-radius: 10px; /* Round the corners of the box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Add a shadow effect for depth */
-  padding: 20px; /* Add padding inside the box */
-  text-align: center; /* Center-align the text inside the box */
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box; /* Include padding and border in width/height calculations */
-  height: 63vh; /* Set a specific height for the new box */
-}
-
-/* Styling for heading inside both boxes */
-.see-interactions .welcome-boxA h2,
-.see-interactions .new-boxA h2 {
-  margin: 0; /* Remove default margin */
-  font-size: 1.5rem; /* Set a custom font size for headings */
-}
-
-/* Styling for paragraphs inside both boxes */
-.see-interactions .welcome-boxA p,
-.see-interactions .new-boxA p {
-  margin-top: 10px; /* Add top margin to paragraphs */
-  font-size: 1rem; /* Set a custom font size for paragraphs */
-}
-
-/* Title header styling */
-.see-interactions .title-header {
-  font-size: 4rem;
-  padding-left: 20px;
-  font-weight: 1050; /* Set a bold font weight */
-  color: #333; /* Set the font color to a dark gray */
-}
-
-/* Smaller screens adjustments */
-@media (max-width: 1050px) {
-  .see-interactions .logo {
-    width: 25%;
-    max-width: 80px;
-  }
-
-  .see-interactions .title-header {
-    font-size: 3rem;
-  }
-}
-
-/* Slider Section Styling */
-.theme-toggle {
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Vertically center the items */
-  gap: 0.5rem; /* Add a gap between elements */
-  margin-right: 1rem; /* Adjust right margin for spacing */
-}
-
-/* Container for the slider */
-.slider-container {
-  position: relative; /* Set positioning relative for absolute children */
-  display: inline-block; /* Behave inline but allow block styling */
-  width: 50px; /* Fixed width */
-  height: 25px; /* Fixed height */
-}
-
-/* Hidden input element that controls the slider */
-.slider-container input {
-  opacity: 0; /* Make input invisible */
-  width: 0;
-  height: 0;
-}
-
-/* Styling for the slider itself */
-.slider {
-  position: absolute; /* Position absolutely within container */
-  top: 0; left: 0; right: 0; bottom: 0;
   background-color: gray;
-  border-radius: 34px;
-  cursor: pointer;
-  transition: 0.4s;
+  border: none;
 }
 
-/* Slider knob */
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 21px;
-  width: 21px;
-  left: 2px;
-  bottom: 2px;
+.see-interactions .logout-buttonV2 {
+  margin-top: 20px;
   background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
+  border: none;
+  cursor: pointer;
 }
 
-/* Change slider background when checked */
-input:checked + .slider {
-  background-color: #000000;
+.see-interactions .logout-buttonV2:hover {
+  background-color: #f0f0f0;
 }
 
-/* Move knob when checked */
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
-/* Dark Mode */
+/* ============================================= */
+/* Dark Mode                                     */
+/* ============================================= */
 .dark-mode {
   background-color: #202225;
   color: #91BECD;
@@ -342,14 +250,6 @@ input:checked + .slider:before {
   color: #91BECD;
 }
 
-/* Slider section */
-.slider-section {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Dark Mode button styling for the admin home page */
 .dark-mode .admin-home button,
 .dark-mode .admin-home .logout-button,
 .dark-mode .admin-home .circle {
@@ -357,14 +257,77 @@ input:checked + .slider:before {
   color: #91BECD;
 }
 
-/* Dark Mode hover effect */
 .dark-mode .admin-home button:hover,
 .dark-mode .admin-home .logout-button:hover,
 .dark-mode .admin-home .circle:hover {
   background-color: #444;
 }
 
-/* Dropdown styling */
+.dark-mode .title-header {
+  color: #91BECD;
+}
+
+/* ============================================= */
+/* Sliders & Toggles                             */
+/* ============================================= */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
+
+.slider-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.slider-container {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.slider-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: gray;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #000000;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* ============================================= */
+/* Dropdown                                      */
+/* ============================================= */
 .see-interactions .drop {
   width: 200px;
   padding: 8px;
@@ -376,42 +339,54 @@ input:checked + .slider:before {
   color: #91BECD !important;
 }
 
-/* Dark Mode - Title header styling */
-.dark-mode .title-header {
-  color: #91BECD;
-}
-
-/* Chat container styling */
-.see-interactions .chat-container {
-  height: 52vh;
-  width: 90%;
-  margin-left: 5%;
-  border-radius: 10px;
-}
-
-/* Assign Mentor container styling */
-.see-interactions .assign-mentor-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: auto;
-  width: 100%;
-  height: 90%;
-  box-sizing: border-box;
-}
-
-/* Individual items inside Assign Mentor container */
-.see-interactions .assign-mentor-container > * {
-  width: 85%;
-  height: 40%;
-  box-sizing: border-box;
-}
-
-/* Responsive adjustments */
+/* ============================================= */
+/* Media Queries                                 */
+/* ============================================= */
 @media (max-width: 1050px) {
-  /* Reset positioning and layout for content wrapper */
-  .see-interactions .content-wrapperVA {
+  .see-interactions .logo {
+    width: 30%;
+    max-width: 80px;
+  }
+
+  .see-interactions .title-header {
+    font-size: clamp(1.8rem, 5vw, 4rem);
+  }
+
+  .see-interactions .sidebarA {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .see-interactions .nav-buttonsA {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+  }
+
+  .see-interactions .icon1,
+  .see-interactions .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .see-interactions .icon1 img,
+  .see-interactions .icon img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .see-interactions .content-wrapperVA,
+  .see-interactions .welcome-box-containerA {
     position: static !important;
     width: 90% !important;
     margin: 20px auto;
@@ -420,43 +395,6 @@ input:checked + .slider:before {
     right: auto !important;
     top: auto !important;
     margin-bottom: 80px;
-  }
-
-  /* Reset positioning and layout for welcome box container */
-  .see-interactions .welcome-box-containerA {
-    position: static !important;
-    width: 90% !important;
-    margin: 20px auto 10px auto;
-    transform: none !important;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-  }
-
-  /* Flex order for layout */
-  .see-interactions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* Make logo-title-container fixed/sticky at top */
-.see-interactions .logo-title-container {
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1050;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-@media (max-width: 1050px) {
-  .see-interactions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .logo-title-container {
@@ -469,21 +407,19 @@ input:checked + .slider:before {
 
   .welcome-box-containerA {
     order: 2;
-    position: static !important;
-    width: 90% !important;
-    margin: 10px 0;
-    transform: none !important;
   }
 
   .content-wrapperVA {
     order: 3;
-    position: static !important;
-    width: 90% !important;
-    margin: 10px 0;
-    transform: none !important;
   }
 
   .sidebarA {
     order: 4;
+  }
+
+  .see-interactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

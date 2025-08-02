@@ -1,15 +1,300 @@
-/* Container for the entire create account page */
+/* ============================================= */
+/* Layout & Page Structure                        */
+/* ============================================= */
 .create-account {
-  display: flex; /* Using flexbox for layout */
-  flex-direction: column; /* Stacks the children vertically */
-  min-height: 100vh; /* Ensures the container takes at least the full viewport height */
-  width: 100%; /* Makes the container span the full width */
-  font-family: Arial, sans-serif; /* Sets the font family for text */
-  align-items: center; /* Centers content horizontally */
-  justify-content: space-between; /* Distributes space between content vertically */
-  position: fixed; /* Fixes the position relative to the viewport */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
-/* Styling for the white rectangle container */
+.create-account .logo-title-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================= */
+/* Logo & Title Styling                           */
+/* ============================================= */
+.create-account .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
+}
+
+.create-account .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050; /* Bold */
+  color: #333;
+}
+
+/* ============================================= */
+/* Sidebar & Navigation                           */
+/* ============================================= */
+
+.create-account .sidebarC {
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
+}
+
+.create-account .nav-buttonsC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80vh;
+  justify-content: center;
+}
+
+/* ============================================= */
+/* Icons & Buttons                               */
+/* ============================================= */
+/* Logout Button */
+.create-account .icon,
+.create-account .icon1 {
+  width: 70px;
+  height: 70px;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 1;
+  flex-grow: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-account .icon img,
+.create-account .icon1 img {
+  width: 40px;
+  height: auto;
+  max-width: 40px;
+  min-width: 20px;
+}
+.create-account .icon1 {
+  background-color: gray;
+  border: none;
+}
+
+.create-account .logout-buttonV2 {
+  margin-top: 20px; /* Top spacing */
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.create-account .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+/* ============================================= */
+/* Content Containers                            */
+/* ============================================= */
+.create-account .content-wrapperVA {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 39.7%;
+  height: 116.6%;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-account .content-wrapperVA > * {
+  max-width: 100%;
+}
+
+.create-account .chat-boxA {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  width: 100%;
+  height: 68.8%;
+  background-color: #b9bec07c;
+}
+
+.create-account .welcome-box-containerA {
+  position: fixed;
+  right: 1%;
+  top: 50%;
+  left: 53%;
+  transform: translateY(-45%);
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-account .welcome-boxA,
+.create-account .new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.create-account .welcome-boxA {
+  height: 16.4vh;
+}
+
+.create-account .new-boxA {
+  height: 63vh;
+}
+
+.create-account .welcome-boxA h2,
+.create-account .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.create-account .welcome-boxA p,
+.create-account .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+/* ============================================= */
+/* Media Queries (Responsive Styling)            */
+/* ============================================= */
+@media (max-width: 1050px) {
+  .create-account .logo {
+    width: 30%;
+    max-width: 80px;
+  }
+
+  .create-account .title-header {
+    font-size: clamp(1.8rem, 5vw, 4rem);
+  }
+
+  .create-account .sidebarC {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .create-account .nav-buttonsA {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+  }
+
+  .create-account .icon1,
+  .create-account .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .create-account .icon1 img,
+  .create-account .icon img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .create-account .content-wrapperVA,
+  .create-account .welcome-box-containerA {
+    position: static !important;
+    width: 90% !important;
+    margin: 20px auto;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 80px;
+  }
+
+  .logo-title-container {
+    order: 1;
+    position: static !important;
+    width: 90% !important;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .welcome-box-containerA {
+    order: 2;
+  }
+
+  .content-wrapperVA {
+    order: 3;
+  }
+
+  .sidebarC {
+    order: 4;
+  }
+
+  .create-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* Dont touch yet */
+/* Styling for the title in dark mode */
+.dark-mode .title-header {
+  color: #91BECD; /* Change color to the desired shade in dark mode */
+}
+/* Styling for the mentor assignment container */
+.create-account .assign-mentor-container {
+  flex-grow: 1; /* Allow container to grow to fill available space */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: flex-start; /* Align content at the top */
+  overflow: auto; /* Allow scrolling if content overflows */
+  width: 100%; /* Full width inside its container */
+  height: 90%; /* Height for the mentor assignment container */
+  box-sizing: border-box; /* Includes padding and border in the element's total width/height */
+}
+/* Styling for individual items inside the assign mentor container */
+.create-account .assign-mentor-container > * {
+  width: 85%; /* Set width for child elements inside the container */
+  height: 40%; /* Set height for child elements inside the container */
+  box-sizing: border-box; /* Includes padding and border in the element's total width/height */
+}
 .create-account .whiterectangle {
   width: 500px; /* Sets the width of the white rectangle */
   height: 56vh; /* Sets the height to 56% of the viewport height */
@@ -22,6 +307,8 @@
   transition: transform 0.3s; /* Adds a smooth transition for the transform property */
   margin-top: 50px; /* Adds a 50px margin to the top of the container */
 }
+
+
 /* Styling for the account creation form */
 .account-form {
   display: flex; /* Uses flexbox layout */
@@ -63,10 +350,6 @@
 .create-account input::placeholder, .create-account select::placeholder {
   color: #91BECD; /* Sets the color of the placeholder text to a light blue */
   opacity: 1; /* Ensures the placeholder text is fully opaque */
-}
-/* Styling for logout button hover effect */
-.create-account .logout-button:hover {
-  background-color: #7A99A5; /* Changes the background color of the logout button to a greyish-blue on hover */
 }
 /* Styling for the footer space */
 .create-account .space {
@@ -118,184 +401,4 @@
   align-items: center; /* Vertically centers the items */
   width: 100%; /* Ensures the top header takes up the full width */
   padding: 0 20px; /* Adds 20px padding to the left and right of the top header */
-}
-/* Styling for the sidebar container */
-.create-account .sidebarC {
-  width: 6.6%; /* Sets the width of the sidebar to 6.6% of the viewport width */
-  height: 80vh; /* Sets the height of the sidebar to 80% of the viewport height */
-  background-color: #b9bec07c; /* Gives the sidebar a semi-transparent background color */
-  display: flex; /* Uses flexbox for layout inside the sidebar */
-  flex-direction: column; /* Stacks the items vertically in the sidebar */
-  justify-content: space-between; /* Distributes items with space between them */
-  align-items: center; /* Centers items horizontally within the sidebar */
-  padding: 20px 0; /* Adds vertical padding of 20px */
-  border-radius: 10px; /* Rounds the corners of the sidebar */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds a shadow to the sidebar */
-  position: fixed; /* Fixes the sidebar position so it stays on the page */
-  left: 1.3%; /* Positions the sidebar 1.3% from the left edge of the screen */
-  top: 54%; /* Positions the sidebar 54% down the viewport */
-  transform: translateY(-50%); /* Centers the sidebar vertically by adjusting its position */
-}
-/* Styling for the navigation buttons container inside the sidebar */
-.create-account .nav-buttonsC {
-  display: flex; /* Uses flexbox for layout */
-  flex-direction: column; /* Stacks navigation buttons vertically */
-  gap: 15px; /* Adds 15px space between each navigation button */
-}
-/* Styling for the icons inside the navigation buttons */
-.create-account .icon img {
-  width: 40px; /* Sets the width of the icon images to 40px */
-  height: auto; /* Maintains the aspect ratio of the images */
-}
-/* Styling for the icon container */
-.create-account .icon {
-  width: 70px; /* Sets the width of the icon container */
-  height: 70px; /* Sets the height of the icon container */
-  background-color: #ffffff; /* Sets the background color to white */
-  border-radius: 50%; /* Makes the icon container round */
-  border: none; /* Removes any border around the icon container */
-  display: flex; /* Uses flexbox for centering the icon image */
-  align-items: center; /* Centers the icon vertically within the container */
-  justify-content: center; /* Centers the icon horizontally within the container */
-  cursor: pointer; /* Changes the cursor to a pointer when hovering over the icon */
-  transition: all 0.3s ease; /* Adds a smooth transition effect for hover states */
-}
-/* Styling for the icon container */
-.create-account .icon1 {
-  width: 70px; /* Sets the width of the icon container to 70px */
-  height: 70px; /* Sets the height of the icon container to 70px */
-  background-color: gray; /* Gives the icon container a gray background */
-  border-radius: 50%; /* Makes the icon container round */
-  border: none; /* Removes any border around the icon container */
-  display: flex; /* Uses flexbox for centering the icon inside */
-  align-items: center; /* Vertically centers the icon */
-  justify-content: center; /* Horizontally centers the icon */
-  cursor: pointer; /* Changes the cursor to a pointer when hovering */
-  transition: all 0.3s ease; /* Adds a smooth transition effect for hover states */
-}
-/* Styling for the icon image inside the container */
-.create-account .icon1 img {
-  width: 40px; /* Sets the width of the icon image to 40px */
-  height: auto; /* Maintains the aspect ratio of the icon image */
-}
-/* Styling for the title header */
-.create-account .title-header {
-  font-size: 4rem; /* Sets the font size of the title to 4rem */
-  padding-left: 20px; /* Adds left padding to the title */
-  font-weight: 900; /* Makes the font weight bold */
-  color: #333; /* Sets the font color to a dark gray */
-}
-/* Styling for the logo image */
-.create-account .logo {
-  width: 100px; /* Sets the width of the logo to 100px */
-  height: auto; /* Maintains the aspect ratio of the logo */
-  margin-right: 10px; /* Adds space between the logo and the title */
-}
-/* Styling for the logout button */
-.create-account .logout-buttonV2 {
-  margin-top: 20px; /* Adds top margin to space out the button */
-  background-color: white; /* Sets the background color of the button to white */
-  border: none; /* Removes the border around the button */
-  cursor: pointer; /* Changes the cursor to a pointer when hovering */
-}
-/* Styling for the container that holds the welcome box */
-.create-account .welcome-box-containerA {
-  position: fixed; /* Fixes the container position relative to the viewport */
-  right: 1%; /* Positions the container 1% from the right edge */
-  top: 50%; /* Positions the container vertically at the middle of the screen */
-  left: 53%; /* Positions the container 53% from the left edge */
-  transform: translateY(-45%); /* Vertically centers the container by offsetting it */
-  width: 45%; /* Sets a fixed width for the container */
-  display: flex; /* Uses flexbox for alignment and spacing of children elements */
-  flex-direction: column; /* Arranges items inside the container in a vertical stack */
-  gap: 10px; /* Adds space between stacked items */
-}
-/* Styling for the welcome box */
-.create-account .welcome-boxA {
-  background-color: #b9bec07c; /* Sets the background color with some transparency */
-  border-radius: 10px; /* Rounds the corners of the box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow around the box for depth */
-  padding: 20px; /* Adds padding inside the box */
-  text-align: center; /* Centers the content inside the box */
-  width: 100%; /* Makes the box take the full width of the container */
-  box-sizing: border-box; /* Ensures padding is included in the width calculation */
-  height: 16.4vh; /* Sets a custom height for the welcome box */
-}
-/* Styling for the new box */
-.create-account .new-boxA {
-  background-color: #b9bec07c; /* Sets the background color with transparency */
-  border-radius: 10px; /* Rounds the corners of the box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow around the box for depth */
-  padding: 20px; /* Adds padding inside the box */
-  text-align: center; /* Centers the content inside the box */
-  width: 100%; /* Makes the box take the full width of the container */
-  box-sizing: border-box; /* Ensures padding is included in the width calculation */
-  height: 63vh; /* Sets a custom height for the new box */
-}
-/* Styling for heading elements (h2) inside .create-account and .new-boxA */
-.create-account h2,
-.create-account .new-boxA h2 {
-  margin: 0; /* Removes any default margin */
-  font-size: 1.5rem; /* Sets the font size for headings */
-}
-/* Styling for paragraph elements (p) inside .welcome-boxA and .new-boxA */
-.create-account .welcome-boxA p,
-.create-account .new-boxA p {
-  margin-top: 10px; /* Adds space above the paragraph */
-  font-size: 1rem; /* Sets the font size for paragraphs */
-}
-/* Styling for the content wrapper container */
-.create-account .content-wrapperVA {
-  position: fixed; /* Fixes the position relative to the viewport */
-  right: 46.3%; /* Positions the container 46.3% from the right edge */
-  top: 72.3%; /* Positions the container 72.3% from the top edge */
-  left: 10%; /* Positions the container 10% from the left edge */
-  transform: translateY(-50%); /* Vertically centers the container */
-  width: 400px; /* Sets a fixed width for the container */
-  display: flex; /* Uses flexbox for layout */
-  flex-direction: column; /* Arranges items inside the container in a vertical stack */
-  gap: 10px; /* Adds space between the stacked items */
-  /* Editable height and width */
-  height: 116.6%; /* Custom height for the container (adjustable) */
-  width: 39.7%; /* Custom width for the container (adjustable) */
-  margin-right: 50px; /* Adds space on the right side */
-}
-/* Styling for individual items inside .content-wrapperVA */
-.create-account .content-wrapperVA > * {
-  /* flex: 1; Uncomment if you want items to grow and fill available space */
-  max-width: 100%; /* Prevents items from stretching beyond the container's width */
-}
-/* Styling for the chat box container */
-.create-account .chat-boxA {
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack content vertically */
-  justify-content: flex-start; /* Align content at the top */
-  border: 1px solid #ccc; /* Light border around the chat box */
-  border-radius: 10px; /* Rounded corners for the chat box */
-  padding: 20px; /* Padding inside the chat box */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Shadow around the chat box */
-  width: 100%; /* Full width inside its container */
-  height: 68.8%; /* Set height for the chat box */
-  background-color: #b9bec07c; /* Semi-transparent background color */
-}
-/* Styling for the title in dark mode */
-.dark-mode .title-header {
-  color: #91BECD; /* Change color to the desired shade in dark mode */
-}
-/* Styling for the mentor assignment container */
-.create-account .assign-mentor-container {
-  flex-grow: 1; /* Allow container to grow to fill available space */
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
-  align-items: flex-start; /* Align content at the top */
-  overflow: auto; /* Allow scrolling if content overflows */
-  width: 100%; /* Full width inside its container */
-  height: 90%; /* Height for the mentor assignment container */
-  box-sizing: border-box; /* Includes padding and border in the element's total width/height */
-}
-/* Styling for individual items inside the assign mentor container */
-.create-account .assign-mentor-container > * {
-  width: 85%; /* Set width for child elements inside the container */
-  height: 40%; /* Set height for child elements inside the container */
-  box-sizing: border-box; /* Includes padding and border in the element's total width/height */
 }
