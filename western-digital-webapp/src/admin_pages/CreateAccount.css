@@ -12,6 +12,7 @@
   justify-content: flex-start;
   gap: 20px;
 }
+
 .create-account .logo-title-container {
   top: 0;
   left: 0;
@@ -42,8 +43,7 @@
 /* ============================================= */
 /* Sidebar & Navigation                           */
 /* ============================================= */
-
-.create-account .sidebarC {
+.create-account .sidebarA {
   width: 6.6%;
   height: 80vh;
   background-color: #b9bec07c;
@@ -60,19 +60,19 @@
   transform: translateY(-50%);
 }
 
-.create-account .nav-buttonsC {
+.create-account .nav-buttonsA {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-height: 80vh;
   justify-content: center;
+  gap: 10px;
 }
 
 /* ============================================= */
 /* Icons & Buttons                               */
 /* ============================================= */
-/* Logout Button */
 .create-account .icon,
 .create-account .icon1 {
   width: 70px;
@@ -96,11 +96,13 @@
   max-width: 40px;
   min-width: 20px;
 }
+
 .create-account .icon1 {
   background-color: gray;
   border: none;
 }
 
+/* Logout Button */
 .create-account .logout-buttonV2 {
   margin-top: 20px; /* Top spacing */
   background-color: white;
@@ -138,11 +140,13 @@
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 10px;
-  padding: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
   width: 100%;
   height: 68.8%;
+  overflow-y: auto;
   background-color: #b9bec07c;
+  box-sizing: border-box;
+  padding-top: 20px;
 }
 
 .create-account .welcome-box-containerA {
@@ -187,6 +191,7 @@
   margin-top: 10px;
   font-size: 1rem;
 }
+
 /* ============================================= */
 /* Media Queries (Responsive Styling)            */
 /* ============================================= */
@@ -200,7 +205,7 @@
     font-size: clamp(1.8rem, 5vw, 4rem);
   }
 
-  .create-account .sidebarC {
+  .create-account .sidebarA {
     position: static !important;
     width: 90%;
     height: 90px !important;
@@ -215,22 +220,18 @@
   }
 
   .create-account .nav-buttonsA {
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100px;
+    gap: 10px;
   }
 
   .create-account .icon1,
   .create-account .icon {
     width: 50px;
     height: 50px;
-  }
-
-  .create-account .icon1 img,
-  .create-account .icon img {
-    width: 50px;
-    height: 50px;
+    flex-shrink: 0;
   }
 
   .create-account .content-wrapperVA,
@@ -261,7 +262,7 @@
     order: 3;
   }
 
-  .sidebarC {
+  .sidebarA {
     order: 4;
   }
 
@@ -271,6 +272,7 @@
     align-items: center;
   }
 }
+
 
 
 /* Dont touch yet */

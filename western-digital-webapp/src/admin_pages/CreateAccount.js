@@ -101,12 +101,37 @@ function CreateAccount() {
         </div>
 
         {/* Sidebar */}
-        <div className="sidebarC">
-          <div className="nav-buttonsC">
-            <motion.button className="icon" onClick={() => navigate("/see-interactions")} whileHover={{ scale: 1.1 }}><img src={chat} alt="chat" /></motion.button>
-            <motion.button className="icon" onClick={() => navigate("/view-progressions")} whileHover={{ scale: 1.1 }}><img src={write} alt="write" /></motion.button>
-            <motion.button className="icon1" onClick={() => navigate("/create-account")} whileHover={{ scale: 1.1 }}><img src={one} alt="create" /></motion.button>
-            <motion.button className="icon" onClick={() => navigate("/assign-mentor")} whileHover={{ scale: 1.1 }}><img src={twopeople} alt="assign" /></motion.button>
+        <div className="sidebarA">
+          <div className="nav-buttonsA">
+          <motion.button className="icon" onClick={() => navigate("/see-interactions")} 
+            whileHover={{ scale: 1.1 }} // Growing effect on hover
+            transition={{ duration: 0.1 }}
+            >  
+                <img src={chat} alt="chat" />
+            </motion.button>
+            
+            <motion.button className="icon" onClick={() => navigate("/view-progressions")}
+                whileHover={{ scale: 1.1 }} // Growing effect on hover
+                transition={{ duration: 0.1 }}
+            >
+                <img src={write} alt="write" />
+            </motion.button>
+            <motion.button
+                className="icon1"
+                onClick={() => navigate("#")}
+                whileHover={{ scale: 1.1 }} // Growing effect on hover
+                transition={{ duration: 0.1 }}
+            >
+                <img src={one} alt="create" />
+            </motion.button>
+            <motion.button
+                className="icon"
+                onClick={() => navigate("/assign-mentor")}
+                whileHover={{ scale: 1.1 }} // Growing effect on hover
+                transition={{ duration: 0.1 }}
+            >
+                <img src={twopeople} alt="twopeople" />
+            </motion.button>
           </div>
 
           {/* Theme switch */}
@@ -307,7 +332,7 @@ export default CreateAccount;
 //           <img src={logo} alt="logo" className="logo" />
 //           <h1 className="title-header">Create Account</h1>
 //     </div>
-//     <div className="sidebarC">
+//     <div className="sidebarA">
 //         {/* Navigation Buttons */}
 //         <div className="nav-buttonsC">
 //           <motion.button

@@ -521,7 +521,7 @@ export default ViewProgressions;
 //           <img src={logo} alt="logo" className="logo" />
 //           <h1 className="title-header">View Progress</h1>
 //     </div>
-//     <div className="sidebarC">
+//     <div className="sidebarA">
 //         {/* Navigation Buttons */}
 //         <div className="nav-buttonsC">
 //           <motion.button

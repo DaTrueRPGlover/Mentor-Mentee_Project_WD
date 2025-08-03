@@ -1,280 +1,384 @@
-/* Styles the assign-mentor container with a flexbox layout */
+/* ============================================= */
+/* Layout & Page Structure                        */
+/* ============================================= */
 .assign-mentor {
-  display: flex; /* Enables flexbox */
-  flex-direction: column; /* Stacks children vertically */
-  min-height: 100vh; /* Full viewport height */
-  width: 100%; /* Full screen width */
-  font-family: Arial, sans-serif; /* Sets font */
-  text-align: center; /* Centers text */
-  align-items: center; /* Centers children horizontally */
-  position: fixed; /* Fixes container during scroll */
-  justify-content: space-between; /* Evenly spaces children */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
-/* Styles the header container */
-.assign-mentor .header-container {
-  display: flex; /* Enables flexbox */
-  flex-direction: column; /* Stacks children vertically */
-  align-items: center; /* Centers children horizontally */
-  width: 100%; /* Full screen width */
-  padding-top: 20px; /* Adds top padding */
-}
-/* Styles the top header */
-.assign-mentor .top-header {
-  display: flex; /* Enables flexbox */
-  justify-content: space-between; /* Spaces children evenly */
-  align-items: center; /* Centers children vertically */
-  width: 100%; /* Full screen width */
-  padding: 0 20px; /* Adds horizontal padding */
-}
-/* Styles the add-assignment container */
-.assign-mentor .add-assignment {
-  margin-bottom: 20px; /* Adds space below the element */
-  display: flex; /* Enables flexbox */
-  flex-direction: column; /* Stacks children vertically */
-  justify-content: center; /* Centers content vertically */
-  align-items: center; /* Centers content horizontally */
-  height: 100%; /* Uses full available height */
-  overflow-y: auto; /* Allows vertical scrolling if needed */
-  margin-left: 2%; /* Adds left margin */
-}
-/* Styles the assignments table */
-.assign-mentor .assignments-table {
-  width: 100%; /* Full width */
-  border-collapse: collapse; /* Removes spacing between table cells */
-  max-height: 48vh; /* Sets a maximum height */
-  overflow-y: auto; /* Enables vertical scrolling */
-  border-radius: 10px; /* Adds rounded corners */
-}
-/* Styles table header and cell elements */
-.assign-mentor .assignments-table th, .assignments-table td {
-  padding: 12px; /* Adds padding inside cells */
-  text-align: center; /* Centers text horizontally */
-  border: 1px solid #ddd; /* Adds a light border around cells */
-}
-/* Styles table rows */
-.assign-mentor .assignments-table tr {
-  background-color: #f2f2f2; /* Sets a light gray background for rows */
-}
-/* Styles the header container inside the assignments table */
-.assign-mentor .assignments-table .header-container {
-  position: relative; /* Allows positioning relative to its normal flow */
-  width: 120%; /* Expands the container beyond the table width */
-  padding-top: 20px; /* Adds top padding */
+.assign-mentor .logo-title-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
 }
 
-/* Styles the dropdown in the Change Mentor column */
-.assign-mentor .assignments-table select {
-  width: 200px; /* Sets the width of the dropdown */
-  padding: 8px; /* Adds padding inside the dropdown */
-  font-size: 16px; /* Sets the font size */
-  border-radius: 10px; /* Adds rounded corners */
-  border: 1px solid #ccc; /* Adds a light border */
-  font-family: Tahoma, sans-serif; /* Sets font style */
-  background-color: white !important; /* Ensures a white background */
-  color: #91BECD !important; /* Sets text color */
-}
-/* Styles the delete button */
-.assign-mentor .delete-button {
-  padding: 8px 16px; /* Adds padding inside the button */
-  color: #fff; /* Sets text color to white */
-  background-color: gray; /* Sets background color */
-  border: none; /* Removes border */
-  border-radius: 5px; /* Adds rounded corners */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-  transition: background-color 0.3s; /* Smooth transition for background color */
-}
-/* Styles the Assign button */
-.assign-mentor .Assign {
-  padding: 8px 16px; /* Adds padding inside the button */
-  color: #fff; /* Sets text color to white */
-  background-color: gray; /* Sets background color */
-  border: none; /* Removes border */
-  border-radius: 5px; /* Adds rounded corners */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-  transition: background-color 0.3s; /* Smooth transition for background color */
-  margin-bottom: 5px; /* Adds spacing below the button */
-}
-/* Styles the option element */
-.assign-mentor .option {
-  width: 200px; /* Sets the width of the option element */
-  padding: 8px; /* Adds padding inside the element */
-  font-size: 16px; /* Sets the font size */
-  border-radius: 10px; /* Adds rounded corners */
-  border: 1px solid #ccc; /* Adds a light border */
-  font-family: Tahoma, sans-serif; /* Sets the font */
-  background-color: white !important; /* Ensures a white background */
-  color: #91BECD !important; /* Sets text color */
-  margin-bottom: 5px; /* Adds bottom margin */
-}
-/* Styles the hover effect for the delete button */
-.assign-mentor .delete-button:hover {
-  background-color: rgb(84, 82, 82); /* Changes background color on hover */
-}
-/* Styles the sidebar (sidebarB) */
-.assign-mentor .sidebarB {
-  width: 6.6%; /* Sets sidebar width */
-  height: 80vh; /* Sets sidebar height */
-  background-color: #b9bec07c; /* Sets background color */
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Stacks children vertically */
-  justify-content: space-between; /* Distributes space evenly between items */
-  align-items: center; /* Centers items horizontally */
-  padding: 20px 0; /* Adds vertical padding */
-  border-radius: 10px; /* Rounds corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow around the sidebar */
-  position: fixed; /* Fixes sidebar position */
-  left: 1.3%; /* Adds margin from the left side */
-  top: 54%; /* Vertically positions the sidebar */
-  transform: translateY(-50%); /* Centers sidebar vertically */
-}
-
-/* Styles the navigation buttons container (nav-buttonsB) */
-.assign-mentor .nav-buttonsB {
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Stacks buttons vertically */
-  gap: 15px; /* Adds space between navigation buttons */
-}
-/* Styles the image inside the icon */
-.assign-mentor .icon img {
-  width: 40px; /* Sets image width */
-  height: auto; /* Maintains aspect ratio */
-}
-/* Styles the icon container */
-.assign-mentor .icon {
-  width: 70px; /* Sets icon width */
-  height: 70px; /* Sets icon height */
-  background-color: #ffffff; /* Sets background color */
-  border-radius: 50%; /* Makes the container circular */
-  border: none; /* Removes border */
-  display: flex; /* Enables flexbox layout */
-  align-items: center; /* Centers content vertically */
-  justify-content: center; /* Centers content horizontally */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-  transition: all 0.3s ease; /* Adds smooth transition effect */
-}
-/* Styles the icon1 container */
-.assign-mentor .icon1 {
-  width: 70px; /* Sets icon width */
-  height: 70px; /* Sets icon height */
-  background-color: gray; /* Sets background color */
-  border-radius: 50%; /* Makes the container circular */
-  border: none; /* Removes border */
-  display: flex; /* Enables flexbox layout */
-  align-items: center; /* Centers content vertically */
-  justify-content: center; /* Centers content horizontally */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-  transition: all 0.3s ease; /* Adds smooth transition effect */
-}
-/* Styles the image inside the icon1 */
-.assign-mentor .icon1 img {
-  width: 40px; /* Sets image width */
-  height: auto; /* Maintains aspect ratio */
-}
-/* Styles the logout button (logout-buttonV2) */
-.assign-mentor .logout-buttonV2 {
-  margin-top: 20px; /* Adds top margin */
-  background-color: white; /* Sets background color */
-  border: none; /* Removes border */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-}
-.assign-mentor .logout-buttonV2:hover {
-  background-color: #f0f0f0; /* Change the background color on hover */
-}
-/* Styles the content wrapper (content-wrapperVA) */
-.assign-mentor .content-wrapperVA {
-  position: fixed; /* Fixes the position */
-  right: 46.3%; /* Positions from the right */
-  top: 72.3%; /* Positions from the top */
-  left: 10%; /* Sets margin from the left */
-  transform: translateY(-50%); /* Centers vertically */
-  width: 400px; /* Fixed width for the container */
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Stacks children vertically */
-  gap: 10px; /* Adds space between items */
-
-  /* Editable height and width */
-  height: 116.6%; /* Adjustable height */
-  width: 39.7%;  /* Adjustable width */
-  margin-right: 50px; /* Adds margin to the right */
-}
-/* Styles individual items inside the content wrapper */
-.assign-mentor .content-wrapperVA > * {
-  max-width: 100%; /* Prevents items from stretching too much */
-}
-/* Styles the chat box (chat-boxA) */
-.assign-mentor .chat-boxA {
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Stacks content vertically */
-  justify-content: flex-start; /* Aligns content at the top */
-  border: 1px solid #ccc; /* Adds a light border */
-  border-radius: 10px; /* Rounds corners */
-  padding: 20px; /* Adds padding inside the box */
-  overflow-y: scroll; /* Enables vertical scrolling */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow */
-  width: 100%; /* Makes the chat box take full width */
-  height: 68.8%; /* Sets the height */
-  background-color: #b9bec07c; /* Sets background color */
-}
-/* Styles the welcome box container (welcome-box-containerA) */
-.assign-mentor .welcome-box-containerA {
-  position: fixed; /* Fixes the position */
-  right: 1%; /* Positions from the right */
-  top: 50%; /* Positions from the top */
-  left: 53%; /* Sets margin from the left */
-  transform: translateY(-45%); /* Vertically centers the container */
-  width: 45%; /* Fixed width for the container */
-  display: flex; /* Enables flexbox layout */
-  flex-direction: column; /* Stacks items vertically */
-  gap: 10px; /* Adds space between items */
-}
-/* Styles the welcome box (welcome-boxA) */
-.assign-mentor .welcome-boxA {
-  background-color: #b9bec07c; /* Sets background color */
-  border-radius: 10px; /* Rounds corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow */
-  padding: 20px; /* Adds padding inside the box */
-  text-align: center; /* Centers text */
-  width: 100%; /* Full width inside container */
-  box-sizing: border-box; /* Ensures padding is included in the width */
-  height: 16.4vh; /* Sets custom height for the welcome box */
-}
-/* Styles the new box (new-boxA) */
-.assign-mentor .new-boxA {
-  background-color: #b9bec07c; /* Sets background color */
-  border-radius: 10px; /* Rounds corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Adds shadow */
-  padding: 20px; /* Adds padding inside the box */
-  text-align: center; /* Centers text */
-  width: 100%; /* Full width inside container */
-  box-sizing: border-box; /* Ensures padding is included in the width */
-  height: 63vh; /* Sets custom height for the new box */
-}
-/* Styles the heading (h2) inside welcome-boxA and new-boxA */
-.welcome-boxA h2,
-.assign-mentor .new-boxA h2 {
-  margin: 0; /* Removes margin */
-  font-size: 1.5rem; /* Sets font size */
-}
-/* Styles the paragraph (p) inside welcome-boxA and new-boxA */
-.welcome-boxA p,
-.assign-mentor .new-boxA p {
-  margin-top: 10px; /* Adds margin at the top */
-  font-size: 1rem; /* Sets font size */
-}
-/* Styles the title header */
-.assign-mentor .title-header {
-  font-size: 4rem; /* Sets font size */
-  padding-left: 20px; /* Adds padding on the left */
-  font-weight: 900; /* Makes text bold */
-  color: #333; /* Sets text color */
-}
-/* Styles the logo */
+/* ============================================= */
+/* Logo & Title Styling                           */
+/* ============================================= */
 .assign-mentor .logo {
-  width: 100px; /* Sets the width of the logo */
-  height: auto; /* Maintains aspect ratio */
-  margin-right: 10px; /* Adds space between logo and title */
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
 }
-/* Styles for dark mode title header */
+
+.assign-mentor .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050; /* Bold */
+  color: #333;
+}
+
+/* ============================================= */
+/* Sidebar & Navigation                           */
+/* ============================================= */
+/* Styles the sidebar (sidebarA) */
+.assign-mentor .sidebarA {
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
+}
+
+.assign-mentor .nav-buttonsA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80vh;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ============================================= */
+/* Icons & Buttons                               */
+/* ============================================= */
+.assign-mentor .icon,
+.assign-mentor .icon1 {
+  width: 70px;
+  height: 70px;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 1;
+  flex-grow: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.assign-mentor .icon img,
+.assign-mentor .icon1 img {
+  width: 40px;
+  height: auto;
+  max-width: 40px;
+  min-width: 20px;
+}
+
+.assign-mentor .icon1 {
+  background-color: gray;
+  border: none;
+}
+
+/* Logout Button */
+.assign-mentor .logout-buttonV2 {
+  margin-top: 20px; /* Top spacing */
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.assign-mentor .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+.assign-mentor .delete-button,
+.assign-mentor .Assign {
+  padding: 8px 16px;
+  color: #fff;
+  background-color: gray;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 5px;
+}
+
+.assign-mentor .delete-button:hover {
+  background-color: rgb(84, 82, 82);
+}
+/* ============================================= */
+/* Content Containers                            */
+/* ============================================= */
+.assign-mentor .content-wrapperVA {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 39.7%;
+  height: 116.6%;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.assign-mentor .content-wrapperVA > * {
+  max-width: 100%;
+}
+
+.assign-mentor .chat-boxA {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  width: 100%;
+  height: 68.8%;
+  overflow-y: auto;
+  background-color: #b9bec07c;
+  box-sizing: border-box;
+  padding-top: 20px;
+}
+
+.assign-mentor .welcome-box-containerA {
+  position: fixed;
+  right: 1%;
+  top: 50%;
+  left: 53%;
+  transform: translateY(-45%);
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assign-mentor .welcome-boxA,
+.assign-mentor.new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.assign-mentor .welcome-boxA {
+  height: 16.4vh;
+}
+
+.assign-mentor .new-boxA {
+  height: 63vh;
+}
+
+.assign-mentor .welcome-boxA h2,
+.assign-mentor .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.assign-mentor .welcome-boxA p,
+.assign-mentor .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* ============================================= */
+/* Layout Containers                            */
+/* ============================================= */
+.assign-mentor .header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.assign-mentor .top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.assign-mentor .add-assignment {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  margin-left: 2%;
+}
+
+/* ============================================= */
+/* Media Queries (Responsive Styling)            */
+/* ============================================= */
+@media (max-width: 1050px) {
+  .assign-mentor.logo {
+    width: 30%;
+    max-width: 80px;
+  }
+
+  .assign-mentor .title-header {
+    font-size: clamp(1.8rem, 5vw, 4rem);
+  }
+
+  .assign-mentor .sidebarA {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .assign-mentor .nav-buttonsA {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    gap: 10px;
+  }
+
+  .assign-mentor .icon1,
+  .assign-mentor .icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  .assign-mentor .content-wrapperVA,
+  .assign-mentor .welcome-box-containerA {
+    position: static !important;
+    width: 90% !important;
+    margin: 20px auto;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 80px;
+  }
+
+  .logo-title-container {
+    order: 1;
+    position: static !important;
+    width: 90% !important;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .welcome-box-containerA {
+    order: 2;
+  }
+
+  .content-wrapperVA {
+    order: 3;
+  }
+
+  .sidebarA {
+    order: 4;
+  }
+
+  .assign-mentor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .assign-mentor .assignments-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .assign-mentor .assignments-table {
+    min-width: 600px;
+  }
+}
+
+/* ============================================= */
+/* Table Wrappers            */
+/* ============================================= */
+.assign-mentor .assignments-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 10px;
+}
+
+/* ============================================= */
+/* Table styles          */
+/* ============================================= */
+.assign-mentor .assignments-table {
+  min-width: 600px;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+.assign-mentor .assignments-table th,
+.assign-mentor .assignments-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.assign-mentor .assignments-table tr {
+  background-color: #f2f2f2;
+}
+
+/* ============================================= */
+/* Input Fields           */
+/* ============================================= */
+.assign-mentor .assignments-table select,
+.assign-mentor .option {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: Tahoma, sans-serif;
+  background-color: white !important;
+  color: #91BECD !important;
+  margin-bottom: 5px;
+}
+
+/* ============================================= */
+/* Darkmode title          */
+/* ============================================= */
 .dark-mode .title-header {
-  color: #91BECD; /* Changes text color in dark mode */
+  color: #91BECD;
 }
+
+
+
