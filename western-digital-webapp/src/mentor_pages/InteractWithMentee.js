@@ -22,7 +22,7 @@ import AssignHWTable from "./AssignHW.js";
 
 function InteractWithMentee() {
   const navigate = useNavigate();
-  const adminName = "Mentor Name"; // Dummy name
+  const adminName = "Mentor John"; // Dummy name
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
 
