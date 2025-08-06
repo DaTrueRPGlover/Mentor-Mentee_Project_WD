@@ -32,7 +32,7 @@ function InteractWithMentee() {
   ];
 
   const dummyMessages = {
-    "1": [
+    1: [
       {
         message: "Hello Mentor!",
         sentTime: "2025-08-04 09:00:00",
@@ -46,7 +46,7 @@ function InteractWithMentee() {
         direction: "outgoing",
       },
     ],
-    "2": [
+    2: [
       {
         message: "Good morning!",
         sentTime: "2025-08-04 10:00:00",
@@ -117,28 +117,52 @@ function InteractWithMentee() {
 
       <div className="sidebarA">
         <div className="nav-buttonsA">
-          <motion.button className="icon1" onClick={() => navigate("/interact-with-mentee")} whileHover={{ scale: 1.1 }}>
+          <motion.button
+            className="icon1"
+            onClick={() => navigate("/interact-with-mentee")}
+            whileHover={{ scale: 1.1 }}
+          >
             <img src={chat} alt="chat" />
           </motion.button>
-          <motion.button className="icon" onClick={() => navigate("/write-mentee-progression")} whileHover={{ scale: 1.1 }}>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/write-mentee-progression")}
+            whileHover={{ scale: 1.1 }}
+          >
             <img src={write} alt="write" />
           </motion.button>
-          <motion.button className="icon" onClick={() => navigate("/assign-homework")} whileHover={{ scale: 1.1 }}>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/assign-homework")}
+            whileHover={{ scale: 1.1 }}
+          >
             <img src={hw} alt="create" />
           </motion.button>
-          <motion.button className="icon" onClick={() => navigate("/mentor-meetings")} whileHover={{ scale: 1.1 }}>
+          <motion.button
+            className="icon"
+            onClick={() => navigate("/mentor-meetings")}
+            whileHover={{ scale: 1.1 }}
+          >
             <img src={calendar} alt="calendar" />
           </motion.button>
         </div>
 
         <div className="slider-section">
           <label className="slider-container">
-            <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={toggleTheme}
+            />
             <span className="slider"></span>
           </label>
         </div>
 
-        <motion.button className="logout-buttonV2" onClick={handleLogout} whileHover={{ scale: 1.1 }}>
+        <motion.button
+          className="logout-buttonV2"
+          onClick={handleLogout}
+          whileHover={{ scale: 1.1 }}
+        >
           <img src={logout} alt="logout" />
         </motion.button>
       </div>
@@ -146,12 +170,21 @@ function InteractWithMentee() {
       <div className="content-wrapperVA">
         <div className="chat-boxA">
           <div className="box1">
-            {mentees.length === 0 && <p className="no-mentees-message">You have no mentees assigned.</p>}
+            {mentees.length === 0 && (
+              <p className="no-mentees-message">
+                You have no mentees assigned.
+              </p>
+            )}
             {mentees.length > 0 && (
               <div className="dropdown-container">
                 <label htmlFor="meeting-select-mentee">Select a Mentee:</label>
-                <select value={selectedMentee} onChange={(e) => setSelectedMentee(e.target.value)}>
-                  <option value="" disabled>-- Select a mentee --</option>
+                <select
+                  value={selectedMentee}
+                  onChange={(e) => setSelectedMentee(e.target.value)}
+                >
+                  <option value="" disabled>
+                    -- Select a mentee --
+                  </option>
                   {mentees.map((mentee) => (
                     <option key={mentee.menteekey} value={mentee.menteekey}>
                       {mentee.menteeName}
@@ -162,9 +195,12 @@ function InteractWithMentee() {
             )}
 
             {selectedMentee && (
-              <MainContainer className="chat-container" style={{ backgroundColor: '#FFFFFF' }}>
-                <ChatContainer style={{ backgroundColor: '#FFFFFF' }}>
-                  <MessageList style={{ backgroundColor: '#FFFFFF' }}>
+              <MainContainer
+                className="chat-container"
+                style={{ backgroundColor: "#FFFFFF" }}
+              >
+                <ChatContainer style={{ backgroundColor: "#FFFFFF" }}>
+                  <MessageList style={{ backgroundColor: "#FFFFFF" }}>
                     {messages.map((msg, index) => (
                       <Message
                         key={index}
@@ -186,32 +222,23 @@ function InteractWithMentee() {
             )}
           </div>
         </div>
-
-        
       </div>
       <div className="welcome-box-containerA">
-          <div className="welcome-boxA">
-            <h2>Welcome, {adminName}!</h2>
-            <p>Today is {formatDateTime(currentDateTime)}</p>
-          </div>
-
-          <div className="new-boxA">
-            <h2>Upcoming Meetings</h2>
-            <AssignHWTable />
-          </div>
+        <div className="welcome-boxA">
+          <h2>Welcome, {adminName}!</h2>
+          <p>Today is {formatDateTime(currentDateTime)}</p>
         </div>
+
+        <div className="new-boxA">
+          <h2>Upcoming Meetings</h2>
+          <AssignHWTable />
+        </div>
+      </div>
     </div>
   );
 }
 
 export default InteractWithMentee;
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import "./InteractWithMentee.css";
@@ -241,7 +268,6 @@ export default InteractWithMentee;
 // import { motion } from "framer-motion"; // Importing motion
 // import AssignHWTable from "./AssignHW.js"; // Import the AssignHWTable component
 
-
 // function InteractWithMentee() {
 //   const [messages, setMessages] = useState([]);
 //   const [mentees, setMentees] = useState([]);
@@ -262,13 +288,13 @@ export default InteractWithMentee;
 //     document.body.className = newTheme ? "dark-mode" : "";
 //     sessionStorage.setItem("isDarkMode", newTheme); // Save state
 //   };
-  
+
 //   useEffect(() => {
 //     const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
 //     setIsDarkMode(savedTheme);
 //     document.body.className = savedTheme ? "dark-mode" : "";
 //   }, []);
-  
+
 //   useEffect(() => {
 //     const user = JSON.parse(sessionStorage.getItem("user"));
 
@@ -455,12 +481,12 @@ export default InteractWithMentee;
 //         <div className="content-wrapperVA">
 //         <div className="chat-boxA">
 //           <div className="box1">
-      
+
 //       {mentees.length === 0 && (
 //         <p className="no-mentees-message">You have no mentees assigned.</p>
 //       )}
 //       {mentees.length > 0 && (
-        
+
 //         <div className="dropdown-container">
 //           <label htmlFor="meeting-select-mentee">Select a Mentee:</label>
 //           <select
@@ -476,15 +502,14 @@ export default InteractWithMentee;
 //           </select>
 //         </div>
 //       )}
-  
 
 //     {selectedMentee && (
-   
+
 //         <MainContainer className="chat-container" style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
 //           <ChatContainer style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
 //             <MessageList style={{ backgroundColor: '#FFFFFF', border: 'none', outline: 'none' }}>
 //               {messages.map((msg, index) => (
-//                 <Message 
+//                 <Message
 //                   key={index}
 //                   model={{
 //                     message: msg.message,
@@ -519,7 +544,7 @@ export default InteractWithMentee;
 //         <h2>Upcoming Meetings</h2>
 //         <AssignHWTable />
 //       </div>
-        
+
 //     </div>
 //       </div>
 
