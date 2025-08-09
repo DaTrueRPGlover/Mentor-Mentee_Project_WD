@@ -2,107 +2,86 @@
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import './CheckHWTable.css'; // Ensure this CSS file exists and is correctly styled
+import './CheckHWTable.css';
 
-const CheckHWTable = () => {
+const mockHomework = [
+  {
+    id: 'hw1',
+    type: 'Homework',
+    title: 'Math Worksheet',
+    description: 'Complete exercises 1–20 on page 42.',
+    date: new Date(2025, 7, 12, 23, 59),
+    link: '/homework/1'
+  },
+  {
+    id: 'hw2',
+    type: 'Homework',
+    title: 'Science Lab Report',
+    description: 'Write up your findings on chemical reactions.',
+    date: new Date(2025, 7, 15, 17, 0),
+    link: '/homework/2'
+  }
+];
+
+const mockMeetings = [
+  {
+    id: 'mt1',
+    type: 'Meeting',
+    title: 'Meeting with Dr. Smith',
+    description: 'Zoom Password: 1234',
+    date: new Date(2025, 7, 10, 10, 0),
+    link: '/mentee-meetings'
+  },
+  {
+    id: 'mt2',
+    type: 'Meeting',
+    title: 'Session with Prof. Lee',
+    description: 'Google Meet link sent via email.',
+    date: new Date(2025, 7, 14, 14, 30),
+    link: '/mentee-meetings'
+  }
+];
+
+export default function CheckHWTable() {
   const [combinedData, setCombinedData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const userInfo = JSON.parse(sessionStorage.getItem('user'));
-  const menteeKey = userInfo?.menteekey;
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    // Combine and sort by date ascending
+    const combined = [...mockHomework, ...mockMeetings].sort(
+      (a, b) => a.date - b.date
+    );
+    setCombinedData(combined);
+  }, []);
 
-      try {
-        if (!menteeKey) {
-          throw new Error('Mentee key not found.');
-        }
-
-        // Fetch Homework Data
-        const homeworkResponse = await fetch(`http://localhost:3001/api/homework/mentee/${menteeKey}`);
-        if (!homeworkResponse.ok) {
-          throw new Error('Failed to fetch homework data.');
-        }
-        const homeworkData = await homeworkResponse.json() || [];
-
-        // Fetch Meetings Data
-        const meetingsResponse = await fetch(`http://localhost:3001/api/meetings/meetings?userId=${menteeKey}`);
-        if (!meetingsResponse.ok) {
-          throw new Error('Failed to fetch meetings data.');
-        }
-        const meetingsData = await meetingsResponse.json() || [];
-
-        // Transform Homework Data
-        const transformedHomework = homeworkData.map(hw => ({
-          id: hw.homework_id,
-          type: 'Homework',
-          title: hw.title,
-          description: hw.description,
-          date: new Date(hw.due_date),
-          link: `/homework/${hw.homework_id}`,
-        }));
-
-        // Transform Meetings Data
-        const transformedMeetings = meetingsData.map(meeting => ({
-          id: meeting.meetingkey,
-          type: 'Meeting',
-          title: `Meeting with ${meeting.mentor_name}`,
-          description: `Zoom Password: ${meeting.meeting_password}`,
-          date: new Date(meeting.datetime),
-          link: '/mentor-meetings' // Directing all meetings to the mentor-meetings page
-        }));
-
-        // Combine and Sort Data
-        const combined = [...transformedHomework, ...transformedMeetings].sort((a, b) => a.date - b.date);
-
-        setCombinedData(combined);
-      } catch (err) {
-        setError(err.message || 'An unexpected error occurred.');
-        console.error('Error fetching data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [menteeKey]);
-
-  if (loading) return <div className="check-hw-table loading">Loading...</div>;
-  if (error) return <div className="check-hw-table error">{error}</div>;
+  if (!combinedData.length) {
+    return (
+      <div className="check-hw-table no-data">
+        <p className="no-homework">No upcoming items.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="check-hw-table">
-      {combinedData.length === 0 ? (
-        <p className="no-homework">No upcoming meetings or assignments found.</p>
-      ) : (
-        <div className="homework-list">
-          {combinedData.map(item => (
-            <Link
-              to={item.type === 'Homework' ? item.link : '/mentee-meetings'} 
-              key={`${item.type}-${item.id}`}
-              className={`homework-card ${item.type.toLowerCase()}`}
-            >
-              <h2 className="homework-title">{item.title}</h2>
-              <p className="homework-description">{item.description}</p>
-              <p className="homework-date">
-                {item.type === 'Homework' ? 'Due: ' : 'Scheduled: '}
-                {format(item.date, 'MMMM dd, yyyy h:mm a')}
-              </p>
-              {item.type === 'Meeting' && (
-                <p className="homework-date">
-                  <strong>Type:</strong> {item.type}
-                </p>
-              )}
-            </Link>
-          ))}
-        </div>
-      )}
+      <div className="homework-list">
+        {combinedData.map(item => (
+          <Link
+            to={item.link}
+            key={`${item.type}-${item.id}`}
+            className={`homework-card ${item.type.toLowerCase()}`}
+          >
+            <h2 className="homework-title">{item.title}</h2>
+            <p className="homework-description">{item.description}</p>
+            <p className="homework-date">
+              {item.type === 'Homework' ? 'Due: ' : 'Scheduled: '}
+              {format(item.date, 'MMMM dd, yyyy h:mm a')}
+            </p>
+            {item.type === 'Meeting' && (
+              <p className="homework-date"><strong>Type:</strong> {item.type}</p>
+            )}
+          </Link>
+        ))}
+      </div>
     </div>
   );
-};
-
-export default CheckHWTable;
+}

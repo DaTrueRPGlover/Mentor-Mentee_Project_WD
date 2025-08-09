@@ -1,573 +1,197 @@
-// src/components/TodoProgression.js
+// src/components/todoprogression.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  EventBusyOutlined,
+  AssignmentTurnedInOutlined,
+  Mood,
+} from "@mui/icons-material";
+import { format } from "date-fns";
 import "./TodoProgression.css";
 
-import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
-import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
-import MoodIcon from "@mui/icons-material/Mood";
-import { motion } from "framer-motion"; // Importing motion
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
 import calendar from "../assets/calendar.png";
 import logout from "../assets/logout.png";
-import CheckHWTable from "./CheckHWTable"; // Import the CheckHWTable component
 
-function TodoProgression() {
+// Mock meetings data
+const mockMeetings = [
+  { key: "mt1", datetime: new Date(2025, 7, 5, 10, 0) },
+  { key: "mt2", datetime: new Date(2025, 7, 12, 14, 30) },
+  { key: "mt3", datetime: new Date(2025, 7, 20, 9, 15) },
+];
+
+export default function TodoProgression() {
   const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeeting] = useState("");
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const name = user['name']
-  console.log(user);
-  console.log(name)
-  const menteeName = name || "Mentee";
-
-  const [communication, setCommunication] = useState(null);
-  const [influence, setInfluence] = useState(null);
-  const [managingProjects, setManagingProjects] = useState(null);
-  const [innovation, setInnovation] = useState(null);
-  const [emotionalIntelligence, setEmotionalIntelligence] = useState(null);
-  const [decisionMaking, setDecisionMaking] = useState(null);
-  const [error, setError] = useState(null);
-  const [newReport, setNewReport] = useState("");
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [errors, setErrors] = useState({}); // State for error messages
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    document.body.className = newTheme ? "dark-mode" : "";
-    sessionStorage.setItem("isDarkMode", newTheme); // Save state
-  };
-  
-  useEffect(() => {
-    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
-    setIsDarkMode(savedTheme);
-    document.body.className = savedTheme ? "dark-mode" : "";
-  }, []);
+  const [ratings, setRatings] = useState({
+    communication: "",
+    influence: "",
+    managingProjects: "",
+    innovation: "",
+    emotionalIntelligence: "",
+    decisionMaking: "",
+  });
+  const [comments, setComments] = useState("");
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    // Retrieve the menteekey from sessionStorage
-    const userInfo = JSON.parse(sessionStorage.getItem("user"));
-    const menteeKey = userInfo?.menteekey;
-
-    if (menteeKey) {
-      fetch(`http://localhost:3001/api/menteenotes/meetings/${menteeKey}`)
-        .then((response) => response.json())
-        .then((data) => setMeetings(data))
-        .catch((error) => console.error("Error fetching meetings:", error));
-    } else {
-      console.error("Menteekey not found in local storage.");
-      setError("Menteekey not found.");
-    }
+    setMeetings(mockMeetings);
+    document.body.classList.remove("dark-mode");
   }, []);
-
-  const ratingToScore = (rating) => {
-    switch (rating) {
-      case "Very Helpful":
-        return 3;
-      case "Somewhat Helpful":
-        return 2;
-      case "Not Helpful":
-        return 1;
-      default:
-        return null;
-    }
-  };
-
-  const formatDateTime = (date) => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  const handleAddReport = async (e) => {
-    e.preventDefault();
-
-    // Validate form before submission
-    const validationErrors = {};
-    if (!selectedMeeting) validationErrors.selectedMeeting = "Meeting is required.";
-    if (!communication) validationErrors.communication = "Communication rating is required.";
-    if (!influence) validationErrors.influence = "Influence rating is required.";
-    if (!managingProjects) validationErrors.managingProjects = "Managing Projects rating is required.";
-    if (!innovation) validationErrors.innovation = "Innovation rating is required.";
-    if (!emotionalIntelligence) validationErrors.emotionalIntelligence = "Emotional Intelligence rating is required.";
-    if (!decisionMaking) validationErrors.decisionMaking = "Decision Making rating is required.";
-    if (!newReport.trim()) validationErrors.newReport = "Additional comments are required.";
-
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length > 0) {
-      // There are validation errors
-      return;
-    }
-
-    const userInfo = JSON.parse(sessionStorage.getItem("user"));
-    const menteeKey = userInfo?.menteekey;
-
-    if (!menteeKey) {
-      setError("Menteekey is missing. Please log in again.");
-      return;
-    }
-
-    const newReportData = {
-      meetingkey: selectedMeeting,
-      menteekey: menteeKey, // Add menteekey to the data being sent
-      notes: newReport,
-      communication: ratingToScore(communication),
-      influence: ratingToScore(influence),
-      managingProjects: ratingToScore(managingProjects),
-      innovation: ratingToScore(innovation),
-      emotionalIntelligence: ratingToScore(emotionalIntelligence),
-      decisionMaking: ratingToScore(decisionMaking),
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:3001/api/menteenotes/menteenotes",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newReportData),
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Report added:", result);
-        // Reset form
-        setNewReport("");
-        setSelectedMeeting("");
-        setCommunication(null);
-        setInfluence(null);
-        setManagingProjects(null);
-        setInnovation(null);
-        setEmotionalIntelligence(null);
-        setDecisionMaking(null);
-        setErrors({});
-      } else {
-        const errorData = await response.json();
-        setErrors({ submit: errorData.message || "Error pushing new report" });
-      }
-    } catch (error) {
-      console.error("Error pushing new report:", error);
-      setErrors({ submit: "Error pushing new report" });
-    }
-  };
 
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
 
-  // Determine if the form is valid
-  const isFormValid = selectedMeeting && communication && influence && managingProjects && innovation && emotionalIntelligence && decisionMaking && newReport.trim();
+  const ratingToScore = (r) =>
+    r === "Very Helpful" ? 3 : r === "Somewhat Helpful" ? 2 : 1;
+
+  const validate = () => {
+    const errs = {};
+    if (!selectedMeeting) errs.selectedMeeting = "Choose a meeting";
+    Object.entries(ratings).forEach(([k, v]) => {
+      if (!v) errs[k] = "Required";
+    });
+    if (!comments.trim()) errs.comments = "Add comments";
+    setErrors(errs);
+    return !Object.keys(errs).length;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    console.log({
+      meeting: selectedMeeting,
+      ratings: Object.fromEntries(
+        Object.entries(ratings).map(([k, v]) => [k, ratingToScore(v)])
+      ),
+      comments,
+    });
+    alert("Report submitted (mock)");
+
+    setSelectedMeeting("");
+    setRatings({
+      communication: "",
+      influence: "",
+      managingProjects: "",
+      innovation: "",
+      emotionalIntelligence: "",
+      decisionMaking: "",
+    });
+    setComments("");
+    setErrors({});
+  };
+
+  const ratingFields = [
+    { key: "communication", icon: <EventBusyOutlined />, label: "Communication" },
+    { key: "influence", icon: <AssignmentTurnedInOutlined />, label: "Influence" },
+    { key: "managingProjects", icon: <Mood />, label: "Managing Projects" },
+    { key: "innovation", icon: <AssignmentTurnedInOutlined />, label: "Innovation" },
+    { key: "emotionalIntelligence", icon: <AssignmentTurnedInOutlined />, label: "Emotional Intelligence" },
+    { key: "decisionMaking", icon: <AssignmentTurnedInOutlined />, label: "Decision Making" },
+  ];
 
   return (
     <div className="todo-progression">
-      <div className="logo-title-container">
-        <img src={logo} alt="logo" className="logo" />
-        <h1 className="title-header">Write Progression</h1>
-      </div>
-      <div className="sidebarA">
-        {/* Navigation Buttons */}
-        <div className="nav-buttonsA">
-          <motion.button
-            className="icon"
-            onClick={() => navigate("/interact-mentor")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
+      {/* Topbar */}
+      <header className="header">
+        <div className="logo-title">
+          <img src={logo} alt="logo" className="logo" />
+          <h1 className="title">Write Progression</h1>
+        </div>
+      </header>
+
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="sidebar-main">
+          <motion.button className="icon" onClick={() => navigate("/interact-mentor")} whileHover={{ scale: 1.08 }}>
             <img src={chat} alt="chat" />
           </motion.button>
-          <motion.button
-            className="icon1"
-            onClick={() => navigate("/todo-progression")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
+          <motion.button className="icon active" onClick={() => navigate("/todo-progression")} whileHover={{ scale: 1.08 }}>
             <img src={write} alt="write" />
           </motion.button>
-          <motion.button
-            className="icon"
-            onClick={() => navigate("/check-hw")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
+          <motion.button className="icon" onClick={() => navigate("/check-hw")} whileHover={{ scale: 1.08 }}>
             <img src={assign} alt="assign" />
           </motion.button>
-          <motion.button
-            className="icon"
-            onClick={() => navigate("/mentee-meetings")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
-          >
+          <motion.button className="icon" onClick={() => navigate("/mentee-meetings")} whileHover={{ scale: 1.08 }}>
             <img src={calendar} alt="calendar" />
           </motion.button>
         </div>
 
-        {/* Dark Mode Toggle */}
-        <div className="slider-section">
-          <span role="img" aria-label="Sun"></span>
-          <label className="slider-container">
-            <input
-              type="checkbox"
-              checked={isDarkMode}
-              onChange={toggleTheme}
-            />
-            <span className="slider"></span>
-          </label>
-          <span role="img" aria-label="Moon"></span>
+        <div className="logout-container">
+          <motion.button className="icon logout-btn" onClick={handleLogout} whileHover={{ scale: 1.08 }}>
+            <img src={logout} alt="logout" />
+          </motion.button>
         </div>
-        {/* Logout Button */}
-        <motion.button
-          className="logout-buttonV2"
-          onClick={handleLogout}
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <img src={logout} alt="logout" />
-        </motion.button>
-      </div>
+      </aside>
 
-      <div className="content-wrapperVA">
-        <div className="chat-boxA">
-          <div className="box">
-            <div className="main-content">
-              <div className="dropdown-container">
-                <label htmlFor="meetingSelect">Select Meeting:</label>
-                <select
-                  id="meetingSelect"
-                  value={selectedMeeting}
-                  onChange={(e) => setSelectedMeeting(e.target.value)}
-                >
-                  <option value="">Choose a meeting</option>
-                  {meetings.map((meeting) => (
-                    <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                      {new Date(meeting.datetime).toLocaleString()}
-                    </option>
-                  ))}
-                </select>
-                {errors.selectedMeeting && <span className="error">{errors.selectedMeeting}</span>}
+      {/* Form */}
+      <main className="main-content">
+        <form className="form-area" onSubmit={handleSubmit}>
+          <div className="dropdown-container">
+            <label htmlFor="mt">Meeting</label>
+            <select
+              id="mt"
+              value={selectedMeeting}
+              onChange={(e) => setSelectedMeeting(e.target.value)}
+            >
+              <option value="">-- choose --</option>
+              {meetings.map((m) => (
+                <option key={m.key} value={m.key}>
+                  {format(m.datetime, "MMM dd, yyyy p")}
+                </option>
+              ))}
+            </select>
+            {errors.selectedMeeting && <div className="error-msg">{errors.selectedMeeting}</div>}
+          </div>
+
+          {ratingFields.map(({ key, icon, label }) => (
+            <div className="form-box" key={key}>
+              <div className="form-title">
+                {icon}
+                <p>{label}</p>
               </div>
-
-              <div className="form-container">
-                {/* Communication Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <EventBusyOutlinedIcon className="form-title-icon" />
-                      <p>Communication</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="communication-very-helpful"
-                        name="communication"
-                        value="Very Helpful"
-                        checked={communication === "Very Helpful"}
-                        onChange={(e) => setCommunication(e.target.value)}
-                      />
-                      <label htmlFor="communication-very-helpful">Very Helpful</label>
-
-                      <input
-                        type="radio"
-                        id="communication-somewhat-helpful"
-                        name="communication"
-                        value="Somewhat Helpful"
-                        checked={communication === "Somewhat Helpful"}
-                        onChange={(e) => setCommunication(e.target.value)}
-                      />
-                      <label htmlFor="communication-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="communication-not-good"
-                        name="communication"
-                        value="Not Helpful"
-                        checked={communication === "Not Helpful"}
-                        onChange={(e) => setCommunication(e.target.value)}
-                      />
-                      <label htmlFor="communication-not-good">Not Helpful</label>
-                    </div>
-                    {errors.communication && <span className="error">{errors.communication}</span>}
-                  </div>
-                </div>
-
-                {/* Influence Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                      <p>Influence</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="influence-very-helpful"
-                        name="influence"
-                        value="Very Helpful"
-                        checked={influence === "Very Helpful"}
-                        onChange={(e) => setInfluence(e.target.value)}
-                      />
-                      <label htmlFor="influence-very-helpful">Very Helpful</label>
-
-                      <input
-                        type="radio"
-                        id="influence-somewhat-helpful"
-                        name="influence"
-                        value="Somewhat Helpful"
-                        checked={influence === "Somewhat Helpful"}
-                        onChange={(e) => setInfluence(e.target.value)}
-                      />
-                      <label htmlFor="influence-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="influence-not-good"
-                        name="influence"
-                        value="Not Helpful"
-                        checked={influence === "Not Helpful"}
-                        onChange={(e) => setInfluence(e.target.value)}
-                      />
-                      <label htmlFor="influence-not-good">Not Helpful</label>
-                    </div>
-                    {errors.influence && <span className="error">{errors.influence}</span>}
-                  </div>
-                </div>
-
-                {/* Managing Projects Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <MoodIcon className="form-title-icon" />
-                      <p>Managing Projects</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="managingProjects-very-helpful"
-                        name="managingProjects"
-                        value="Very Helpful"
-                        checked={managingProjects === "Very Helpful"}
-                        onChange={(e) => setManagingProjects(e.target.value)}
-                      />
-                      <label htmlFor="managingProjects-very-helpful">
-                        Very Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="managingProjects-somewhat-helpful"
-                        name="managingProjects"
-                        value="Somewhat Helpful"
-                        checked={managingProjects === "Somewhat Helpful"}
-                        onChange={(e) => setManagingProjects(e.target.value)}
-                      />
-                      <label htmlFor="managingProjects-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="managingProjects-not-good"
-                        name="managingProjects"
-                        value="Not Helpful"
-                        checked={managingProjects === "Not Helpful"}
-                        onChange={(e) => setManagingProjects(e.target.value)}
-                      />
-                      <label htmlFor="managingProjects-not-good">Not Helpful</label>
-                    </div>
-                    {errors.managingProjects && <span className="error">{errors.managingProjects}</span>}
-                  </div>
-                </div>
-
-                {/* Innovation Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                      <p>Innovation</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="innovation-very-helpful"
-                        name="innovation"
-                        value="Very Helpful"
-                        checked={innovation === "Very Helpful"}
-                        onChange={(e) => setInnovation(e.target.value)}
-                      />
-                      <label htmlFor="innovation-very-helpful">Very Helpful</label>
-
-                      <input
-                        type="radio"
-                        id="innovation-somewhat-helpful"
-                        name="innovation"
-                        value="Somewhat Helpful"
-                        checked={innovation === "Somewhat Helpful"}
-                        onChange={(e) => setInnovation(e.target.value)}
-                      />
-                      <label htmlFor="innovation-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="innovation-not-good"
-                        name="innovation"
-                        value="Not Helpful"
-                        checked={innovation === "Not Helpful"}
-                        onChange={(e) => setInnovation(e.target.value)}
-                      />
-                      <label htmlFor="innovation-not-good">Not Helpful</label>
-                    </div>
-                    {errors.innovation && <span className="error">{errors.innovation}</span>}
-                  </div>
-                </div>
-
-                {/* Emotional Intelligence Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                      <p>Emotional Intelligence</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="emotionalIntelligence-very-helpful"
-                        name="emotionalIntelligence"
-                        value="Very Helpful"
-                        checked={emotionalIntelligence === "Very Helpful"}
-                        onChange={(e) => setEmotionalIntelligence(e.target.value)}
-                      />
-                      <label htmlFor="emotionalIntelligence-very-helpful">
-                        Very Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="emotionalIntelligence-somewhat-helpful"
-                        name="emotionalIntelligence"
-                        value="Somewhat Helpful"
-                        checked={emotionalIntelligence === "Somewhat Helpful"}
-                        onChange={(e) => setEmotionalIntelligence(e.target.value)}
-                      />
-                      <label htmlFor="emotionalIntelligence-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="emotionalIntelligence-not-good"
-                        name="emotionalIntelligence"
-                        value="Not Helpful"
-                        checked={emotionalIntelligence === "Not Helpful"}
-                        onChange={(e) => setEmotionalIntelligence(e.target.value)}
-                      />
-                      <label htmlFor="emotionalIntelligence-not-good">Not Helpful</label>
-                    </div>
-                    {errors.emotionalIntelligence && <span className="error">{errors.emotionalIntelligence}</span>}
-                  </div>
-                </div>
-
-                {/* Decision Making Section */}
-                <div className="form-box">
-                  <div className="question-group">
-                    <div className="form-title">
-                      <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-                      <p>Decision Making</p>
-                    </div>
-                    <div className="radio-options">
-                      <input
-                        type="radio"
-                        id="decisionMaking-very-helpful"
-                        name="decisionMaking"
-                        value="Very Helpful"
-                        checked={decisionMaking === "Very Helpful"}
-                        onChange={(e) => setDecisionMaking(e.target.value)}
-                      />
-                      <label htmlFor="decisionMaking-very-helpful">Very Helpful</label>
-
-                      <input
-                        type="radio"
-                        id="decisionMaking-somewhat-helpful"
-                        name="decisionMaking"
-                        value="Somewhat Helpful"
-                        checked={decisionMaking === "Somewhat Helpful"}
-                        onChange={(e) => setDecisionMaking(e.target.value)}
-                      />
-                      <label htmlFor="decisionMaking-somewhat-helpful">
-                        Somewhat Helpful
-                      </label>
-
-                      <input
-                        type="radio"
-                        id="decisionMaking-not-good"
-                        name="decisionMaking"
-                        value="Not Helpful"
-                        checked={decisionMaking === "Not Helpful"}
-                        onChange={(e) => setDecisionMaking(e.target.value)}
-                      />
-                      <label htmlFor="decisionMaking-not-good">Not Helpful</label>
-                    </div>
-                    {errors.decisionMaking && <span className="error">{errors.decisionMaking}</span>}
-                  </div>
-                </div>
-
-                {/* Comments Section */}
-                <div className="comment-container">
-                  <textarea
-                    value={newReport}
-                    onChange={(e) => setNewReport(e.target.value)}
-                    placeholder="Extra comments here"
-                  />
-                  {errors.newReport && <span className="error">{errors.newReport}</span>}
-                  {errors.submit && <span className="error">{errors.submit}</span>}
-                  <button className="submit-button" onClick={handleAddReport} disabled={!isFormValid}>
-                    Submit
-                  </button>
-                </div>
+              <div className="radio-options">
+                {["Very Helpful", "Somewhat Helpful", "Not Helpful"].map((opt) => (
+                  <label key={opt}>
+                    <input
+                      type="radio"
+                      name={key}
+                      value={opt}
+                      checked={ratings[key] === opt}
+                      onChange={() =>
+                        setRatings((r) => ({ ...r, [key]: opt }))
+                      }
+                    />
+                    {opt}
+                  </label>
+                ))}
               </div>
+              {errors[key] && <div className="error-msg">{errors[key]}</div>}
             </div>
-          </div>
-        </div>
-      </div>
+          ))}
 
-      {/* Welcome and To-Do Boxes Container */}
-      <div className="welcome-box-containerA">
-        {/* Welcome Message Box */}
-        <div className="welcome-boxA">
-          <h2>Welcome, {menteeName}!</h2>
-          <p>Today is {formatDateTime(currentDateTime)}</p>
-        </div>
-
-        {/* New Box under the Welcome Box */}
-        <div className="new-box">
-          <h2>Upcoming Meetings/Homework</h2>
-          <div className="check-hw-table-container">
-            <CheckHWTable />
+          <div className="comment-container">
+            <textarea
+              placeholder="Extra comments..."
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
+            />
+            {errors.comments && <div className="error-msg">{errors.comments}</div>}
           </div>
-        </div>
-      </div>
+
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+        </form>
+      </main>
     </div>
   );
-};
-
-export default TodoProgression;
+}

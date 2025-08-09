@@ -1,153 +1,198 @@
-// src/components/InteractWithMentor.js
-import React, { useState, useEffect } from "react";
+// src/components/interactwithmentor.js
+import React, { useState, useEffect, useRef } from "react";
 import "./InteractWithMentor.css";
 import logo from "../assets/WDC2.png";
-import chat from "../assets/chat.png";
-import write from "../assets/write.png";
-import assign from "../assets/assign.png";
-import calendar from "../assets/calendar.png";
-import logout from "../assets/logout.png";
-
+import chatIcon from "../assets/chat.png";
+import writeIcon from "../assets/write.png";
+import assignIcon from "../assets/assign.png";
+import calendarIcon from "../assets/calendar.png";
+import logoutIcon from "../assets/logout.png";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"; // Importing motion
-import ChatBox from "./ChatBox"; // Import the ChatBox component
-import CheckHWTable from "./CheckHWTable"; // Import the CheckHWTable component
+import { motion } from "framer-motion";
+import CheckHWTable from "./CheckHWTable";
 
-function InteractWithMentor() {
+// initial mock chat
+const initialChat = [
+  { id: 1, sender: "Mentor", text: "Hey! How's the project?", time: new Date() },
+  { id: 2, sender: "You",    text: "Good, just testing this chat UI.", time: new Date() },
+  { id: 3, sender: "Mentor", text: "Nice progress so far!", time: new Date() },
+  { id: 4, sender: "You",    text: "Thanks!", time: new Date() },
+];
+
+export default function InteractWithMentor() {
   const navigate = useNavigate();
+  const contentRef = useRef(null);
+
+  const [chatMessages, setChatMessages] = useState(initialChat);
+  const [messageInput, setMessageInput] = useState("");
+  const [currentDateTime] = useState(new Date());
+  const user = JSON.parse(sessionStorage.getItem("user")) || {};
+  const menteeName = user.name || "Mentee";
+
+  // Meeting modal state (fed by CheckHWTable)
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [chatMessages]);
+
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const name = user['name']
-  const menteeName = name|| "Mentee";
-
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    document.body.className = newTheme ? "dark-mode" : "";
-    sessionStorage.setItem("isDarkMode", newTheme); // Save state
+  const handleSend = () => {
+    if (!messageInput.trim()) return;
+    setChatMessages((msgs) => [
+      ...msgs,
+      { id: msgs.length + 1, sender: "You", text: messageInput.trim(), time: new Date() }
+    ]);
+    setMessageInput("");
   };
-  
-  useEffect(() => {
-    const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
-    setIsDarkMode(savedTheme);
-    document.body.className = savedTheme ? "dark-mode" : "";
-  }, []);
 
-  const formatDateTime = (date) => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return date.toLocaleDateString("en-US", options);
-  };
+  const formatTime = (d) =>
+    d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
   return (
     <div className="interact-with-mentor">
+      {/* Topbar (no logout here) */}
       <div className="logo-title-container">
         <img src={logo} alt="logo" className="logo" />
         <h1 className="title-header">Chat With Mentor</h1>
       </div>
+
       {/* Sidebar */}
-      <div className="sidebar">
-        {/* Navigation Buttons */}
-        <div className="nav-buttons">
+      <aside className="sidebar">
+        <div className="sidebar-main">
           <motion.button
-            className="icon1"
+            className="icon active"
             onClick={() => navigate("/interact-mentor")}
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
-            transition={{ duration: 0.1 }}
+            whileHover={{ scale: 1.08 }}
           >
-            <img src={chat} alt="chat" />
+            <img src={chatIcon} alt="Chat" />
           </motion.button>
           <motion.button
             className="icon"
             onClick={() => navigate("/todo-progression")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
+            whileHover={{ scale: 1.08 }}
           >
-            <img src={write} alt="write" />
+            <img src={writeIcon} alt="Write" />
           </motion.button>
           <motion.button
             className="icon"
             onClick={() => navigate("/check-hw")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
+            whileHover={{ scale: 1.08 }}
           >
-            <img src={assign} alt="assign" />
+            <img src={assignIcon} alt="Assign" />
           </motion.button>
           <motion.button
             className="icon"
             onClick={() => navigate("/mentee-meetings")}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.1 }}
+            whileHover={{ scale: 1.08 }}
           >
-            <img src={calendar} alt="calendar" />
+            <img src={calendarIcon} alt="Calendar" />
           </motion.button>
         </div>
 
-        {/* Dark Mode Toggle */}
-        <div className="slider-section">
-          <span role="img" aria-label="Sun"></span>
-          <label className="slider-container">
-            <input
-              type="checkbox"
-              checked={isDarkMode}
-              onChange={toggleTheme}
-            />
-            <span className="slider"></span>
-          </label>
-          <span role="img" aria-label="Moon"></span>
+        {/* Logout pinned at bottom */}
+        <div className="logout-container">
+          <motion.button
+            className="icon logout-btn"
+            onClick={handleLogout}
+            whileHover={{ scale: 1.08 }}
+          >
+            <img src={logoutIcon} alt="logout" />
+          </motion.button>
         </div>
-        {/* Logout Button */}
-        <motion.button
-          className="logout-buttonV2"
-          onClick={handleLogout}
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <img src={logout} alt="logout" />
-        </motion.button>
-      </div>
+      </aside>
 
-      {/* Content Wrapper for Welcome Message and Chat Box */}
+      {/* Chat */}
       <div className="content-wrapperV2">
-        {/* Chat Box */}
         <div className="chat-box">
-          <div className="box">
-            <ChatBox />
+          <div className="chat-content" ref={contentRef}>
+            {chatMessages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`chat-message ${msg.sender === "You" ? "outgoing" : "incoming"}`}
+              >
+                <div className="bubble">
+                  <p>{msg.text}</p>
+                  <span className="timestamp">{formatTime(msg.time)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="chat-options">
+            <input
+              type="text"
+              placeholder="Type a message…"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            />
+            <button onClick={handleSend}>Send</button>
           </div>
         </div>
       </div>
-      {/* Welcome and To-Do Boxes Container */}
+
+      {/* Right-side: Upcoming + Homework (from shared table) */}
       <div className="welcome-box-container">
-        {/* Welcome Message Box */}
         <div className="welcome-box">
           <h2>Welcome, {menteeName}!</h2>
-          <p>Today is {formatDateTime(currentDateTime)}</p>
+          <p>{currentDateTime.toLocaleString()}</p>
         </div>
-
-        {/* New Box under the Welcome Box */}
         <div className="new-box">
-        <h2>Upcoming Meetings/Homework</h2>
-        <div className="check-hw-table-container">
-          <CheckHWTable />
+          <h2>Upcoming Meetings & Homework</h2>
+          <div className="check-hw-table-container">
+            {/* When a Meeting card is clicked in this table, open the modal */}
+            <CheckHWTable
+              onMeetingClick={(item) =>
+                setSelectedMeeting({
+                  title: item.title,
+                  description: item.description,
+                  date: item.date,
+                  joinUrl: item.joinUrl, // may be undefined; we handle that below
+                })
+              }
+            />
+          </div>
         </div>
       </div>
-      </div>
+
+      {/* Meeting Modal triggered by CheckHWTable click */}
+      {selectedMeeting && (
+        <div className="modal-overlay" onClick={() => setSelectedMeeting(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="close-btn"
+              onClick={() => setSelectedMeeting(null)}
+              aria-label="Close"
+            >
+              ✖
+            </button>
+            <h3>{selectedMeeting.title}</h3>
+            {selectedMeeting.description && <p>{selectedMeeting.description}</p>}
+            {selectedMeeting.date && (
+              <p>
+                <strong>When:</strong>{" "}
+                {selectedMeeting.date.toLocaleString()}
+              </p>
+            )}
+            <a
+              className={`join-link ${!selectedMeeting.joinUrl ? 'disabled' : ''}`}
+              href={selectedMeeting.joinUrl || '#'}
+              target={selectedMeeting.joinUrl ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                if (!selectedMeeting.joinUrl) e.preventDefault();
+              }}
+            >
+              {selectedMeeting.joinUrl ? 'Join Meeting' : 'Join link unavailable'}
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-export default InteractWithMentor;

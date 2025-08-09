@@ -1,519 +1,113 @@
-/* toDoProgression.css */
-.todo-progression{
-  display: flex;
-  flex-direction: column;
+/* src/components/todoprogression.css */
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f5f5;
+  --accent: #53a5ff;
+  --accent-hover: #3a8de0;
+  --text: #333333;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Fixed topbar */
+.header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 1rem;
+  background: var(--secondary-bg);
+  box-shadow: 0 2px 4px var(--card-shadow);
+  z-index: 1000;
+}
+.logo-title { display: flex; align-items: center; gap: .5rem; }
+.logo { width: 3rem; }
+.title { font-size: 1.75rem; color: var(--text); }
+
+/* Sidebar */
+.sidebar {
+  position: fixed; top: 4rem; left: 0; bottom: 0;
+  width: 4.25rem;
+  background: var(--secondary-bg);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1rem 0;
+  box-shadow: 2px 0 4px var(--card-shadow);
+  z-index: 900;
+}
+.sidebar-main {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.25rem;
+}
+
+/* Circular icons unified */
+.icon {
+  width: 3rem; height: 3rem;
+  background: var(--primary-bg);
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition: transform .18s, background .18s, box-shadow .18s;
+  border: none;
+}
+.icon img { width: 1.5rem; height: 1.5rem; }
+.icon:hover { transform: translateY(-2px); background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.icon.active { background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+
+/* Logout pinned */
+.logout-container { margin-top: auto; padding-bottom: 1rem; }
+.logout-btn { background: #ff4d4d !important; }
+.logout-btn:hover { background: #e04343 !important; }
+.logout-btn img { filter: brightness(0) invert(1); }
+
+/* Main content */
+.main-content {
+  margin-left: 4.25rem;
+  padding: 2rem;
+  padding-top: calc(2rem + 4rem);
+  background: var(--secondary-bg);
   min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  align-items: center; /* Center all content horizontally */
-  justify-content: space-between;
-  position: fixed;
-}
-.todo-progression .logo-button {
-  background: none; /* Remove default button background */
-  border: none; /* Remove default border */
-  cursor: pointer; /* Change cursor to pointer */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-}
-
-.todo-progression .top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-}
-
-
-.todo-progression .welcome-message {
-  font-size: 32px;
-  text-align: center;
-  margin: 20px 0;
-  background-color: inherit;
-  color: black !important;
-  font-family: Tahoma, sans-serif;
-}
-
-
-/* Main content styles */
-.todo-progression .main-content {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  color: white;
-
-
-}
-
-.todo-progression .mentor-mentee-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between the two dropdowns */
-}
-
-.todo-progression .dropdown-container {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 200px;
-}
-
-.todo-progression .dropdown-container label {
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.todo-progression .dropdown-container select {
-  width: 200px;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: 1px solid #ccc; 
-  font-family: Tahoma, sans-serif;
-  color: black !important;
-  background-color: white !important;
-  border-radius: 10px;
-  
-}
-
-.todo-progression .logout-button {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: black;
-  font-size: 1.2rem; /* Use relative units for font size */
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
-}
-
-.todo-progression .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .todo-progression .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .todo-progression .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
-  }
-}
-
-
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .todo-progression .add-task input {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
-
-/*////////////////*/
-/* BODY STYLES */
-/*////////////////*/
-
-
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
-  strong {
-    font-weight: bold;
-  }
-
-  textarea {
-    height: 200px;
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-    width: 100%;
-    background-color: white;
-    font-family: Arial, sans-serif;
-  }
-  
-  .todo-progression .submit-button {
-    background-color: #53a5ff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  .todo-progression .submit-button:hover {
-    background-color: #0056b3;
-  }
-
-  .todo-progression .submit-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-
-
- /* Additional Styles for Attitude Question */
-
- .todo-progression .question-group {
-  display: flex;
-  flex-direction: column; /* Stack the title above the options */
-  align-items: left; /* Center the group horizontally */
-  text-align: left;
-}
-
-.todo-progression .question-group p {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #333;
-  background-color: transparent;
-
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
-}
-
-.todo-progression .question-group input[type="radio"] {
-  margin: 0; /* Reset margin */
-  transform: scale(1.5); /* Keep size adjustments */
-  display: flex; /* Arrange radio buttons and labels in a row */
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
-}
-
-.todo-progression .question-group .radio-options {
-  display: flex; /* Arrange radio buttons and labels in a row */
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
-  gap: 15px; /* Add spacing between the options */
-  margin-left: 6px;
-  color: black;
-
-}
-
-.todo-progression .question-group label {
-  margin: 0; /* Reset margin */
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
-  display: flex; /* Arrange radio buttons and labels in a row */
-}
-
-
-/* Form box styling */
-.todo-progression .form-box {
-  width: 90%;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: white !important;
-
-}
-
-.todo-progression .question-group div {
-  display: flex;
-  align-items: center; /* Align radio button with label vertically */
-  gap: 8px; /* Add space between radio button and label */
-}
-
-
-
-
-.todo-progression .form-box 
- {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow with larger blur radius and opacity */
-}
-
-
-/* Styling for the comment box container */
-.todo-progression .comment-container {
-  display: flex;
-  width: 100%;
-  flex-direction: column; /* Stack the elements vertically */
-  align-items: center; /* Center elements horizontally */
-  margin-top: 20px; /* Space above the comment box */
-}
-
-/* Style the form title container */
-.todo-progression .form-title {
-  display: flex;
-  color: black;
-  margin-bottom: 10px; /* Space below the form title */
-  align-items: left; /* Align items (text and icon) vertically */
-  justify-content: left; /* Center the content horizontally */
-  
-}
-
-/* Style the icon */
-.todo-progression .form-title-icon {
-  width: 26px; /* Adjust the size of the icon */
-  height: 26px; /* Adjust the size of the icon */
-
-
-  background-color: white !important;
-
-
-}
-
-/* Style the form title text */
-.todo-progression .form-title p {
-  font-size: 1.2rem;
-  color: black;
-  font-weight: bold;
-  margin: 0; /* Remove any margin from the paragraph */
-  line-height: 1.5; /* Set a consistent line height */
-}
-
-
-.todo-progression .box {
-  width: 60vh;
-  height: 70vh;
-  border-width: 5px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column; /* Ensure items are stacked vertically */
-  align-items: center;
-  justify-content: flex-start; /* Align items to the top */
-  border-radius: 15px;
-  backdrop-filter: blur(5px);
-  padding: 20px; /* Add padding for spacing */
-  overflow-y: scroll;
-}
-
-.todo-progression .sidebarA {
-  width: 6.6%; /* Sidebar width */
-  height: 80vh; /* Sidebar height */
-  background-color: #b9bec07c;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  position: fixed; /* Sticks sidebar to the left */
-  left: 1.3%; /* Margin space from the very left */
-  top: 54%; /* Center sidebar vertically */
-  transform: translateY(-50%);
-}
-
-.todo-progression .nav-buttonsA {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between navigation buttons */
-}
-
-.todo-progression .icon img {
-  width: 40px;
-  height: auto;
-}
-.todo-progression .icon {
-  width: 70px;
-  height: 70px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.todo-progression .icon1 {
-  width: 70px;
-  height: 70px;
-  background-color: gray;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.todo-progression .icon1 img {
-  width: 40px;
-  height: auto;
-}
-
-/* Welcome Box Container Styling */
-.todo-progression  .welcome-box-containerA {
-  position: fixed;
-  right: 1%;
-  top: 50%;
-  left: 53%;
-  transform: translateY(-45%);
-  width: 45%; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-}
-
-/* Welcome Box Styling */
-.todo-progression  .welcome-boxA {
-  background-color: #b9bec07c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
   box-sizing: border-box;
-  height: 16.4vh; /* Custom height for welcome box */
+}
+.form-area { max-width: 720px; margin: 0 auto; }
+.dropdown-container { margin-bottom: 1.5rem; text-align: left; }
+.dropdown-container label { display:block; margin-bottom: .25rem; font-weight: 600; }
+.dropdown-container select {
+  width: 100%; padding: .5rem; border: 1px solid #ccc; border-radius: .5rem;
 }
 
+/* Cards */
+.form-box {
+  background: var(--primary-bg);
+  padding: 1rem;
+  border-radius: .75rem;
+  box-shadow: 0 2px 8px var(--card-shadow);
+  margin-bottom: 1rem;
+}
+.form-title { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+.form-title p { font-weight: 600; }
+.radio-options { display: flex; flex-wrap: wrap; gap: 1rem; }
 
-/* New Box Styling */
-/* Ensure the new box has proper scroll handling */
-.todo-progression  .new-box {
-  background-color: #b9bec07c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 63vh; /* Custom height for the new box */
-  overflow: hidden; /* Prevent overflow of content outside the box */
-  display: flex;
-  flex-direction: column;
+/* Comments */
+.comment-container { margin: 1rem 0; }
+.comment-container textarea {
+  width: 100%; height: 120px; padding: .75rem;
+  border: 1px solid #ccc; border-radius: .5rem; box-sizing: border-box;
 }
 
-/* Make CheckHWTable scrollable */
-.todo-progression  .new-box .check-hw-table-container {
-  flex: 1; /* Take up remaining space within the new-box */
-  overflow-y: auto; /* Vertical scrolling if content overflows */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  padding-right: 10px; /* Add space for scrollbar */
-  margin-left: 2%;
+/* Submit */
+.submit-btn {
+  width: 100%; padding: .75rem;
+  background: var(--accent); color: #fff; border: none; border-radius: .75rem;
+  font-size: 1rem; cursor: pointer; transition: background .25s;
 }
+.submit-btn:hover { background: var(--accent-hover); }
 
-/* Optional: Customize scrollbar for better appearance */
-.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar {
-  width: 8px;
+/* Errors */
+.error-msg { color: #d93025; font-size: .85rem; margin-top: .25rem; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main-content { padding: 1rem; padding-top: calc(1rem + 4rem); }
 }
-
-.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Customize scrollbar color */
-  border-radius: 10px;
-}
-
-.todo-progression  .new-box .check-hw-table-container::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.todo-progression .logout-buttonV2 {
-  margin-top: 20px;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.todo-progression .logo {
-  width: 100px; /* Set a width for your logo */
-  height: auto;
-  margin-right: 10px; /* Space between logo and title */
-}
-
-.todo-progression .title-header {
-  font-size: 4rem;
-  padding-left: 20px;
-  font-weight: 900;;
-  color: #333;
-}
-
-/* Content Wrapper Styling */
-.todo-progression .content-wrapperVA {
-  position: fixed;
-  right: 46.3%;
-  top: 72.3%;
-  left: 10%;
-  transform: translateY(-50%);
-  width: 400px; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-
-  /* Editable height and width */
-  height: 116.6%; /* Change this value */
-  width: 39.7%;  /* Change this value */
-  margin-right: 50px;
-}
-
-
-/* Styling for Individual Items in Content Wrapper */
-.todo-progression .content-wrapperVA > * {
-  /* flex: 1; */
-  max-width: 100%; /* Prevent items from stretching too much */
-}
-
-/* ` Box Styling */
-.todo-progression .chat-boxA {
-  display: flex;
-  flex-direction: column; /* Stack content vertically */
-  justify-content: flex-start; /* Align content at the top */
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  width: 100%; /* Full width inside its container */
-  height: 68.8%;
-  background-color: #b9bec07c;
-  left: 53%;
-}
-
-/* Responsive styles */
 @media (max-width: 768px) {
-  .check-hw .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .check-hw .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
-  }
-}
-
-
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .check-hw .add-task input {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
-
-/* Error message styling */
-.error {
-  color: red;
-  font-size: 0.8em;
-  margin-top: 4px;
-  display: block;
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; }
 }

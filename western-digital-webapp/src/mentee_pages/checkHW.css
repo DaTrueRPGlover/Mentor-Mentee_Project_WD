@@ -1,579 +1,158 @@
-
-
-
-
-/* White rectangle styling */
-.whiteR {
-  background-color: #ffffff; /* White background */
-  padding: 30px; /* Padding inside the rectangle */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 100%;
-  display: flex; /* Enable flexbox */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  color: #333; /* Text color */
-  margin-left: 20%;
-  margin-right: 20%;
-
+/*=============== Variables ===============*/
+:root {
+  --header-height: 4rem;
+  --sidebar-width: 4.25rem;
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f5f5;
+  --accent: #53a5ff;
+  --accent-hover: #3a8de0;
+  --text: #333333;
+  --card-shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure everything inside the whiteR container has a white background */
-.whiteR * {
-  background-color: #ffffff !important; /* Enforce white background on all nested elements */
-  color: #333; /* Text color */
+/*=============== Topbar ===============*/
+.header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-height);
+  display: flex; align-items: center;
+  padding: 0 1rem;
+  background: var(--secondary-bg);
+  box-shadow: 0 2px 4px var(--card-shadow);
+  z-index: 1000;
+}
+.logo-title { display: flex; align-items: center; }
+.logo { width: 3rem; margin-right: 0.5rem; }
+.title { font-size: 1.75rem; color: var(--text); }
+
+/*=============== Overall Layout ===============*/
+.check-hw {
+  display: flex; flex-direction: column; min-height: 100vh;
+  padding-top: var(--header-height);
+  background: var(--primary-bg);
 }
 
-/* Heading styling */
-.whiteR h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
+/*=============== Sidebar ===============*/
+.sidebar {
+  position: fixed; top: var(--header-height); left: 0; bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--secondary-bg);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1rem 0;
+  box-shadow: 2px 0 4px var(--card-shadow);
+  z-index: 900;
+}
+.sidebar-main {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
 }
 
-/* No homework message */
-.no-homework {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #777;
+/* Circular icons unified */
+.icon {
+  width: 3rem; height: 3rem;
+  background: var(--primary-bg);
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition: transform .18s, background .18s, box-shadow .18s;
+  border: none;
+}
+.icon img { width: 1.5rem; height: 1.5rem; }
+.icon:hover { transform: translateY(-2px); background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.icon.active { background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+
+/* Logout button at bottom */
+.logout-container { margin-top: auto; padding-bottom: 1rem; }
+.logout-btn { background: #ff4d4d !important; }
+.logout-btn:hover { background: #e04343 !important; }
+.logout-btn img { filter: brightness(0) invert(1); }
+
+/*=============== Main Content ===============*/
+.main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin: 1rem 1rem 1rem calc(var(--sidebar-width) + 1rem);
+  flex: 1; box-sizing: border-box;
+}
+.assignments, .meetings {
+  background: var(--primary-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px var(--card-shadow);
 }
 
-/* Homework list styling */
-.homework-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+/*=============== Homework Cards ===============*/
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
 }
-
-/* Individual homework card styling */
 .homework-card {
-  background-color: #ffffff; /* White background */
-  padding: 25px; /* Increased padding for larger cards */
-  border-radius: 15px; /* More rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
-  text-decoration: none;
-  color: inherit; /* Inherit text color */
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  max-height: 300px; /* Prevent cards from getting too tall */
-  overflow: visible; /* Allow content to overflow if needed */
-  position: relative; /* To make sure it handles children well */
-  word-wrap: break-word; /* Allow long words to wrap into the next line */
+  background: var(--primary-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px var(--card-shadow);
+  text-decoration: none; color: inherit;
+  transition: transform 0.2s, background 0.2s;
 }
+.homework-card:hover { transform: translateY(-4px); background: #f9f9f9; }
+.homework-card h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.homework-card p { margin-bottom: 0.75rem; color: #555; }
+.dates { display: flex; justify-content: space-between; font-size: 0.875rem; color: #777; }
 
-.homework-card:hover {
-  background-color: #f1f1f1; /* Change background color on hover */
+/*=============== Meetings (scrollable) ===============*/
+.meetings { display: flex; flex-direction: column; height: 100%; }
+.meetings h2 { text-align: center; margin-bottom: 0.75rem; color: var(--text); }
+.meeting-grid { flex: 1; overflow-y: auto; padding-right: 4px; }
+.meeting-card {
+  background: var(--secondary-bg);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 6px var(--card-shadow);
+  transition: transform 0.2s, background 0.2s;
 }
+.meeting-card:hover { transform: translateY(-3px); background: #eaf3ff; }
+.meeting-card p { margin: 0.25rem 0; font-size: 0.95rem; }
 
-/* Homework title styling */
-.homework-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  word-wrap: break-word; /* Ensure title wraps when necessary */
-  white-space: normal; /* Allow the title to break and wrap */
-}
+/* Thin scrollbar */
+.meeting-grid::-webkit-scrollbar { width: 6px; }
+.meeting-grid::-webkit-scrollbar-track { background: transparent; }
+.meeting-grid::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 4px; }
 
-/* Homework description styling */
-.homework-description {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 10px;
-  word-wrap: break-word; /* Make sure long words wrap to the next line */
-  white-space: normal; /* Allow multiple lines if necessary */
-}
-
-/* Homework date styling */
-.homework-date {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 5px;
-}
-
-/* Loading and error messages */
-.loading,
-.error {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-top: 20px;
-  color: #ff6b6b; /* Red for error */
-}
-
-
-
-.check-hw{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  align-items: center; /* Center all content horizontally */
-  justify-content: space-between;
+/*=============== Modal Popup ===============*/
+.modal-overlay {
   position: fixed;
-
+  top: var(--header-height);
+  left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1500;
 }
-.check-hw .logo-button {
-  background: none; /* Remove default button background */
-  border: none; /* Remove default border */
-  cursor: pointer; /* Change cursor to pointer */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-}
-
-.check-hw .top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-}
-
-
-.check-hw .welcome-message {
-  font-size: 32px;
+.modal {
+  background: var(--primary-bg);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  position: relative;
+  width: min(420px, 92%);
   text-align: center;
-  margin: 20px 0;
-  background-color: inherit;
-  color: #91BECD !important;
-  font-family: Tahoma, sans-serif;
 }
-
-
-
-
-/* Main content styles */
-.check-hw .main-content {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  color: white;
-
+.close-btn {
+  position: absolute; top: 0.5rem; right: 0.75rem;
+  font-size: 1.25rem; background: none; border: none; cursor: pointer;
 }
-
-.check-hw .mentor-mentee-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between the two dropdowns */
+.join-link {
+  display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem;
+  background: var(--accent); color: #fff; border-radius: 0.5rem; text-decoration: none;
 }
+.join-link:hover { background: var(--accent-hover); }
 
-.check-hw .dropdown-container {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 200px;
+/*=============== Responsive ===============*/
+@media (max-width: 1050px) {
+  .main-grid { grid-template-columns: 1fr; }
 }
-
-.check-hw .dropdown-container label {
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.check-hw .dropdown-container select {
-  width: 200px;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: 1px solid #ccc; 
-  font-family: Tahoma, sans-serif;
-  color: #91BECD !important;
-  background-color: white !important;
-  border-radius: 10px;
-  
-}
-
-.check-hw .logout-button {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: #91BECD;
-  font-size: 1.2rem; /* Use relative units for font size */
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
-}
-
-.check-hw .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
-}
-
-/* Responsive styles */
 @media (max-width: 768px) {
-  .check-hw .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .check-hw .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
-  }
-}
-
-
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .check-hw .add-task input {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
-
-/*////////////////*/
-/* BODY STYLES */
-/*////////////////*/
-
-
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-    font-size: 1.1em;
-  }
-  
-  strong {
-    font-weight: bold;
-  }
-
-  textarea {
-    height: 200px;
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-    width: 100%;
-    background-color: white;
-    font-family: Arial, sans-serif;
-  }
-  
-  .check-hw .submit-button {
-
-
-    background-color: #53a5ff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  .check-hw .submit-button:hover {
-    background-color: #0056b3;
-  }
-
-
- /* Additional Styles for Attitude Question */
-
- .check-hw .question-group {
-  display: flex;
-  flex-direction: column; /* Stack the title above the options */
-  align-items: center; /* Center the group horizontally */
-  text-align: center;
-}
-
-.check-hw .question-group p {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #333;
-  background-color: transparent;
-
-
-}
-
-.check-hw .question-group input[type="radio"] {
-  margin: 0; /* Reset margin */
-  transform: scale(1.5); /* Keep size adjustments */
-  display: flex; /* Arrange radio buttons and labels in a row */
-}
-
-.check-hw .question-group .radio-options {
-  display: flex; /* Arrange radio buttons and labels in a row */
-  align-items: center; /* Align items vertically */
-  justify-content: center; /* Center the options horizontally */
-  gap: 15px; /* Add spacing between the options */
-  color: #91BECD;
-
-}
-
-.check-hw .question-group label {
-  margin: 0; /* Reset margin */
-  text-align: center; /* Ensure label text is centered */
-  display: flex; /* Arrange radio buttons and labels in a row */
-}
-
-
-/* Form box styling */
-.check-hw .form-box {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: white !important;
-
-}
-
-.check-hw .question-group div {
-  display: flex;
-  align-items: center; /* Align radio button with label vertically */
-  gap: 8px; /* Add space between radio button and label */
-}
-
-
-
-
-.check-hw .form-box 
- {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow with larger blur radius and opacity */
-}
-
-
-/* Styling for the comment box container */
-.check-hw .comment-container {
-  display: flex;
-  width: 100%;
-  flex-direction: column; /* Stack the elements vertically */
-  align-items: center; /* Center elements horizontally */
-  margin-top: 20px; /* Space above the comment box */
-}
-
-/* Style the form title container */
-.check-hw .form-title {
-  display: flex;
-  color: black;
-  margin-bottom: 10px; /* Space below the form title */
-  align-items: center; /* Align items (text and icon) vertically */
-  justify-content: center; /* Center the content horizontally */
-  
-}
-
-/* Style the icon */
-.check-hw .form-title-icon {
-  width: 26px; /* Adjust the size of the icon */
-  height: 26px; /* Adjust the size of the icon */
-  margin-right: 4px; /* Space between the icon and the text */
-  vertical-align: middle; /* Align the icon vertically in the middle of the text */
-  background-color: white !important;
-
-
-}
-
-/* Style the form title text */
-.check-hw .form-title p {
-  font-size: 1.2rem;
-  color: #91BECD;
-  font-weight: bold;
-  margin: 0; /* Remove any margin from the paragraph */
-  line-height: 1.5; /* Set a consistent line height */
-}
-
-
-.check-hw .box {
-  max-width: 60vh;
-  height: 70vh;
-  border-width: 5px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column; /* Ensure items are stacked vertically */
-  align-items: center;
-  justify-content: flex-start; /* Align items to the top */
-  border-radius: 15px;
-  backdrop-filter: blur(5px);
-  padding: 20px; /* Add padding for spacing */
-  overflow-y: scroll;
-}
-
-.check-hw .sidebarA {
-  width: 6.6%; /* Sidebar width */
-  height: 80vh; /* Sidebar height */
-  background-color: #b9bec07c;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  position: fixed; /* Sticks sidebar to the left */
-  left: 1.3%; /* Margin space from the very left */
-  top: 54%; /* Center sidebar vertically */
-  transform: translateY(-50%);
-}
-
-.check-hw .nav-buttonsA {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between navigation buttons */
-}
-
-.check-hw .icon img {
-  width: 40px;
-  height: auto;
-}
-.check-hw .icon {
-  width: 70px;
-  height: 70px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.check-hw .icon1 {
-  width: 70px;
-  height: 70px;
-  background-color: gray;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.check-hw .icon1 img {
-  width: 40px;
-  height: auto;
-}
-
-/* Welcome Box Container Styling */
-.check-hw  .welcome-box-containerA {
-  position: fixed;
-  right: 1%;
-  top: 50%;
-  left: 53%;
-  transform: translateY(-45%);
-  width: 45%; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-  
-}
-
-/* Welcome Box Styling */
-.check-hw  .welcome-boxA {
-  background-color: #b9bec07c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 16.4vh; /* Custom height for welcome box */
-}
-
-.new-boxA {
-  background-color: #b9bec07c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 63vh; /* Custom height for the new box */
-  overflow: hidden; /* Prevent overflow of content outside the box */
-  display: flex;
-  flex-direction: column;
-}
-
-.new-boxA h2 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.new-boxA .chat-box-container {
-  max-height: 100%; /* Make the ChatBox smaller (80% of container height) */
-  width: 100%;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  background-color: inherit Im !important; /* Optional: Set background color */
-  border-radius: 8px;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-
-
-.check-hw .logout-buttonV2 {
-  margin-top: 20px;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.check-hw .logo {
-  width: 100px; /* Set a width for your logo */
-  height: auto;
-  margin-right: 10px; /* Space between logo and title */
-}
-
-.check-hw .title-header {
-  font-size: 4rem;
-  padding-left: 20px;
-  font-weight: 900;;
-  color: #333;
-}
-
-/* Content Wrapper Styling */
-.check-hw .content-wrapperVA {
-  position: fixed;
-  right: 46.3%;
-  top: 72.3%;
-  left: 10%;
-  transform: translateY(-50%);
-  width: 400px; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-
-  /* Editable height and width */
-  height: 116.6%; /* Change this value */
-  width: 39.7%;  /* Change this value */
-  margin-right: 50px;
-}
-
-
-/* Styling for Individual Items in Content Wrapper */
-.check-hw .content-wrapperVA > * {
-  /* flex: 1; */
-  max-width: 100%; /* Prevent items from stretching too much */
-}
-
-/* Chat Box Styling */
-.check-hw .chat-boxA {
-  display: flex;
-  flex-direction: column; /* Stack content vertically */
-  justify-content: flex-start; /* Align content at the top */
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  width: 100%; /* Full width inside its container */
-  height: 68.8%;
-  background-color: #b9bec07c;
-  left: 53%;
+  .sidebar { display: none; }
+  .main-grid { margin: 1rem; }
+  .modal-overlay { left: 0; width: 100%; }
 }
