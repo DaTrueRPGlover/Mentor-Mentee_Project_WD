@@ -336,7 +336,7 @@
   border: 1px solid #ccc; 
   font-family: Tahoma, sans-serif;
   background-color: white !important;
-  color: #91BECD !important;
+  color: black !important;
   border-radius: 10px;
   
 }
@@ -612,11 +612,7 @@ input:checked + .slider:before {
 
 
 
-.interact-with-mentee .logo {
-  width: 100px; /* Set a width for your logo */
-  height: auto;
-  margin-right: 10px; /* Space between logo and title */
-}
+
 
 
 
