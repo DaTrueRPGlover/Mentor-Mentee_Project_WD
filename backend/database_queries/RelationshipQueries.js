@@ -80,3 +80,11 @@ export const deleteMentorMenteeRelationship = async (relationship_id) => {
   `;
   await pool.execute(sql, [relationship_id]);
 };
+
+
+/* try {
+ const newRelationship = await createMentorMenteeRelationship("53106eef-f8d8-47be-bc0b-cdc34304e2c2", "f90ade85-f8c5-4cd2-bae7-9fa42a920907");
+ console.log("Relationship created successfully!")
+} catch(error){
+  console.log("Error creating the relationship")
+} */

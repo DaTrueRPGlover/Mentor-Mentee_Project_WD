@@ -1,15 +1,306 @@
-/* writeMenteeProgression.css */
-.write-mentee-progression{
+/* ============================================= */
+/* Layout & Page Structure                        */
+/* ============================================= */
+
+.write-mentee-progression {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
   font-family: Arial, sans-serif;
   text-align: center;
-  align-items: center; /* Center all content horizontally */
-  justify-content: space-between;
-  position: fixed;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
+
+.write-mentee-progression .logo-title-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================= */
+/* Logo & Title Styling                           */
+/* ============================================= */
+
+.write-mentee-progression .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
+  margin-left: 10px;
+}
+
+.write-mentee-progression .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050; /* Bold */
+  color: #333;
+}
+
+/* ============================================= */
+/* Sidebar & Navigation                           */
+/* ============================================= */
+
+.write-mentee-progression .sidebarA {
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
+}
+
+.write-mentee-progression .nav-buttonsA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80vh;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ============================================= */
+/* Icons & Buttons                               */
+/* ============================================= */
+
+.write-mentee-progression .icon,
+.write-mentee-progression .icon1 {
+  width: 70px;
+  height: 70px;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 1;
+  flex-grow: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.write-mentee-progression .icon img,
+.write-mentee-progression .icon1 img {
+  width: 40px;
+  height: auto;
+  max-width: 40px;
+  min-width: 20px;
+}
+
+.write-mentee-progression .icon1 {
+  background-color: gray;
+  border: none;
+}
+
+/* Logout Button */
+.write-mentee-progression .logout-buttonV2 {
+  margin-top: 20px; /* Top spacing */
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.write-mentee-progression .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* ============================================= */
+/* Content Containers                            */
+/* ============================================= */
+
+.write-mentee-progression .content-wrapperVA {
+  position: fixed;
+  right: 46.3%;
+  top: 72.3%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 39.7%;
+  height: 116.6%;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.write-mentee-progression .content-wrapperVA > * {
+  max-width: 100%;
+}
+
+.write-mentee-progression .chat-boxA {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  width: 100%;
+  height: 68.8%;
+  overflow-y: auto;
+  background-color: #b9bec07c;
+  box-sizing: border-box;
+  padding-top: 20px;
+}
+
+.write-mentee-progression .welcome-box-containerA {
+  position: fixed;
+  right: 1%;
+  top: 50%;
+  left: 53%;
+  transform: translateY(-45%);
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.write-mentee-progression .welcome-boxA,
+.write-mentee-progression .new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.write-mentee-progression .welcome-boxA {
+  height: 16.4vh;
+}
+
+.write-mentee-progression .new-boxA {
+  height: 63vh;
+}
+
+.write-mentee-progression .welcome-boxA h2,
+.write-mentee-progression .new-boxA h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.write-mentee-progression .welcome-boxA p,
+.write-mentee-progression .new-boxA p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+
+/* ============================================= */
+/* Media Queries (Responsive Styling)            */
+/* ============================================= */
+
+@media (max-width: 1050px) {
+  .write-mentee-progression .logo {
+    width: 30%;
+    max-width: 80px;
+  }
+
+  .write-mentee-progression .title-header {
+    font-size: clamp(1.8rem, 5vw, 4rem);
+  }
+
+  .write-mentee-progression .sidebarA {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .write-mentee-progression .nav-buttonsA {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    gap: 10px;
+  }
+
+  .write-mentee-progression .icon1,
+  .write-mentee-progression .icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  .write-mentee-progression .content-wrapperVA,
+  .write-mentee-progression .welcome-box-containerA {
+    position: static !important;
+    width: 90% !important;
+    margin: 20px auto;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 80px;
+  }
+
+  .write-mentee-progression .welcome-boxA{
+    margin-bottom: 80px;
+  }
+
+  .logo-title-container {
+    order: 1;
+    position: static !important;
+    width: 90% !important;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .welcome-box-containerA {
+    order: 2;
+  }
+
+  .content-wrapperVA {
+    order: 3;
+  }
+
+  .sidebarA {
+    order: 4;
+  }
+
+  .write-mentee-progression {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* ============================================= */
+/* OLD STUFF/UNUSED         */
+/* ============================================= */
+
+
 .write-mentee-progression .logo-button {
   background: none; /* Remove default button background */
   border: none; /* Remove default border */
@@ -66,6 +357,7 @@
 .write-mentee-progression .dropdown-container label {
   margin-bottom: 8px;
   font-weight: bold;
+  color: black;
 }
 
 .write-mentee-progression .dropdown-container select {
@@ -81,49 +373,8 @@
   
 }
 
-.write-mentee-progression .logout-button {
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: black;
-  font-size: 1.2rem; /* Use relative units for font size */
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px; /* Padding remains as is */
-  position: absolute; /* Use absolute positioning */
-  right: 20px; /* Position it 20px from the right */
-  top: 20px; /* Position it 20px from the top */
-  transition: background-color 0.3s; /* Smooth transition for hover */
-}
-
-.write-mentee-progression .logout-button:hover {
-  background-color: #7CAFB7; /* Hover color */
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .write-mentee-progression .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .write-mentee-progression .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
-  }
-}
 
 
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .write-mentee-progression .add-task input {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
 
 /*////////////////*/
 /* BODY STYLES */
@@ -306,110 +557,20 @@
 
 }
 
-.write-mentee-progression .sidebarA {
-  width: 6.6%; /* Sidebar width */
-  height: 80vh; /* Sidebar height */
-  background-color: #b9bec07c;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  position: fixed; /* Sticks sidebar to the left */
-  left: 1.3%; /* Margin space from the very left */
-  top: 54%; /* Center sidebar vertically */
-  transform: translateY(-50%);
-}
-
-.write-mentee-progression .nav-buttonsA {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between navigation buttons */
-}
-
-.write-mentee-progression .icon img {
-  width: 40px;
-  height: auto;
-}
-.write-mentee-progression .icon {
-  width: 70px;
-  height: 70px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.write-mentee-progression .icon1 {
-  width: 70px;
-  height: 70px;
-  background-color: gray;
-  border-radius: 50%;
-  border: none; /* No border */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.write-mentee-progression .icon1 img {
-  width: 40px;
-  height: auto;
-}
-
-/* Welcome Box Container Styling */
-.write-mentee-progression  .welcome-box-containerA {
-  position: fixed;
-  right: 1%;
-  top: 50%;
-  left: 53%;
-  transform: translateY(-45%);
-  width: 45%; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-}
-
-/* Welcome Box Styling */
-.write-mentee-progression  .welcome-boxA {
-  background-color: #b9bec07c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 16.4vh; /* Custom height for welcome box */
-}
 
 
-/* New Box Styling */
-/* Ensure the new box has proper scroll handling */
-.write-mentee-progression  .new-boxA {
-  background-color: #b9bec07c; /* Same background color as the other boxes */
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  text-align: center;
-  width: 100%; /* Full width of the container */
-  box-sizing: border-box;
-  height: 63vh; /* Adjust height to fit inside the container */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
-}
 
-/* Optional: Customize scrollbar for better appearance */
+
+
+
+
+/* 
 .write-mentee-progression  .new-boxA .check-hw-table-container::-webkit-scrollbar {
   width: 8px;
 }
 
 .write-mentee-progression  .new-boxA .check-hw-table-container::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Customize scrollbar color */
+  background-color: #ccc; 
   border-radius: 10px;
 }
 
@@ -417,88 +578,20 @@
   background-color: transparent;
 }
 
-.write-mentee-progression .logout-buttonV2 {
-  margin-top: 20px;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.write-mentee-progression .logo {
-  width: 100px; /* Set a width for your logo */
-  height: auto;
-  margin-right: 10px; /* Space between logo and title */
-}
-
-.write-mentee-progression .title-header {
-  font-size: 4rem;
-  padding-left: 20px;
-  font-weight: 900;
-}
-
-/* Content Wrapper Styling */
-.write-mentee-progression .content-wrapperVA {
-  position: fixed;
-  right: 46.3%;
-  top: 72.3%;
-  left: 10%;
-  transform: translateY(-50%);
-  width: 400px; /* Fixed width for the container */
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between the stacked items */
-
-  /* Editable height and width */
-  height: 116.6%; /* Change this value */
-  width: 39.7%;  /* Change this value */
-  margin-right: 50px;
-}
+ */
 
 
-/* Styling for Individual Items in Content Wrapper */
-.write-mentee-progression .content-wrapperVA > * {
-  /* flex: 1; */
-  max-width: 100%; /* Prevent items from stretching too much */
-}
-
-/* Chat Box Styling */
-.write-mentee-progression .chat-boxA {
-  display: flex;
-  flex-direction: column; /* Stack content vertically */
-  justify-content: flex-start; /* Align content at the top */
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  width: 100%; /* Full width inside its container */
-  height: 68.8%;
-  background-color: #b9bec07c;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .check-hw .logout-button {
-    font-size: 1rem; /* Smaller font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .check-hw .logout-button {
-    font-size: 0.9rem; /* Even smaller font size for very small screens */
-    padding: 6px 12px; /* Adjust padding further for small screens */
-    right: 10px; /* Adjust right positioning for small screens */
-    top: 10px; /* Adjust top positioning for small screens */
-  }
-}
 
 
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .check-hw .add-task input {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
+
+
+
+
+
+
+
+
+
 
 /* Error message styling */
 .error {

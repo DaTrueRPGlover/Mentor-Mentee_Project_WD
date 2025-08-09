@@ -96,6 +96,7 @@ export const getMentorMenteeRelationships = async () => {
     }
 };
 
+
 export const createAccount = async (firstName, lastName, email, password, department, role) => {
     console.log('Creating account with:', { firstName, lastName, email, department, role });
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
@@ -320,6 +321,15 @@ export const updateMentorForMentee = async (menteekey, newMentorkey) => {
         connection.release();
     }
 };
+
+// Test to insert new users into the database
+/* try {
+    const newUser = await createAccount("Test", "Mentee", "testmentee1@test.com", "testpassword", "testdepartment", "mentee");
+    console.log("Account created successfully, new user ID: ", newUser);
+} catch(error) {
+    console.error("Failed to create account");
+} */
+
 /*
 // Example usage of updateAccount function
 try {
@@ -335,64 +345,3 @@ try {
 } catch (error) {
     console.error('Failed to update account:', error);
 }*/
-
-
-
-// // Fetch mentee names
-// export const getMenteeNames = async () => {
-//     console.log('Fetching mentee names and roles...');
-//     const connection = await pool.getConnection();
-
-//     try {
-//         const query = `
-//             SELECT 
-//                 ui.name AS mentee_name,
-//                 ui.lastname AS mentee_lastname,
-//                 ui.role AS mentee_role
-//             FROM 
-//                 mentor_mentee_relationship mmr
-//             JOIN 
-//                 userInfo ui ON mmr.menteeId = ui.userid;
-//         `;
-//         const [results] = await connection.execute(query);
-//         console.log('Fetched mentee names:', results);
-//         return results; // Return mentee results
-//     } catch (error) {
-//         console.error('Error fetching mentee names:', error);
-//         throw error;
-//     } finally {
-//         connection.release();
-//     }
-// };
-
-
-  
-
-
-
-/*(async () => { //Previous test to check the connection of the database '8' is the initial key we had in our database's admin table
-    try {
-        const adminName = await getAdminNameByKey('8');
-        console.log('Admin Name:', adminName);
-    } catch (error) {
-        console.error('Error fetching admin name:', error);
-    }
-})();*/
-
-
-/*console.log('Admin name: ' + (await getAdminNameByKey('0c5dbe5d-9885-11ef-a92b-02a12f7436d7'))); //Test for fetching Admin Name; PASSED
-console.log('Admin email: ' + (await getAdminEmailByKey('0c5dbe5d-9885-11ef-a92b-02a12f7436d7'))); //Test for fetching Admin Email; PASSED
-console.log('Admin department key: ' + (await getAdminDepartmentKeyByKey('0c5dbe5d-9885-11ef-a92b-02a12f7436d7'))); //Test for fetching Admin Department Key; PASSED*/
-//console.log('Admin username: ' + (await getAdminUsernameByKey('8'))); //Test for fetching Admin Username; PASSED
-/*(async () => {
-    try {
-        console.log('Attempting to create a new account...');
-        const userId = await createAccount('Hally', 'Honz', 'sample4@email.com', 'test4password', 'WDIN', 'mentee');
-        console.log('Account created successfully with user ID:', userId);
-    } catch (error) {
-        console.error('Failed to create account:', error); // This will log any error that occurs
-    }
-})();*/
-
-
-
