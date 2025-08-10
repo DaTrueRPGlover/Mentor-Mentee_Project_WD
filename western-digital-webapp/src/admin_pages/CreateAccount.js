@@ -10,7 +10,7 @@ import write from "../assets/write.png";
 import one from "../assets/one.png";
 import twopeople from "../assets/twopeople.png";
 import { motion } from "framer-motion";
-// import AssignMentorTable from './AssignMentorTable';
+import AssignMentorTable from './AssignMentorTable';
 
 function CreateAccount() {
   const navigate = useNavigate();

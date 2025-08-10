@@ -2,6 +2,7 @@
 //Remember to remove box C
 //Reminder to change the sidebar to sidebarA and navbar to nav-buttonsA
 //Take out WelcomeboxcintainerA out of contentWrapperVA
+// ViewProgressions.js
 import React, { useState, useEffect } from 'react';
 import './ViewProgression.css';
 import { useNavigate } from "react-router-dom";
@@ -11,28 +12,33 @@ import write from "../assets/write.png";
 import one from "../assets/one.png";
 import twopeople from "../assets/twopeople.png";
 import logo from "../assets/WDC2.png";
+import { motion } from "framer-motion";
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import MoodIcon from '@mui/icons-material/Mood';
-// import AssignMentor from './AssignMentorTable.js';
-import { motion } from "framer-motion";
+import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import AssignMentor from './AssignMentorTable.js';
 
 function ViewProgressions() {
   const navigate = useNavigate();
+
+  // States
   const [menteesList, setMenteesList] = useState([]);
-  const [mentorsList, setMentorsList] = useState([]);
   const [meetingsList, setMeetingsList] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState('');
-  const [selectedMentor, setSelectedMentor] = useState('');
   const [selectedMeeting, setSelectedMeeting] = useState('');
   const [menteeNotes, setMenteeNotes] = useState(null);
-  const [mentorNotes, setMentorNotes] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const user = JSON.parse(sessionStorage.getItem("user")) || {};
-  const adminName = user.name || "Admin";
+  const [mentorsList, setMentorsList] = useState([]);
+  const [selectedMentor, setSelectedMentor] = useState('');
+  const [mentorNotes, setMentorNotes] = useState(null);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const adminName = user?.name || "Admin";
+
+  // Toggle Theme
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
     setIsDarkMode(newTheme);
@@ -46,23 +52,148 @@ function ViewProgressions() {
     document.body.className = savedTheme ? "dark-mode" : "";
   }, []);
 
+  // Fetch Mentee Notes
+  const fetchMenteeNotes = async (meetingkey, menteekey) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/menteeNotes/menteenotes/${meetingkey}/${menteekey}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setMenteeNotes(data);
+          setErrorMessage('');
+        } else {
+          setErrorMessage('No notes found for this meeting and mentee key.');
+          setMenteeNotes(null);
+        }
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentee notes');
+        setMenteeNotes(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentee notes');
+      setMenteeNotes(null);
+    }
+  };
+
+  // Fetch Mentor Notes
+  const fetchMentorNotes = async (meetingkey, mentorkey) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/mentorNotes/mentornotes/${meetingkey}/${mentorkey}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setMentorNotes(data);
+          setErrorMessage('');
+        } else {
+          setErrorMessage('No notes found for this meeting and mentor key.');
+          setMentorNotes(null);
+        }
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentor notes');
+        setMentorNotes(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentor notes');
+      setMentorNotes(null);
+    }
+  };
+
+  // Format Date
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  // Fetch Lists
+  const fetchMenteeNames = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/mentees');
+      if (response.ok) {
+        const data = await response.json();
+        setMenteesList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentee data');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentee data');
+    }
+  };
+
+  const fetchMentorNames = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/mentors');
+      if (response.ok) {
+        const data = await response.json();
+        setMentorsList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching mentor data');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching mentor data');
+    }
+  };
+
+  const fetchMeetingsByMentee = async (menteekey) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/meetings/mentees/${menteekey}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMeetingsList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching meetings data');
+        setMeetingsList([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching meetings data');
+      setMeetingsList([]);
+    }
+  };
+
+  const fetchMeetingsByMentor = async (mentorkey) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/meetings/mentors/${mentorkey}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMeetingsList(data);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Error fetching meetings data');
+        setMeetingsList([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error fetching meetings data');
+      setMeetingsList([]);
+    }
+  };
+
+  // Effects
   useEffect(() => {
-    setMenteesList([
-      { userid: "m1", name: "Jane", lastname: "Doe" },
-      { userid: "m2", name: "John", lastname: "Smith" }
-    ]);
-    setMentorsList([
-      { userid: "t1", name: "Alice", lastname: "Walker" },
-      { userid: "t2", name: "Bob", lastname: "Johnson" }
-    ]);
+    fetchMenteeNames();
+    fetchMentorNames();
   }, []);
 
   useEffect(() => {
     if (selectedMentee) {
-      setMeetingsList([
-        { meetingkey: "mtg1", datetime: new Date().toISOString() },
-        { meetingkey: "mtg2", datetime: new Date(Date.now() - 86400000).toISOString() }
-      ]);
+      fetchMeetingsByMentee(selectedMentee);
       setSelectedMeeting('');
       setMenteeNotes(null);
       setErrorMessage('');
@@ -71,10 +202,7 @@ function ViewProgressions() {
 
   useEffect(() => {
     if (selectedMentor) {
-      setMeetingsList([
-        { meetingkey: "mtg1", datetime: new Date().toISOString() },
-        { meetingkey: "mtg2", datetime: new Date(Date.now() - 86400000).toISOString() }
-      ]);
+      fetchMeetingsByMentor(selectedMentor);
       setSelectedMeeting('');
       setMentorNotes(null);
       setErrorMessage('');
@@ -83,786 +211,283 @@ function ViewProgressions() {
 
   useEffect(() => {
     if (selectedMentee && selectedMeeting) {
-      setMenteeNotes({
-        profile_of_a_leader: 3,
-        executive_communication_style: 4,
-        trust_respect_visibility: 2,
-        motivating_your_team: 5,
-        self_advocacy_and_career_growth: 3,
-        work_life_balance: 4,
-        additional_comments: "Doing great! Needs more practice on public speaking."
-      });
-      setErrorMessage('');
+      fetchMenteeNotes(selectedMeeting, selectedMentee);
     }
   }, [selectedMentee, selectedMeeting]);
 
   useEffect(() => {
     if (selectedMentor && selectedMeeting) {
-      setMentorNotes({
-        skipped: 0,
-        finished_homework: 1,
-        attitude_towards_learning: 4,
-        additional_comments: "Very engaged during the last session."
-      });
-      setErrorMessage('');
+      fetchMentorNotes(selectedMeeting, selectedMentor);
     }
   }, [selectedMentor, selectedMeeting]);
 
+  // Logout
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
 
-  const formatDateTime = (date) => {
-    return new Date(date).toLocaleString("en-US", {
-      weekday: "long", year: "numeric", month: "long",
-      day: "numeric", hour: "2-digit", minute: "2-digit"
-    });
-  };
-
   return (
     <div className="view-progression">
-        <div className="logo-title-container">
-            <img src={logo} alt="logo" className="logo" />
-            <h1 className="title-header">View Progress</h1>
+      {/* Logo and Title */}
+      <div className="logo-title-container">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">View Progress</h1>
+      </div>
+
+      {/* Sidebar */}
+      <div className="sidebarA">
+        {/* Navigation */}
+        <div className="nav-buttonsA">
+          <motion.button className="icon" onClick={() => navigate("/see-interactions")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button className="icon1" onClick={() => navigate("/view-progressions")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button className="icon" onClick={() => navigate("/create-account")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={one} alt="create" />
+          </motion.button>
+          <motion.button className="icon" onClick={() => navigate("/assign-mentor")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={twopeople} alt="twopeople" />
+          </motion.button>
         </div>
-        <div className="sidebarA">
-            <div className="nav-buttonsA">
-            <motion.button className="icon" onClick={() => navigate("/see-interactions")} 
-            whileHover={{ scale: 1.1 }} // Growing effect on hover
-            transition={{ duration: 0.1 }}
-            >  
-                <img src={chat} alt="chat" />
-            </motion.button>
-            
-            <motion.button className="icon1" onClick={() => navigate("#")}
-                whileHover={{ scale: 1.1 }} // Growing effect on hover
-                transition={{ duration: 0.1 }}
-            >
-                <img src={write} alt="write" />
-            </motion.button>
-            <motion.button
-                className="icon"
-                onClick={() => navigate("/create-account")}
-                whileHover={{ scale: 1.1 }} // Growing effect on hover
-                transition={{ duration: 0.1 }}
-            >
-                <img src={one} alt="create" />
-            </motion.button>
-            <motion.button
-                className="icon"
-                onClick={() => navigate("/assign-mentor")}
-                whileHover={{ scale: 1.1 }} // Growing effect on hover
-                transition={{ duration: 0.1 }}
-            >
-                <img src={twopeople} alt="twopeople" />
-            </motion.button>
-            </div>
 
-            <div className="slider-section">
-            <label className="slider-container">
-                <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
-                <span className="slider"></span>
-            </label>
-            </div>
-
-            <motion.button className="logout-buttonV2" onClick={handleLogout} whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
-            <img src={logout} alt="logout" />
-            </motion.button>
+        {/* Theme Toggle */}
+        <div className="slider-section">
+          <label className="slider-container">
+            <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+            <span className="slider"></span>
+          </label>
         </div>
-        <div className="content-wrapperVA">
-            <div className="chat-boxA">
-                <div className="box1">
-                    <div className="chat-containerA">
-                        <div className="main-content">
-                            <div className="mentor-mentee-container">
-                                <div className="dropdown-container">
-                                    <label htmlFor="mentee-select">Select Mentee:</label>
-                                    <select id="mentee-select" value={selectedMentee} onChange={(e) => setSelectedMentee(e.target.value)}>
-                                    <option value="">-- Select Mentee --</option>
-                                    {menteesList.map((mentee) => (
-                                        <option key={mentee.userid} value={mentee.userid}>
-                                        {mentee.name} {mentee.lastname}
-                                        </option>
-                                    ))}
-                                    </select>
-                                </div>
 
-                                <div className="dropdown-container">
-                                    <label htmlFor="mentor-select">Select Mentor:</label>
-                                    <select id="mentor-select" value={selectedMentor} onChange={(e) => setSelectedMentor(e.target.value)}>
-                                    <option value="">-- Select Mentor --</option>
-                                    {mentorsList.map((mentor) => (
-                                        <option key={mentor.userid} value={mentor.userid}>
-                                        {mentor.name} {mentor.lastname}
-                                        </option>
-                                    ))}
-                                    </select>
-                                </div>
-                            </div>
+        {/* Logout */}
+        <motion.button className="logout-buttonV2" onClick={handleLogout} whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
+          <img src={logout} alt="logout" />
+        </motion.button>
+      </div>
 
-                            <div className="smallrect">
-                            {selectedMentee && (
-                                <div className="dropdown-container">
-                                <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
-                                <select id="meeting-select-mentee" value={selectedMeeting} onChange={(e) => setSelectedMeeting(e.target.value)}>
-                                    <option value="">-- Select Meeting --</option>
-                                    {meetingsList.map((meeting) => (
-                                    <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                                        {new Date(meeting.datetime).toLocaleString()}
-                                    </option>
-                                    ))}
-                                </select>
-                                </div>
-                            )}
+      {/* Content */}
+      <div className="content-wrapperVA">
+        <div className="chat-boxA">
+          <div className="box1">
+            <div className="main-content">
+              {/* Dropdowns */}
+              <div className="mentor-mentee-container">
+                <div className="dropdown-container">
+                  <label htmlFor="mentee-select">Select Mentee:</label>
+                  <select id="mentee-select" value={selectedMentee} onChange={(e) => setSelectedMentee(e.target.value)}>
+                    <option value="">-- Select Mentee --</option>
+                    {menteesList.map((mentee) => (
+                      <option key={mentee.userid} value={mentee.userid}>
+                        {mentee.name} {mentee.lastname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                            {selectedMentor && (
-                                <div className="dropdown-container">
-                                <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
-                                <select id="meeting-select-mentor" value={selectedMeeting} onChange={(e) => setSelectedMeeting(e.target.value)}>
-                                    <option value="">-- Select Meeting --</option>
-                                    {meetingsList.map((meeting) => (
-                                    <option key={meeting.meetingkey} value={meeting.meetingkey}>
-                                        {new Date(meeting.datetime).toLocaleString()}
-                                    </option>
-                                    ))}
-                                </select>
-                                </div>
-                            )}
-                            </div>
+                <div className="dropdown-container">
+                  <label htmlFor="mentor-select">Select Mentor:</label>
+                  <select id="mentor-select" value={selectedMentor} onChange={(e) => setSelectedMentor(e.target.value)}>
+                    <option value="">-- Select Mentor --</option>
+                    {mentorsList.map((mentor) => (
+                      <option key={mentor.userid} value={mentor.userid}>
+                        {mentor.name} {mentor.lastname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-                            <div className="content-split">
-                            <div className="form-section">
-                                {menteeNotes && (
-                                <>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><EventBusyOutlinedIcon /><p>Communication</p></div><input className='input1' type="number" value={menteeNotes.profile_of_a_leader} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><AssignmentTurnedInOutlinedIcon /><p>Influence</p></div><input className='input1' type="number" value={menteeNotes.executive_communication_style} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><MoodIcon /><p>Managing Projects</p></div><input className='input1' type="number" value={menteeNotes.trust_respect_visibility} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><MoodIcon /><p>Innovation</p></div><input className='input1' type="number" value={menteeNotes.motivating_your_team} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><MoodIcon /><p>Emotional Intelligence</p></div><input className='input1' type="number" value={menteeNotes.self_advocacy_and_career_growth} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><MoodIcon /><p>Decision Making</p></div><input className='input1' type="number" value={menteeNotes.work_life_balance} readOnly /></div></div>
-                                    {menteeNotes.additional_comments && (
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><p>Additional Comments</p></div><textarea value={menteeNotes.additional_comments} readOnly rows="4" cols="50" /></div></div>
-                                    )}
-                                </>
-                                )}
+              <div className="smallrect">
+                {selectedMentee && (
+                  <div className="dropdown-container">
+                    <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
+                    <select id="meeting-select-mentee" value={selectedMeeting} onChange={(e) => setSelectedMeeting(e.target.value)}>
+                      <option value="">-- Select Meeting --</option>
+                      {meetingsList.map((meeting) => (
+                        <option key={meeting.meetingkey} value={meeting.meetingkey}>
+                          {new Date(meeting.datetime).toLocaleString()}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
-                                {mentorNotes && (
-                                <>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><EventBusyOutlinedIcon /><p>Skipped Meeting?</p></div><input className='input1' type="number" value={mentorNotes.skipped} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><AssignmentTurnedInOutlinedIcon /><p>Mentee Finished HW?</p></div><input className='input1' type="number" value={mentorNotes.finished_homework} readOnly /></div></div>
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><MoodIcon /><p>Attitude Toward Learning</p></div><input className='input1' type="number" value={mentorNotes.attitude_towards_learning} readOnly /></div></div>
-                                    {mentorNotes.additional_comments && (
-                                    <div className="form-box1"><div className="question-group"><div className="form-title"><p>Additional Comments</p></div><textarea value={mentorNotes.additional_comments} readOnly rows="4" cols="50" /></div></div>
-                                    )}
-                                </>
-                                )}
-                            </div>
-                            </div>
+                {selectedMentor && (
+                  <div className="dropdown-container">
+                    <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
+                    <select id="meeting-select-mentor" value={selectedMeeting} onChange={(e) => setSelectedMeeting(e.target.value)}>
+                      <option value="">-- Select Meeting --</option>
+                      {meetingsList.map((meeting) => (
+                        <option key={meeting.meetingkey} value={meeting.meetingkey}>
+                          {new Date(meeting.datetime).toLocaleString()}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
+              {/* Forms */}
+              <div className="content-split">
+                {/* Mentee Notes */}
+                <div className="form-section">
+                  {menteeNotes && (
+                    <>
+                      {/* Communication */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <EventBusyOutlinedIcon className="form-title-icon" />
+                            <p>Communication</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.profile_of_a_leader} readOnly />
                         </div>
+                      </div>
+
+                      {/* Influence */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
+                            <p>Influence</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.executive_communication_style} readOnly />
+                        </div>
+                      </div>
+
+                      {/* Managing Projects */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <MoodIcon className="form-title-icon" />
+                            <p>Managing Projects</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.trust_respect_visibility} readOnly />
+                        </div>
+                      </div>
+
+                      {/* Innovation */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <MoodIcon className="form-title-icon" />
+                            <p>Innovation</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.motivating_your_team} readOnly />
+                        </div>
+                      </div>
+
+                      {/* Emotional Intelligence */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <MoodIcon className="form-title-icon" />
+                            <p>Emotional Intelligence</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.self_advocacy_and_career_growth} readOnly />
+                        </div>
+                      </div>
+
+                      {/* Decision Making */}
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <MoodIcon className="form-title-icon" />
+                            <p>Decision Making</p>
+                          </div>
+                          <input className="input1" type="number" value={menteeNotes.work_life_balance} readOnly />
+                        </div>
+                      </div>
+
+                      {/* Additional Comments */}
+                      {menteeNotes.additional_comments && (
+                        <div className="form-box1">
+                          <div className="question-group">
+                            <div className="form-title">
+                              <p>Additional Comments</p>
+                            </div>
+                            <textarea value={menteeNotes.additional_comments} readOnly rows="4" cols="50" />
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {/* Mentor Notes */}
+                {mentorNotes && (
+                  <>
+                    {/* Skipped Meeting */}
+                    <div className="form-box1">
+                      <div className="question-group">
+                        <div className="form-title">
+                          <EventBusyOutlinedIcon className="form-title-icon" />
+                          <p>Skipped Meeting?</p>
+                        </div>
+                        <input className="input1" type="number" value={mentorNotes.skipped} readOnly />
+                      </div>
                     </div>
-                </div>
+
+                    {/* Homework */}
+                    <div className="form-box1">
+                      <div className="question-group">
+                        <div className="form-title">
+                          <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
+                          <p>Mentee Finished HW?</p>
+                        </div>
+                        <input className="input1" type="number" value={mentorNotes.finished_homework} readOnly />
+                      </div>
+                    </div>
+
+                    {/* Attitude */}
+                    <div className="form-box1">
+                      <div className="question-group">
+                        <div className="form-title">
+                          <MoodIcon className="form-title-icon" />
+                          <p>Mentee's Attitude Towards Learning</p>
+                        </div>
+                        <input className="input1" type="number" value={mentorNotes.attitude_towards_learning} readOnly />
+                      </div>
+                    </div>
+
+                    {/* Additional Comments */}
+                    {mentorNotes.additional_comments && (
+                      <div className="form-box1">
+                        <div className="question-group">
+                          <div className="form-title">
+                            <p>Additional Comments</p>
+                          </div>
+                          <textarea className="textarea" value={mentorNotes.additional_comments} readOnly rows="4" cols="50" />
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
+          </div>
         </div>
-        <div className="welcome-box-containerA">
-            <div className="welcome-boxA">
-                <h2>Welcome, {adminName}!</h2>
-                <p>Today is {formatDateTime(currentDateTime)}</p>
-            </div>
-            {/* <div className="new-boxA">
-                <h2>To-Do</h2>
-                <div className="assign-mentor-container">
-                <AssignMentor />
-                </div>
-            </div> */}
-            </div>
+      </div>
+
+      {/* Welcome Box */}
+      <div className="welcome-box-containerA">
+        <div className="welcome-boxA">
+          <h2>Welcome, {adminName}!</h2>
+          <p>Today is {formatDateTime(currentDateTime)}</p>
+        </div>
+
+        <div className="new-boxA">
+          <h2>To-Do</h2>
+          <div className="assign-mentor-container">
+            <AssignMentor />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default ViewProgressions;
 
-// // ViewProgressions.js
-// import React, { useState, useEffect } from 'react';
-// import './ViewProgression.css';
-// import { useNavigate } from "react-router-dom";
-// import logout from "../assets/logout.png";
-// import chat from "../assets/chat.png";
-// import write from "../assets/write.png";
-// import one from "../assets/one.png";
-// import twopeople from "../assets/twopeople.png";
-// import logo from "../assets/WDC2.png";
-// import { motion } from "framer-motion"; // Importing motion
-// import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
-// import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
-// import MoodIcon from '@mui/icons-material/Mood';
-// import {
-//   AppBar,
-//   Toolbar,
-//   Typography,
-//   Button,
-// } from "@mui/material";
-// import AssignMentor from './AssignMentorTable.js';
-
-// function ViewProgressions() {
-//   const navigate = useNavigate();
-//   // States for tracking data related to mentees, mentors, assignments, and UI state
-
-//   const [menteesList, setMenteesList] = useState([]);
-//   const [meetingsList, setMeetingsList] = useState([]);
-//   const [selectedMentee, setSelectedMentee] = useState('');
-//   const [selectedMeeting, setSelectedMeeting] = useState('');
-//   const [menteeNotes, setMenteeNotes] = useState(null);
-//   const [errorMessage, setErrorMessage] = useState('');
-
-
-//   const [mentorsList, setMentorsList] = useState([]);
-//   const [selectedMentor, setSelectedMentor] = useState('');
-//   const [mentorNotes, setMentorNotes] = useState(null);
-//     // User data and theme state
-
-//   const user = JSON.parse(sessionStorage.getItem("user"));
-//   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-//   const name = user['name']
-//   const adminName = name || "Admin";
-//   const [isDarkMode, setIsDarkMode] = useState(false);
-//   // Function to toggle dark mode theme
-
-//   const toggleTheme = () => {
-//     const newTheme = !isDarkMode;
-//     setIsDarkMode(newTheme);
-//     document.body.className = newTheme ? "dark-mode" : "";
-//     sessionStorage.setItem("isDarkMode", newTheme); // Save state
-//   };
-  
-//   useEffect(() => {
-//     const savedTheme = sessionStorage.getItem("isDarkMode") === "true"; // Retrieve state
-//     setIsDarkMode(savedTheme);
-//     document.body.className = savedTheme ? "dark-mode" : "";
-//   }, []);
-//   // Fetch mentee notes by meeting key and mentee key
-//   const fetchMenteeNotes = async (meetingkey, menteekey) => {
-//     try {
-//       console.log("Mentee Key:", menteekey);
-//       console.log("Meeting Key:", meetingkey);
-//       const response = await fetch(`http://localhost:3001/api/menteeNotes/menteenotes/${meetingkey}/${menteekey}`);
-//       if (response.ok) {
-//         const data = await response.json();
-//         if (data) {
-//           setMenteeNotes(data);
-//           setErrorMessage('');
-//         } else {
-//           setErrorMessage('No notes found for this meeting and mentee key.');
-//           setMenteeNotes(null);
-//         }
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching mentee notes');
-//         setMenteeNotes(null);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching mentee notes');
-//       setMenteeNotes(null);
-//     }
-//   };
-//   // gets mentor notes from database
-//   const fetchMentorNotes = async (meetingkey, mentorkey) => {
-//     try {
-//       console.log("Mentor Key:", mentorkey);
-//       console.log("Meeting Key:", meetingkey);
-//       const response = await fetch(`http://localhost:3001/api/mentorNotes/mentornotes/${meetingkey}/${mentorkey}`);
-//       if (response.ok) {
-//         const data = await response.json();
-//         if (data) {
-//           setMentorNotes(data); // Set mentee notes state with the fetched data
-//           setErrorMessage('');
-//         } else {
-//           setErrorMessage('No notes found for this meeting and mentee key.');
-//           setMentorNotes(null);
-//         }
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching mentor notes');
-//         setMentorNotes(null);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching mentor notes');
-//       setMentorNotes(null);
-//     }
-//   };
-//   // Fetch list of date and time
-//   const formatDateTime = (date) => {
-//     const options = {
-//       weekday: "long",
-//       year: "numeric",
-//       month: "long",
-//       day: "numeric",
-//       hour: "2-digit",
-//       minute: "2-digit",
-//       second: "2-digit",
-//     };
-//     return date.toLocaleDateString("en-US", options);
-//   };
-//   // Fetch list of mentees
-//   const fetchMenteeNames = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3001/api/mentees');
-//       if (response.ok) {
-//         const data = await response.json();
-//         setMenteesList(data);
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching mentee data');
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching mentee data');
-//     }
-//   };
-
-//   const fetchMentorNames = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3001/api/mentors');
-//       if (response.ok) {
-//         const data = await response.json();
-//         setMentorsList(data);
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching mentor data');
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching mentor data');
-//     }
-//   };
-
-//   // Fetch meetings for a selected mentee
-//   const fetchMeetingsByMentee = async (menteekey) => {
-//     try {
-//       const response = await fetch(`http://localhost:3001/api/meetings/mentees/${menteekey}`);
-//       if (response.ok) {
-//         const data = await response.json();
-//         setMeetingsList(data);
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching meetings data');
-//         setMeetingsList([]);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching meetings data');
-//       setMeetingsList([]);
-//     }
-//   };
-//   const fetchMeetingsByMentor = async (mentorkey) => {
-//     try {
-//       const response = await fetch(`http://localhost:3001/api/meetings/mentors/${mentorkey}`);
-//       if (response.ok) {
-//         const data = await response.json();
-//         setMeetingsList(data);
-//       } else {
-//         const errorData = await response.json();
-//         setErrorMessage(errorData.message || 'Error fetching meetings data');
-//         setMeetingsList([]);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setErrorMessage('Error fetching meetings data');
-//       setMeetingsList([]);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchMenteeNames();
-//     fetchMentorNames();
-//   }, []);
-
-//   useEffect(() => {
-//     if (selectedMentee) {
-//       fetchMeetingsByMentee(selectedMentee);
-//       setSelectedMeeting(''); // Reset selected meeting when mentee changes
-//       setMenteeNotes(null); // Clear previous notes
-//       setErrorMessage('');
-//     }
-//   }, [selectedMentee]);
-
-//   useEffect(() => {
-//     if (selectedMentor) {
-//       fetchMeetingsByMentor(selectedMentor);
-//       setSelectedMeeting(''); // Reset selected meeting when mentee changes
-//       setMentorNotes(null); // Clear previous notes
-//       setErrorMessage('');
-//     }
-//   }, [selectedMentor]);
-
-//   useEffect(() => {
-//     if (selectedMentee && selectedMeeting) {
-//       fetchMenteeNotes(selectedMeeting, selectedMentee);
-//     }
-//   }, [selectedMentee, selectedMeeting]);
-
-//   useEffect(() => {
-//     if (selectedMentor && selectedMeeting) {
-//       fetchMentorNotes(selectedMeeting, selectedMentor);
-//     }
-//   }, [selectedMentor, selectedMeeting]);
-
-//   const handleLogout = () => {
-//     sessionStorage.clear();
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="view-progression">
-// <div className="boxC">
-//     <div className="logo-title-container">
-//           <img src={logo} alt="logo" className="logo" />
-//           <h1 className="title-header">View Progress</h1>
-//     </div>
-//     <div className="sidebarA">
-//         {/* Navigation Buttons */}
-//         <div className="nav-buttonsC">
-//           <motion.button
-//             className="icon"
-//             onClick={() => navigate("/see-interactions")}
-//             whileHover={{ scale: 1.1 }} // Growing effect on hover
-//             transition={{ duration: 0.1 }}
-//           >
-//             <img src={chat} alt="chat" />
-//           </motion.button>
-//           <motion.button
-//             className="icon1"
-//             onClick={() => navigate("/view-progressions")}
-//             whileHover={{ scale: 1.1 }} // Growing effect on hover
-//             transition={{ duration: 0.1 }}
-//           >
-//             <img src={write} alt="write" />
-//           </motion.button>
-//           <motion.button
-//             className="icon"
-//             onClick={() => navigate("/create-account")}
-//             whileHover={{ scale: 1.1 }} // Growing effect on hover
-//             transition={{ duration: 0.1 }}
-//           >
-//             <img src={one} alt="create" />
-//           </motion.button>
-//           <motion.button
-//             className="icon"
-//             onClick={() => navigate("/assign-mentor")}
-//             whileHover={{ scale: 1.1 }} // Growing effect on hover
-//             transition={{ duration: 0.1 }}
-//           >
-//             <img src={twopeople} alt="twopeople" />
-//           </motion.button>
-//         </div>
-
-//         {/* Logout Button */}
-//         <div className="slider-section">
-//           <span role="img" aria-label="Sun"></span>
-//           <label className="slider-container">
-//             <input
-//               type="checkbox"
-//               checked={isDarkMode}
-//               onChange={toggleTheme}
-//             />
-//             <span className="slider"></span>
-//           </label>
-//           <span role="img" aria-label="Moon"></span>
-//         </div>
-//         <motion.button
-//           className="logout-buttonV2"
-//           onClick={handleLogout}
-//           whileHover={{ scale: 1.1 }} // Growing effect on hover
-//           transition={{ duration: 0.3 }}
-//         >
-//           <img src={logout} alt="logout" />
-//         </motion.button>
-//       </div>
-
-//       <div className="content-wrapperVA">
-//         <div className="chat-boxA">
-//           <div className="box1">
-//           <div className="chat-containerA">
-//           </div>
-//           <div className="main-content">
-//   {/* Mentor and Mentee Dropdowns Side by Side */}
-//   <div className="mentor-mentee-container">
-//     <div className="dropdown-container">
-//       <label htmlFor="mentee-select">Select Mentee:</label>
-//       <select
-//         id="mentee-select"
-//         value={selectedMentee}
-//         onChange={(e) => setSelectedMentee(e.target.value)}
-//       >
-//         <option value="">-- Select Mentee --</option>
-//         {menteesList.map((mentee) => (
-//           <option key={mentee.userid} value={mentee.userid}>
-//             {mentee.name} {mentee.lastname}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-
-//     <div className="dropdown-container">
-//       <label htmlFor="mentor-select">Select Mentor:</label>
-//       <select
-//         id="mentor-select"
-//         value={selectedMentor}
-//         onChange={(e) => setSelectedMentor(e.target.value)}
-//       >
-//         <option value="">-- Select Mentor --</option>
-//         {mentorsList.map((mentor) => (
-//           <option key={mentor.userid} value={mentor.userid}>
-//             {mentor.name} {mentor.lastname}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   </div>
-
-//   {/* Other Dropdowns Stacked Below */}
-//   <div className="smallrect">
-//   {selectedMentee && (
-//     <div className="dropdown-container">
-//       <label htmlFor="meeting-select-mentee">Select Meeting (Mentee):</label>
-//       <select
-//         id="meeting-select-mentee"
-//         value={selectedMeeting}
-//         onChange={(e) => setSelectedMeeting(e.target.value)}
-//       >
-//         <option value="">-- Select Meeting --</option>
-//         {meetingsList.map((meeting) => (
-//           <option key={meeting.meetingkey} value={meeting.meetingkey}>
-//             {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   )}
-
-//   {selectedMentor && (
-//     <div className="dropdown-container">
-//       <label htmlFor="meeting-select-mentor">Select Meeting (Mentor):</label>
-//       <select
-//         id="meeting-select-mentor"
-//         value={selectedMeeting}
-//         onChange={(e) => setSelectedMeeting(e.target.value)}
-//       >
-//         <option value="">-- Select Meeting --</option>
-//         {meetingsList.map((meeting) => (
-//           <option key={meeting.meetingkey} value={meeting.meetingkey}>
-//             {new Date(meeting.datetime).toLocaleString()} {/* Display readable date */}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   )}
-//   </div>
-
-
-
-     
-//   {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
-
-//       <div className="content-split">
-//         <div className="form-section">
-//           {/* Display mentee notes */}
-//           {menteeNotes && (
-//             <>
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <EventBusyOutlinedIcon className="form-title-icon" />
-//                     <p>Communication</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.profile_of_a_leader}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-//                     <p>Infulence</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.executive_communication_style}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <MoodIcon className="form-title-icon" />
-//                     <p>Managing Projects</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.trust_respect_visibility}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <MoodIcon className="form-title-icon" />
-//                     <p>Innovation</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.motivating_your_team}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <MoodIcon className="form-title-icon" />
-//                     <p>Emotional Intelligence</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.self_advocacy_and_career_growth}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="form-box1">
-//                 <div className="question-group">
-//                   <div className="form-title">
-//                     <MoodIcon className="form-title-icon" />
-//                     <p>Decision Making</p>
-//                   </div>
-//                   <input className='input1'
-//                     type="number"
-//                     value={menteeNotes.work_life_balance}
-//                     readOnly
-//                   />
-//                 </div>
-//               </div>
-
-//               {/* Additional Comments */}
-//               {menteeNotes.additional_comments && (
-//                 <div className="form-box1">
-//                   <div className="question-group">
-//                     <div className="form-title">
-//                       <p>Additional Comments</p>
-//                     </div>
-//                     <textarea
-//                       value={menteeNotes.additional_comments}
-//                       readOnly
-//                       rows="4"
-//                       cols="50"
-//                     />
-//                   </div>
-//                 </div>
-//               )}
-//             </>
-//           )}
-//         </div>
-//         {/* MENTOR FORM NOW  */}
-//         {mentorNotes && (
-//     <>
-//       <div className="form-box1">
-//         <div className="question-group">
-//           <div className="form-title">
-//             <EventBusyOutlinedIcon className="form-title-icon" />
-//             <p>Skipped Meeting?</p>
-//           </div>
-//           <input className='input1'
-//             type="number"
-//             value={mentorNotes.skipped}
-//             readOnly
-//           />
-//         </div>
-//       </div>
-
-//       <div className="form-box1">
-//         <div className="question-group">
-//           <div className="form-title">
-//             <AssignmentTurnedInOutlinedIcon className="form-title-icon" />
-//             <p>Mentee Finished HW?</p>
-//           </div>
-//           <input className='input1'
-//             type="number"
-//             value={mentorNotes.finished_homework}
-//             readOnly
-//           />
-//         </div>
-//       </div>
-
-//       <div className="form-box1">
-//         <div className="question-group">
-//           <div className="form-title">
-//             <MoodIcon className="form-title-icon" />
-//             <p>Mentee's Attitude Towards Learning</p>
-//           </div>
-//           <input className='input1'
-//             type="number"
-//             value={mentorNotes.attitude_towards_learning}
-//             readOnly
-//           />
-//         </div>
-//       </div>
-
-//       {/* Additional Comments */}
-//       {mentorNotes.additional_comments && (
-//         <div className="form-box1">
-//           <div className="question-group">
-//             <div className="form-title">
-//               <p>Additional Comments</p>
-//             </div>
-//             <textarea
-//               className='textarea'
-//               value={mentorNotes.additional_comments}
-//               readOnly
-//               rows="4"
-//               cols="50"
-//             />
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   )}
-//       </div>
-//       </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       </div>
-//       <div className="welcome-box-containerA">
-//       {/* Welcome Message Box */}
-//       <div className="welcome-boxA">
-//         <h2>Welcome, {adminName}!</h2>
-//         <p>Today is {formatDateTime(currentDateTime)}</p>
-//       </div>
-
-//       <div className="new-boxA">
-//     <h2>To-Do</h2>
-//     <div className="assign-mentor-container">
-//       <AssignMentor/>
-//     </div>
-//   </div>
-      
-//     </div>
-//     </div>
-    
-//   );
-// }
-
-// export default ViewProgressions;
