@@ -277,11 +277,11 @@
 /* Misc                                           */
 /* ============================================= */
 
-.container1 { text-align: center; margin-bottom: 20px; }
-.welcome-message { font-size: 2rem; font-weight: bold; }
-.mentor-name { font-size: 1.2rem; color: #555; }
-.main-container { width: 02; } /* left as-is from your file */
-.no-mentor-message { font-size: 1.2rem; color: #777; text-align: center; }
+.interact-with-mentor .container1 { text-align: center; margin-bottom: 20px; }
+.interact-with-mentor .welcome-message { font-size: 2rem; font-weight: bold; }
+.interact-with-mentor .mentor-name { font-size: 1.2rem; color: #555; }
+.interact-with-mentor .main-container { width: 02; } /* left as-is from your file */
+.interact-with-mentor .no-mentor-message { font-size: 1.2rem; color: #777; text-align: center; }
 
 /* ============================================= */
 /* Media Queries (Responsive Styling)             */
