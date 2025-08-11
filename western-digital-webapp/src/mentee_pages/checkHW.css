@@ -185,7 +185,7 @@
 }
 
 .check-hw .welcome-boxA,
-.new-boxA {
+.check-hw .new-boxA {
   background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -196,7 +196,7 @@
 }
 
 .check-hw .welcome-boxA { height: 16.4vh; }
-.new-boxA {
+.check-hw .new-boxA {
   height: 63vh;
   overflow: hidden;
   display: flex;
@@ -204,7 +204,7 @@
 }
 
 /* Chat box inside right column */
-.new-boxA .chat-box-container {
+.check-hw .new-boxA .chat-box-container {
   max-height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -218,7 +218,7 @@
 /* White rectangle (list container)               */
 /* ============================================= */
 
-.whiteR {
+.check-hw .whiteR {
   background-color: #ffffff;
   padding: 30px;
   border-radius: 10px;
@@ -231,15 +231,15 @@
   margin-left: 20%;
   margin-right: 20%;
 }
-.whiteR * {
+.check-hw .whiteR * {
   background-color: #ffffff !important;
   color: #333;
 }
 
 /* List / cards */
-.homework-list { display: flex; flex-direction: column; gap: 15px; }
+.check-hw .homework-list { display: flex; flex-direction: column; gap: 15px; }
 
-.homework-card {
+.check-hw .homework-card {
   background-color: #ffffff;
   padding: 25px;
   border-radius: 15px;
@@ -256,11 +256,11 @@
   position: relative;
   word-wrap: break-word;
 }
-.homework-card:hover { background-color: #f1f1f1; }
+.check-hw .homework-card:hover { background-color: #f1f1f1; }
 
-.homework-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; white-space: normal; }
-.homework-description { font-size: 1rem; color: #555; margin-bottom: 10px; white-space: normal; }
-.homework-date { font-size: 0.9rem; color: #777; margin-bottom: 5px; }
+.check-hw .homework-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; white-space: normal; }
+.check-hw .homework-description { font-size: 1rem; color: #555; margin-bottom: 10px; white-space: normal; }
+.check-hw .homework-date { font-size: 0.9rem; color: #777; margin-bottom: 5px; }
 
 .loading, .error { font-size: 1.2rem; text-align: center; margin-top: 20px; color: #ff6b6b; }
 

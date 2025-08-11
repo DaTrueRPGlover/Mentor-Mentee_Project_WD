@@ -27,14 +27,14 @@
   }
   
   /* No Data Message */
-  .no-homework {
+  .check-hw-table .no-homework {
     text-align: center;
     font-size: 1.5rem; /* Increased font size */
     color: #777;
   }
   
   /* Homework List Styling */
-  .homework-list {
+  .check-hw-table .homework-list {
     display: flex;
     flex-direction: column;
     gap: 25px; /* Increased gap between cards */
@@ -43,7 +43,7 @@
   }
   
   /* Homework Card Styling */
-  .homework-card {
+  .check-hw-table .homework-card {
     background-color: inherit; /* White background */
     padding: 25px; /* Increased padding for larger cards */
     border-radius: 15px; /* More rounded corners */
@@ -59,29 +59,29 @@
   }
   
   /* Hover Effects */
-  .homework-card:hover {
+  .check-hw-table .homework-card:hover {
     background-color: #f9f9f9; /* Light grey on hover */
     transform: translateY(-5px); /* Slight lift on hover */
   }
   
   /* Additional Styling for Meetings */
-  .homework-card.meeting {
+  .check-hw-table .homework-card.meeting {
     border-left: 7px solid #007bff; /* Blue border for meetings */
   }
   
-  .homework-card.homework {
+  .check-hw-table .homework-card.homework {
     border-left: 7px solid #28a745; /* Green border for homework */
   }
   
   /* Homework Title Styling */
-  .homework-title {
+  .check-hw-table .homework-title {
     font-size: 2rem; /* Increased font size */
     font-weight: bold;
     margin-bottom: 15px;
   }
   
   /* Homework Description Styling */
-  .homework-description {
+  .check-hw-table .homework-description {
     font-size: 1.2rem; /* Increased font size */
     color: #555;
     margin-bottom: 15px;
@@ -89,7 +89,7 @@
   }
   
   /* Homework Date Styling */
-  .homework-date {
+  .check-hw-table .homework-date {
     font-size: 1rem; /* Increased font size */
     color: #777;
     margin-bottom: 5px;
