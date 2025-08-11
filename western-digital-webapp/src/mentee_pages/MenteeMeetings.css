@@ -1,207 +1,335 @@
-:root {
-  --primary-bg: #ffffff;
-  --secondary-bg: #f5f5f5;
-  --accent: #53a5ff;
-  --text: #333333;
-  --card-shadow: rgba(0, 0, 0, 0.1);
-}
+/* ============================================= */
+/* Layout & Page Structure                        */
+/* ============================================= */
 
-body.dark-mode {
-  background: #1e1e1e;
-  color: #dddddd;
-}
-
-/* Topbar */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: var(--secondary-bg);
-}
-
-.logo-title-container {
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  width: 3rem;
-  margin-right: 0.5rem;
-}
-
-.title-header {
-  font-size: 1.75rem;
-  color: var(--text);
-}
-
-.topbar-actions .icon-btn img {
-  width: 1.5rem;
-}
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 4rem;
-  left: 0;
-  bottom: 0;
-  width: 4rem;
-  background: var(--secondary-bg);
+.mentee-meetings {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1rem 0;
-  gap: 2rem;
-  box-shadow: 2px 0 4px rgba(0,0,0,0.1);
-}
-
-.sidebar-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-  padding-bottom: 1rem;
-}
-
-.sidebar .icon {
-  width: 3rem;
-  height: 3rem;
-  background: var(--primary-bg);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-}
-
-.sidebar .icon:hover {
-  transform: scale(1.1);
-  background: var(--accent);
-}
-
-.sidebar .icon.active {
-  background: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent);
-}
-
-.sidebar .icon img {
-  width: 1.75rem;
-  height: auto;
-}
-
-/* Logout button style */
-.logout-btn {
-  background: #ff4d4f;
-  border-radius: 50%;
-  padding: 0.5rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-  background: #d9363e;
-  transform: scale(1.2);
-}
-
-.logout-btn img {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-/* Main container */
-.main-container {
-  margin-top: 4rem;
-  margin-left: 4rem;
-  padding: 1rem;
-  background: var(--primary-bg);
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.calendar-container {
+  min-height: 100vh;
   width: 100%;
-  max-width: 900px;
-  height: 80vh;
-  background: var(--primary-bg);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px var(--card-shadow);
-  overflow: hidden;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start; /* match mentor */
+  gap: 20px;
+  position: fixed; /* desktop fixed; mobile becomes static */
 }
 
-/* Event dialog styles */
-.event-dialog-backdrop {
-  position: fixed;
+.mentee-meetings .logo-title-container {
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.4);
+  width: 100%;
+  z-index: 1050;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
 }
 
-.event-dialog {
-  position: relative;
-  background: var(--primary-bg);
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px var(--card-shadow);
-  width: 300px;
-  max-width: 90%;
-  z-index: 10000;
+/* ============================================= */
+/* Logo & Title Styling                           */
+/* ============================================= */
+
+.mentee-meetings .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
+  margin-left: 10px;
 }
 
-.close-icon {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: var(--text);
+.mentee-meetings .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050;
+  color: #333;
 }
 
-.event-dialog h2 {
-  margin-top: 1rem;
-}
+/* ============================================= */
+/* Sidebar & Navigation                           */
+/* ============================================= */
 
-.event-dialog p {
-  margin: 0.5rem 0;
-}
-
-.dialog-actions {
+.mentee-meetings .sidebarA {
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+  flex-direction: column;
+  justify-content: center; /* center like mentor */
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
 }
 
-.join-btn {
-  padding: 0.75rem 1.5rem;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
+.mentee-meetings .nav-buttonsA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80vh;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ============================================= */
+/* Icons & Buttons                                */
+/* ============================================= */
+
+.mentee-meetings .icon,
+.mentee-meetings .icon1 {
+  width: 70px;
+  height: 70px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mentee-meetings .icon { background-color: #ffffff; border: none; }
+.mentee-meetings .icon1 { background-color: gray; border: none; }
+
+.mentee-meetings .icon img,
+.mentee-meetings .icon1 img {
+  width: 40px;
+  height: auto;
+  max-width: 40px;
+  min-width: 20px;
+}
+
+/* Optional rectangular logout (kept if used elsewhere) */
+.mentee-meetings .logout-button {
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #91BECD;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: background-color 0.3s;
+}
+.mentee-meetings .logout-button:hover { background-color: #7CAFB7; }
+
+/* Sidebar circle logout (matches other pages) */
+.mentee-meetings .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .main-container { margin-left: 0; }
+/* ============================================= */
+/* Content Containers                             */
+/* ============================================= */
+
+/* main title/message block kept */
+.mentee-meetings .welcome-message {
+  font-size: 32px;
+  text-align: center;
+  margin: 20px 0;
+  background-color: inherit;
+  color: #91BECD !important;
+  font-family: Tahoma, sans-serif;
 }
 
+/* Left/center column wrapper */
+.mentee-meetings .content-wrapperVA {
+  position: fixed;
+  left: 10.7%;
+  top: 72.3%;
+  overflow-y: auto;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 116.6%;
+  width: 80%;
+  margin-right: 50px;
+}
+
+/* Inner cards */
+.mentee-meetings .chat-boxA {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  background-color: #b9bec07c;
+  height: 100%;
+}
+
+/* Right column (optional containers kept as-is) */
+.mentee-meetings .welcome-box-containerA {
+  position: fixed;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-45%);
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mentee-meetings .welcome-boxA,
+.mentee-meetings .new-boxA {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mentee-meetings .welcome-boxA { height: 16.4vh; }
+.mentee-meetings .new-boxA { height: 63vh; }
+
+/* Calendar / react-big-calendar tweaks (kept) */
+.rbc-month-row  { border: 1px solid black; }
+.rbc-day-bg     { border-right: 1px solid black; }
+.rbc-toolbar button { border: 1px solid black; }
+
+/* Content area baseline */
+.mentee-meetings .main-content {
+  margin-top: -5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.mentee-meetings .box {
+  border-width: 5px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  width: 100%;
+  padding: 20px;
+}
+
+/* Forms & common elements (kept) */
+ul { list-style-type: none; padding: 0; }
+li { margin: 10px 0; font-size: 1.1em; }
+strong { font-weight: bold; }
+textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; width: 100%; background-color: white; font-family: Arial, sans-serif; }
+
+.mentee-meetings .submit-button { background-color: #53a5ff; color: white; border: none; padding: 10px 20px; cursor: pointer; margin-bottom: 10px; }
+.mentee-meetings .submit-button:hover { background-color: #0056b3; }
+
+.mentee-meetings .question-group { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.mentee-meetings .question-group p { font-size: 1.2rem; margin-bottom: 10px; font-weight: bold; color: #333; background-color: transparent; }
+.mentee-meetings .question-group input[type="radio"] { margin: 0; transform: scale(1.5); display: flex; }
+.mentee-meetings .question-group .radio-options { display: flex; align-items: center; justify-content: center; gap: 15px; color: #91BECD; }
+.mentee-meetings .question-group label { margin: 0; text-align: center; display: flex; }
+
+.mentee-meetings .form-box {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+}
+.mentee-meetings .comment-container { display: flex; width: 100%; flex-direction: column; align-items: center; margin-top: 20px; }
+.mentee-meetings .form-title { display: flex; color: black; margin-bottom: 10px; align-items: center; justify-content: center; }
+.mentee-meetings .form-title-icon { width: 26px; height: 26px; margin-right: 4px; vertical-align: middle; background-color: white !important; }
+.mentee-meetings .form-title p { font-size: 1.2rem; color: #91BECD; font-weight: bold; margin: 0; line-height: 1.5; }
+
+/* ============================================= */
+/* Media Queries (Responsive Styling)            */
+/* Mirrors MentorMeeting.css                      */
+/* ============================================= */
+
+@media (max-width: 1050px) {
+  /* allow page to scroll and stack vertically */
+  .mentee-meetings { position: static !important; }
+
+  .mentee-meetings .logo { width: 30%; max-width: 80px; }
+  .mentee-meetings .title-header { font-size: clamp(1.8rem, 5vw, 4rem); }
+
+  /* Sidebar becomes a bottom bar */
+  .mentee-meetings .sidebarA {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mentee-meetings .nav-buttonsA {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    gap: 10px;
+  }
+
+  .mentee-meetings .icon1,
+  .mentee-meetings .icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  /* Main columns stack and take full width */
+  .mentee-meetings .content-wrapperVA,
+  .mentee-meetings .welcome-box-containerA {
+    position: static !important;
+    width: 90% !important;
+    margin: 20px auto;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 80px;
+    height: auto; /* let content define height */
+  }
+
+  .mentee-meetings .welcome-boxA { margin-bottom: 80px; }
+
+  /* Reorder for clean top-to-bottom flow */
+  .mentee-meetings .logo-title-container {
+    order: 1;
+    position: static !important;
+    width: 90% !important;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .mentee-meetings .content-wrapperVA { order: 2; }
+  .mentee-meetings .welcome-box-containerA { order: 3; }
+  .mentee-meetings .sidebarA { order: 4; }
+}
+
+/* Keep smaller button tweaks if you still use .logout-button */
+@media (max-width: 768px) {
+  .mentee-meetings .logout-button { font-size: 1rem; padding: 8px 16px; }
+}
 @media (max-width: 480px) {
-  .header { flex-direction: column; align-items: flex-start; }
+  .mentee-meetings .logout-button { font-size: 0.9rem; padding: 6px 12px; right: 10px; top: 10px; }
 }

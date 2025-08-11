@@ -1,143 +1,154 @@
-// src/components/homeworkeach.js
-import React, { useMemo } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import "./homeworkeach.css";
-
+// src/components/HomeworkEach.js
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
+import Linkify from 'react-linkify';
+import './homeworkeach.css';
+import { motion } from "framer-motion";
 import logo from "../assets/WDC2.png";
 import chat from "../assets/chat.png";
 import write from "../assets/write.png";
 import assign from "../assets/assign.png";
 import calendar from "../assets/calendar.png";
 import logout from "../assets/logout.png";
+import { useNavigate } from "react-router-dom";
 
-/** Replace this with your real data fetch.
- * For now, a tiny mock so the page renders.
- */
-const MOCK_HOMEWORK = [
-  {
-    id: "1",
-    title: "Math Worksheet",
-    subject: "Math",
-    points: 20,
-    period: "Period 2",
-    description:
-      "Complete exercises 1–20 on page 42. Show all work. Upload a clear photo.",
-    resources: [
-      { label: "Worksheet PDF", href: "#" },
-      { label: "Example Solutions", href: "#" },
-    ],
-  },
-  {
-    id: "2",
-    title: "Science Lab Report",
-    subject: "Science",
-    points: 30,
-    period: "Period 4",
-    description:
-      "Write a 1–2 page report on your chemical reaction experiment. Include hypothesis, method, results, and conclusion.",
-    resources: [{ label: "Lab Template", href: "#" }],
-  },
-];
-
-export default function HomeworkEach() {
+const HomeworkEach = () => {
+  const { homeworkId } = useParams();
+  const [homework, setHomework] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const name = user?.name;
+  const menteeName = name || "Mentee";
 
-  const hw = useMemo(
-    () => MOCK_HOMEWORK.find((h) => h.id === id) || MOCK_HOMEWORK[0],
-    [id]
-  );
+  const [currentDateTime] = useState(new Date());
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.body.className = newTheme ? "dark-mode" : "";
+    sessionStorage.setItem("isDarkMode", newTheme);
+  };
+
+  useEffect(() => {
+    const savedTheme = sessionStorage.getItem("isDarkMode") === "true";
+    setIsDarkMode(savedTheme);
+    document.body.className = savedTheme ? "dark-mode" : "";
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/");
   };
 
+  // ---- SAME SHARED INLINE MOCK DATA ----
+  const MOCK_HOMEWORK = [
+    {
+      homework_id: 101,
+      title: "Arrays & Big-O",
+      description:
+        "Solve 5 array problems and write a short note on time complexity. Helpful ref: https://bigocheatsheet.io/",
+      assigned_date: "2025-08-05T10:00:00Z",
+      due_date: "2025-08-12T23:59:59Z",
+    },
+    {
+      homework_id: 102,
+      title: "SQL Joins Practice",
+      description:
+        "Complete the worksheet on INNER/LEFT/RIGHT joins using sample data. Try this sandbox: https://www.db-fiddle.com/",
+      assigned_date: "2025-08-07T12:00:00Z",
+      due_date: "2025-08-14T23:59:59Z",
+    },
+    {
+      homework_id: 103,
+      title: "React State & Props",
+      description:
+        "Build a small component demonstrating lifting state up and prop drilling. See docs: https://react.dev/",
+      assigned_date: "2025-08-09T09:30:00Z",
+      due_date: "2025-08-16T23:59:59Z",
+    },
+  ];
+  // --------------------------------------
+
+  useEffect(() => {
+    const loadMockEach = async () => {
+      setLoading(true);
+      try {
+        // simulate latency
+        await new Promise((r) => setTimeout(r, 400));
+        const item = MOCK_HOMEWORK.find(h => h.homework_id === Number(homeworkId));
+        if (!item) {
+          setError('Homework not found (mock).');
+        } else {
+          setHomework(item);
+          setError(null);
+        }
+      } catch (e) {
+        setError('Failed to load homework details (mock). Please try again later.');
+        console.error('Error loading mock homework details:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMockEach();
+  }, [homeworkId]);
+
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+
   return (
-    <div className="hw-each-page">
-      {/* Topbar */}
-      <header className="header">
-        <div className="logo-title">
-          <img src={logo} alt="logo" className="logo" />
-          <h1 className="title">Homework Details</h1>
-        </div>
-      </header>
+    <div className="homework-detail">
+      <div className="logo-title-container">
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="title-header">View Homework</h1>
+      </div>
 
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-main">
-          <button
-            className="icon"
-            onClick={() => navigate("/interact-mentor")}
-            aria-label="Chat"
-          >
-            <img src={chat} alt="Chat" />
-          </button>
-          <button
-            className="icon"
-            onClick={() => navigate("/todo-progression")}
-            aria-label="Write"
-          >
-            <img src={write} alt="Write" />
-          </button>
-          {/* Highlight Assign/Check HW as active for homework detail */}
-          <button
-            className="icon active"
-            onClick={() => navigate("/check-hw")}
-            aria-label="Assigned Homework"
-          >
-            <img src={assign} alt="Assign" />
-          </button>
-          <button
-            className="icon"
-            onClick={() => navigate("/mentee-meetings")}
-            aria-label="Calendar"
-          >
-            <img src={calendar} alt="Calendar" />
-          </button>
+      <div className="sidebar">
+        <div className="nav-buttons">
+          <motion.button className="icon1" onClick={() => navigate("/interact-mentor")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={chat} alt="chat" />
+          </motion.button>
+          <motion.button className="icon" onClick={() => navigate("/todo-progression")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={write} alt="write" />
+          </motion.button>
+          <motion.button className="icon" onClick={() => navigate("/check-hw")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={assign} alt="assign" />
+          </motion.button>
+          <motion.button className="icon" onClick={() => navigate("/mentee-meetings")} whileHover={{ scale: 1.1 }} transition={{ duration: 0.1 }}>
+            <img src={calendar} alt="calendar" />
+          </motion.button>
         </div>
 
-        {/* Logout pinned at bottom */}
-        <div className="logout-container">
-          <button
-            className="icon logout-btn"
-            onClick={handleLogout}
-            aria-label="Logout"
-          >
-            <img src={logout} alt="Logout" />
-          </button>
+        <div className="slider-section">
+          <span role="img" aria-label="Sun"></span>
+          <label className="slider-container">
+            <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+            <span className="slider"></span>
+          </label>
+          <span role="img" aria-label="Moon"></span>
         </div>
-      </aside>
 
-      {/* Main content */}
-      <main className="homework-detail">
-        <article className="detail-card">
-          <h2 className="hw-title">{hw.title}</h2>
-          <p className="hw-subject"><strong>Subject:</strong> {hw.subject}</p>
-          <p className="hw-points"><strong>Points:</strong> {hw.points}</p>
-          <p className="hw-period"><strong>Class:</strong> {hw.period}</p>
+        <motion.button className="logout-buttonV2" onClick={handleLogout} whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
+          <img src={logout} alt="logout" />
+        </motion.button>
+      </div>
 
-          <h3>Instructions</h3>
-          <p className="hw-description">{hw.description}</p>
-
-          {hw.resources?.length ? (
-            <>
-              <h3>Resources</h3>
-              <ul className="hw-resources">
-                {hw.resources.map((r, i) => (
-                  <li key={i}>
-                    <a href={r.href}>{r.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-
-          <div className="back-link">
-            <Link to="/check-hw">← Back to Assigned Homework</Link>
-          </div>
-        </article>
-      </main>
+      <div className="white">
+        <h1>{homework.title}</h1>
+        {/* Auto-detect links */}
+        <Linkify>
+          <p className="homework-description">{homework.description}</p>
+        </Linkify>
+        <p className="homework-date">Assigned: {format(new Date(homework.assigned_date), 'MMMM dd, yyyy')}</p>
+        <p className="homework-date">Due: {format(new Date(homework.due_date), 'MMMM dd, yyyy')}</p>
+      </div>
     </div>
   );
-}
+};
+
+export default HomeworkEach;

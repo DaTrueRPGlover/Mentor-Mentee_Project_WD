@@ -9,7 +9,6 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-// import "./ChatBox.css"; // Create and style this CSS as needed
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
@@ -17,143 +16,147 @@ const ChatBox = () => {
   const [mentorKey, setMentorKey] = useState(null);
   const [conversationKey, setConversationKey] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  // ---- INLINE MOCK DATA ----
+  const MOCK_RELATIONSHIP = {
+    mentorkey: 2001,
+    mentor_name: "Alex Mentor",
+  };
+
+  const MOCK_CONVERSATION = {
+    conversationKey: "conv_abc123",
+    messages: [
+      {
+        message_text: "Hey! Welcome to the mentorship chat 👋",
+        message_time: "2025-08-10T09:00:00Z",
+        sender_role: "mentor",
+      },
+      {
+        message_text: "Feel free to send your questions anytime.",
+        message_time: "2025-08-10T09:01:10Z",
+        sender_role: "mentor",
+      },
+      {
+        message_text: "Thanks! I’ll start with today’s homework doubts.",
+        message_time: "2025-08-10T09:02:25Z",
+        sender_role: "mentee",
+      },
+    ],
+  };
+
+  const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+  // --------------------------
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    // We no longer gate on sessionStorage; always load mocks for this page.
+    (async () => {
+      try {
+        await delay(300); // simulate latency
+        setMentorKey(MOCK_RELATIONSHIP.mentorkey);
+        setMentorName(MOCK_RELATIONSHIP.mentor_name);
 
-    if (!user || user.role.toLowerCase() !== "mentee") {
-      console.error("User not logged in or not a mentee");
-      return;
-    }
-
-    // Fetch the mentor assigned to the mentee
-    fetch(
-      `http://localhost:3001/api/relationships/mentor?menteekey=${user.userId}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error || data.length === 0) {
-          console.error("Error fetching mentor:", data.error);
-          return;
-        }
-
-        setMentorKey(data[0].mentorkey);
-        setMentorName(data[0].mentor_name);
-
-        // Fetch messages with the mentor
-        fetch(
-          `http://localhost:3001/api/messages?menteekey=${user.userId}&mentorkey=${data[0].mentorkey}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            setConversationKey(data.conversationKey);
-            const formattedMessages = data.messages.map((msg) => ({
-              message: msg.message_text,
-              sentTime: new Date(msg.message_time).toLocaleString(),
-              sender: msg.sender_role === "mentee" ? "You" : "Mentor",
-              direction: msg.sender_role === "mentee" ? "outgoing" : "incoming",
-            }));
-            setMessages(formattedMessages);
-          })
-          .catch((error) => console.error("Error fetching messages:", error));
-      })
-      .catch((error) => console.error("Error fetching mentor:", error));
+        await delay(250); // simulate latency
+        setConversationKey(MOCK_CONVERSATION.conversationKey);
+        const formatted = MOCK_CONVERSATION.messages.map((msg) => ({
+          message: msg.message_text,
+          sentTime: new Date(msg.message_time).toLocaleString(),
+          sender: msg.sender_role === "mentee" ? "You" : "Mentor",
+          direction: msg.sender_role === "mentee" ? "outgoing" : "incoming",
+        }));
+        setMessages(formatted);
+      } catch (e) {
+        console.error("Error loading mock data:", e);
+      } finally {
+        setIsReady(true);
+      }
+    })();
   }, []);
 
+  // Simulate occasional mentor typing + a canned reply once on mount
   useEffect(() => {
     if (!conversationKey) return;
 
-    const ws = new WebSocket("ws://localhost:3001");
-
-    ws.onopen = () => {
-      console.log("WebSocket connection opened");
-
-      ws.send(
-        JSON.stringify({ type: "subscribe", conversation_key: conversationKey })
-      );
-    };
-
-    ws.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      console.log("WebSocket new message:", newMessage);
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
+    const typingTimer = setTimeout(() => setIsTyping(true), 1200);
+    const replyTimer = setTimeout(() => {
+      setIsTyping(false);
+      setMessages((prev) => [
+        ...prev,
         {
-          message: newMessage.message,
-          sentTime: new Date(newMessage.timestamp).toLocaleString(),
-          sender: newMessage.senderRole === "mentee" ? "You" : "Mentor",
-          direction:
-            newMessage.senderRole === "mentee" ? "outgoing" : "incoming",
+          message: "Got it. Can you share where you got stuck?",
+          sentTime: new Date().toLocaleString(),
+          sender: "Mentor",
+          direction: "incoming",
         },
       ]);
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+    }, 2600);
 
     return () => {
-      ws.close();
+      clearTimeout(typingTimer);
+      clearTimeout(replyTimer);
     };
   }, [conversationKey]);
 
   const handleSendMessage = async (messageText) => {
-    if (messageText.trim()) {
-      const user = JSON.parse(sessionStorage.getItem("user"));
+    if (!messageText.trim()) return;
 
-      const messageData = {
-        conversationKey,
-        menteekey: user.userId,
-        mentorkey: mentorKey,
-        senderRole: user.role.toLowerCase(),
-        messageText,
-      };
+    // Append your outgoing message immediately
+    setMessages((prev) => [
+      ...prev,
+      {
+        message: messageText,
+        sentTime: new Date().toLocaleString(),
+        sender: "You",
+        direction: "outgoing",
+      },
+    ]);
 
-      try {
-        await fetch("http://localhost:3001/api/messages", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(messageData),
-        });
-      } catch (error) {
-        console.error("Error sending message:", error);
-      }
-    }
+    // Simulate mentor typing + quick auto-reply
+    setIsTyping(true);
+    await delay(800);
+    setIsTyping(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        message: "Thanks for the context! Let's walk through it step-by-step.",
+        sentTime: new Date().toLocaleString(),
+        sender: "Mentor",
+        direction: "incoming",
+      },
+    ]);
   };
+
+  if (!isReady) {
+    return <p className="no-mentor-message">Loading chat…</p>;
+  }
 
   return (
     <div className="chat-box-component">
-      {mentorKey ? (
-        <MainContainer className="chat-container">
-          <ChatContainer>
-            <MessageList
-              typingIndicator={
-                isTyping ? <TypingIndicator content="Mentor is typing..." /> : null
-              }
-            >
-              {messages.map((msg, index) => (
-                <Message
-                  key={index}
-                  model={{
-                    message: msg.message,
-                    sentTime: msg.sentTime,
-                    sender: msg.sender,
-                    direction: msg.direction,
-                  }}
-                />
-              ))}
-            </MessageList>
-            <MessageInput
-              placeholder="Type your message here..."
-              onSend={handleSendMessage}
-            />
-          </ChatContainer>
-        </MainContainer>
-      ) : (
-        <p className="no-mentor-message">You have no mentor assigned.</p>
-      )}
+      <MainContainer className="chat-container">
+        <ChatContainer>
+          <MessageList
+            typingIndicator={
+              isTyping ? <TypingIndicator content="Mentor is typing..." /> : null
+            }
+          >
+            {messages.map((msg, index) => (
+              <Message
+                key={index}
+                model={{
+                  message: msg.message,
+                  sentTime: msg.sentTime,
+                  sender: msg.sender,
+                  direction: msg.direction,
+                }}
+              />
+            ))}
+          </MessageList>
+          <MessageInput
+            placeholder="Type your message here..."
+            onSend={handleSendMessage}
+          />
+        </ChatContainer>
+      </MainContainer>
     </div>
   );
 };

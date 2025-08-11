@@ -1,172 +1,377 @@
-:root {
-  --primary-bg: #ffffff;
-  --secondary-bg: #f5f5f5;
-  --accent: #53a5ff;
-  --accent-hover: #3a8de0;
-  --text: #333333;
-  --card-shadow: rgba(0,0,0,0.1);
-}
+/* ============================================= */
+/* Layout & Page Structure                        */
+/* ============================================= */
 
-/* Topbar */
-.logo-title-container {
-  position: fixed;
-  top: 0;
-  left: 0; right: 0;
-  height: 4rem;
-  background: var(--secondary-bg);
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  box-shadow: 0 2px 4px var(--card-shadow);
-  z-index: 1000;
-}
-.logo { width: 3rem; margin-right: .5rem; }
-.title-header { flex:1; font-size:1.75rem; color:var(--text); }
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 4rem; left: 0; bottom: 0;
-  width: 4.25rem;
-  background: var(--secondary-bg);
-  display: flex; flex-direction: column; align-items: center;
-  padding: 1rem 0;
-  box-shadow: 2px 0 4px var(--card-shadow);
-  z-index: 900;
-}
-.sidebar-main {
-  flex: 1;
+.interact-with-mentor {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  text-align: center;
   align-items: center;
-  gap: 1.25rem;
+  justify-content: flex-start; /* match mentee */
+  /* NOTE: keep fixed layout only for large screens; mobile overrides to static */
+  position: fixed;
 }
 
-/* Circular icon buttons (shared look) */
-.icon {
-  width: 3rem; height: 3rem;
-  background: var(--primary-bg);
+/* ============================================= */
+/* Logo & Title Styling                           */
+/* ============================================= */
+
+.interact-with-mentor .logo-title-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.interact-with-mentor .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
+  margin-left: 10px;
+}
+
+.interact-with-mentor .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050;
+  color: #333;
+}
+
+/* ============================================= */
+/* Sidebar & Navigation                           */
+/* ============================================= */
+
+.interact-with-mentor .sidebar {
+  width: 6.6%;
+  height: 80vh;
+  background-color: #b9bec07c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center like mentee */
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 1.3%;
+  top: 54%;
+  transform: translateY(-50%);
+}
+
+.interact-with-mentor .nav-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* match mentee */
+  width: 100%;
+  max-height: 80vh;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ============================================= */
+/* Icons & Buttons                                */
+/* ============================================= */
+
+.interact-with-mentor .icon,
+.interact-with-mentor .icon1 {
+  width: 70px;
+  height: 70px;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 1;
+  flex-grow: 0;
   border-radius: 50%;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interact-with-mentor .icon {
+  background-color: #ffffff;
   border: none;
 }
-.icon img { width: 1.5rem; height: 1.5rem; }
-.icon:hover { transform: translateY(-2px); background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
-.icon.active { background: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
 
-/* Logout pinned at bottom */
-.logout-container { margin-top: auto; padding-bottom: 1rem; }
-.logout-btn { background: #ff4d4d !important; }
-.logout-btn:hover { background: #e04343 !important; }
-.logout-btn img { filter: brightness(0) invert(1); }
+.interact-with-mentor .icon1 {
+  background-color: gray;
+  border: none;
+}
 
-/* Chat container */
-.content-wrapperV2 {
-  position: fixed;
-  top: 4rem; left: 4.25rem; bottom: 0; right: 45%;
-  padding: 1rem; box-sizing: border-box;
+.interact-with-mentor .icon img,
+.interact-with-mentor .icon1 img {
+  width: 40px;
+  height: auto;
+  max-width: 40px;
+  min-width: 20px;
 }
-.chat-box {
-  display: flex; flex-direction: column;
-  height: 100%; background: var(--secondary-bg);
-  border-radius: 8px; box-shadow: 0 4px 10px var(--card-shadow);
-}
-.chat-content { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:.5rem; }
-.chat-message { display: flex; margin-bottom: 0.5rem; }
-.chat-message.incoming { justify-content: flex-start; }
-.chat-message.outgoing { justify-content: flex-end; }
-.chat-message .bubble {
-  max-width: 70%;
-  padding: .75rem 1rem;
-  border-radius: 1rem;
-  background: var(--primary-bg);
-  box-shadow: 0 2px 6px var(--card-shadow);
-}
-.chat-message.outgoing .bubble { background: var(--accent); color:#fff; }
-.timestamp { display: block; font-size: .65rem; color: #666; margin-top: .25rem; }
-.chat-options {
-  display:flex; gap:.5rem; padding:.5rem; border-top:1px solid #ddd; background:#fff;
-}
-.chat-options input {
-  flex:1; padding:.5rem;
-  border:1px solid #ccc; border-radius:4px;
-}
-.chat-options button {
-  padding:.5rem 1rem; background:var(--accent); color:#fff;
-  border:none; border-radius:4px; cursor:pointer;
-}
-.chat-options button:hover { background: var(--accent-hover); }
 
-/* Right side: welcome + upcoming */
-.welcome-box-container {
-  position: fixed;
-  top: 4rem; right: 0; bottom: 0;
-  width: 45%;
-  padding: 1rem; box-sizing: border-box;
-  display: flex; flex-direction: column; gap: 1rem;
+.interact-with-mentor .icon:hover,
+.interact-with-mentor .icon1:hover {
+  background-color: #e0e0e0;
 }
-.welcome-box {
-  background: var(--secondary-bg);
-  flex: 0 0 20vh;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  border-radius:8px; box-shadow:0 4px 10px var(--card-shadow);
-}
-.new-box {
-  background: var(--secondary-bg);
-  flex: 1;
-  border-radius: 8px; box-shadow: 0 4px 10px var(--card-shadow);
-  display: flex; flex-direction: column; padding: 1rem; box-sizing: border-box;
-}
-.meetings-list { display: flex; flex-direction: column; gap: .5rem; }
-.meeting-row {
-  text-align: left;
-  background: var(--primary-bg);
-  border: none; border-radius: 8px;
-  padding: .75rem 1rem;
+
+/* Logout Button (kept consistent with mentee) */
+.interact-with-mentor .logout-buttonV2 {
+  margin-top: 20px;
+  background-color: white;
+  border: none;
   cursor: pointer;
-  box-shadow: 0 1px 6px var(--card-shadow);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.meeting-row:hover { background: #f0f6ff; }
-.meeting-title { font-weight: 600; color: var(--text); }
-.meeting-meta { font-size: .9rem; color: #666; }
 
-/* Modal (shared style with your other pages) */
-.modal-overlay {
+.interact-with-mentor .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+.interact-with-mentor .logout-buttonV2 img {
+  width: 50%;
+  height: 50%;
+}
+
+/* ============================================= */
+/* Content Containers                             */
+/* ============================================= */
+
+.interact-with-mentor .content-wrapperV2 {
   position: fixed;
-  top: 4rem; left: 4.25rem; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 1500;
+  right: 46.3%;
+  top: 72.3%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 39.7%;
+  height: 116.6%;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.modal {
-  background: var(--primary-bg);
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 12px var(--card-shadow);
-  position: relative;
-  width: min(420px, 92%);
-  text-align: center;
-}
-.close-btn {
-  position: absolute; top: 0.5rem; right: 0.75rem;
-  font-size: 1.25rem; background: none; border: none; cursor: pointer;
-}
-.join-link {
-  display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem;
-  background: var(--accent); color: #fff; border-radius: 0.6rem; text-decoration: none;
-}
-.join-link:hover { background: var(--accent-hover); }
 
-/* Responsive */
-@media (max-width: 1100px) {
-  .content-wrapperV2 { right: 0; }
-  .welcome-box-container { position: static; width: auto; margin-left: 4.25rem; }
-  .modal-overlay { top: 4rem; left: 4.25rem; }
+.interact-with-mentor .content-wrapperV2 > * {
+  max-width: 100%;
 }
-@media (max-width: 768px) {
-  .sidebar, .welcome-box-container { display:none; }
-  .content-wrapperV2 { left: 0; padding: .75rem; }
-  .logo-title-container { padding: 0 .75rem; }
-  .modal-overlay { left: 0; }
+
+.interact-with-mentor .chat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 68.8%;
+  overflow-y: auto;
+  background-color: #b9bec07c;
+  box-sizing: border-box;
+  padding-top: 20px;
 }
+
+/* Ensure the chat content is scrollable */
+.interact-with-mentor .chat-content {
+  height: 55vh;
+  width: 90%;
+}
+
+/* Invisible Scrollbar (for WebKit) */
+.interact-with-mentor .chat-content::-webkit-scrollbar {
+  width: 0px !important;
+}
+.interact-with-mentor .chat-content::-webkit-scrollbar-thumb {
+  background-color: transparent !important;
+}
+.interact-with-mentor .chat-content::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+/* Welcome / Right Column */
+.interact-with-mentor .welcome-box-container {
+  position: fixed;
+  right: 1%;
+  top: 50%;
+  left: 53%;
+  transform: translateY(-45%);
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.interact-with-mentor .welcome-box,
+.interact-with-mentor .new-box {
+  background-color: #b9bec07c;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.interact-with-mentor .welcome-box {
+  height: 16.4vh;
+}
+
+.interact-with-mentor .new-box {
+  height: 63vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.interact-with-mentor .new-box .check-hw-table-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+  margin-left: 2%;
+}
+
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.interact-with-mentor .new-box .check-hw-table-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.interact-with-mentor .welcome-box h2,
+.interact-with-mentor .new-box h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.interact-with-mentor .welcome-box p,
+.interact-with-mentor .new-box p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* Chatscope container shim (kept) */
+.interact-with-mentor .chat-container {
+  background-color: #b9bec0;
+  box-shadow: none !important;
+  border: none !important;
+  height: 70vh;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  border-radius: 10px;
+}
+
+/* ============================================= */
+/* Misc                                           */
+/* ============================================= */
+
+.container1 { text-align: center; margin-bottom: 20px; }
+.welcome-message { font-size: 2rem; font-weight: bold; }
+.mentor-name { font-size: 1.2rem; color: #555; }
+.main-container { width: 02; } /* left as-is from your file */
+.no-mentor-message { font-size: 1.2rem; color: #777; text-align: center; }
+
+/* ============================================= */
+/* Media Queries (Responsive Styling)             */
+/* Mirrors interact-with-mentee behavior          */
+/* ============================================= */
+
+@media (max-width: 1050px) {
+  /* Let the page scroll on mobile */
+  .interact-with-mentor {
+    position: static !important;
+  }
+
+  .interact-with-mentor .logo {
+    width: 30%;
+    max-width: 80px;
+  }
+
+  .interact-with-mentor .title-header {
+    font-size: clamp(1.8rem, 5vw, 4rem);
+  }
+
+  /* Sidebar becomes a bottom bar */
+  .interact-with-mentor .sidebar {
+    position: static !important;
+    width: 90%;
+    height: 90px !important;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .interact-with-mentor .nav-buttons {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    gap: 10px;
+  }
+
+  .interact-with-mentor .icon1,
+  .interact-with-mentor .icon,
+  .interact-with-mentor .logout-buttonV2 {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  /* Main columns stack vertically */
+  .interact-with-mentor .content-wrapperV2,
+  .interact-with-mentor .welcome-box-container {
+    position: static !important;
+    width: 90% !important;
+    margin: 20px auto;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 80px;
+  }
+
+  /* Keep some spacing below the small welcome box */
+  .interact-with-mentor .welcome-box {
+    margin-bottom: 80px;
+  }
+
+  /* Reorder sections for a clean top-to-bottom flow */
+  .interact-with-mentor .logo-title-container {
+    order: 1;
+    position: static !important;
+    width: 90% !important;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .interact-with-mentor .welcome-box-container { order: 2; }
+  .interact-with-mentor .content-wrapperV2 { order: 3; }
+  .interact-with-mentor .sidebar { order: 4; }
+
+  .interact-with-mentor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ============================================= */
+/* (Optional) Old/unused hooks kept for parity    */
+/* ============================================= */
