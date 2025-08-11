@@ -18,7 +18,7 @@ import MentorMeetings from './mentor_pages/MentorMeetings';
 import WriteProgression from './mentor_pages/WriteMenteeProgression';
 // Admin Pages
 import SeeInteractions from './admin_pages/SeeInteractions';
-import AssignMentors from './admin_pages/AssignMentor';
+import AssignMentor from './admin_pages/AssignMentor';
 import ViewProgressions from './admin_pages/ViewProgression';
 import CreateAccount from './admin_pages/CreateAccount';
 
@@ -37,7 +37,7 @@ function App() {
         <Route path="/write-mentee-progression" element={<WriteProgression />} />
         {/* admin-home -> admin_pages */}
         <Route path="/see-interactions" element={<SeeInteractions />} />
-        <Route path="/assign-mentor" element={<AssignMentors />} />
+        <Route path="/assign-mentor" element={<AssignMentor />} />
         <Route path="/view-progressions" element={<ViewProgressions />} />
         <Route path="/create-account" element={<CreateAccount />} />
         {/* mentee-home -> mentee_pages */}
