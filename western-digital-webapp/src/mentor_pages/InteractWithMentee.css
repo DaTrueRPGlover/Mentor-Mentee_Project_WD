@@ -109,10 +109,15 @@
 
 /* Logout Button */
 .interact-with-mentee .logout-buttonV2 {
-  margin-top: 20px; /* Top spacing */
   background-color: white;
   border: none;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .interact-with-mentee .logout-buttonV2:hover {
@@ -593,19 +598,22 @@ input:checked + .slider:before {
   margin-left: 120px;
 }
 
+
+
+/* THIS SHOULD NOT BE ADMIN NOTE FOR KYLE */
 /* Dark Mode Button Colors */
-.dark-mode .admin-home button,
-.dark-mode .admin-home .logout-button,
-.dark-mode .admin-home .circle {
+.dark-mode .slider-section button,
+.dark-mode .slider-section .logout-button,
+.dark-mode .slider-section .circle {
   background-color: rgb(48, 48, 74) !important;
-  color: #91BECD; /* Light text color */
+  color: #91BECD;
 }
 
 /* Dark Mode Hover Effect */
-.dark-mode .admin-home button:hover,
-.dark-mode .admin-home .logout-button:hover,
-.dark-mode .admin-home .circle:hover {
-  background-color: #444; /* Lighter background on hover */
+.dark-mode .slider-section button:hover,
+.dark-mode .slider-section .logout-button:hover,
+.dark-mode .slider-section .circle:hover {
+  background-color: #444;
 }
 
 

@@ -109,10 +109,15 @@
 
 /* Logout Button */
 .write-mentee-progression .logout-buttonV2 {
-  margin-top: 20px; /* Top spacing */
   background-color: white;
   border: none;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .write-mentee-progression .logout-buttonV2:hover {

@@ -93,6 +93,39 @@
   margin-bottom: 5px;
 }
 
+.assign-hw .logo {
+  width: 20%;
+  max-width: 100px;
+  min-width: 40px;
+  height: auto;
+  transition: width 0.3s ease;
+  margin-left: 10px;
+}
+
+.assign-hw .title-header {
+  font-size: 4rem;
+  padding-left: 20px;
+  font-weight: 1050; /* Bold */
+  color: #333;
+}
+
+.assign-hw .logout-buttonV2 {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assign-hw .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+
 /* Responsive Styling */
 @media (max-width: 1200px) {
   .homework-list {

@@ -31,6 +31,7 @@
   min-width: 40px;
   height: auto;
   transition: width 0.3s ease;
+  margin-left: 10px;
 }
 
 .create-account .title-header {
@@ -104,10 +105,15 @@
 
 /* Logout Button */
 .create-account .logout-buttonV2 {
-  margin-top: 20px; /* Top spacing */
   background-color: white;
   border: none;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .create-account .logout-buttonV2:hover {

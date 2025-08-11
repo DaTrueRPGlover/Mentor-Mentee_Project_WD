@@ -34,6 +34,7 @@
   height: auto;
   transition: width 0.3s ease;
   margin-left: 10px;
+  margin-top: -10px;
 }
 
 .mentor-meetings .title-header {
@@ -109,10 +110,15 @@
 
 /* Logout Button */
 .mentor-meetings .logout-buttonV2 {
-  margin-top: 20px; /* Top spacing */
   background-color: white;
   border: none;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mentor-meetings .logout-buttonV2:hover {
@@ -261,21 +267,6 @@
 /* OLD STUFF/UNUSED         */
 /* ============================================= */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Main content styles */
 .mentor-meetings .main-content {
   margin-top: -5%;
@@ -288,35 +279,7 @@
   color: white;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*////////////////*/
-/* BODY STYLES */
-/*////////////////*/
-
-
-  
-
-  
-
-
- 
-
 .mentor-meetings .box {
-
-
-
   border-width: 5px;
   margin: 20px auto;
   display: flex;
@@ -328,15 +291,6 @@
   padding: 20px; /* Add padding for spacing */
 
 }
-
-
-
-
-
-
-
-
-
 
 /* Calendar-specific styles */
 .mentor-meetings .calendar {
