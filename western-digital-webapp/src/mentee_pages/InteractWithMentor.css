@@ -10,9 +10,8 @@
   font-family: Arial, sans-serif;
   text-align: center;
   align-items: center;
-  justify-content: flex-start; /* match mentee */
-  /* NOTE: keep fixed layout only for large screens; mobile overrides to static */
-  position: fixed;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 /* ============================================= */
@@ -20,12 +19,12 @@
 /* ============================================= */
 
 .interact-with-mentor .logo-title-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
   display: flex;
   align-items: center;
-  z-index: 10;
 }
 
 .interact-with-mentor .logo {
@@ -40,7 +39,7 @@
 .interact-with-mentor .title-header {
   font-size: 4rem;
   padding-left: 20px;
-  font-weight: 1050;
+  font-weight: 1050; /* Bold */
   color: #333;
 }
 
@@ -120,7 +119,6 @@
 
 /* Logout Button (kept consistent with mentee) */
 .interact-with-mentor .logout-buttonV2 {
-  margin-top: 20px;
   background-color: white;
   border: none;
   cursor: pointer;
@@ -354,11 +352,12 @@
 
   /* Reorder sections for a clean top-to-bottom flow */
   .interact-with-mentor .logo-title-container {
-    order: 1;
-    position: static !important;
-    width: 90% !important;
-    margin: 10px 0;
-    transform: none !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
   }
 
   .interact-with-mentor .welcome-box-container { order: 2; }
