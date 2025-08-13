@@ -125,7 +125,22 @@
 }
 
 /* Logout Button (match mentee style) */
-.todo-progression .logout-buttonV2 {
+/* .todo-progression .logout-buttonV2 {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-progression .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+} */
+ .todo-progression .logout-buttonV2 {
   background-color: white;
   border: none;
   cursor: pointer;
@@ -141,8 +156,13 @@
   background-color: #f0f0f0;
 }
 
+.todo-progression .logout-buttonV2 img {
+  width: 50%;
+  height: 50%;
+}
+
 /* If you still use the rectangular logout button, keep this block */
-.todo-progression .logout-button {
+/* .todo-progression .logout-button {
   border-radius: 50px;
   border: none;
   cursor: pointer;
@@ -155,8 +175,8 @@
   right: 20px;
   top: 20px;
   transition: background-color 0.3s;
-}
-.todo-progression .logout-button:hover { background-color: #7CAFB7; }
+} */
+/* .todo-progression .logout-button:hover { background-color: #7CAFB7; } */
 
 /* ============================================= */
 /* Content Containers                             */
@@ -384,7 +404,8 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
   }
 
   .todo-progression .icon1,
-  .todo-progression .icon {
+  .todo-progression .icon,
+  .todo-progression .logout-buttonV2 {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
@@ -428,9 +449,9 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
 }
 
 /* Keep your smaller button tweaks if you still use .logout-button */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .todo-progression .logout-button { font-size: 1rem; padding: 8px 16px; }
 }
 @media (max-width: 480px) {
   .todo-progression .logout-button { font-size: 0.9rem; padding: 6px 12px; right: 10px; top: 10px; }
-}
+} */

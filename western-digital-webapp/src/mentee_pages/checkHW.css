@@ -111,7 +111,7 @@
 }
 
 /* Logout Button (keep consistent with other pages) */
-.check-hw .logout-buttonV2 {
+/* .check-hw .logout-buttonV2 {
   margin-top: 20px;
   background-color: white;
   border: none;
@@ -120,7 +120,7 @@
 .check-hw .logout-buttonV2:hover { background-color: #f0f0f0; }
 
 /* If you still use the rectangular logout button, keep it */
-.check-hw .logout-button {
+/* .check-hw .logout-button {
   background-color: white;
   border: none;
   cursor: pointer;
@@ -131,7 +131,27 @@
   align-items: center;
   justify-content: center;
 }
-.check-hw .logout-button:hover { background-color: #7CAFB7; }
+.check-hw .logout-button:hover { background-color: #7CAFB7; } */
+.check-hw .logout-buttonV2 {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-hw .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+.check-hw .logout-buttonV2 img {
+  width: 50%;
+  height: 50%;
+}
 
 /* ============================================= */
 /* Content Containers                             */
@@ -376,7 +396,8 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
   }
 
   .check-hw .icon1,
-  .check-hw .icon {
+  .check-hw .icon,
+  .check-hw .logout-buttonV2 {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
@@ -419,9 +440,9 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
 }
 
 /* Keep smaller button tweaks if still using .logout-button */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .check-hw .logout-button { font-size: 1rem; padding: 8px 16px; }
 }
 @media (max-width: 480px) {
   .check-hw .logout-button { font-size: 0.9rem; padding: 6px 12px; right: 10px; top: 10px; }
-}
+} */

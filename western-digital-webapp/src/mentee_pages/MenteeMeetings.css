@@ -105,7 +105,7 @@
 }
 
 /* Optional rectangular logout (kept if used elsewhere) */
-.mentee-meetings .logout-button {
+/* .mentee-meetings .logout-button {
   background-color: white;
   border: none;
   cursor: pointer;
@@ -119,12 +119,33 @@
 .mentee-meetings .logout-button:hover { background-color: #7CAFB7; }
 
 /* Sidebar circle logout (matches other pages) */
-.mentee-meetings .logout-buttonV2 {
+/* .mentee-meetings .logout-buttonV2 {
   margin-top: 20px;
   background-color: white;
   border: none;
   cursor: pointer;
+} */
+  .mentee-meetings .logout-buttonV2 {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.mentee-meetings .logout-buttonV2:hover {
+  background-color: #f0f0f0;
+}
+
+.mentee-meetings .logout-buttonV2 img {
+  width: 50%;
+  height: 50%;
+}
+
 
 /* ============================================= */
 /* Content Containers                             */
@@ -287,7 +308,8 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
   }
 
   .mentee-meetings .icon1,
-  .mentee-meetings .icon {
+  .mentee-meetings .icon,
+  .mentee-meetings .logout-buttonV2 {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
@@ -324,9 +346,9 @@ textarea { height: 200px; padding: 10px; font-size: 1em; margin-bottom: 10px; wi
 }
 
 /* Keep smaller button tweaks if you still use .logout-button */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .mentee-meetings .logout-button { font-size: 1rem; padding: 8px 16px; }
 }
 @media (max-width: 480px) {
   .mentee-meetings .logout-button { font-size: 0.9rem; padding: 6px 12px; right: 10px; top: 10px; }
-}
+} */
