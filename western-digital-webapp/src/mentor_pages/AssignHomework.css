@@ -2,7 +2,7 @@
 /* Layout & Page Structure                        */
 /* ============================================= */
 
-.assign-hw {
+.assign-homework {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -14,7 +14,7 @@
   gap: 20px;
 }
 
-.assign-hw .logo-title-container {
+.assign-homework .logo-title-container {
   top: 0;
   left: 0;
   width: 100%;
@@ -27,7 +27,7 @@
 /* Logo & Title Styling                           */
 /* ============================================= */
 
-.assign-hw .logo {
+.assign-homework .logo {
   width: 20%;
   max-width: 100px;
   min-width: 40px;
@@ -36,7 +36,7 @@
   margin-left: 10px;
 }
 
-.assign-hw .title-header {
+.assign-homework .title-header {
   font-size: 4rem;
   padding-left: 20px;
   font-weight: 1050; /* Bold */
@@ -47,7 +47,7 @@
 /* Sidebar & Navigation                           */
 /* ============================================= */
 
-.assign-hw .sidebarA {
+.assign-homework .sidebarA {
   width: 6.6%;
   height: 80vh;
   background-color: #b9bec07c;
@@ -64,7 +64,7 @@
   transform: translateY(-50%);
 }
 
-.assign-hw .nav-buttonsA {
+.assign-homework .nav-buttonsA {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,8 +78,8 @@
 /* Icons & Buttons                               */
 /* ============================================= */
 
-.assign-hw .icon,
-.assign-hw .icon1 {
+.assign-homework .icon,
+.assign-homework .icon1 {
   width: 70px;
   height: 70px;
   min-width: 40px;
@@ -94,28 +94,33 @@
   transition: all 0.3s ease;
 }
 
-.assign-hw .icon img,
-.assign-hw .icon1 img {
+.assign-homework .icon img,
+.assign-homework .icon1 img {
   width: 40px;
   height: auto;
   max-width: 40px;
   min-width: 20px;
 }
 
-.assign-hw .icon1 {
+.assign-homework .icon1 {
   background-color: gray;
   border: none;
 }
 
 /* Logout Button */
-.assign-hw .logout-buttonV2 {
-  margin-top: 20px; /* Top spacing */
+.assign-homework .logout-buttonV2 {
   background-color: white;
   border: none;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.assign-hw .logout-buttonV2:hover {
+.assign-homework .logout-buttonV2:hover {
   background-color: #f0f0f0;
 }
 
@@ -124,7 +129,7 @@
 /* Content Containers                            */
 /* ============================================= */
 
-.assign-hw .content-wrapperVA {
+.assign-homework .content-wrapperVA {
   position: fixed;
   right: 46.3%;
   top: 72.3%;
@@ -138,11 +143,11 @@
   gap: 10px;
 }
 
-.assign-hw .content-wrapperVA > * {
+.assign-homework .content-wrapperVA > * {
   max-width: 100%;
 }
 
-.assign-hw .chat-boxA {
+.assign-homework .chat-boxA {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -156,7 +161,7 @@
   padding-top: 20px;
 }
 
-.assign-hw .welcome-box-containerA {
+.assign-homework .welcome-box-containerA {
   position: fixed;
   right: 1%;
   top: 50%;
@@ -168,8 +173,8 @@
   gap: 10px;
 }
 
-.assign-hw .welcome-boxA,
-.assign-hw .new-boxA {
+.assign-homework .welcome-boxA,
+.assign-homework .new-boxA {
   background-color: #b9bec07c;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -180,22 +185,22 @@
   overflow-y: auto;
 }
 
-.assign-hw .welcome-boxA {
+.assign-homework .welcome-boxA {
   height: 16.4vh;
 }
 
-.assign-hw .new-boxA {
+.assign-homework .new-boxA {
   height: 63vh;
 }
 
-.assign-hw .welcome-boxA h2,
-.assign-hw .new-boxA h2 {
+.assign-homework .welcome-boxA h2,
+.assign-homework .new-boxA h2 {
   margin: 0;
   font-size: 1.5rem;
 }
 
-.assign-hw .welcome-boxA p,
-.assign-hw .new-boxA p {
+.assign-homework .welcome-boxA p,
+.assign-homework .new-boxA p {
   margin-top: 10px;
   font-size: 1rem;
 }
@@ -206,16 +211,16 @@
 /* ============================================= */
 
 @media (max-width: 1050px) {
-  .assign-hw .logo {
+  .assign-homework .logo {
     width: 30%;
     max-width: 80px;
   }
 
-  .assign-hw .title-header {
+  .assign-homework .title-header {
     font-size: clamp(1.8rem, 5vw, 4rem);
   }
 
-  .assign-hw .sidebarA {
+  .assign-homework .sidebarA {
     position: static !important;
     width: 90%;
     height: 90px !important;
@@ -229,7 +234,7 @@
     margin-right: auto;
   }
 
-  .assign-hw .nav-buttonsA {
+  .assign-homework .nav-buttonsA {
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -237,15 +242,15 @@
     gap: 10px;
   }
 
-  .assign-hw .icon1,
-  .assign-hw .icon {
+  .assign-homework .icon1,
+  .assign-homework .icon {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
   }
 
-  .assign-hw .content-wrapperVA,
-  .assign-hw .welcome-box-containerA {
+  .assign-homework .content-wrapperVA,
+  .assign-homework .welcome-box-containerA {
     position: static !important;
     width: 90% !important;
     margin: 20px auto;
@@ -256,7 +261,7 @@
     margin-bottom: 80px;
   }
 
-  .assign-hw .welcome-boxA{
+  .assign-homework .welcome-boxA{
     margin-bottom: 80px;
   }
 
@@ -280,7 +285,7 @@
     order: 4;
   }
 
-  .assign-hw {
+  .assign-homework {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -300,7 +305,7 @@
 
 
 
-.assign-hw .homework-body {
+.assign-homework .homework-body {
 
 
   width: 100%; /* Adjust this percentage as needed */
@@ -313,13 +318,13 @@
   margin: 20px auto; /* Centers the homework body horizontally */
 }
 
-.assign-hw .homework-form {
+.assign-homework .homework-form {
   display: flex;
   flex-direction: column;
   background: #ffffff !important;
 }
 
-.assign-hw .homework-input {
+.assign-homework .homework-input {
 
   margin-bottom: 15px;
   padding: 12px;
@@ -329,13 +334,13 @@
   background: #ffffff !important; /* Input background */
 }
 
-.assign-hw .homework-input:focus {
+.assign-homework .homework-input:focus {
   outline: none;
   border-color: #91BECD;
 }
 
 /* Date and Time Input Styling */
-.assign-hw .date-time-container {
+.assign-homework .date-time-container {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -343,19 +348,19 @@
   background: #ffffff; /* Ensure white background for date-time containers */
 }
 
-.assign-hw .date-time-container label {
+.assign-homework .date-time-container label {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 5px;
   color: #333;
 }
-.assign-hw .homework-body label {
+.assign-homework .homework-body label {
   background-color: #ffffff;
 }
-.assign-hw .homework-body h3 {
+.assign-homework .homework-body h3 {
   background-color: #ffffff;
 }
-.assign-hw .date-input, .time-input {
+.assign-homework .date-input, .time-input {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -365,17 +370,17 @@
   background: #ffffff; /* Input background */
 }
 
-.assign-hw .date-input:focus, .time-input:focus {
+.assign-homework .date-input:focus, .time-input:focus {
   border-color: #91BECD;
   outline: none;
 }
 
-.assign-hw .mentees-container {
+.assign-homework .mentees-container {
   margin: 20px 0;
   background: #ffffff; /* Mentees container background */
 }
 
-.assign-hw .mentee-list {
+.assign-homework .mentee-list {
   display: flex;
   flex-direction: column;
   max-height: 200px;
@@ -386,19 +391,19 @@
   background-color: #ffffff; /* Mentee list background */
 }
 
-.assign-hw .mentee-item {
+.assign-homework .mentee-item {
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   background: #ffffff; /* Mentee item background */
 }
 
-.assign-hw .mentee-item label {
+.assign-homework .mentee-item label {
   font-size: 1rem;
 }
 
 /* Assign Button Styling */
-.assign-hw .homework-button {
+.assign-homework .homework-button {
   padding: 12px;
   font-size: 1.2rem;
   color: #ffffff;
@@ -409,19 +414,19 @@
   transition: background-color 0.3s ease;
 }
 
-.assign-hw .homework-button:disabled {
+.assign-homework .homework-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
 
-.assign-hw .homework-button:not(:disabled):hover {
+.assign-homework .homework-button:not(:disabled):hover {
   background-color: #0056b3;
 }
 
 
 
 
-.assign-hw .logo-button {
+.assign-homework .logo-button {
   background: none; /* Remove default button background */
   border: none; /* Remove default border */
   cursor: pointer; /* Change cursor to pointer */
@@ -429,7 +434,7 @@
   margin: 0; /* Remove margin */
 }
 
-.assign-hw .top-header {
+.assign-homework .top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -438,7 +443,7 @@
 }
 
 
-.assign-hw .welcome-message {
+.assign-homework .welcome-message {
   font-size: 32px;
   text-align: center;
   margin: 20px 0;
@@ -451,7 +456,7 @@
 
 
 /* Main content styles */
-.assign-hw .main-content {
+.assign-homework .main-content {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -463,13 +468,13 @@
 
 }
 
-.assign-hw .mentor-mentee-container {
+.assign-homework .mentor-mentee-container {
   display: flex;
   justify-content: center;
   gap: 20px; /* Space between the two dropdowns */
 }
 
-.assign-hw .dropdown-container {
+.assign-homework .dropdown-container {
   margin: 20px 0;
   display: flex;
   flex-direction: column;
@@ -477,12 +482,12 @@
   width: 200px;
 }
 
-.assign-hw .dropdown-container label {
+.assign-homework .dropdown-container label {
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.assign-hw .dropdown-container select {
+.assign-homework .dropdown-container select {
   width: 200px;
   padding: 8px;
   font-size: 16px;
@@ -529,7 +534,7 @@
     font-family: Arial, sans-serif;
   }
   
-  .assign-hw .submit-button {
+  .assign-homework .submit-button {
 
 
     background-color: #53a5ff;
@@ -539,21 +544,21 @@
     cursor: pointer;
     margin-bottom: 10px;
   }
-  .assign-hw .submit-button:hover {
+  .assign-homework .submit-button:hover {
     background-color: #0056b3;
   }
 
 
  /* Additional Styles for Attitude Question */
 
- .assign-hw .question-group {
+ .assign-homework .question-group {
   display: flex;
   flex-direction: column; /* Stack the title above the options */
   align-items: center; /* Center the group horizontally */
   text-align: center;
 }
 
-.assign-hw .question-group p {
+.assign-homework .question-group p {
   font-size: 1.2rem;
   margin-bottom: 10px;
   font-weight: bold;
@@ -563,13 +568,13 @@
 
 }
 
-.assign-hw .question-group input[type="radio"] {
+.assign-homework .question-group input[type="radio"] {
   margin: 0; /* Reset margin */
   transform: scale(1.5); /* Keep size adjustments */
   display: flex; /* Arrange radio buttons and labels in a row */
 }
 
-.assign-hw .question-group .radio-options {
+.assign-homework .question-group .radio-options {
   display: flex; /* Arrange radio buttons and labels in a row */
   align-items: center; /* Align items vertically */
   justify-content: center; /* Center the options horizontally */
@@ -578,7 +583,7 @@
 
 }
 
-.assign-hw .question-group label {
+.assign-homework .question-group label {
   margin: 0; /* Reset margin */
   text-align: center; /* Ensure label text is centered */
   display: flex; /* Arrange radio buttons and labels in a row */
@@ -586,7 +591,7 @@
 
 
 /* Form box styling */
-.assign-hw .form-box {
+.assign-homework .form-box {
   width: 80%;
   margin: 20px auto;
   padding: 20px;
@@ -596,7 +601,7 @@
 
 }
 
-.assign-hw .question-group div {
+.assign-homework .question-group div {
   display: flex;
   align-items: center; /* Align radio button with label vertically */
   gap: 8px; /* Add space between radio button and label */
@@ -605,14 +610,14 @@
 
 
 
-.assign-hw .form-box 
+.assign-homework .form-box 
  {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Stronger shadow with larger blur radius and opacity */
 }
 
 
 /* Styling for the comment box container */
-.assign-hw .comment-container {
+.assign-homework .comment-container {
   display: flex;
   width: 100%;
   flex-direction: column; /* Stack the elements vertically */
@@ -621,7 +626,7 @@
 }
 
 /* Style the form title container */
-.assign-hw .form-title {
+.assign-homework .form-title {
   display: flex;
   color: black;
   margin-bottom: 10px; /* Space below the form title */
@@ -631,7 +636,7 @@
 }
 
 /* Style the icon */
-.assign-hw .form-title-icon {
+.assign-homework .form-title-icon {
   width: 26px; /* Adjust the size of the icon */
   height: 26px; /* Adjust the size of the icon */
   margin-right: 4px; /* Space between the icon and the text */
@@ -642,7 +647,7 @@
 }
 
 /* Style the form title text */
-.assign-hw .form-title p {
+.assign-homework .form-title p {
   font-size: 1.2rem;
   color: #91BECD;
   font-weight: bold;
@@ -651,7 +656,7 @@
 }
 
 
-.assign-hw .box {
+.assign-homework .box {
   width: 60vh;
   height: 70vh;
   border-width: 5px;
