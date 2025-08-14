@@ -248,7 +248,7 @@
 /* Media Queries (Responsive Styling)            */
 /* ============================================= */
 @media (max-width: 1050px) {
-  .assign-mentor.logo {
+  .assign-mentor .logo {
     width: 30%;
     max-width: 80px;
   }
@@ -259,9 +259,8 @@
 
   .assign-mentor .sidebarA {
     position: static !important;
-    width: 90%;
+    width: auto; /* let width fit content */
     height: 90px !important;
-    overflow: hidden;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -269,21 +268,32 @@
     box-shadow: none;
     margin-left: auto;
     margin-right: auto;
+    overflow: visible; /* so nothing is clipped */
+    padding: 5px;
   }
 
   .assign-mentor .nav-buttonsA {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    gap: 10px;
+    width: auto; /* fit all icons */
+    gap: 4px; /* smaller spacing between buttons */
   }
 
   .assign-mentor .icon1,
   .assign-mentor .icon {
-    width: 50px;
-    height: 50px;
+    width: 45px; /* slightly smaller */
+    height: 45px;
     flex-shrink: 0;
+  }
+  .assign-mentor .slider-section {
+    margin: 0; /* remove vertical spacing */
+  }
+
+  .assign-mentor .logout-buttonV2 {
+    width: 45px;
+    height: 45px;
+    margin: 0;
   }
 
   .assign-mentor .content-wrapperVA,
@@ -323,15 +333,11 @@
     flex-direction: column;
     align-items: center;
   }
-  .assign-mentor .assignments-table-wrapper {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  .assign-mentor .assignments-table {
-    min-width: 600px;
-  }
 }
+
+
+
+
 
 /* ============================================= */
 /* Table Wrappers            */
